@@ -218,6 +218,8 @@ DISP_GLOBAL_PARAM_STRU gGlobalParam;
 
 Ex_DISP_PARAM_CALI_STRU gCaliParam;
 
+unsigned int gMachineFlow;
+
 DLoginState gUserLoginState;
 
 AdditionalGlobalCfg gAdditionalCfgParam;
@@ -452,6 +454,8 @@ void MainRetriveMachineInfo(int iMachineType) //ex_dcj
 
     strV = "/ExMachineMsg/MachineFlow/";
     gAdditionalCfgParam.machineInfo.iMachineFlow = config->value(strV, 5).toInt();
+
+	gMachineFlow = gAdditionalCfgParam.machineInfo.iMachineFlow;
 
     if (config)
     {
@@ -1508,6 +1512,7 @@ void MainSaveExMachineMsg(int iMachineType)
 
     strV = "/ExMachineMsg/MachineFlow/";
     config->setValue(strV, gAdditionalCfgParam.machineInfo.iMachineFlow);
+	
 
     if (config)
     {
@@ -5109,6 +5114,7 @@ void MainWindow::on_timerSecondEvent()
     if (!m_bSplash)
     {
         int iDelta;
+  
         iDelta = m_periodEvents - m_ulFlowRptTick[APP_FM_FM2_NO];
 
         if ((iDelta >= FM_CALC_PERIOD/PERIOD_EVENT_LENGTH)

@@ -191,15 +191,6 @@ MainPage::MainPage(QObject *parent,CBaseWidget *widget,MainWindow *wndMain) : CP
     DrawSpeed(1, iValue);
     //end
 
-    m_pLabels[LABEL_NAVI_EDI_WQ_VALUE]->hide();
-    m_pLabels[LABEL_NAVI_EDI_WQ_UNIT]->hide();
-    m_pLabels[LABEL_NAVI_EDI_LOOP_LBL]->hide();
-    m_pLabels[LABEL_NAVI_EDI_LOOP_VALUE]->hide();
-    m_pLabels[LABEL_NAVI_EDI_LOOP_UNIT]->hide();
-    m_pLabels[LABEL_NAVI_EDI_TEMP_VALUE]->hide();
-    m_pLabels[LABEL_NAVI_EDI_TEMP_UNIT]->hide();
-    m_pLabels[LABEL_NAVI_EDI_LOGO]->hide();
-    m_pLabels[LABEL_NAVI_EDI_STATE]->hide();
 }
 
 void MainPage::initUi()

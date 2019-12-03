@@ -1000,6 +1000,19 @@ void DWaterQualityPage::updFlowInfo(int iIndex,int iValue)
     {
     case APP_FM_FM1_NO:
     {
+        switch(gGlobalParam.iMachineType)
+        {
+        case MACHINE_L_EDI_LOOP:
+            if(gAdditionalCfgParam.machineInfo.iMachineFlow >= 500)
+            {
+                updateValue(m_tags[EDI_Product_Rate], strFlowUnitH.arg(toTwoDecimal(fUnit*(60.0*0.8*iValue)/1000)));
+                m_historyInfo[EDI_Product_Rate].value1 = ((60.0*0.8*iValue)/1000);
+            }
+            break;
+        default:
+            break;
+        }
+
         if (DispGetUpQtwFlag()
             || DispGetUpCirFlag())
         {
@@ -1048,8 +1061,20 @@ void DWaterQualityPage::updFlowInfo(int iIndex,int iValue)
         updateValue(m_tags[Tap_Rate], strFlowUnitH.arg(toTwoDecimal(fUnit*(60.0*(m_aulFlowMeter[APP_FM_FM3_NO] + m_aulFlowMeter[APP_FM_FM4_NO]))/1000)));
         m_historyInfo[Tap_Rate].value1 = ((60.0*(m_aulFlowMeter[APP_FM_FM3_NO] + m_aulFlowMeter[APP_FM_FM4_NO]))/1000);
 
-        updateValue(m_tags[EDI_Product_Rate], strFlowUnitH.arg(toTwoDecimal(fUnit*(60.0*0.8*iValue)/1000)));
-        m_historyInfo[EDI_Product_Rate].value1 = ((60.0*0.8*iValue)/1000);
+        switch(gGlobalParam.iMachineType)
+        {
+        case MACHINE_L_EDI_LOOP:
+            if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
+            {
+                updateValue(m_tags[EDI_Product_Rate], strFlowUnitH.arg(toTwoDecimal(fUnit*(60.0*0.8*iValue)/1000)));
+                m_historyInfo[EDI_Product_Rate].value1 = ((60.0*0.8*iValue)/1000);
+            }
+            break;
+        default:
+            updateValue(m_tags[EDI_Product_Rate], strFlowUnitH.arg(toTwoDecimal(fUnit*(60.0*0.8*iValue)/1000)));
+            m_historyInfo[EDI_Product_Rate].value1 = ((60.0*0.8*iValue)/1000);
+            break;
+        }
 
         updateValue(m_tags[EDI_Reject_Rate], strFlowUnitH.arg(toTwoDecimal(fUnit*(60.0*0.2*iValue)/1000)));
         m_historyInfo[EDI_Reject_Rate].value1 = ((60.0*0.2*iValue)/1000);

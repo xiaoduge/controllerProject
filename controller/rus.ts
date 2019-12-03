@@ -80,437 +80,437 @@
     </message>
     <message>
         <location filename="alarmdisplaypage.cpp" line="179"/>
-        <location filename="alarmdisplaypage.cpp" line="189"/>
-        <location filename="alarmdisplaypage.cpp" line="193"/>
+        <location filename="alarmdisplaypage.cpp" line="188"/>
+        <location filename="alarmdisplaypage.cpp" line="192"/>
         <source>us/cm</source>
         <translation>μS/cm</translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="189"/>
+        <location filename="alarmdisplaypage.cpp" line="188"/>
         <source>UP Feed Cond. &gt; </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="193"/>
+        <location filename="alarmdisplaypage.cpp" line="192"/>
         <source>RO Product Cond. &gt; </source>
         <translation>RO проводимость &gt; </translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="203"/>
+        <location filename="alarmdisplaypage.cpp" line="200"/>
         <source>RO Rejection &lt; </source>
         <translation>RO режекция &lt; </translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="210"/>
+        <location filename="alarmdisplaypage.cpp" line="207"/>
         <source>EDI Product Resis. &lt; </source>
         <translation>EDI сопр.  &lt; </translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="210"/>
-        <location filename="alarmdisplaypage.cpp" line="217"/>
-        <location filename="alarmdisplaypage.cpp" line="224"/>
-        <location filename="alarmdisplaypage.cpp" line="259"/>
-        <location filename="alarmdisplaypage.cpp" line="273"/>
-        <location filename="alarmdisplaypage.cpp" line="280"/>
-        <location filename="alarmdisplaypage.cpp" line="387"/>
+        <location filename="alarmdisplaypage.cpp" line="207"/>
+        <location filename="alarmdisplaypage.cpp" line="214"/>
+        <location filename="alarmdisplaypage.cpp" line="221"/>
+        <location filename="alarmdisplaypage.cpp" line="256"/>
+        <location filename="alarmdisplaypage.cpp" line="270"/>
+        <location filename="alarmdisplaypage.cpp" line="277"/>
+        <location filename="alarmdisplaypage.cpp" line="383"/>
         <source>omg</source>
         <translation>MΩ.cm</translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="217"/>
+        <location filename="alarmdisplaypage.cpp" line="214"/>
         <source>UP Product Resis. &lt; </source>
         <translation>Сопр. ультрачистой воды &lt; </translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="224"/>
+        <location filename="alarmdisplaypage.cpp" line="221"/>
         <source>Loop Resis. &lt; </source>
         <translation>Петля сопр. &lt; </translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="231"/>
+        <location filename="alarmdisplaypage.cpp" line="228"/>
         <source>Pure Tank Level &lt; </source>
         <translation>Уровень в баке &lt; </translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="203"/>
-        <location filename="alarmdisplaypage.cpp" line="231"/>
-        <location filename="alarmdisplaypage.cpp" line="238"/>
+        <location filename="alarmdisplaypage.cpp" line="200"/>
+        <location filename="alarmdisplaypage.cpp" line="228"/>
+        <location filename="alarmdisplaypage.cpp" line="235"/>
         <source>%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="238"/>
+        <location filename="alarmdisplaypage.cpp" line="235"/>
         <source>Feed Tank Level &lt; </source>
         <translation>Уровень пит. воды в баке &lt; </translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="245"/>
+        <location filename="alarmdisplaypage.cpp" line="242"/>
         <source>RO Prod. Rate &lt; </source>
         <translation>RO произв. &lt; </translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="245"/>
-        <location filename="alarmdisplaypage.cpp" line="252"/>
+        <location filename="alarmdisplaypage.cpp" line="242"/>
+        <location filename="alarmdisplaypage.cpp" line="249"/>
         <source>L/h</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="252"/>
+        <location filename="alarmdisplaypage.cpp" line="249"/>
         <source>RO Rej. Rate &lt; </source>
         <translation>RO расх. слив &lt; </translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="259"/>
+        <location filename="alarmdisplaypage.cpp" line="256"/>
         <source>Tank Resis. &lt; </source>
         <translation>Сопр. баке &lt; </translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="273"/>
+        <location filename="alarmdisplaypage.cpp" line="270"/>
         <source>Recir. Cond. &lt; </source>
         <translation>Сопр. рецирк. воды &lt; </translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="280"/>
+        <location filename="alarmdisplaypage.cpp" line="277"/>
         <source>HP Product Cond. &lt; </source>
         <translation>Сопр. очищенной воды &lt; </translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="287"/>
+        <location filename="alarmdisplaypage.cpp" line="284"/>
         <source>Feed Temp. &gt; </source>
         <translation>Темп. питающей воды &gt; </translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="287"/>
-        <location filename="alarmdisplaypage.cpp" line="294"/>
-        <location filename="alarmdisplaypage.cpp" line="303"/>
-        <location filename="alarmdisplaypage.cpp" line="307"/>
-        <location filename="alarmdisplaypage.cpp" line="318"/>
-        <location filename="alarmdisplaypage.cpp" line="322"/>
-        <location filename="alarmdisplaypage.cpp" line="331"/>
-        <location filename="alarmdisplaypage.cpp" line="338"/>
-        <location filename="alarmdisplaypage.cpp" line="345"/>
-        <location filename="alarmdisplaypage.cpp" line="352"/>
-        <location filename="alarmdisplaypage.cpp" line="359"/>
-        <location filename="alarmdisplaypage.cpp" line="366"/>
-        <location filename="alarmdisplaypage.cpp" line="373"/>
-        <location filename="alarmdisplaypage.cpp" line="380"/>
+        <location filename="alarmdisplaypage.cpp" line="284"/>
+        <location filename="alarmdisplaypage.cpp" line="291"/>
+        <location filename="alarmdisplaypage.cpp" line="300"/>
+        <location filename="alarmdisplaypage.cpp" line="304"/>
+        <location filename="alarmdisplaypage.cpp" line="315"/>
+        <location filename="alarmdisplaypage.cpp" line="319"/>
+        <location filename="alarmdisplaypage.cpp" line="327"/>
+        <location filename="alarmdisplaypage.cpp" line="334"/>
+        <location filename="alarmdisplaypage.cpp" line="341"/>
+        <location filename="alarmdisplaypage.cpp" line="348"/>
+        <location filename="alarmdisplaypage.cpp" line="355"/>
+        <location filename="alarmdisplaypage.cpp" line="362"/>
+        <location filename="alarmdisplaypage.cpp" line="369"/>
+        <location filename="alarmdisplaypage.cpp" line="376"/>
         <source>Celsius</source>
         <translation>℃</translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="294"/>
+        <location filename="alarmdisplaypage.cpp" line="291"/>
         <source>Feed Temp. &lt; </source>
         <translation>Темп. питающей воды &lt; </translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="303"/>
+        <location filename="alarmdisplaypage.cpp" line="300"/>
         <source>UP Feed Temp. &gt; </source>
         <translation>Темп.Ультра чистая вода &gt; </translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="307"/>
+        <location filename="alarmdisplaypage.cpp" line="304"/>
         <source>RO Temp. &gt; </source>
         <translation>RO темп. &gt; </translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="318"/>
+        <location filename="alarmdisplaypage.cpp" line="315"/>
         <source>UP Feed Temp. &lt; </source>
         <translation>Темп.Ультра чистая вода &lt; </translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="322"/>
+        <location filename="alarmdisplaypage.cpp" line="319"/>
         <source>RO Temp. &lt; </source>
         <translation>RO темп. &lt; </translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="331"/>
+        <location filename="alarmdisplaypage.cpp" line="327"/>
         <source>EDI Temp. &gt; </source>
         <translation>EDI темп. &gt; </translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="338"/>
+        <location filename="alarmdisplaypage.cpp" line="334"/>
         <source>EDI Temp. &lt; </source>
         <translation>EDI темп. &lt; </translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="345"/>
+        <location filename="alarmdisplaypage.cpp" line="341"/>
         <source>UP Temp. &gt; </source>
         <translation>Темп. ультрачистой воды &gt; </translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="352"/>
+        <location filename="alarmdisplaypage.cpp" line="348"/>
         <source>UP Temp. &lt; </source>
         <translation>Темп. ультрачистой воды &lt; </translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="359"/>
+        <location filename="alarmdisplaypage.cpp" line="355"/>
         <source>Loop Temp. &gt; </source>
         <translation>Темп. петле &gt; </translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="366"/>
+        <location filename="alarmdisplaypage.cpp" line="362"/>
         <source>Loop Temp. &lt; </source>
         <translation>Темп. петле &lt; </translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="373"/>
+        <location filename="alarmdisplaypage.cpp" line="369"/>
         <source>TOC Temp. &gt; </source>
         <translation>TOC темп. &gt; </translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="380"/>
+        <location filename="alarmdisplaypage.cpp" line="376"/>
         <source>TOC Temp. &lt; </source>
         <translation>TOC темп. &lt; </translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="387"/>
+        <location filename="alarmdisplaypage.cpp" line="383"/>
         <source>TOC Feed Resis. &lt; </source>
         <translation>Сопр. пит. TOC &lt; </translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="394"/>
+        <location filename="alarmdisplaypage.cpp" line="390"/>
         <source>Leak or Tank Overflow</source>
         <translation>утечка или переполнение бака</translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="401"/>
+        <location filename="alarmdisplaypage.cpp" line="397"/>
         <source>High Work Pressure</source>
         <translation type="unfinished">Высокое рабочее давление</translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="510"/>
-        <location filename="alarmdisplaypage.cpp" line="511"/>
-        <location filename="alarmdisplaypage.cpp" line="551"/>
-        <location filename="alarmdisplaypage.cpp" line="589"/>
-        <location filename="alarmdisplaypage.cpp" line="633"/>
-        <location filename="alarmdisplaypage.cpp" line="676"/>
-        <location filename="alarmdisplaypage.cpp" line="717"/>
-        <location filename="alarmdisplaypage.cpp" line="758"/>
-        <location filename="alarmdisplaypage.cpp" line="800"/>
-        <location filename="alarmdisplaypage.cpp" line="842"/>
-        <location filename="alarmdisplaypage.cpp" line="884"/>
-        <location filename="alarmdisplaypage.cpp" line="925"/>
-        <location filename="alarmdisplaypage.cpp" line="965"/>
-        <location filename="alarmdisplaypage.cpp" line="1000"/>
-        <location filename="alarmdisplaypage.cpp" line="1036"/>
-        <location filename="alarmdisplaypage.cpp" line="1070"/>
-        <location filename="alarmdisplaypage.cpp" line="1110"/>
-        <location filename="alarmdisplaypage.cpp" line="1147"/>
-        <location filename="alarmdisplaypage.cpp" line="1184"/>
-        <location filename="alarmdisplaypage.cpp" line="1213"/>
+        <location filename="alarmdisplaypage.cpp" line="507"/>
+        <location filename="alarmdisplaypage.cpp" line="508"/>
+        <location filename="alarmdisplaypage.cpp" line="542"/>
+        <location filename="alarmdisplaypage.cpp" line="580"/>
+        <location filename="alarmdisplaypage.cpp" line="618"/>
+        <location filename="alarmdisplaypage.cpp" line="656"/>
+        <location filename="alarmdisplaypage.cpp" line="693"/>
+        <location filename="alarmdisplaypage.cpp" line="730"/>
+        <location filename="alarmdisplaypage.cpp" line="767"/>
+        <location filename="alarmdisplaypage.cpp" line="805"/>
+        <location filename="alarmdisplaypage.cpp" line="843"/>
+        <location filename="alarmdisplaypage.cpp" line="881"/>
+        <location filename="alarmdisplaypage.cpp" line="918"/>
+        <location filename="alarmdisplaypage.cpp" line="952"/>
+        <location filename="alarmdisplaypage.cpp" line="984"/>
+        <location filename="alarmdisplaypage.cpp" line="1014"/>
+        <location filename="alarmdisplaypage.cpp" line="1051"/>
+        <location filename="alarmdisplaypage.cpp" line="1084"/>
+        <location filename="alarmdisplaypage.cpp" line="1116"/>
+        <location filename="alarmdisplaypage.cpp" line="1145"/>
         <source> </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="515"/>
+        <location filename="alarmdisplaypage.cpp" line="512"/>
         <source>Please replace it in time so as not to affect the performance of the system.</source>
         <translation>Пожалуйста, замените картридж для нормальной работы системы.</translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="516"/>
+        <location filename="alarmdisplaypage.cpp" line="513"/>
         <source>Perform RO Membrane Cl2 Cleaning, Install a cleaning pack and press Clean.</source>
         <translation>Cl2 -очистка RO мембран,Вставьте картридж для очистки и нажмите                                                                                  </translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="535"/>
-        <location filename="alarmdisplaypage.cpp" line="579"/>
-        <location filename="alarmdisplaypage.cpp" line="617"/>
-        <location filename="alarmdisplaypage.cpp" line="662"/>
-        <location filename="alarmdisplaypage.cpp" line="704"/>
-        <location filename="alarmdisplaypage.cpp" line="745"/>
-        <location filename="alarmdisplaypage.cpp" line="786"/>
-        <location filename="alarmdisplaypage.cpp" line="829"/>
-        <location filename="alarmdisplaypage.cpp" line="871"/>
-        <location filename="alarmdisplaypage.cpp" line="913"/>
-        <location filename="alarmdisplaypage.cpp" line="953"/>
-        <location filename="alarmdisplaypage.cpp" line="992"/>
-        <location filename="alarmdisplaypage.cpp" line="1023"/>
-        <location filename="alarmdisplaypage.cpp" line="1057"/>
-        <location filename="alarmdisplaypage.cpp" line="1098"/>
-        <location filename="alarmdisplaypage.cpp" line="1133"/>
-        <location filename="alarmdisplaypage.cpp" line="1170"/>
+        <location filename="alarmdisplaypage.cpp" line="532"/>
+        <location filename="alarmdisplaypage.cpp" line="570"/>
+        <location filename="alarmdisplaypage.cpp" line="608"/>
+        <location filename="alarmdisplaypage.cpp" line="646"/>
+        <location filename="alarmdisplaypage.cpp" line="684"/>
+        <location filename="alarmdisplaypage.cpp" line="720"/>
+        <location filename="alarmdisplaypage.cpp" line="757"/>
+        <location filename="alarmdisplaypage.cpp" line="795"/>
+        <location filename="alarmdisplaypage.cpp" line="833"/>
+        <location filename="alarmdisplaypage.cpp" line="872"/>
+        <location filename="alarmdisplaypage.cpp" line="909"/>
+        <location filename="alarmdisplaypage.cpp" line="944"/>
+        <location filename="alarmdisplaypage.cpp" line="975"/>
+        <location filename="alarmdisplaypage.cpp" line="1005"/>
+        <location filename="alarmdisplaypage.cpp" line="1042"/>
+        <location filename="alarmdisplaypage.cpp" line="1074"/>
+        <location filename="alarmdisplaypage.cpp" line="1106"/>
         <source>Installation Date </source>
         <translation>Дата установки:</translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="551"/>
-        <location filename="alarmdisplaypage.cpp" line="589"/>
-        <location filename="alarmdisplaypage.cpp" line="633"/>
-        <location filename="alarmdisplaypage.cpp" line="676"/>
-        <location filename="alarmdisplaypage.cpp" line="717"/>
-        <location filename="alarmdisplaypage.cpp" line="758"/>
-        <location filename="alarmdisplaypage.cpp" line="800"/>
-        <location filename="alarmdisplaypage.cpp" line="842"/>
-        <location filename="alarmdisplaypage.cpp" line="884"/>
-        <location filename="alarmdisplaypage.cpp" line="925"/>
-        <location filename="alarmdisplaypage.cpp" line="965"/>
-        <location filename="alarmdisplaypage.cpp" line="1000"/>
-        <location filename="alarmdisplaypage.cpp" line="1036"/>
-        <location filename="alarmdisplaypage.cpp" line="1070"/>
-        <location filename="alarmdisplaypage.cpp" line="1110"/>
-        <location filename="alarmdisplaypage.cpp" line="1147"/>
-        <location filename="alarmdisplaypage.cpp" line="1184"/>
-        <location filename="alarmdisplaypage.cpp" line="1213"/>
+        <location filename="alarmdisplaypage.cpp" line="542"/>
+        <location filename="alarmdisplaypage.cpp" line="580"/>
+        <location filename="alarmdisplaypage.cpp" line="618"/>
+        <location filename="alarmdisplaypage.cpp" line="656"/>
+        <location filename="alarmdisplaypage.cpp" line="693"/>
+        <location filename="alarmdisplaypage.cpp" line="730"/>
+        <location filename="alarmdisplaypage.cpp" line="767"/>
+        <location filename="alarmdisplaypage.cpp" line="805"/>
+        <location filename="alarmdisplaypage.cpp" line="843"/>
+        <location filename="alarmdisplaypage.cpp" line="881"/>
+        <location filename="alarmdisplaypage.cpp" line="918"/>
+        <location filename="alarmdisplaypage.cpp" line="952"/>
+        <location filename="alarmdisplaypage.cpp" line="984"/>
+        <location filename="alarmdisplaypage.cpp" line="1014"/>
+        <location filename="alarmdisplaypage.cpp" line="1051"/>
+        <location filename="alarmdisplaypage.cpp" line="1084"/>
+        <location filename="alarmdisplaypage.cpp" line="1116"/>
+        <location filename="alarmdisplaypage.cpp" line="1145"/>
         <source>It is </source>
         <translation>Просрочено: </translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="551"/>
-        <location filename="alarmdisplaypage.cpp" line="589"/>
-        <location filename="alarmdisplaypage.cpp" line="633"/>
-        <location filename="alarmdisplaypage.cpp" line="676"/>
-        <location filename="alarmdisplaypage.cpp" line="717"/>
-        <location filename="alarmdisplaypage.cpp" line="758"/>
-        <location filename="alarmdisplaypage.cpp" line="800"/>
-        <location filename="alarmdisplaypage.cpp" line="842"/>
-        <location filename="alarmdisplaypage.cpp" line="884"/>
-        <location filename="alarmdisplaypage.cpp" line="925"/>
-        <location filename="alarmdisplaypage.cpp" line="965"/>
-        <location filename="alarmdisplaypage.cpp" line="1000"/>
-        <location filename="alarmdisplaypage.cpp" line="1036"/>
-        <location filename="alarmdisplaypage.cpp" line="1070"/>
-        <location filename="alarmdisplaypage.cpp" line="1110"/>
-        <location filename="alarmdisplaypage.cpp" line="1147"/>
-        <location filename="alarmdisplaypage.cpp" line="1184"/>
-        <location filename="alarmdisplaypage.cpp" line="1213"/>
+        <location filename="alarmdisplaypage.cpp" line="542"/>
+        <location filename="alarmdisplaypage.cpp" line="580"/>
+        <location filename="alarmdisplaypage.cpp" line="618"/>
+        <location filename="alarmdisplaypage.cpp" line="656"/>
+        <location filename="alarmdisplaypage.cpp" line="693"/>
+        <location filename="alarmdisplaypage.cpp" line="730"/>
+        <location filename="alarmdisplaypage.cpp" line="767"/>
+        <location filename="alarmdisplaypage.cpp" line="805"/>
+        <location filename="alarmdisplaypage.cpp" line="843"/>
+        <location filename="alarmdisplaypage.cpp" line="881"/>
+        <location filename="alarmdisplaypage.cpp" line="918"/>
+        <location filename="alarmdisplaypage.cpp" line="952"/>
+        <location filename="alarmdisplaypage.cpp" line="984"/>
+        <location filename="alarmdisplaypage.cpp" line="1014"/>
+        <location filename="alarmdisplaypage.cpp" line="1051"/>
+        <location filename="alarmdisplaypage.cpp" line="1084"/>
+        <location filename="alarmdisplaypage.cpp" line="1116"/>
+        <location filename="alarmdisplaypage.cpp" line="1145"/>
         <source>days overdue. </source>
         <translation>30 дней.</translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="552"/>
+        <location filename="alarmdisplaypage.cpp" line="543"/>
         <source>Prefilter</source>
         <translation>Картридж Pre Pack</translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="555"/>
-        <location filename="alarmdisplaypage.cpp" line="593"/>
-        <location filename="alarmdisplaypage.cpp" line="637"/>
-        <location filename="alarmdisplaypage.cpp" line="679"/>
-        <location filename="alarmdisplaypage.cpp" line="720"/>
-        <location filename="alarmdisplaypage.cpp" line="761"/>
-        <location filename="alarmdisplaypage.cpp" line="803"/>
-        <location filename="alarmdisplaypage.cpp" line="845"/>
-        <location filename="alarmdisplaypage.cpp" line="887"/>
-        <location filename="alarmdisplaypage.cpp" line="928"/>
-        <location filename="alarmdisplaypage.cpp" line="968"/>
-        <location filename="alarmdisplaypage.cpp" line="1003"/>
-        <location filename="alarmdisplaypage.cpp" line="1039"/>
-        <location filename="alarmdisplaypage.cpp" line="1073"/>
-        <location filename="alarmdisplaypage.cpp" line="1113"/>
-        <location filename="alarmdisplaypage.cpp" line="1150"/>
-        <location filename="alarmdisplaypage.cpp" line="1187"/>
+        <location filename="alarmdisplaypage.cpp" line="546"/>
+        <location filename="alarmdisplaypage.cpp" line="584"/>
+        <location filename="alarmdisplaypage.cpp" line="622"/>
+        <location filename="alarmdisplaypage.cpp" line="659"/>
+        <location filename="alarmdisplaypage.cpp" line="696"/>
+        <location filename="alarmdisplaypage.cpp" line="733"/>
+        <location filename="alarmdisplaypage.cpp" line="770"/>
+        <location filename="alarmdisplaypage.cpp" line="808"/>
+        <location filename="alarmdisplaypage.cpp" line="846"/>
+        <location filename="alarmdisplaypage.cpp" line="884"/>
+        <location filename="alarmdisplaypage.cpp" line="921"/>
+        <location filename="alarmdisplaypage.cpp" line="955"/>
+        <location filename="alarmdisplaypage.cpp" line="987"/>
+        <location filename="alarmdisplaypage.cpp" line="1017"/>
+        <location filename="alarmdisplaypage.cpp" line="1054"/>
+        <location filename="alarmdisplaypage.cpp" line="1087"/>
+        <location filename="alarmdisplaypage.cpp" line="1119"/>
         <source>Cat No.:</source>
         <translation>Кат. №:</translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="558"/>
-        <location filename="alarmdisplaypage.cpp" line="596"/>
-        <location filename="alarmdisplaypage.cpp" line="640"/>
-        <location filename="alarmdisplaypage.cpp" line="682"/>
-        <location filename="alarmdisplaypage.cpp" line="723"/>
-        <location filename="alarmdisplaypage.cpp" line="764"/>
-        <location filename="alarmdisplaypage.cpp" line="806"/>
-        <location filename="alarmdisplaypage.cpp" line="848"/>
-        <location filename="alarmdisplaypage.cpp" line="890"/>
-        <location filename="alarmdisplaypage.cpp" line="931"/>
-        <location filename="alarmdisplaypage.cpp" line="971"/>
-        <location filename="alarmdisplaypage.cpp" line="1006"/>
-        <location filename="alarmdisplaypage.cpp" line="1043"/>
-        <location filename="alarmdisplaypage.cpp" line="1076"/>
-        <location filename="alarmdisplaypage.cpp" line="1116"/>
-        <location filename="alarmdisplaypage.cpp" line="1153"/>
-        <location filename="alarmdisplaypage.cpp" line="1190"/>
+        <location filename="alarmdisplaypage.cpp" line="549"/>
+        <location filename="alarmdisplaypage.cpp" line="587"/>
+        <location filename="alarmdisplaypage.cpp" line="625"/>
+        <location filename="alarmdisplaypage.cpp" line="662"/>
+        <location filename="alarmdisplaypage.cpp" line="699"/>
+        <location filename="alarmdisplaypage.cpp" line="736"/>
+        <location filename="alarmdisplaypage.cpp" line="773"/>
+        <location filename="alarmdisplaypage.cpp" line="811"/>
+        <location filename="alarmdisplaypage.cpp" line="849"/>
+        <location filename="alarmdisplaypage.cpp" line="887"/>
+        <location filename="alarmdisplaypage.cpp" line="924"/>
+        <location filename="alarmdisplaypage.cpp" line="958"/>
+        <location filename="alarmdisplaypage.cpp" line="991"/>
+        <location filename="alarmdisplaypage.cpp" line="1020"/>
+        <location filename="alarmdisplaypage.cpp" line="1057"/>
+        <location filename="alarmdisplaypage.cpp" line="1090"/>
+        <location filename="alarmdisplaypage.cpp" line="1122"/>
         <source>Lot No.:</source>
         <translation>Лот №:</translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="590"/>
+        <location filename="alarmdisplaypage.cpp" line="581"/>
         <source>AC Pack</source>
         <translation>Картридж AC Pack </translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="634"/>
+        <location filename="alarmdisplaypage.cpp" line="619"/>
         <source>T Pack</source>
         <translation>Картридж T Pack </translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="687"/>
+        <location filename="alarmdisplaypage.cpp" line="667"/>
         <source>P PACK</source>
         <translation>Картридж P Pack</translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="727"/>
-        <location filename="alarmdisplaypage.cpp" line="811"/>
+        <location filename="alarmdisplaypage.cpp" line="703"/>
+        <location filename="alarmdisplaypage.cpp" line="778"/>
         <source>U PACK</source>
         <translation>Картридж U Pack</translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="768"/>
+        <location filename="alarmdisplaypage.cpp" line="740"/>
         <source>AT PACK</source>
         <translation>Картридж AT Pack</translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="853"/>
+        <location filename="alarmdisplaypage.cpp" line="816"/>
         <source>254 UV</source>
         <translation>254 УФ</translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="895"/>
+        <location filename="alarmdisplaypage.cpp" line="854"/>
         <source>185 UV</source>
         <translation>185 УФ</translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="936"/>
+        <location filename="alarmdisplaypage.cpp" line="892"/>
         <source>TANK UV</source>
         <translation>Бак УФ</translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="976"/>
+        <location filename="alarmdisplaypage.cpp" line="929"/>
         <source>TUBE UV</source>
         <translation>Петля УФ</translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="1011"/>
+        <location filename="alarmdisplaypage.cpp" line="963"/>
         <source>TOC UV</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="1048"/>
+        <location filename="alarmdisplaypage.cpp" line="996"/>
         <source>Tank Vent Filter</source>
         <translation>Бак вент фильтр</translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="1083"/>
+        <location filename="alarmdisplaypage.cpp" line="1027"/>
         <source>Final Fliter B</source>
         <translation>Финишный фильтр В</translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="1087"/>
+        <location filename="alarmdisplaypage.cpp" line="1031"/>
         <source>Bio-filter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="1121"/>
+        <location filename="alarmdisplaypage.cpp" line="1062"/>
         <source>Final Fliter A</source>
         <translation>Финишный фильтр A</translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="1158"/>
+        <location filename="alarmdisplaypage.cpp" line="1095"/>
         <source>Loop Filter</source>
         <translation>Петля фильтр</translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="1195"/>
+        <location filename="alarmdisplaypage.cpp" line="1127"/>
         <source>Loop DI</source>
         <translation>Петля деиониз. фильтр</translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="1203"/>
+        <location filename="alarmdisplaypage.cpp" line="1135"/>
         <source>Last Maintenance </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="alarmdisplaypage.cpp" line="1218"/>
+        <location filename="alarmdisplaypage.cpp" line="1150"/>
         <source>RO Chlorine</source>
         <translation type="unfinished"></translation>
     </message>
@@ -523,217 +523,217 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="alarmsetpage.cpp" line="75"/>
+        <location filename="alarmsetpage.cpp" line="74"/>
         <source>save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="alarmsetpage.cpp" line="87"/>
+        <location filename="alarmsetpage.cpp" line="82"/>
         <source>Check 254 UV</source>
         <translation>Проверить 254 УФ </translation>
     </message>
     <message>
-        <location filename="alarmsetpage.cpp" line="93"/>
+        <location filename="alarmsetpage.cpp" line="85"/>
         <source>Check 185 UV</source>
         <translation>Проверить 185 УФ </translation>
     </message>
     <message>
-        <location filename="alarmsetpage.cpp" line="99"/>
+        <location filename="alarmsetpage.cpp" line="88"/>
         <source>Check Tank UV</source>
         <translation>Проверить Бак УФ </translation>
     </message>
     <message>
-        <location filename="alarmsetpage.cpp" line="105"/>
+        <location filename="alarmsetpage.cpp" line="91"/>
         <source>Check Loop UV</source>
         <translation>Проверить Петля УФ </translation>
     </message>
     <message>
-        <location filename="alarmsetpage.cpp" line="111"/>
+        <location filename="alarmsetpage.cpp" line="94"/>
         <source>PRE Pack Not Detected</source>
         <translation>Картридж Pre Pack не установлен</translation>
     </message>
     <message>
-        <location filename="alarmsetpage.cpp" line="117"/>
+        <location filename="alarmsetpage.cpp" line="97"/>
         <source>AC Pack Not Detected</source>
         <translation>Картридж AC Pack не установлен</translation>
     </message>
     <message>
-        <location filename="alarmsetpage.cpp" line="123"/>
+        <location filename="alarmsetpage.cpp" line="100"/>
         <source>P Pack Not Detected</source>
         <translation>Картридж P Pack не установлен</translation>
     </message>
     <message>
-        <location filename="alarmsetpage.cpp" line="129"/>
+        <location filename="alarmsetpage.cpp" line="103"/>
         <source>AT Pack Not Detected</source>
         <translation>Картридж AT Pack не установлен</translation>
     </message>
     <message>
-        <location filename="alarmsetpage.cpp" line="135"/>
+        <location filename="alarmsetpage.cpp" line="106"/>
         <source>H Pack Not Detected</source>
         <translation>Картридж H Pack не установлен</translation>
     </message>
     <message>
-        <location filename="alarmsetpage.cpp" line="141"/>
+        <location filename="alarmsetpage.cpp" line="109"/>
         <source>U Pack Not Detected</source>
         <translation>Картридж U Pack не установлен</translation>
     </message>
     <message>
-        <location filename="alarmsetpage.cpp" line="148"/>
+        <location filename="alarmsetpage.cpp" line="113"/>
         <source>Low Tap Pressure</source>
         <translation>Низкое давление пит. </translation>
     </message>
     <message>
-        <location filename="alarmsetpage.cpp" line="154"/>
+        <location filename="alarmsetpage.cpp" line="116"/>
         <source>High Tap Conductivity</source>
         <translation>Высокая проводимость пит. </translation>
     </message>
     <message>
-        <location filename="alarmsetpage.cpp" line="163"/>
+        <location filename="alarmsetpage.cpp" line="121"/>
         <source>High UP Feed Cond.</source>
         <translation>Высокое сопр. пит. воды</translation>
     </message>
     <message>
-        <location filename="alarmsetpage.cpp" line="168"/>
+        <location filename="alarmsetpage.cpp" line="126"/>
         <source>High RO Conductivity</source>
         <translation>Высоская проводимость RO</translation>
     </message>
     <message>
-        <location filename="alarmsetpage.cpp" line="176"/>
+        <location filename="alarmsetpage.cpp" line="130"/>
         <source>Low RO Rejection</source>
         <translation>RO низкая режекция </translation>
     </message>
     <message>
-        <location filename="alarmsetpage.cpp" line="183"/>
+        <location filename="alarmsetpage.cpp" line="133"/>
         <source>Low EDI Resistivity</source>
         <translation>Низкое сопротивление EDI</translation>
     </message>
     <message>
-        <location filename="alarmsetpage.cpp" line="189"/>
+        <location filename="alarmsetpage.cpp" line="136"/>
         <source>Low UP Resistivity</source>
         <translation>Низкое сопротивление UP</translation>
     </message>
     <message>
-        <location filename="alarmsetpage.cpp" line="195"/>
+        <location filename="alarmsetpage.cpp" line="139"/>
         <source>Low Loop Resistivity</source>
         <translation>Низкое сопротивление в петле</translation>
     </message>
     <message>
-        <location filename="alarmsetpage.cpp" line="201"/>
+        <location filename="alarmsetpage.cpp" line="142"/>
         <source>Low Pure Tank Level</source>
         <translation>Низкий уровень чистой воды в баке</translation>
     </message>
     <message>
-        <location filename="alarmsetpage.cpp" line="207"/>
+        <location filename="alarmsetpage.cpp" line="145"/>
         <source>Low Feed Tank Level</source>
         <translation>Низкий уровень пит. воды в баке</translation>
     </message>
     <message>
-        <location filename="alarmsetpage.cpp" line="213"/>
+        <location filename="alarmsetpage.cpp" line="148"/>
         <source>Low RO Product Rate</source>
         <translation>RO низкая подача продукта</translation>
     </message>
     <message>
-        <location filename="alarmsetpage.cpp" line="219"/>
+        <location filename="alarmsetpage.cpp" line="151"/>
         <source>Low RO Reject Rate</source>
         <translation>RO низкая  режекция</translation>
     </message>
     <message>
-        <location filename="alarmsetpage.cpp" line="225"/>
+        <location filename="alarmsetpage.cpp" line="154"/>
         <source>Low Recir. Resis.</source>
         <translation>Низкое сопротивление рецирк.</translation>
     </message>
     <message>
-        <location filename="alarmsetpage.cpp" line="231"/>
+        <location filename="alarmsetpage.cpp" line="157"/>
         <source>Low HP Prouduce Cond.</source>
         <translation>Низкое сопр. HP</translation>
     </message>
     <message>
-        <location filename="alarmsetpage.cpp" line="237"/>
+        <location filename="alarmsetpage.cpp" line="160"/>
         <source>Low Pure Tank Water Resis.</source>
         <translation>Низкое сопр. очищенной воды в баке</translation>
     </message>
     <message>
-        <location filename="alarmsetpage.cpp" line="249"/>
+        <location filename="alarmsetpage.cpp" line="169"/>
         <source>High RO Feed Temp.</source>
         <translation>Высокая темп. пит. RO</translation>
     </message>
     <message>
-        <location filename="alarmsetpage.cpp" line="255"/>
+        <location filename="alarmsetpage.cpp" line="172"/>
         <source>Low RO Feed Temp.</source>
         <translation>Низкая темп. пит. RO</translation>
     </message>
     <message>
-        <location filename="alarmsetpage.cpp" line="264"/>
+        <location filename="alarmsetpage.cpp" line="177"/>
         <source>High UP Feed Temp.</source>
         <translation>Высокая темп. пит. воды</translation>
     </message>
     <message>
-        <location filename="alarmsetpage.cpp" line="268"/>
+        <location filename="alarmsetpage.cpp" line="181"/>
         <source>High RO Temperature</source>
         <translation>Высокая темп. RO</translation>
     </message>
     <message>
-        <location filename="alarmsetpage.cpp" line="277"/>
+        <location filename="alarmsetpage.cpp" line="187"/>
         <source>Low UP Feed Temp.</source>
         <translation>Низкая темп. пит. воды</translation>
     </message>
     <message>
-        <location filename="alarmsetpage.cpp" line="281"/>
+        <location filename="alarmsetpage.cpp" line="191"/>
         <source>Low RO Temperature</source>
         <translation>Низкая темп. RO</translation>
     </message>
     <message>
-        <location filename="alarmsetpage.cpp" line="288"/>
+        <location filename="alarmsetpage.cpp" line="195"/>
         <source>High EDI Temperature</source>
         <translation>Высокая темп EDI</translation>
     </message>
     <message>
-        <location filename="alarmsetpage.cpp" line="294"/>
+        <location filename="alarmsetpage.cpp" line="198"/>
         <source>Low EDI Temperature</source>
         <translation>Низкая темп. EDI</translation>
     </message>
     <message>
-        <location filename="alarmsetpage.cpp" line="301"/>
+        <location filename="alarmsetpage.cpp" line="201"/>
         <source>High UP Temperature</source>
         <translation type="unfinished">Высокая темп. UP</translation>
     </message>
     <message>
-        <location filename="alarmsetpage.cpp" line="307"/>
+        <location filename="alarmsetpage.cpp" line="204"/>
         <source>Low UP Temperature</source>
         <translation type="unfinished">Низкая темп. UP</translation>
     </message>
     <message>
-        <location filename="alarmsetpage.cpp" line="314"/>
+        <location filename="alarmsetpage.cpp" line="207"/>
         <source>High Loop Temperature</source>
         <translation>Высокая темп. в петле</translation>
     </message>
     <message>
-        <location filename="alarmsetpage.cpp" line="320"/>
+        <location filename="alarmsetpage.cpp" line="210"/>
         <source>Low Loop Temperature</source>
         <translation>Низкая темп. в петле</translation>
     </message>
     <message>
-        <location filename="alarmsetpage.cpp" line="327"/>
+        <location filename="alarmsetpage.cpp" line="213"/>
         <source>High TOC Temperature</source>
         <translation>Выская TOC темп.</translation>
     </message>
     <message>
-        <location filename="alarmsetpage.cpp" line="333"/>
+        <location filename="alarmsetpage.cpp" line="216"/>
         <source>Low TOC Temperature</source>
         <translation>Низкая ТОС темп.</translation>
     </message>
     <message>
-        <location filename="alarmsetpage.cpp" line="340"/>
+        <location filename="alarmsetpage.cpp" line="219"/>
         <source>High TOC Feed Conductivity</source>
         <translation>Выское сопр. пит. ТОС</translation>
     </message>
     <message>
-        <location filename="alarmsetpage.cpp" line="346"/>
+        <location filename="alarmsetpage.cpp" line="222"/>
         <source>Leak or Tank Overflow</source>
         <translation>утечка или переполнение бака</translation>
     </message>
     <message>
-        <location filename="alarmsetpage.cpp" line="352"/>
+        <location filename="alarmsetpage.cpp" line="225"/>
         <source>High Work Pressure</source>
         <translation type="unfinished">Высокое рабочее давление</translation>
     </message>
@@ -741,79 +741,79 @@
 <context>
     <name>AllocationSetPage</name>
     <message>
-        <location filename="allocationsetpage.cpp" line="30"/>
-        <location filename="allocationsetpage.cpp" line="38"/>
+        <location filename="allocationsetpage.cpp" line="28"/>
+        <location filename="allocationsetpage.cpp" line="36"/>
         <source>Dist. Control</source>
         <translation>Контроль разд.</translation>
     </message>
     <message>
-        <location filename="allocationsetpage.cpp" line="39"/>
+        <location filename="allocationsetpage.cpp" line="37"/>
         <source>Start Time</source>
         <translation>Время начала</translation>
     </message>
     <message>
-        <location filename="allocationsetpage.cpp" line="40"/>
+        <location filename="allocationsetpage.cpp" line="38"/>
         <source>Stop Time</source>
         <translation>Время окончания</translation>
     </message>
     <message>
-        <location filename="allocationsetpage.cpp" line="41"/>
+        <location filename="allocationsetpage.cpp" line="39"/>
         <source>Working Days</source>
         <translation>Дни работы</translation>
     </message>
     <message>
-        <location filename="allocationsetpage.cpp" line="42"/>
+        <location filename="allocationsetpage.cpp" line="40"/>
         <source>Recir. Period</source>
         <translation>Частота рецирк.</translation>
     </message>
     <message>
-        <location filename="allocationsetpage.cpp" line="43"/>
+        <location filename="allocationsetpage.cpp" line="41"/>
         <source>Recir. Duration</source>
         <translation>Время рецирк.</translation>
     </message>
     <message>
-        <location filename="allocationsetpage.cpp" line="44"/>
-        <location filename="allocationsetpage.cpp" line="45"/>
+        <location filename="allocationsetpage.cpp" line="42"/>
+        <location filename="allocationsetpage.cpp" line="43"/>
         <source>Min</source>
         <translation>Мин.</translation>
     </message>
     <message>
-        <location filename="allocationsetpage.cpp" line="47"/>
+        <location filename="allocationsetpage.cpp" line="45"/>
         <source>Sun.</source>
         <translation>ВС</translation>
     </message>
     <message>
-        <location filename="allocationsetpage.cpp" line="48"/>
+        <location filename="allocationsetpage.cpp" line="46"/>
         <source>Mon.</source>
         <translation>ПН</translation>
     </message>
     <message>
-        <location filename="allocationsetpage.cpp" line="49"/>
+        <location filename="allocationsetpage.cpp" line="47"/>
         <source>Tue.</source>
         <translation>ВТ</translation>
     </message>
     <message>
-        <location filename="allocationsetpage.cpp" line="50"/>
+        <location filename="allocationsetpage.cpp" line="48"/>
         <source>Wed.</source>
         <translation>СР</translation>
     </message>
     <message>
-        <location filename="allocationsetpage.cpp" line="51"/>
+        <location filename="allocationsetpage.cpp" line="49"/>
         <source>Thu.</source>
         <translation>ЧТ</translation>
     </message>
     <message>
-        <location filename="allocationsetpage.cpp" line="52"/>
+        <location filename="allocationsetpage.cpp" line="50"/>
         <source>Fri.</source>
         <translation>ПТ</translation>
     </message>
     <message>
-        <location filename="allocationsetpage.cpp" line="53"/>
+        <location filename="allocationsetpage.cpp" line="51"/>
         <source>Sat.</source>
         <translation>СБ</translation>
     </message>
     <message>
-        <location filename="allocationsetpage.cpp" line="55"/>
+        <location filename="allocationsetpage.cpp" line="53"/>
         <source>Save</source>
         <translation>Сохранить</translation>
     </message>
@@ -848,12 +848,12 @@
         <location filename="ConsumableinsPage.cpp" line="563"/>
         <location filename="ConsumableinsPage.cpp" line="570"/>
         <location filename="ConsumableinsPage.cpp" line="577"/>
-        <location filename="ConsumableinsPage.cpp" line="585"/>
-        <location filename="ConsumableinsPage.cpp" line="593"/>
-        <location filename="ConsumableinsPage.cpp" line="602"/>
-        <location filename="ConsumableinsPage.cpp" line="610"/>
-        <location filename="ConsumableinsPage.cpp" line="619"/>
-        <location filename="ConsumableinsPage.cpp" line="627"/>
+        <location filename="ConsumableinsPage.cpp" line="584"/>
+        <location filename="ConsumableinsPage.cpp" line="591"/>
+        <location filename="ConsumableinsPage.cpp" line="598"/>
+        <location filename="ConsumableinsPage.cpp" line="605"/>
+        <location filename="ConsumableinsPage.cpp" line="613"/>
+        <location filename="ConsumableinsPage.cpp" line="620"/>
         <source>Install</source>
         <translation>помещать</translation>
     </message>
@@ -943,76 +943,76 @@
         <translation>Петля деиониз. фильтр</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="584"/>
+        <location filename="ConsumableinsPage.cpp" line="583"/>
         <source>Feed Pump</source>
         <translation>Пит. насос</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="592"/>
+        <location filename="ConsumableinsPage.cpp" line="590"/>
         <source>Dist. Pump</source>
         <translation>Раздаточный насос</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="601"/>
+        <location filename="ConsumableinsPage.cpp" line="597"/>
         <source>Recir. Pump</source>
         <translation>Рецирк. насос</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="609"/>
+        <location filename="ConsumableinsPage.cpp" line="604"/>
         <source>RO Membrane</source>
         <translation>RO мембрана</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="618"/>
+        <location filename="ConsumableinsPage.cpp" line="612"/>
         <source>RO Pump</source>
         <translation>RO насос</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="626"/>
+        <location filename="ConsumableinsPage.cpp" line="619"/>
         <source>EDI Module</source>
         <translation>EDI модуль</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="636"/>
+        <location filename="ConsumableinsPage.cpp" line="629"/>
         <source>CAT</source>
         <translation>Кат. №</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="637"/>
+        <location filename="ConsumableinsPage.cpp" line="630"/>
         <source>LOT</source>
         <translation>Лот №</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="863"/>
+        <location filename="ConsumableinsPage.cpp" line="855"/>
         <source>Alarm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="863"/>
+        <location filename="ConsumableinsPage.cpp" line="855"/>
         <source>Failed to read RFID,please make sure the part is installed correctly.</source>
         <translation>RFID не идентифицирован, пожалуйста, убедитесь, что деталь правильно установлена</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="878"/>
-        <location filename="ConsumableinsPage.cpp" line="889"/>
+        <location filename="ConsumableinsPage.cpp" line="870"/>
+        <location filename="ConsumableinsPage.cpp" line="881"/>
         <source>About</source>
         <translation type="unfinished">Подробнее</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="878"/>
-        <location filename="ConsumableinsPage.cpp" line="889"/>
+        <location filename="ConsumableinsPage.cpp" line="870"/>
+        <location filename="ConsumableinsPage.cpp" line="881"/>
         <source>Please Input Serial Number !</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="903"/>
-        <location filename="ConsumableinsPage.cpp" line="933"/>
+        <location filename="ConsumableinsPage.cpp" line="895"/>
+        <location filename="ConsumableinsPage.cpp" line="925"/>
         <source>Warning</source>
         <translation type="unfinished">Внимание</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="904"/>
-        <location filename="ConsumableinsPage.cpp" line="934"/>
+        <location filename="ConsumableinsPage.cpp" line="896"/>
+        <location filename="ConsumableinsPage.cpp" line="926"/>
         <source>The type of consumable is wrong, failed installation!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1020,183 +1020,183 @@
 <context>
     <name>ConsumableStatePage</name>
     <message>
-        <location filename="consumablestatepage.cpp" line="347"/>
+        <location filename="consumablestatepage.cpp" line="368"/>
         <source>Consumables Status</source>
         <translation type="unfinished">Статус расх.</translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="385"/>
-        <location filename="consumablestatepage.cpp" line="386"/>
+        <location filename="consumablestatepage.cpp" line="406"/>
+        <location filename="consumablestatepage.cpp" line="407"/>
         <source> </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="399"/>
-        <location filename="consumablestatepage.cpp" line="433"/>
-        <location filename="consumablestatepage.cpp" line="469"/>
-        <location filename="consumablestatepage.cpp" line="502"/>
-        <location filename="consumablestatepage.cpp" line="534"/>
-        <location filename="consumablestatepage.cpp" line="566"/>
-        <location filename="consumablestatepage.cpp" line="598"/>
-        <location filename="consumablestatepage.cpp" line="630"/>
-        <location filename="consumablestatepage.cpp" line="662"/>
-        <location filename="consumablestatepage.cpp" line="694"/>
-        <location filename="consumablestatepage.cpp" line="726"/>
-        <location filename="consumablestatepage.cpp" line="758"/>
-        <location filename="consumablestatepage.cpp" line="786"/>
+        <location filename="consumablestatepage.cpp" line="420"/>
+        <location filename="consumablestatepage.cpp" line="453"/>
+        <location filename="consumablestatepage.cpp" line="481"/>
+        <location filename="consumablestatepage.cpp" line="512"/>
+        <location filename="consumablestatepage.cpp" line="543"/>
+        <location filename="consumablestatepage.cpp" line="574"/>
+        <location filename="consumablestatepage.cpp" line="605"/>
+        <location filename="consumablestatepage.cpp" line="636"/>
+        <location filename="consumablestatepage.cpp" line="667"/>
+        <location filename="consumablestatepage.cpp" line="698"/>
+        <location filename="consumablestatepage.cpp" line="729"/>
+        <location filename="consumablestatepage.cpp" line="760"/>
+        <location filename="consumablestatepage.cpp" line="787"/>
         <location filename="consumablestatepage.cpp" line="814"/>
-        <location filename="consumablestatepage.cpp" line="849"/>
-        <location filename="consumablestatepage.cpp" line="877"/>
-        <location filename="consumablestatepage.cpp" line="905"/>
+        <location filename="consumablestatepage.cpp" line="848"/>
+        <location filename="consumablestatepage.cpp" line="875"/>
+        <location filename="consumablestatepage.cpp" line="902"/>
         <source>Installation Date </source>
         <translation>Дата установки</translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="404"/>
-        <location filename="consumablestatepage.cpp" line="438"/>
-        <location filename="consumablestatepage.cpp" line="474"/>
-        <location filename="consumablestatepage.cpp" line="507"/>
-        <location filename="consumablestatepage.cpp" line="539"/>
-        <location filename="consumablestatepage.cpp" line="571"/>
-        <location filename="consumablestatepage.cpp" line="603"/>
-        <location filename="consumablestatepage.cpp" line="635"/>
-        <location filename="consumablestatepage.cpp" line="667"/>
-        <location filename="consumablestatepage.cpp" line="699"/>
-        <location filename="consumablestatepage.cpp" line="731"/>
-        <location filename="consumablestatepage.cpp" line="763"/>
-        <location filename="consumablestatepage.cpp" line="791"/>
+        <location filename="consumablestatepage.cpp" line="425"/>
+        <location filename="consumablestatepage.cpp" line="458"/>
+        <location filename="consumablestatepage.cpp" line="486"/>
+        <location filename="consumablestatepage.cpp" line="517"/>
+        <location filename="consumablestatepage.cpp" line="548"/>
+        <location filename="consumablestatepage.cpp" line="579"/>
+        <location filename="consumablestatepage.cpp" line="610"/>
+        <location filename="consumablestatepage.cpp" line="641"/>
+        <location filename="consumablestatepage.cpp" line="672"/>
+        <location filename="consumablestatepage.cpp" line="703"/>
+        <location filename="consumablestatepage.cpp" line="734"/>
+        <location filename="consumablestatepage.cpp" line="765"/>
+        <location filename="consumablestatepage.cpp" line="792"/>
         <location filename="consumablestatepage.cpp" line="819"/>
-        <location filename="consumablestatepage.cpp" line="854"/>
-        <location filename="consumablestatepage.cpp" line="882"/>
-        <location filename="consumablestatepage.cpp" line="910"/>
+        <location filename="consumablestatepage.cpp" line="853"/>
+        <location filename="consumablestatepage.cpp" line="880"/>
+        <location filename="consumablestatepage.cpp" line="907"/>
         <source>Replace in </source>
         <translation>Заменить в течении</translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="404"/>
-        <location filename="consumablestatepage.cpp" line="438"/>
-        <location filename="consumablestatepage.cpp" line="474"/>
-        <location filename="consumablestatepage.cpp" line="507"/>
-        <location filename="consumablestatepage.cpp" line="539"/>
-        <location filename="consumablestatepage.cpp" line="571"/>
-        <location filename="consumablestatepage.cpp" line="603"/>
-        <location filename="consumablestatepage.cpp" line="635"/>
-        <location filename="consumablestatepage.cpp" line="667"/>
-        <location filename="consumablestatepage.cpp" line="699"/>
-        <location filename="consumablestatepage.cpp" line="731"/>
-        <location filename="consumablestatepage.cpp" line="763"/>
-        <location filename="consumablestatepage.cpp" line="791"/>
+        <location filename="consumablestatepage.cpp" line="425"/>
+        <location filename="consumablestatepage.cpp" line="458"/>
+        <location filename="consumablestatepage.cpp" line="486"/>
+        <location filename="consumablestatepage.cpp" line="517"/>
+        <location filename="consumablestatepage.cpp" line="548"/>
+        <location filename="consumablestatepage.cpp" line="579"/>
+        <location filename="consumablestatepage.cpp" line="610"/>
+        <location filename="consumablestatepage.cpp" line="641"/>
+        <location filename="consumablestatepage.cpp" line="672"/>
+        <location filename="consumablestatepage.cpp" line="703"/>
+        <location filename="consumablestatepage.cpp" line="734"/>
+        <location filename="consumablestatepage.cpp" line="765"/>
+        <location filename="consumablestatepage.cpp" line="792"/>
         <location filename="consumablestatepage.cpp" line="819"/>
-        <location filename="consumablestatepage.cpp" line="854"/>
-        <location filename="consumablestatepage.cpp" line="882"/>
-        <location filename="consumablestatepage.cpp" line="910"/>
+        <location filename="consumablestatepage.cpp" line="853"/>
+        <location filename="consumablestatepage.cpp" line="880"/>
+        <location filename="consumablestatepage.cpp" line="907"/>
         <source>days</source>
         <translation>дней</translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="407"/>
-        <location filename="consumablestatepage.cpp" line="441"/>
-        <location filename="consumablestatepage.cpp" line="477"/>
-        <location filename="consumablestatepage.cpp" line="510"/>
-        <location filename="consumablestatepage.cpp" line="542"/>
-        <location filename="consumablestatepage.cpp" line="574"/>
-        <location filename="consumablestatepage.cpp" line="606"/>
-        <location filename="consumablestatepage.cpp" line="638"/>
-        <location filename="consumablestatepage.cpp" line="670"/>
-        <location filename="consumablestatepage.cpp" line="702"/>
-        <location filename="consumablestatepage.cpp" line="734"/>
-        <location filename="consumablestatepage.cpp" line="766"/>
-        <location filename="consumablestatepage.cpp" line="794"/>
+        <location filename="consumablestatepage.cpp" line="428"/>
+        <location filename="consumablestatepage.cpp" line="461"/>
+        <location filename="consumablestatepage.cpp" line="489"/>
+        <location filename="consumablestatepage.cpp" line="520"/>
+        <location filename="consumablestatepage.cpp" line="551"/>
+        <location filename="consumablestatepage.cpp" line="582"/>
+        <location filename="consumablestatepage.cpp" line="613"/>
+        <location filename="consumablestatepage.cpp" line="644"/>
+        <location filename="consumablestatepage.cpp" line="675"/>
+        <location filename="consumablestatepage.cpp" line="706"/>
+        <location filename="consumablestatepage.cpp" line="737"/>
+        <location filename="consumablestatepage.cpp" line="768"/>
+        <location filename="consumablestatepage.cpp" line="795"/>
         <location filename="consumablestatepage.cpp" line="822"/>
-        <location filename="consumablestatepage.cpp" line="857"/>
-        <location filename="consumablestatepage.cpp" line="885"/>
-        <location filename="consumablestatepage.cpp" line="913"/>
+        <location filename="consumablestatepage.cpp" line="856"/>
+        <location filename="consumablestatepage.cpp" line="883"/>
+        <location filename="consumablestatepage.cpp" line="910"/>
         <source>Cat No.:</source>
         <translation>Кат. №</translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="410"/>
-        <location filename="consumablestatepage.cpp" line="444"/>
-        <location filename="consumablestatepage.cpp" line="480"/>
-        <location filename="consumablestatepage.cpp" line="513"/>
-        <location filename="consumablestatepage.cpp" line="545"/>
-        <location filename="consumablestatepage.cpp" line="577"/>
-        <location filename="consumablestatepage.cpp" line="609"/>
-        <location filename="consumablestatepage.cpp" line="641"/>
-        <location filename="consumablestatepage.cpp" line="673"/>
-        <location filename="consumablestatepage.cpp" line="705"/>
-        <location filename="consumablestatepage.cpp" line="737"/>
-        <location filename="consumablestatepage.cpp" line="769"/>
-        <location filename="consumablestatepage.cpp" line="797"/>
+        <location filename="consumablestatepage.cpp" line="431"/>
+        <location filename="consumablestatepage.cpp" line="464"/>
+        <location filename="consumablestatepage.cpp" line="492"/>
+        <location filename="consumablestatepage.cpp" line="523"/>
+        <location filename="consumablestatepage.cpp" line="554"/>
+        <location filename="consumablestatepage.cpp" line="585"/>
+        <location filename="consumablestatepage.cpp" line="616"/>
+        <location filename="consumablestatepage.cpp" line="647"/>
+        <location filename="consumablestatepage.cpp" line="678"/>
+        <location filename="consumablestatepage.cpp" line="709"/>
+        <location filename="consumablestatepage.cpp" line="740"/>
+        <location filename="consumablestatepage.cpp" line="771"/>
+        <location filename="consumablestatepage.cpp" line="798"/>
         <location filename="consumablestatepage.cpp" line="825"/>
-        <location filename="consumablestatepage.cpp" line="860"/>
-        <location filename="consumablestatepage.cpp" line="888"/>
-        <location filename="consumablestatepage.cpp" line="916"/>
+        <location filename="consumablestatepage.cpp" line="859"/>
+        <location filename="consumablestatepage.cpp" line="886"/>
+        <location filename="consumablestatepage.cpp" line="913"/>
         <source>Lot No.:</source>
         <translation>Лот №</translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="425"/>
+        <location filename="consumablestatepage.cpp" line="445"/>
         <source>Prefilter</source>
         <translation>Картридж Pre Pack</translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="458"/>
+        <location filename="consumablestatepage.cpp" line="477"/>
         <source>AC Pack</source>
         <translation>Картридж AC Pack </translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="493"/>
+        <location filename="consumablestatepage.cpp" line="504"/>
         <source>T Pack</source>
         <translation>Картридж T Pack </translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="525"/>
+        <location filename="consumablestatepage.cpp" line="535"/>
         <source>P PACK </source>
         <translation>Картридж P Pack </translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="557"/>
+        <location filename="consumablestatepage.cpp" line="566"/>
         <source>U PACK </source>
         <translation>Картридж U Pack </translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="589"/>
+        <location filename="consumablestatepage.cpp" line="597"/>
         <source>AT PACK </source>
         <translation>Картридж AT Pack </translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="621"/>
+        <location filename="consumablestatepage.cpp" line="628"/>
         <source>H PACK </source>
         <translation>Картридж H Pack </translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="653"/>
+        <location filename="consumablestatepage.cpp" line="659"/>
         <source>254 UV</source>
         <translation>254 УФ</translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="685"/>
+        <location filename="consumablestatepage.cpp" line="690"/>
         <source>185 UV</source>
         <translation>185 УФ</translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="717"/>
+        <location filename="consumablestatepage.cpp" line="721"/>
         <source>TANK UV</source>
         <translation>Бак УФ</translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="749"/>
+        <location filename="consumablestatepage.cpp" line="752"/>
         <source>TUBE UV</source>
         <translation>Петля УФ</translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="781"/>
+        <location filename="consumablestatepage.cpp" line="783"/>
         <source>TOC UV</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="809"/>
+        <location filename="consumablestatepage.cpp" line="810"/>
         <source>Tank Vent Filter</source>
         <translation>Бак вент фильтр</translation>
     </message>
@@ -1211,19 +1211,1320 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="872"/>
+        <location filename="consumablestatepage.cpp" line="871"/>
         <source>Final Fliter A</source>
         <translation>Финишный фильтр A</translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="900"/>
+        <location filename="consumablestatepage.cpp" line="898"/>
         <source>Loop Filter</source>
         <translation>Петля фильтр</translation>
     </message>
     <message>
-        <location filename="consumablestatepage.cpp" line="928"/>
+        <location filename="consumablestatepage.cpp" line="925"/>
         <source>Loop DI</source>
         <translation>Петля деиониз. фильтр</translation>
+    </message>
+</context>
+<context>
+    <name>DCheckConsumaleInstall</name>
+    <message>
+        <location filename="dcheckconsumaleinstall.cpp" line="157"/>
+        <location filename="dcheckconsumaleinstall.cpp" line="168"/>
+        <source>Warning</source>
+        <translation type="unfinished">Внимание</translation>
+    </message>
+    <message>
+        <location filename="dcheckconsumaleinstall.cpp" line="157"/>
+        <source>write install date error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dcheckconsumaleinstall.cpp" line="168"/>
+        <source>write vol data error</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DConsumableInstallDialog</name>
+    <message>
+        <location filename="dconsumableinstalldialog.cpp" line="19"/>
+        <location filename="dconsumableinstalldialog.cpp" line="129"/>
+        <source>Components Installation</source>
+        <translation type="unfinished">Установка компонентов</translation>
+    </message>
+    <message>
+        <location filename="dconsumableinstalldialog.cpp" line="58"/>
+        <location filename="dconsumableinstalldialog.cpp" line="135"/>
+        <source>Install</source>
+        <translation type="unfinished">помещать</translation>
+    </message>
+    <message>
+        <location filename="dconsumableinstalldialog.cpp" line="131"/>
+        <source>Cat No.:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dconsumableinstalldialog.cpp" line="132"/>
+        <source>Lot No.:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dconsumableinstalldialog.cpp" line="133"/>
+        <source>User Name:</source>
+        <translation type="unfinished">Имя пользователя</translation>
+    </message>
+    <message>
+        <location filename="dconsumableinstalldialog.cpp" line="171"/>
+        <location filename="dconsumableinstalldialog.cpp" line="178"/>
+        <source>Warning</source>
+        <translation type="unfinished">Внимание</translation>
+    </message>
+    <message>
+        <location filename="dconsumableinstalldialog.cpp" line="171"/>
+        <source>Please enter a valid username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dconsumableinstalldialog.cpp" line="178"/>
+        <source>Invalid username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dconsumableinstalldialog.cpp" line="209"/>
+        <source>P Pack</source>
+        <translation type="unfinished">Картридж P Pack</translation>
+    </message>
+    <message>
+        <location filename="dconsumableinstalldialog.cpp" line="212"/>
+        <source>AC Pack</source>
+        <translation type="unfinished">Картридж AC Pack </translation>
+    </message>
+    <message>
+        <location filename="dconsumableinstalldialog.cpp" line="215"/>
+        <source>U Pack</source>
+        <translation type="unfinished">Картридж U Pack</translation>
+    </message>
+    <message>
+        <location filename="dconsumableinstalldialog.cpp" line="218"/>
+        <source>H Pack</source>
+        <translation type="unfinished">Картридж H Pack</translation>
+    </message>
+    <message>
+        <location filename="dconsumableinstalldialog.cpp" line="221"/>
+        <source>Prefilter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dconsumableinstalldialog.cpp" line="224"/>
+        <source>Clean Pack</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dconsumableinstalldialog.cpp" line="227"/>
+        <source>AT Pack</source>
+        <translation type="unfinished">Картридж AT Pack</translation>
+    </message>
+    <message>
+        <location filename="dconsumableinstalldialog.cpp" line="230"/>
+        <source>T Pack</source>
+        <translation type="unfinished">Картридж T Pack </translation>
+    </message>
+    <message>
+        <location filename="dconsumableinstalldialog.cpp" line="233"/>
+        <source>RO Membrane</source>
+        <translation type="unfinished">RO мембрана</translation>
+    </message>
+    <message>
+        <location filename="dconsumableinstalldialog.cpp" line="236"/>
+        <source>185 UV Lamp</source>
+        <translation type="unfinished">185 УФ лампа</translation>
+    </message>
+    <message>
+        <location filename="dconsumableinstalldialog.cpp" line="239"/>
+        <source>254 UV Lamp</source>
+        <translation type="unfinished">254 УФ лампа</translation>
+    </message>
+    <message>
+        <location filename="dconsumableinstalldialog.cpp" line="242"/>
+        <source>Tank UV Lamp</source>
+        <translation type="unfinished">Бак УФ лампа</translation>
+    </message>
+    <message>
+        <location filename="dconsumableinstalldialog.cpp" line="245"/>
+        <source>RO Pump</source>
+        <translation type="unfinished">RO насос</translation>
+    </message>
+    <message>
+        <location filename="dconsumableinstalldialog.cpp" line="248"/>
+        <source>Recir. Pump</source>
+        <translation type="unfinished">Рецирк. насос</translation>
+    </message>
+    <message>
+        <location filename="dconsumableinstalldialog.cpp" line="251"/>
+        <source>Final Fliter A</source>
+        <translation type="unfinished">Финишный фильтр A</translation>
+    </message>
+    <message>
+        <location filename="dconsumableinstalldialog.cpp" line="256"/>
+        <source>Final Fliter B</source>
+        <translation type="unfinished">Финишный фильтр В</translation>
+    </message>
+    <message>
+        <location filename="dconsumableinstalldialog.cpp" line="260"/>
+        <source>Bio-filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dconsumableinstalldialog.cpp" line="264"/>
+        <source>EDI Module</source>
+        <translation type="unfinished">EDI модуль</translation>
+    </message>
+    <message>
+        <location filename="dconsumableinstalldialog.cpp" line="267"/>
+        <source>Tank Vent Filter</source>
+        <translation type="unfinished">Бак вент фильтр</translation>
+    </message>
+    <message>
+        <location filename="dconsumableinstalldialog.cpp" line="270"/>
+        <source>Loop Filter</source>
+        <translation type="unfinished">Петля фильтр</translation>
+    </message>
+    <message>
+        <location filename="dconsumableinstalldialog.cpp" line="273"/>
+        <source>Tube UV</source>
+        <translation type="unfinished">Петля УФ </translation>
+    </message>
+</context>
+<context>
+    <name>DFactoryTestPage</name>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="35"/>
+        <source>Factory Test</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="60"/>
+        <source>RFID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="61"/>
+        <location filename="dfactorytestpage.cpp" line="194"/>
+        <source>Flow &amp; Pressure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="62"/>
+        <source>Wifi Test</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="63"/>
+        <location filename="dfactorytestpage.cpp" line="297"/>
+        <source>Maintenance</source>
+        <translation type="unfinished">Обслуживание</translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="65"/>
+        <source>Cat No.:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="66"/>
+        <source>Lot No.:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="67"/>
+        <source>Installation Date:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="68"/>
+        <source>Volume of Use:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="69"/>
+        <source>Address:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="71"/>
+        <source>Write</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="72"/>
+        <source>Read</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="73"/>
+        <location filename="dfactorytestpage.cpp" line="100"/>
+        <source>Clear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="75"/>
+        <source>Flow Test</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="77"/>
+        <source>S1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="78"/>
+        <source>S2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="79"/>
+        <source>S3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="80"/>
+        <source>S4</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="85"/>
+        <location filename="dfactorytestpage.cpp" line="98"/>
+        <source>Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="88"/>
+        <source>Pressure Test</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="90"/>
+        <source>Work Pres.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="91"/>
+        <source>Pure Tank Level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="92"/>
+        <source>Source Tank Level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="102"/>
+        <location filename="dfactorytestpage.cpp" line="291"/>
+        <source>Zigbee Upd</source>
+        <translation type="unfinished">Zigbee обновл.</translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="211"/>
+        <source>20</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="212"/>
+        <source>21</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="213"/>
+        <source>22</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="214"/>
+        <source>23</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="215"/>
+        <source>24</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="251"/>
+        <source>RFID TEST</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="273"/>
+        <source>Update Wifi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="314"/>
+        <source>Fail: Flow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="314"/>
+        <location filename="dfactorytestpage.cpp" line="331"/>
+        <source>Can not enter test Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="331"/>
+        <source>Fail: Pressure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="353"/>
+        <location filename="dfactorytestpage.cpp" line="358"/>
+        <location filename="dfactorytestpage.cpp" line="364"/>
+        <location filename="dfactorytestpage.cpp" line="369"/>
+        <source>Warning</source>
+        <translation type="unfinished">Внимание</translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="353"/>
+        <source>write cat error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="358"/>
+        <source>write lot error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="364"/>
+        <source>write install date error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="369"/>
+        <source>write vol data error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="372"/>
+        <source>Write finished</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="557"/>
+        <source>FAIL</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DFlowChartPage</name>
+    <message>
+        <location filename="dflowchartpage.cpp" line="27"/>
+        <source>Flow Chart</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dflowchartpage.cpp" line="65"/>
+        <source>Runing Status</source>
+        <translation type="unfinished">Статус процесса</translation>
+    </message>
+    <message>
+        <location filename="dflowchartpage.cpp" line="147"/>
+        <source>Tank Full</source>
+        <translation type="unfinished">Бак полный</translation>
+    </message>
+    <message>
+        <location filename="dflowchartpage.cpp" line="157"/>
+        <source>Fill Feed Tank</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dflowchartpage.cpp" line="163"/>
+        <source>Flush</source>
+        <translation type="unfinished">очистка</translation>
+    </message>
+    <message>
+        <location filename="dflowchartpage.cpp" line="169"/>
+        <source>Rinsing</source>
+        <translation type="unfinished">промывка</translation>
+    </message>
+    <message>
+        <location filename="dflowchartpage.cpp" line="174"/>
+        <source>Filling</source>
+        <translation type="unfinished">Наполнение</translation>
+    </message>
+    <message>
+        <location filename="dflowchartpage.cpp" line="179"/>
+        <source>LPP</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dflowchartpage.cpp" line="182"/>
+        <source>KP</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dflowchartpage.cpp" line="189"/>
+        <location filename="dflowchartpage.cpp" line="190"/>
+        <source>Standby</source>
+        <translation type="unfinished">Ожидание</translation>
+    </message>
+    <message>
+        <location filename="dflowchartpage.cpp" line="195"/>
+        <location filename="dflowchartpage.cpp" line="212"/>
+        <source>Dispense</source>
+        <translation type="unfinished">Раздача</translation>
+    </message>
+    <message>
+        <location filename="dflowchartpage.cpp" line="199"/>
+        <location filename="dflowchartpage.cpp" line="223"/>
+        <source>Recirculation</source>
+        <translation type="unfinished">рециркуляция</translation>
+    </message>
+    <message>
+        <location filename="dflowchartpage.cpp" line="203"/>
+        <location filename="dflowchartpage.cpp" line="216"/>
+        <source>Ready</source>
+        <translation type="unfinished">Готов</translation>
+    </message>
+</context>
+<context>
+    <name>DFlowChartWidget</name>
+    <message>
+        <location filename="dflowchartwidget.cpp" line="682"/>
+        <location filename="dflowchartwidget.cpp" line="952"/>
+        <location filename="dflowchartwidget.cpp" line="1377"/>
+        <location filename="dflowchartwidget.cpp" line="1643"/>
+        <location filename="dflowchartwidget.cpp" line="1846"/>
+        <location filename="dflowchartwidget.cpp" line="2047"/>
+        <location filename="dflowchartwidget.cpp" line="2217"/>
+        <source>us</source>
+        <translation type="unfinished">μS/cm</translation>
+    </message>
+    <message>
+        <location filename="dflowchartwidget.cpp" line="744"/>
+        <location filename="dflowchartwidget.cpp" line="1445"/>
+        <location filename="dflowchartwidget.cpp" line="1884"/>
+        <location filename="dflowchartwidget.cpp" line="2100"/>
+        <source>TOC</source>
+        <translation type="unfinished">ТОС</translation>
+    </message>
+    <message>
+        <location filename="dflowchartwidget.cpp" line="748"/>
+        <location filename="dflowchartwidget.cpp" line="1009"/>
+        <location filename="dflowchartwidget.cpp" line="1448"/>
+        <location filename="dflowchartwidget.cpp" line="1690"/>
+        <location filename="dflowchartwidget.cpp" line="2104"/>
+        <source>RO Rejection</source>
+        <translation type="unfinished">RO режекция</translation>
+    </message>
+    <message>
+        <location filename="dflowchartwidget.cpp" line="2213"/>
+        <source>omg</source>
+        <translation type="unfinished">MΩ.cm</translation>
+    </message>
+    <message>
+        <location filename="dflowchartwidget.cpp" line="2222"/>
+        <source>Celsius</source>
+        <translation type="unfinished">℃</translation>
+    </message>
+    <message>
+        <location filename="dflowchartwidget.cpp" line="2226"/>
+        <source>F</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DHintDialog</name>
+    <message>
+        <location filename="dhintdialog.cpp" line="42"/>
+        <source>~DHintDialog()</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DHistoryPage</name>
+    <message>
+        <location filename="dhistorypage.cpp" line="36"/>
+        <source>History</source>
+        <translation type="unfinished">История</translation>
+    </message>
+    <message>
+        <location filename="dhistorypage.cpp" line="57"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Отмена</translation>
+    </message>
+    <message>
+        <location filename="dhistorypage.cpp" line="58"/>
+        <source>OK</source>
+        <translation type="unfinished">ОК </translation>
+    </message>
+    <message>
+        <location filename="dhistorypage.cpp" line="60"/>
+        <source>Send</source>
+        <translation type="unfinished">Отправить</translation>
+    </message>
+    <message>
+        <location filename="dhistorypage.cpp" line="61"/>
+        <source>Search</source>
+        <translation type="unfinished">Поиск</translation>
+    </message>
+    <message>
+        <location filename="dhistorypage.cpp" line="62"/>
+        <source>Page Up</source>
+        <translation type="unfinished">Вверх</translation>
+    </message>
+    <message>
+        <location filename="dhistorypage.cpp" line="63"/>
+        <source>Page Down</source>
+        <translation type="unfinished">Вниз</translation>
+    </message>
+    <message>
+        <location filename="dhistorypage.cpp" line="65"/>
+        <source>Start Date</source>
+        <translation type="unfinished">Дата начала </translation>
+    </message>
+    <message>
+        <location filename="dhistorypage.cpp" line="66"/>
+        <source>End Date</source>
+        <translation type="unfinished">Дата окончания</translation>
+    </message>
+    <message>
+        <location filename="dhistorypage.cpp" line="68"/>
+        <location filename="dhistorypage.cpp" line="122"/>
+        <source>Alarm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dhistorypage.cpp" line="69"/>
+        <location filename="dhistorypage.cpp" line="122"/>
+        <source>GetW</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dhistorypage.cpp" line="70"/>
+        <location filename="dhistorypage.cpp" line="122"/>
+        <source>PWater</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dhistorypage.cpp" line="71"/>
+        <location filename="dhistorypage.cpp" line="122"/>
+        <source>Log</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dhistorypage.cpp" line="406"/>
+        <location filename="dhistorypage.cpp" line="412"/>
+        <location filename="dhistorypage.cpp" line="418"/>
+        <location filename="dhistorypage.cpp" line="427"/>
+        <location filename="dhistorypage.cpp" line="439"/>
+        <source>ID</source>
+        <translation type="unfinished">ID</translation>
+    </message>
+    <message>
+        <location filename="dhistorypage.cpp" line="407"/>
+        <source>Ecoid</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dhistorypage.cpp" line="408"/>
+        <location filename="dhistorypage.cpp" line="421"/>
+        <source>Quality</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dhistorypage.cpp" line="409"/>
+        <location filename="dhistorypage.cpp" line="415"/>
+        <location filename="dhistorypage.cpp" line="424"/>
+        <location filename="dhistorypage.cpp" line="436"/>
+        <location filename="dhistorypage.cpp" line="443"/>
+        <source>Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dhistorypage.cpp" line="413"/>
+        <source>type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dhistorypage.cpp" line="414"/>
+        <source>Status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dhistorypage.cpp" line="419"/>
+        <source>WName</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dhistorypage.cpp" line="420"/>
+        <source>Quantity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dhistorypage.cpp" line="422"/>
+        <source>TOC</source>
+        <translation type="unfinished">ТОС</translation>
+    </message>
+    <message>
+        <location filename="dhistorypage.cpp" line="423"/>
+        <source>Tmp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dhistorypage.cpp" line="428"/>
+        <source>Duration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dhistorypage.cpp" line="429"/>
+        <source>Ecoroin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dhistorypage.cpp" line="430"/>
+        <source>Tmproin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dhistorypage.cpp" line="431"/>
+        <source>Ecorores</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dhistorypage.cpp" line="432"/>
+        <source>eEcoropw</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dhistorypage.cpp" line="433"/>
+        <source>Tmpropw</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dhistorypage.cpp" line="434"/>
+        <source>Ecoedi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dhistorypage.cpp" line="435"/>
+        <source>Tmpedi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dhistorypage.cpp" line="440"/>
+        <source>Name</source>
+        <translation type="unfinished">Имя</translation>
+    </message>
+    <message>
+        <location filename="dhistorypage.cpp" line="441"/>
+        <source>Action</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dhistorypage.cpp" line="442"/>
+        <source>Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DInitConsumableInsPage</name>
+    <message>
+        <location filename="dinitconsumableinspage.cpp" line="28"/>
+        <source>Next</source>
+        <translation type="unfinished">Далее</translation>
+    </message>
+    <message>
+        <location filename="dinitconsumableinspage.cpp" line="29"/>
+        <source>Back</source>
+        <translation type="unfinished">Назад</translation>
+    </message>
+    <message>
+        <location filename="dinitconsumableinspage.cpp" line="31"/>
+        <location filename="dinitconsumableinspage.cpp" line="37"/>
+        <source>Note:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dinitconsumableinspage.cpp" line="32"/>
+        <source>Install the AC Pack after all other components with RFID chip are installed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dinitconsumableinspage.cpp" line="33"/>
+        <location filename="dinitconsumableinspage.cpp" line="37"/>
+        <source>Scan the final filter and install it to the dispenser after finishing system setting-up.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dinitconsumableinspage.cpp" line="36"/>
+        <source>Follow the steps below to install and scan the chip for the consumables.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dinitconsumableinspage.cpp" line="37"/>
+        <source>Step 1: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dinitconsumableinspage.cpp" line="37"/>
+        <source>Scan the consumables on the RFID tags position</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dinitconsumableinspage.cpp" line="38"/>
+        <source>Step 2: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dinitconsumableinspage.cpp" line="38"/>
+        <source>Install cartridges</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dinitconsumableinspage.cpp" line="313"/>
+        <source>U Pack</source>
+        <translation type="unfinished">Картридж U Pack</translation>
+    </message>
+    <message>
+        <location filename="dinitconsumableinspage.cpp" line="327"/>
+        <source>H Pack</source>
+        <translation type="unfinished">Картридж H Pack</translation>
+    </message>
+    <message>
+        <location filename="dinitconsumableinspage.cpp" line="341"/>
+        <location filename="dinitconsumableinspage.cpp" line="350"/>
+        <location filename="dinitconsumableinspage.cpp" line="360"/>
+        <source>P Pack</source>
+        <translation type="unfinished">Картридж P Pack</translation>
+    </message>
+    <message>
+        <location filename="dinitconsumableinspage.cpp" line="375"/>
+        <source>AC Pack</source>
+        <translation type="unfinished">Картридж AC Pack </translation>
+    </message>
+    <message>
+        <location filename="dinitconsumableinspage.cpp" line="389"/>
+        <location filename="dinitconsumableinspage.cpp" line="396"/>
+        <source>AT Pack</source>
+        <translation type="unfinished">Картридж AT Pack</translation>
+    </message>
+    <message>
+        <location filename="dinitconsumableinspage.cpp" line="423"/>
+        <source>RO Membrane</source>
+        <translation type="unfinished">RO мембрана</translation>
+    </message>
+    <message>
+        <location filename="dinitconsumableinspage.cpp" line="441"/>
+        <source>Final Fliter B</source>
+        <translation type="unfinished">Финишный фильтр В</translation>
+    </message>
+    <message>
+        <location filename="dinitconsumableinspage.cpp" line="445"/>
+        <source>Bio-filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dinitconsumableinspage.cpp" line="460"/>
+        <location filename="dinitconsumableinspage.cpp" line="475"/>
+        <source>Final Fliter A</source>
+        <translation type="unfinished">Финишный фильтр A</translation>
+    </message>
+    <message>
+        <location filename="dinitconsumableinspage.cpp" line="492"/>
+        <source>254 UV Lamp</source>
+        <translation type="unfinished">254 УФ лампа</translation>
+    </message>
+    <message>
+        <location filename="dinitconsumableinspage.cpp" line="506"/>
+        <location filename="dinitconsumableinspage.cpp" line="519"/>
+        <source>185 UV Lamp</source>
+        <translation type="unfinished">185 УФ лампа</translation>
+    </message>
+    <message>
+        <location filename="dinitconsumableinspage.cpp" line="536"/>
+        <source>Tank UV Lamp</source>
+        <translation type="unfinished">Бак УФ лампа</translation>
+    </message>
+    <message>
+        <location filename="dinitconsumableinspage.cpp" line="555"/>
+        <source>Tank Vent Filter</source>
+        <translation type="unfinished">Бак вент фильтр</translation>
+    </message>
+    <message>
+        <location filename="dinitconsumableinspage.cpp" line="573"/>
+        <source>Tube UV</source>
+        <translation type="unfinished">Петля УФ </translation>
+    </message>
+    <message>
+        <location filename="dinitconsumableinspage.cpp" line="593"/>
+        <source>Loop Filter</source>
+        <translation type="unfinished">Петля фильтр</translation>
+    </message>
+    <message>
+        <location filename="dinitconsumableinspage.cpp" line="613"/>
+        <source>Loop DI</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DInitHandleCfgpage</name>
+    <message>
+        <location filename="dinithandlecfgpage.cpp" line="42"/>
+        <source>Connecting Device</source>
+        <translation type="unfinished">Подключенное устройство</translation>
+    </message>
+    <message>
+        <location filename="dinithandlecfgpage.cpp" line="50"/>
+        <source>SN</source>
+        <translation type="unfinished">С/Н</translation>
+    </message>
+    <message>
+        <location filename="dinithandlecfgpage.cpp" line="51"/>
+        <source>Address</source>
+        <translation type="unfinished">Адрес</translation>
+    </message>
+    <message>
+        <location filename="dinithandlecfgpage.cpp" line="52"/>
+        <source>Default</source>
+        <translation type="unfinished">По умолчанию</translation>
+    </message>
+    <message>
+        <location filename="dinithandlecfgpage.cpp" line="53"/>
+        <source>Type</source>
+        <translation type="unfinished">Тип</translation>
+    </message>
+    <message>
+        <location filename="dinithandlecfgpage.cpp" line="54"/>
+        <source>Operate</source>
+        <translation type="unfinished">Управлять</translation>
+    </message>
+    <message>
+        <location filename="dinithandlecfgpage.cpp" line="56"/>
+        <source>Finished</source>
+        <translation type="unfinished">Готово</translation>
+    </message>
+    <message>
+        <location filename="dinithandlecfgpage.cpp" line="57"/>
+        <source>Back</source>
+        <translation type="unfinished">Назад</translation>
+    </message>
+    <message>
+        <location filename="dinithandlecfgpage.cpp" line="59"/>
+        <source>Query</source>
+        <translation type="unfinished">Запрос</translation>
+    </message>
+    <message>
+        <location filename="dinithandlecfgpage.cpp" line="60"/>
+        <source>Config.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dinithandlecfgpage.cpp" line="61"/>
+        <source>Reset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dinithandlecfgpage.cpp" line="63"/>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dinithandlecfgpage.cpp" line="65"/>
+        <source>Dispenser</source>
+        <translation type="unfinished">Диспенсер</translation>
+    </message>
+    <message>
+        <location filename="dinithandlecfgpage.cpp" line="98"/>
+        <source>Successfully saved</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dinithandlecfgpage.cpp" line="173"/>
+        <source>CAN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dinithandlecfgpage.cpp" line="174"/>
+        <source>Zigbee</source>
+        <translation type="unfinished">Wireless</translation>
+    </message>
+    <message>
+        <location filename="dinithandlecfgpage.cpp" line="223"/>
+        <source>HANDLER</source>
+        <translation type="unfinished">Диспенсер</translation>
+    </message>
+    <message>
+        <location filename="dinithandlecfgpage.cpp" line="309"/>
+        <source>Be sure to save the handsets&apos; configuration when collected all responses!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dinithandlecfgpage.cpp" line="642"/>
+        <source>About</source>
+        <translation type="unfinished">Подробнее</translation>
+    </message>
+    <message>
+        <location filename="dinithandlecfgpage.cpp" line="642"/>
+        <source>One and only one default handler per category shoud be configured !</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DInitLanguagepage</name>
+    <message>
+        <location filename="dinitlanguagepage.cpp" line="36"/>
+        <source>Language</source>
+        <translation type="unfinished">Язык</translation>
+    </message>
+    <message>
+        <location filename="dinitlanguagepage.cpp" line="44"/>
+        <location filename="dinitlanguagepage.cpp" line="97"/>
+        <source>English</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dinitlanguagepage.cpp" line="45"/>
+        <location filename="dinitlanguagepage.cpp" line="98"/>
+        <source>Chinese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dinitlanguagepage.cpp" line="46"/>
+        <location filename="dinitlanguagepage.cpp" line="99"/>
+        <source>Spanish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dinitlanguagepage.cpp" line="47"/>
+        <location filename="dinitlanguagepage.cpp" line="100"/>
+        <source>French</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dinitlanguagepage.cpp" line="48"/>
+        <location filename="dinitlanguagepage.cpp" line="101"/>
+        <source>German</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dinitlanguagepage.cpp" line="49"/>
+        <location filename="dinitlanguagepage.cpp" line="102"/>
+        <source>Italian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dinitlanguagepage.cpp" line="50"/>
+        <location filename="dinitlanguagepage.cpp" line="103"/>
+        <source>Korean</source>
+        <translation type="unfinished">한국어</translation>
+    </message>
+    <message>
+        <location filename="dinitlanguagepage.cpp" line="51"/>
+        <location filename="dinitlanguagepage.cpp" line="104"/>
+        <source>Russian</source>
+        <translation type="unfinished">русский</translation>
+    </message>
+    <message>
+        <location filename="dinitlanguagepage.cpp" line="52"/>
+        <location filename="dinitlanguagepage.cpp" line="105"/>
+        <source>Portugese</source>
+        <translation type="unfinished">Português</translation>
+    </message>
+    <message>
+        <location filename="dinitlanguagepage.cpp" line="55"/>
+        <source>Next</source>
+        <translation type="unfinished">Далее</translation>
+    </message>
+</context>
+<context>
+    <name>DInitNetworkpage</name>
+    <message>
+        <location filename="dinitnetworkpage.cpp" line="29"/>
+        <source>Connectivity</source>
+        <translation type="unfinished">Подключения</translation>
+    </message>
+    <message>
+        <location filename="dinitnetworkpage.cpp" line="36"/>
+        <source>CAN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dinitnetworkpage.cpp" line="37"/>
+        <source>Zigbee</source>
+        <translation type="unfinished">Wireless</translation>
+    </message>
+    <message>
+        <location filename="dinitnetworkpage.cpp" line="38"/>
+        <source>WIFI</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dinitnetworkpage.cpp" line="44"/>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dinitnetworkpage.cpp" line="45"/>
+        <source>Back</source>
+        <translation type="unfinished">Назад</translation>
+    </message>
+    <message>
+        <location filename="dinitnetworkpage.cpp" line="46"/>
+        <source>Next</source>
+        <translation type="unfinished">Далее</translation>
+    </message>
+    <message>
+        <location filename="dinitnetworkpage.cpp" line="48"/>
+        <source>SSID:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dinitnetworkpage.cpp" line="49"/>
+        <source>Add</source>
+        <translation type="unfinished">Добавить</translation>
+    </message>
+    <message>
+        <location filename="dinitnetworkpage.cpp" line="50"/>
+        <source>Refresh</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dinitnetworkpage.cpp" line="51"/>
+        <source>Add network</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DInitSyscfgpage</name>
+    <message>
+        <location filename="dinitsyscfgpage.cpp" line="30"/>
+        <source>System Config</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dinitsyscfgpage.cpp" line="38"/>
+        <source>Configuration</source>
+        <translation type="unfinished">Настройки</translation>
+    </message>
+    <message>
+        <location filename="dinitsyscfgpage.cpp" line="40"/>
+        <source>Leak Protector</source>
+        <translation type="unfinished">Защита от утечки</translation>
+    </message>
+    <message>
+        <location filename="dinitsyscfgpage.cpp" line="41"/>
+        <source>Tank UV</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dinitsyscfgpage.cpp" line="44"/>
+        <source>Next</source>
+        <translation type="unfinished">Далее</translation>
+    </message>
+    <message>
+        <location filename="dinitsyscfgpage.cpp" line="45"/>
+        <source>Back</source>
+        <translation type="unfinished">Назад</translation>
+    </message>
+</context>
+<context>
+    <name>DInitTankcfgpage</name>
+    <message>
+        <location filename="dinittankcfgpage.cpp" line="43"/>
+        <source>System Config</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dinittankcfgpage.cpp" line="50"/>
+        <source>Tank Set</source>
+        <translation type="unfinished">Объем бака</translation>
+    </message>
+    <message>
+        <location filename="dinittankcfgpage.cpp" line="54"/>
+        <source>Pure Water Tank</source>
+        <translation type="unfinished">Бак чистой воды</translation>
+    </message>
+    <message>
+        <location filename="dinittankcfgpage.cpp" line="56"/>
+        <location filename="dinittankcfgpage.cpp" line="61"/>
+        <location filename="dinittankcfgpage.cpp" line="131"/>
+        <location filename="dinittankcfgpage.cpp" line="206"/>
+        <source>UDF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dinittankcfgpage.cpp" line="57"/>
+        <location filename="dinittankcfgpage.cpp" line="62"/>
+        <location filename="dinittankcfgpage.cpp" line="133"/>
+        <location filename="dinittankcfgpage.cpp" line="207"/>
+        <source>NO</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dinittankcfgpage.cpp" line="59"/>
+        <source>Feed Tank</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dinittankcfgpage.cpp" line="64"/>
+        <source>Next</source>
+        <translation type="unfinished">Далее</translation>
+    </message>
+    <message>
+        <location filename="dinittankcfgpage.cpp" line="65"/>
+        <source>Back</source>
+        <translation type="unfinished">Назад</translation>
+    </message>
+    <message>
+        <location filename="dinittankcfgpage.cpp" line="67"/>
+        <location filename="dinittankcfgpage.cpp" line="69"/>
+        <location filename="dinittankcfgpage.cpp" line="151"/>
+        <location filename="dinittankcfgpage.cpp" line="224"/>
+        <source>Height(M)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dinittankcfgpage.cpp" line="68"/>
+        <location filename="dinittankcfgpage.cpp" line="70"/>
+        <location filename="dinittankcfgpage.cpp" line="165"/>
+        <location filename="dinittankcfgpage.cpp" line="238"/>
+        <source>Volume(L)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dinittankcfgpage.cpp" line="126"/>
+        <location filename="dinittankcfgpage.cpp" line="201"/>
+        <source>30</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dinittankcfgpage.cpp" line="127"/>
+        <location filename="dinittankcfgpage.cpp" line="202"/>
+        <source>60</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dinittankcfgpage.cpp" line="128"/>
+        <location filename="dinittankcfgpage.cpp" line="203"/>
+        <source>100</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dinittankcfgpage.cpp" line="129"/>
+        <location filename="dinittankcfgpage.cpp" line="204"/>
+        <source>200</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dinittankcfgpage.cpp" line="130"/>
+        <location filename="dinittankcfgpage.cpp" line="205"/>
+        <source>350</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DInitTimePage</name>
+    <message>
+        <location filename="dinittimepage.cpp" line="41"/>
+        <location filename="dinittimepage.cpp" line="59"/>
+        <source>Time &amp; Date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dinittimepage.cpp" line="51"/>
+        <source>Select Date</source>
+        <translation type="unfinished">Выберите дату</translation>
+    </message>
+    <message>
+        <location filename="dinittimepage.cpp" line="52"/>
+        <source>Select Time</source>
+        <translation type="unfinished">Выберите время</translation>
+    </message>
+    <message>
+        <location filename="dinittimepage.cpp" line="60"/>
+        <source>OK</source>
+        <translation type="unfinished">ОК </translation>
+    </message>
+    <message>
+        <location filename="dinittimepage.cpp" line="61"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Отмена</translation>
+    </message>
+    <message>
+        <location filename="dinittimepage.cpp" line="63"/>
+        <source>Next</source>
+        <translation type="unfinished">Далее</translation>
+    </message>
+    <message>
+        <location filename="dinittimepage.cpp" line="64"/>
+        <source>Back</source>
+        <translation type="unfinished">Назад</translation>
+    </message>
+</context>
+<context>
+    <name>DLanguagepage</name>
+    <message>
+        <location filename="dlanguagepage.cpp" line="43"/>
+        <source>Language</source>
+        <translation type="unfinished">Язык</translation>
+    </message>
+    <message>
+        <location filename="dlanguagepage.cpp" line="51"/>
+        <location filename="dlanguagepage.cpp" line="133"/>
+        <source>English</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlanguagepage.cpp" line="52"/>
+        <location filename="dlanguagepage.cpp" line="134"/>
+        <source>Chinese</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlanguagepage.cpp" line="53"/>
+        <location filename="dlanguagepage.cpp" line="135"/>
+        <source>Spanish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlanguagepage.cpp" line="54"/>
+        <location filename="dlanguagepage.cpp" line="136"/>
+        <source>French</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlanguagepage.cpp" line="55"/>
+        <location filename="dlanguagepage.cpp" line="137"/>
+        <source>German</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlanguagepage.cpp" line="56"/>
+        <location filename="dlanguagepage.cpp" line="138"/>
+        <source>Italian</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dlanguagepage.cpp" line="57"/>
+        <location filename="dlanguagepage.cpp" line="139"/>
+        <source>Korean</source>
+        <translation type="unfinished">한국어</translation>
+    </message>
+    <message>
+        <location filename="dlanguagepage.cpp" line="58"/>
+        <location filename="dlanguagepage.cpp" line="140"/>
+        <source>Russian</source>
+        <translation type="unfinished">русский</translation>
+    </message>
+    <message>
+        <location filename="dlanguagepage.cpp" line="59"/>
+        <location filename="dlanguagepage.cpp" line="141"/>
+        <source>Portugese</source>
+        <translation type="unfinished">Português</translation>
+    </message>
+    <message>
+        <location filename="dlanguagepage.cpp" line="61"/>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1236,6 +2537,231 @@
     <message>
         <location filename="dloginwarningdialog.cpp" line="54"/>
         <source>~DLoginWarningDialog()</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DManagerSetPage</name>
+    <message>
+        <location filename="dmanagersetpage.cpp" line="60"/>
+        <source>Manager Config</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dmanagersetpage.cpp" line="67"/>
+        <location filename="dmanagersetpage.cpp" line="704"/>
+        <source>Time &amp; Date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dmanagersetpage.cpp" line="68"/>
+        <location filename="dmanagersetpage.cpp" line="742"/>
+        <source>Calibration</source>
+        <translation type="unfinished">Калибровка</translation>
+    </message>
+    <message>
+        <location filename="dmanagersetpage.cpp" line="69"/>
+        <location filename="dmanagersetpage.cpp" line="814"/>
+        <source>Audio</source>
+        <translation type="unfinished">Аудио</translation>
+    </message>
+    <message>
+        <location filename="dmanagersetpage.cpp" line="70"/>
+        <location filename="dmanagersetpage.cpp" line="907"/>
+        <source>LCD</source>
+        <translation type="unfinished">Экран</translation>
+    </message>
+    <message>
+        <location filename="dmanagersetpage.cpp" line="71"/>
+        <location filename="dmanagersetpage.cpp" line="972"/>
+        <source>Additional Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dmanagersetpage.cpp" line="76"/>
+        <source>Select Date</source>
+        <translation type="unfinished">Выберите дату</translation>
+    </message>
+    <message>
+        <location filename="dmanagersetpage.cpp" line="77"/>
+        <source>Select Time</source>
+        <translation type="unfinished">Выберите время</translation>
+    </message>
+    <message>
+        <location filename="dmanagersetpage.cpp" line="85"/>
+        <source>Date &amp; Time</source>
+        <translation type="unfinished">Дата и Время</translation>
+    </message>
+    <message>
+        <location filename="dmanagersetpage.cpp" line="87"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Отмена</translation>
+    </message>
+    <message>
+        <location filename="dmanagersetpage.cpp" line="88"/>
+        <source>OK</source>
+        <translation type="unfinished">ОК </translation>
+    </message>
+    <message>
+        <location filename="dmanagersetpage.cpp" line="91"/>
+        <source>Disp. Rate</source>
+        <translation type="unfinished">Подача ультрачистой воды</translation>
+    </message>
+    <message>
+        <location filename="dmanagersetpage.cpp" line="92"/>
+        <location filename="dmanagersetpage.cpp" line="103"/>
+        <location filename="dmanagersetpage.cpp" line="114"/>
+        <location filename="dmanagersetpage.cpp" line="124"/>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dmanagersetpage.cpp" line="95"/>
+        <source>Touch-tone</source>
+        <translation type="unfinished">Звук при нажатии</translation>
+    </message>
+    <message>
+        <location filename="dmanagersetpage.cpp" line="97"/>
+        <source>Audio Alarms</source>
+        <translation type="unfinished">Звук предупреждения</translation>
+    </message>
+    <message>
+        <location filename="dmanagersetpage.cpp" line="106"/>
+        <source>Brightness</source>
+        <translation type="unfinished">Яркость</translation>
+    </message>
+    <message>
+        <location filename="dmanagersetpage.cpp" line="107"/>
+        <source>Energy-saving</source>
+        <translation type="unfinished">Энергосбережение</translation>
+    </message>
+    <message>
+        <location filename="dmanagersetpage.cpp" line="108"/>
+        <source>SleepTime</source>
+        <translation type="unfinished">Заставка</translation>
+    </message>
+    <message>
+        <location filename="dmanagersetpage.cpp" line="123"/>
+        <source>HP Recir.</source>
+        <translation type="unfinished">Рециркуляция HP</translation>
+    </message>
+    <message>
+        <location filename="dmanagersetpage.cpp" line="438"/>
+        <location filename="dmanagersetpage.cpp" line="483"/>
+        <location filename="dmanagersetpage.cpp" line="503"/>
+        <location filename="dmanagersetpage.cpp" line="570"/>
+        <source>Successfully saved</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DPermissionSetPage</name>
+    <message>
+        <location filename="dpermissionsetpage.cpp" line="31"/>
+        <source>Permission</source>
+        <translation type="unfinished">Разрешения</translation>
+    </message>
+    <message>
+        <location filename="dpermissionsetpage.cpp" line="38"/>
+        <location filename="dpermissionsetpage.cpp" line="51"/>
+        <location filename="dpermissionsetpage.cpp" line="257"/>
+        <source>RFID Config</source>
+        <translation type="unfinished">RFID установки</translation>
+    </message>
+    <message>
+        <location filename="dpermissionsetpage.cpp" line="39"/>
+        <location filename="dpermissionsetpage.cpp" line="55"/>
+        <location filename="dpermissionsetpage.cpp" line="292"/>
+        <location filename="dpermissionsetpage.cpp" line="358"/>
+        <source>Verification</source>
+        <translation type="unfinished">проверка</translation>
+    </message>
+    <message>
+        <location filename="dpermissionsetpage.cpp" line="42"/>
+        <location filename="dpermissionsetpage.cpp" line="43"/>
+        <source>Sub-Account</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dpermissionsetpage.cpp" line="44"/>
+        <location filename="dpermissionsetpage.cpp" line="382"/>
+        <source>Name</source>
+        <translation type="unfinished">Имя</translation>
+    </message>
+    <message>
+        <location filename="dpermissionsetpage.cpp" line="45"/>
+        <source>Query</source>
+        <translation type="unfinished">Запрос</translation>
+    </message>
+    <message>
+        <location filename="dpermissionsetpage.cpp" line="46"/>
+        <source>Display All</source>
+        <translation type="unfinished">Показать все</translation>
+    </message>
+    <message>
+        <location filename="dpermissionsetpage.cpp" line="47"/>
+        <source>Reset</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dpermissionsetpage.cpp" line="48"/>
+        <source>Reset All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dpermissionsetpage.cpp" line="52"/>
+        <source>Disable RFID</source>
+        <translation type="unfinished">Отключить RFID</translation>
+    </message>
+    <message>
+        <location filename="dpermissionsetpage.cpp" line="53"/>
+        <location filename="dpermissionsetpage.cpp" line="57"/>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dpermissionsetpage.cpp" line="56"/>
+        <source>Users is free of verification.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dpermissionsetpage.cpp" line="163"/>
+        <location filename="dpermissionsetpage.cpp" line="183"/>
+        <source>Successfully saved</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dpermissionsetpage.cpp" line="381"/>
+        <source>ID</source>
+        <translation type="unfinished">ID</translation>
+    </message>
+    <message>
+        <location filename="dpermissionsetpage.cpp" line="383"/>
+        <source>UP Quantity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dpermissionsetpage.cpp" line="384"/>
+        <source>HP Quantity</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DRFIDCfgPage</name>
+    <message>
+        <location filename="drfidcfgpage.cpp" line="28"/>
+        <location filename="drfidcfgpage.cpp" line="36"/>
+        <source>RFID Config</source>
+        <translation type="unfinished">RFID установки</translation>
+    </message>
+    <message>
+        <location filename="drfidcfgpage.cpp" line="37"/>
+        <source>Disable RFID</source>
+        <translation type="unfinished">Отключить RFID</translation>
+    </message>
+    <message>
+        <location filename="drfidcfgpage.cpp" line="38"/>
+        <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1260,6 +2786,597 @@
         <location filename="drunwarningdialog.cpp" line="48"/>
         <source>Quit</source>
         <translation>Выйти</translation>
+    </message>
+</context>
+<context>
+    <name>DScreenSleepPage</name>
+    <message>
+        <location filename="dscreensleeppage.cpp" line="95"/>
+        <location filename="dscreensleeppage.cpp" line="98"/>
+        <location filename="dscreensleeppage.cpp" line="101"/>
+        <location filename="dscreensleeppage.cpp" line="104"/>
+        <location filename="dscreensleeppage.cpp" line="107"/>
+        <location filename="dscreensleeppage.cpp" line="110"/>
+        <location filename="dscreensleeppage.cpp" line="113"/>
+        <location filename="dscreensleeppage.cpp" line="116"/>
+        <location filename="dscreensleeppage.cpp" line="122"/>
+        <location filename="dscreensleeppage.cpp" line="134"/>
+        <location filename="dscreensleeppage.cpp" line="137"/>
+        <location filename="dscreensleeppage.cpp" line="140"/>
+        <location filename="dscreensleeppage.cpp" line="143"/>
+        <location filename="dscreensleeppage.cpp" line="146"/>
+        <location filename="dscreensleeppage.cpp" line="149"/>
+        <location filename="dscreensleeppage.cpp" line="152"/>
+        <location filename="dscreensleeppage.cpp" line="155"/>
+        <location filename="dscreensleeppage.cpp" line="161"/>
+        <source>%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DSuperPowerPage</name>
+    <message>
+        <location filename="dsuperpowerpage.cpp" line="46"/>
+        <source>Super Power</source>
+        <translation type="unfinished">Настройка информации</translation>
+    </message>
+    <message>
+        <location filename="dsuperpowerpage.cpp" line="52"/>
+        <source>Initialize</source>
+        <translation type="unfinished">инициализировать</translation>
+    </message>
+    <message>
+        <location filename="dsuperpowerpage.cpp" line="53"/>
+        <location filename="dsuperpowerpage.cpp" line="125"/>
+        <source>Yes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dsuperpowerpage.cpp" line="54"/>
+        <location filename="dsuperpowerpage.cpp" line="126"/>
+        <source>No</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dsuperpowerpage.cpp" line="56"/>
+        <source>System Type</source>
+        <translation type="unfinished">Тип системы</translation>
+    </message>
+    <message>
+        <location filename="dsuperpowerpage.cpp" line="58"/>
+        <source>Company</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dsuperpowerpage.cpp" line="59"/>
+        <source>Catalog No</source>
+        <translation type="unfinished">Каталожный №</translation>
+    </message>
+    <message>
+        <location filename="dsuperpowerpage.cpp" line="60"/>
+        <source>Serial No</source>
+        <translation type="unfinished">Серийный №</translation>
+    </message>
+    <message>
+        <location filename="dsuperpowerpage.cpp" line="61"/>
+        <source>Production Date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dsuperpowerpage.cpp" line="62"/>
+        <source>Installation Date</source>
+        <translation type="unfinished">Дата установки</translation>
+    </message>
+    <message>
+        <location filename="dsuperpowerpage.cpp" line="63"/>
+        <source>Software Version</source>
+        <translation type="unfinished">Версия ПО</translation>
+    </message>
+    <message>
+        <location filename="dsuperpowerpage.cpp" line="65"/>
+        <source>Delete</source>
+        <translation type="unfinished">Удалить</translation>
+    </message>
+    <message>
+        <location filename="dsuperpowerpage.cpp" line="66"/>
+        <source>Delete Data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dsuperpowerpage.cpp" line="68"/>
+        <source>Delete Cfg</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dsuperpowerpage.cpp" line="70"/>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dsuperpowerpage.cpp" line="235"/>
+        <location filename="dsuperpowerpage.cpp" line="237"/>
+        <location filename="dsuperpowerpage.cpp" line="247"/>
+        <source>All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dsuperpowerpage.cpp" line="235"/>
+        <location filename="dsuperpowerpage.cpp" line="237"/>
+        <location filename="dsuperpowerpage.cpp" line="389"/>
+        <source>Alarm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dsuperpowerpage.cpp" line="235"/>
+        <location filename="dsuperpowerpage.cpp" line="237"/>
+        <source>GetW</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dsuperpowerpage.cpp" line="235"/>
+        <location filename="dsuperpowerpage.cpp" line="237"/>
+        <source>PWater</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dsuperpowerpage.cpp" line="235"/>
+        <location filename="dsuperpowerpage.cpp" line="237"/>
+        <location filename="dsuperpowerpage.cpp" line="425"/>
+        <source>Log</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dsuperpowerpage.cpp" line="235"/>
+        <location filename="dsuperpowerpage.cpp" line="237"/>
+        <source>Consumables</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dsuperpowerpage.cpp" line="235"/>
+        <source>Sub-account</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dsuperpowerpage.cpp" line="247"/>
+        <source>Consumables Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dsuperpowerpage.cpp" line="247"/>
+        <source>Config Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dsuperpowerpage.cpp" line="247"/>
+        <source>Cailbration Info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dsuperpowerpage.cpp" line="376"/>
+        <source>Water</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dsuperpowerpage.cpp" line="376"/>
+        <source>Deleting table failed: Water</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dsuperpowerpage.cpp" line="389"/>
+        <source>Deleting table failed: Alarm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dsuperpowerpage.cpp" line="401"/>
+        <source>GetWater</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dsuperpowerpage.cpp" line="401"/>
+        <source>Deleting table failed: GetW</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dsuperpowerpage.cpp" line="413"/>
+        <source>Product Water</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dsuperpowerpage.cpp" line="413"/>
+        <source>Deleting table failed: pWater</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dsuperpowerpage.cpp" line="425"/>
+        <source>Deleting table failed: Log</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dsuperpowerpage.cpp" line="438"/>
+        <source>Consumable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dsuperpowerpage.cpp" line="438"/>
+        <source>Deleting table failed: Consumable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dsuperpowerpage.cpp" line="451"/>
+        <source>SubAccount</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dsuperpowerpage.cpp" line="451"/>
+        <source>Deleting table failed: SubAccount</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dsuperpowerpage.cpp" line="489"/>
+        <location filename="dsuperpowerpage.cpp" line="515"/>
+        <source>NOTIFY</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dsuperpowerpage.cpp" line="490"/>
+        <source>Do you want to restart the system immediately
+ to enter the initialization interface?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dsuperpowerpage.cpp" line="515"/>
+        <source>Change Device Type?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dsuperpowerpage.cpp" line="638"/>
+        <location filename="dsuperpowerpage.cpp" line="643"/>
+        <location filename="dsuperpowerpage.cpp" line="648"/>
+        <location filename="dsuperpowerpage.cpp" line="655"/>
+        <location filename="dsuperpowerpage.cpp" line="662"/>
+        <location filename="dsuperpowerpage.cpp" line="669"/>
+        <source>Warning</source>
+        <translation type="unfinished">Внимание</translation>
+    </message>
+    <message>
+        <location filename="dsuperpowerpage.cpp" line="638"/>
+        <location filename="dsuperpowerpage.cpp" line="655"/>
+        <source>Delete Consumables info file failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dsuperpowerpage.cpp" line="643"/>
+        <location filename="dsuperpowerpage.cpp" line="662"/>
+        <source>Delete Config info file failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dsuperpowerpage.cpp" line="648"/>
+        <location filename="dsuperpowerpage.cpp" line="669"/>
+        <source>Delete Caliration info file failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DSysMsgPage</name>
+    <message>
+        <location filename="dsysmsgpage.cpp" line="30"/>
+        <source>Information</source>
+        <translation type="unfinished">Информация</translation>
+    </message>
+    <message>
+        <location filename="dsysmsgpage.cpp" line="50"/>
+        <source>Catalog No.</source>
+        <translation type="unfinished">Каталожный №</translation>
+    </message>
+    <message>
+        <location filename="dsysmsgpage.cpp" line="51"/>
+        <source>Serial No.</source>
+        <translation type="unfinished">Серийный №</translation>
+    </message>
+    <message>
+        <location filename="dsysmsgpage.cpp" line="52"/>
+        <source>Production Date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dsysmsgpage.cpp" line="53"/>
+        <source>Installation Date</source>
+        <translation type="unfinished">Дата установки</translation>
+    </message>
+    <message>
+        <location filename="dsysmsgpage.cpp" line="54"/>
+        <source>Software Version</source>
+        <translation type="unfinished">Версия ПО</translation>
+    </message>
+    <message>
+        <location filename="dsysmsgpage.cpp" line="139"/>
+        <location filename="dsysmsgpage.cpp" line="142"/>
+        <location filename="dsysmsgpage.cpp" line="145"/>
+        <location filename="dsysmsgpage.cpp" line="148"/>
+        <location filename="dsysmsgpage.cpp" line="151"/>
+        <location filename="dsysmsgpage.cpp" line="154"/>
+        <location filename="dsysmsgpage.cpp" line="157"/>
+        <location filename="dsysmsgpage.cpp" line="160"/>
+        <location filename="dsysmsgpage.cpp" line="166"/>
+        <location filename="dsysmsgpage.cpp" line="178"/>
+        <location filename="dsysmsgpage.cpp" line="181"/>
+        <location filename="dsysmsgpage.cpp" line="184"/>
+        <location filename="dsysmsgpage.cpp" line="187"/>
+        <location filename="dsysmsgpage.cpp" line="190"/>
+        <location filename="dsysmsgpage.cpp" line="193"/>
+        <location filename="dsysmsgpage.cpp" line="196"/>
+        <location filename="dsysmsgpage.cpp" line="199"/>
+        <location filename="dsysmsgpage.cpp" line="205"/>
+        <source>%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DUserCfgPage</name>
+    <message>
+        <location filename="dusercfgpage.cpp" line="38"/>
+        <location filename="dusercfgpage.cpp" line="53"/>
+        <source>User Config</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dusercfgpage.cpp" line="46"/>
+        <source>Query</source>
+        <translation type="unfinished">Запрос</translation>
+    </message>
+    <message>
+        <location filename="dusercfgpage.cpp" line="47"/>
+        <source>Display All</source>
+        <translation type="unfinished">Показать все</translation>
+    </message>
+    <message>
+        <location filename="dusercfgpage.cpp" line="48"/>
+        <source>Submit</source>
+        <translation type="unfinished">Отправить</translation>
+    </message>
+    <message>
+        <location filename="dusercfgpage.cpp" line="49"/>
+        <source>Revert</source>
+        <translation type="unfinished">Восстановить </translation>
+    </message>
+    <message>
+        <location filename="dusercfgpage.cpp" line="50"/>
+        <source>Add</source>
+        <translation type="unfinished">Добавить</translation>
+    </message>
+    <message>
+        <location filename="dusercfgpage.cpp" line="51"/>
+        <location filename="dusercfgpage.cpp" line="242"/>
+        <source>Delete</source>
+        <translation type="unfinished">Удалить</translation>
+    </message>
+    <message>
+        <location filename="dusercfgpage.cpp" line="54"/>
+        <location filename="dusercfgpage.cpp" line="171"/>
+        <source>Name</source>
+        <translation type="unfinished">Имя</translation>
+    </message>
+    <message>
+        <location filename="dusercfgpage.cpp" line="170"/>
+        <source>ID</source>
+        <translation type="unfinished">ID</translation>
+    </message>
+    <message>
+        <location filename="dusercfgpage.cpp" line="172"/>
+        <source>Password</source>
+        <translation type="unfinished">Пароль</translation>
+    </message>
+    <message>
+        <location filename="dusercfgpage.cpp" line="173"/>
+        <source>Permission</source>
+        <translation type="unfinished">Разрешения</translation>
+    </message>
+    <message>
+        <location filename="dusercfgpage.cpp" line="216"/>
+        <source>tableModel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dusercfgpage.cpp" line="217"/>
+        <source>Database Error:%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dusercfgpage.cpp" line="242"/>
+        <source>Are you sure delete current row?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DUserManualPage</name>
+    <message>
+        <location filename="dusermanualpage.cpp" line="30"/>
+        <source>User Manual</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DWaterQualityPage</name>
+    <message>
+        <location filename="dwaterqualitypage.cpp" line="53"/>
+        <source>Water Quality</source>
+        <translation type="unfinished">Качество воды</translation>
+    </message>
+    <message>
+        <location filename="dwaterqualitypage.cpp" line="61"/>
+        <source>Tap Cond.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dwaterqualitypage.cpp" line="62"/>
+        <source>RO Feed Cond.</source>
+        <translation type="unfinished">Провод. пит. RO</translation>
+    </message>
+    <message>
+        <location filename="dwaterqualitypage.cpp" line="63"/>
+        <source>RO Product</source>
+        <translation type="unfinished">RO продукт</translation>
+    </message>
+    <message>
+        <location filename="dwaterqualitypage.cpp" line="64"/>
+        <source>RO Rejection</source>
+        <translation type="unfinished">RO режекция</translation>
+    </message>
+    <message>
+        <location filename="dwaterqualitypage.cpp" line="65"/>
+        <source>EDI Product</source>
+        <translation type="unfinished">EDI продукт</translation>
+    </message>
+    <message>
+        <location filename="dwaterqualitypage.cpp" line="66"/>
+        <source>RO Feed Pressure</source>
+        <translation type="unfinished">Давл. пит. RO</translation>
+    </message>
+    <message>
+        <location filename="dwaterqualitypage.cpp" line="67"/>
+        <source>RO Pressure</source>
+        <translation type="unfinished">RO давление</translation>
+    </message>
+    <message>
+        <location filename="dwaterqualitypage.cpp" line="68"/>
+        <source>RO Product Rate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dwaterqualitypage.cpp" line="69"/>
+        <source>RO Reject Rate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dwaterqualitypage.cpp" line="70"/>
+        <source>RO Feed Rate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dwaterqualitypage.cpp" line="71"/>
+        <source>Tap Rate</source>
+        <translation type="unfinished">Подача пит.</translation>
+    </message>
+    <message>
+        <location filename="dwaterqualitypage.cpp" line="72"/>
+        <source>EDI Product Rate</source>
+        <translation type="unfinished">EDI подача</translation>
+    </message>
+    <message>
+        <location filename="dwaterqualitypage.cpp" line="73"/>
+        <source>EDI Reject Rate</source>
+        <translation type="unfinished">EDI слив</translation>
+    </message>
+    <message>
+        <location filename="dwaterqualitypage.cpp" line="74"/>
+        <source>Source Tank Level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dwaterqualitypage.cpp" line="75"/>
+        <source>Pure Tank Level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dwaterqualitypage.cpp" line="76"/>
+        <source>HP Resis.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dwaterqualitypage.cpp" line="77"/>
+        <source>HP Disp. rate</source>
+        <translation type="unfinished">Подача HP</translation>
+    </message>
+    <message>
+        <location filename="dwaterqualitypage.cpp" line="78"/>
+        <source>UP IN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dwaterqualitypage.cpp" line="79"/>
+        <source>UP</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dwaterqualitypage.cpp" line="80"/>
+        <source>TOC</source>
+        <translation type="unfinished">ТОС</translation>
+    </message>
+    <message>
+        <location filename="dwaterqualitypage.cpp" line="81"/>
+        <source>UP Disp. rate</source>
+        <translation type="unfinished">Подача ультрачистой воды</translation>
+    </message>
+    <message>
+        <location filename="dwaterqualitypage.cpp" line="83"/>
+        <source>omg</source>
+        <translation type="unfinished">MΩ.cm</translation>
+    </message>
+    <message>
+        <location filename="dwaterqualitypage.cpp" line="84"/>
+        <source>us/cm</source>
+        <translation type="unfinished">μS/cm</translation>
+    </message>
+    <message>
+        <location filename="dwaterqualitypage.cpp" line="85"/>
+        <source>Celsius</source>
+        <translation type="unfinished">℃</translation>
+    </message>
+    <message>
+        <location filename="dwaterqualitypage.cpp" line="86"/>
+        <source>Fahrenheit</source>
+        <translation type="unfinished">F</translation>
+    </message>
+    <message>
+        <location filename="dwaterqualitypage.cpp" line="87"/>
+        <source>L/h</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dwaterqualitypage.cpp" line="88"/>
+        <source>L/min</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dwaterqualitypage.cpp" line="89"/>
+        <source>G/h</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dwaterqualitypage.cpp" line="90"/>
+        <source>G/min</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dwaterqualitypage.cpp" line="91"/>
+        <source>bar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dwaterqualitypage.cpp" line="92"/>
+        <source>mpa</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dwaterqualitypage.cpp" line="93"/>
+        <source>psi</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dwaterqualitypage.cpp" line="94"/>
+        <source>ppb</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dwaterqualitypage.cpp" line="95"/>
+        <source>%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dwaterqualitypage.cpp" line="96"/>
+        <source>L</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1478,2241 +3595,986 @@
 <context>
     <name>Ex_CheckConsumaleInstall</name>
     <message>
-        <location filename="ex_checkconsumaleinstall.cpp" line="156"/>
-        <location filename="ex_checkconsumaleinstall.cpp" line="167"/>
         <source>Warning</source>
-        <translation type="unfinished">Внимание</translation>
-    </message>
-    <message>
-        <location filename="ex_checkconsumaleinstall.cpp" line="156"/>
-        <source>write install date error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_checkconsumaleinstall.cpp" line="167"/>
-        <source>write vol data error</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Внимание</translation>
     </message>
 </context>
 <context>
     <name>Ex_ConsumableInstallDialog</name>
     <message>
-        <location filename="ex_consumableinstalldialog.cpp" line="19"/>
-        <location filename="ex_consumableinstalldialog.cpp" line="129"/>
         <source>Components Installation</source>
-        <translation>Установка компонентов</translation>
+        <translation type="obsolete">Установка компонентов</translation>
     </message>
     <message>
-        <location filename="ex_consumableinstalldialog.cpp" line="58"/>
-        <location filename="ex_consumableinstalldialog.cpp" line="135"/>
         <source>Install</source>
         <oldsource>install</oldsource>
-        <translation>помещать</translation>
+        <translation type="obsolete">помещать</translation>
     </message>
     <message>
-        <location filename="ex_consumableinstalldialog.cpp" line="131"/>
         <source>Cat No.:</source>
         <oldsource>CAT</oldsource>
-        <translation type="unfinished">Кат. №</translation>
+        <translation type="obsolete">Кат. №</translation>
     </message>
     <message>
-        <location filename="ex_consumableinstalldialog.cpp" line="132"/>
         <source>Lot No.:</source>
         <oldsource>LOT</oldsource>
-        <translation type="unfinished">Лот №</translation>
+        <translation type="obsolete">Лот №</translation>
     </message>
     <message>
-        <location filename="ex_consumableinstalldialog.cpp" line="133"/>
         <source>User Name:</source>
-        <translation type="unfinished">Имя пользователя</translation>
+        <translation type="obsolete">Имя пользователя</translation>
     </message>
     <message>
-        <location filename="ex_consumableinstalldialog.cpp" line="171"/>
-        <location filename="ex_consumableinstalldialog.cpp" line="178"/>
         <source>Warning</source>
         <oldsource>Waring</oldsource>
-        <translation type="unfinished">Внимание</translation>
+        <translation type="obsolete">Внимание</translation>
     </message>
     <message>
-        <location filename="ex_consumableinstalldialog.cpp" line="171"/>
-        <source>Please enter a valid username</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_consumableinstalldialog.cpp" line="178"/>
-        <source>Invalid username</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_consumableinstalldialog.cpp" line="209"/>
         <source>P Pack</source>
-        <translation>Картридж P Pack</translation>
+        <translation type="obsolete">Картридж P Pack</translation>
     </message>
     <message>
-        <location filename="ex_consumableinstalldialog.cpp" line="212"/>
         <source>AC Pack</source>
-        <translation>Картридж AC Pack </translation>
+        <translation type="obsolete">Картридж AC Pack </translation>
     </message>
     <message>
-        <location filename="ex_consumableinstalldialog.cpp" line="215"/>
         <source>U Pack</source>
-        <translation>Картридж U Pack</translation>
+        <translation type="obsolete">Картридж U Pack</translation>
     </message>
     <message>
-        <location filename="ex_consumableinstalldialog.cpp" line="218"/>
         <source>H Pack</source>
         <oldsource>H Pacl</oldsource>
-        <translation>Картридж H Pack</translation>
+        <translation type="obsolete">Картридж H Pack</translation>
     </message>
     <message>
-        <location filename="ex_consumableinstalldialog.cpp" line="221"/>
-        <source>Prefilter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_consumableinstalldialog.cpp" line="224"/>
-        <source>Clean Pack</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_consumableinstalldialog.cpp" line="227"/>
         <source>AT Pack</source>
-        <translation>Картридж AT Pack</translation>
+        <translation type="obsolete">Картридж AT Pack</translation>
     </message>
     <message>
-        <location filename="ex_consumableinstalldialog.cpp" line="230"/>
         <source>T Pack</source>
-        <translation>Картридж T Pack </translation>
+        <translation type="obsolete">Картридж T Pack </translation>
     </message>
     <message>
-        <location filename="ex_consumableinstalldialog.cpp" line="233"/>
         <source>RO Membrane</source>
-        <translation>RO мембрана</translation>
+        <translation type="obsolete">RO мембрана</translation>
     </message>
     <message>
-        <location filename="ex_consumableinstalldialog.cpp" line="236"/>
         <source>185 UV Lamp</source>
-        <translation>185 УФ лампа</translation>
+        <translation type="obsolete">185 УФ лампа</translation>
     </message>
     <message>
-        <location filename="ex_consumableinstalldialog.cpp" line="239"/>
         <source>254 UV Lamp</source>
-        <translation>254 УФ лампа</translation>
+        <translation type="obsolete">254 УФ лампа</translation>
     </message>
     <message>
-        <location filename="ex_consumableinstalldialog.cpp" line="242"/>
         <source>Tank UV Lamp</source>
-        <translation>Бак УФ лампа</translation>
+        <translation type="obsolete">Бак УФ лампа</translation>
     </message>
     <message>
-        <location filename="ex_consumableinstalldialog.cpp" line="245"/>
         <source>RO Pump</source>
-        <translation>RO насос</translation>
+        <translation type="obsolete">RO насос</translation>
     </message>
     <message>
-        <location filename="ex_consumableinstalldialog.cpp" line="248"/>
         <source>Recir. Pump</source>
-        <translation>Рецирк. насос</translation>
+        <translation type="obsolete">Рецирк. насос</translation>
     </message>
     <message>
-        <location filename="ex_consumableinstalldialog.cpp" line="251"/>
         <source>Final Fliter A</source>
-        <translation>Финишный фильтр A</translation>
+        <translation type="obsolete">Финишный фильтр A</translation>
     </message>
     <message>
-        <location filename="ex_consumableinstalldialog.cpp" line="256"/>
         <source>Final Fliter B</source>
-        <translation>Финишный фильтр В</translation>
+        <translation type="obsolete">Финишный фильтр В</translation>
     </message>
     <message>
-        <location filename="ex_consumableinstalldialog.cpp" line="260"/>
-        <source>Bio-filter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_consumableinstalldialog.cpp" line="264"/>
         <source>EDI Module</source>
-        <translation>EDI модуль</translation>
+        <translation type="obsolete">EDI модуль</translation>
     </message>
     <message>
-        <location filename="ex_consumableinstalldialog.cpp" line="267"/>
         <source>Tank Vent Filter</source>
-        <translation>Бак вент фильтр</translation>
+        <translation type="obsolete">Бак вент фильтр</translation>
     </message>
     <message>
-        <location filename="ex_consumableinstalldialog.cpp" line="270"/>
         <source>Loop Filter</source>
-        <translation type="unfinished">Петля фильтр</translation>
+        <translation type="obsolete">Петля фильтр</translation>
     </message>
     <message>
-        <location filename="ex_consumableinstalldialog.cpp" line="273"/>
         <source>Tube UV</source>
-        <translation type="unfinished">Петля УФ </translation>
+        <translation type="obsolete">Петля УФ </translation>
     </message>
 </context>
 <context>
     <name>Ex_FactoryTestPage</name>
     <message>
-        <location filename="ex_factorytestpage.cpp" line="35"/>
-        <source>Factory Test</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_factorytestpage.cpp" line="60"/>
-        <source>RFID</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_factorytestpage.cpp" line="62"/>
-        <source>Wifi Test</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_factorytestpage.cpp" line="63"/>
-        <location filename="ex_factorytestpage.cpp" line="297"/>
         <source>Maintenance</source>
-        <translation type="unfinished">Обслуживание</translation>
+        <translation type="obsolete">Обслуживание</translation>
     </message>
     <message>
-        <location filename="ex_factorytestpage.cpp" line="65"/>
-        <source>Cat No.:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_factorytestpage.cpp" line="66"/>
-        <source>Lot No.:</source>
-        <oldsource>Lott No.:</oldsource>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_factorytestpage.cpp" line="67"/>
-        <source>Installation Date:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_factorytestpage.cpp" line="68"/>
-        <source>Volume of Use:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_factorytestpage.cpp" line="69"/>
-        <source>Address:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_factorytestpage.cpp" line="71"/>
-        <source>Write</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_factorytestpage.cpp" line="72"/>
-        <source>Read</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_factorytestpage.cpp" line="73"/>
-        <location filename="ex_factorytestpage.cpp" line="100"/>
-        <source>Clear</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_factorytestpage.cpp" line="75"/>
-        <source>Flow Test</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_factorytestpage.cpp" line="77"/>
-        <source>S1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_factorytestpage.cpp" line="78"/>
-        <source>S2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_factorytestpage.cpp" line="79"/>
-        <source>S3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_factorytestpage.cpp" line="80"/>
-        <source>S4</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_factorytestpage.cpp" line="85"/>
-        <location filename="ex_factorytestpage.cpp" line="98"/>
-        <source>Start</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_factorytestpage.cpp" line="88"/>
-        <source>Pressure Test</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_factorytestpage.cpp" line="90"/>
-        <source>Work Pres.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_factorytestpage.cpp" line="91"/>
         <source>Pure Tank Level</source>
-        <translation type="unfinished">Ур. очищенной воды в баке</translation>
+        <translation type="obsolete">Ур. очищенной воды в баке</translation>
     </message>
     <message>
-        <location filename="ex_factorytestpage.cpp" line="92"/>
-        <source>Source Tank Level</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_factorytestpage.cpp" line="557"/>
-        <source>FAIL</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_factorytestpage.cpp" line="61"/>
-        <location filename="ex_factorytestpage.cpp" line="194"/>
-        <source>Flow &amp; Pressure</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_factorytestpage.cpp" line="102"/>
-        <location filename="ex_factorytestpage.cpp" line="291"/>
         <source>Zigbee Upd</source>
-        <translation type="unfinished">Zigbee обновл.</translation>
+        <translation type="obsolete">Zigbee обновл.</translation>
     </message>
     <message>
-        <location filename="ex_factorytestpage.cpp" line="211"/>
-        <source>20</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_factorytestpage.cpp" line="212"/>
-        <source>21</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_factorytestpage.cpp" line="213"/>
-        <source>22</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_factorytestpage.cpp" line="214"/>
-        <source>23</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_factorytestpage.cpp" line="215"/>
-        <source>24</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_factorytestpage.cpp" line="251"/>
-        <source>RFID TEST</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_factorytestpage.cpp" line="273"/>
-        <source>Update Wifi</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_factorytestpage.cpp" line="314"/>
-        <source>Fail: Flow</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_factorytestpage.cpp" line="314"/>
-        <location filename="ex_factorytestpage.cpp" line="331"/>
-        <source>Can not enter test Mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_factorytestpage.cpp" line="331"/>
-        <source>Fail: Pressure</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_factorytestpage.cpp" line="353"/>
-        <location filename="ex_factorytestpage.cpp" line="358"/>
-        <location filename="ex_factorytestpage.cpp" line="364"/>
-        <location filename="ex_factorytestpage.cpp" line="369"/>
         <source>Warning</source>
-        <translation type="unfinished">Внимание</translation>
-    </message>
-    <message>
-        <location filename="ex_factorytestpage.cpp" line="353"/>
-        <source>write cat error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_factorytestpage.cpp" line="358"/>
-        <source>write lot error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_factorytestpage.cpp" line="364"/>
-        <source>write install date error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_factorytestpage.cpp" line="369"/>
-        <source>write vol data error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_factorytestpage.cpp" line="372"/>
-        <source>Write finished</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Внимание</translation>
     </message>
 </context>
 <context>
     <name>Ex_FlowChartPage</name>
     <message>
-        <location filename="ex_flowchartpage.cpp" line="27"/>
-        <source>Flow Chart</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_flowchartpage.cpp" line="65"/>
         <source>Runing Status</source>
-        <translation type="unfinished">Статус процесса</translation>
+        <translation type="obsolete">Статус процесса</translation>
     </message>
     <message>
-        <location filename="ex_flowchartpage.cpp" line="147"/>
         <source>Tank Full</source>
-        <translation type="unfinished">Бак полный</translation>
+        <translation type="obsolete">Бак полный</translation>
     </message>
     <message>
-        <location filename="ex_flowchartpage.cpp" line="157"/>
-        <source>Fill Feed Tank</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_flowchartpage.cpp" line="163"/>
         <source>Flush</source>
-        <translation type="unfinished">очистка</translation>
+        <translation type="obsolete">очистка</translation>
     </message>
     <message>
-        <location filename="ex_flowchartpage.cpp" line="169"/>
         <source>Rinsing</source>
-        <translation type="unfinished">промывка</translation>
+        <translation type="obsolete">промывка</translation>
     </message>
     <message>
-        <location filename="ex_flowchartpage.cpp" line="174"/>
         <source>Filling</source>
-        <translation type="unfinished">Наполнение</translation>
+        <translation type="obsolete">Наполнение</translation>
     </message>
     <message>
-        <location filename="ex_flowchartpage.cpp" line="179"/>
-        <source>LPP</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_flowchartpage.cpp" line="182"/>
-        <source>KP</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_flowchartpage.cpp" line="189"/>
-        <location filename="ex_flowchartpage.cpp" line="190"/>
         <source>Standby</source>
-        <translation type="unfinished">Ожидание</translation>
+        <translation type="obsolete">Ожидание</translation>
     </message>
     <message>
-        <location filename="ex_flowchartpage.cpp" line="195"/>
-        <location filename="ex_flowchartpage.cpp" line="212"/>
         <source>Dispense</source>
-        <translation type="unfinished">Раздача</translation>
+        <translation type="obsolete">Раздача</translation>
     </message>
     <message>
-        <location filename="ex_flowchartpage.cpp" line="199"/>
-        <location filename="ex_flowchartpage.cpp" line="223"/>
         <source>Recirculation</source>
-        <translation type="unfinished">рециркуляция</translation>
+        <translation type="obsolete">рециркуляция</translation>
     </message>
     <message>
-        <location filename="ex_flowchartpage.cpp" line="203"/>
-        <location filename="ex_flowchartpage.cpp" line="216"/>
         <source>Ready</source>
-        <translation type="unfinished">Готов</translation>
+        <translation type="obsolete">Готов</translation>
     </message>
 </context>
 <context>
     <name>Ex_FlowChartWidget</name>
     <message>
-        <location filename="ex_flowchartwidget.cpp" line="2213"/>
         <source>omg</source>
-        <translation type="unfinished">MΩ.cm</translation>
+        <translation type="obsolete">MΩ.cm</translation>
     </message>
     <message>
-        <location filename="ex_flowchartwidget.cpp" line="682"/>
-        <location filename="ex_flowchartwidget.cpp" line="952"/>
-        <location filename="ex_flowchartwidget.cpp" line="1377"/>
-        <location filename="ex_flowchartwidget.cpp" line="1643"/>
-        <location filename="ex_flowchartwidget.cpp" line="1846"/>
-        <location filename="ex_flowchartwidget.cpp" line="2047"/>
-        <location filename="ex_flowchartwidget.cpp" line="2217"/>
         <source>us</source>
-        <translation type="unfinished">μS/cm</translation>
+        <translation type="obsolete">μS/cm</translation>
     </message>
     <message>
-        <location filename="ex_flowchartwidget.cpp" line="744"/>
-        <location filename="ex_flowchartwidget.cpp" line="1445"/>
-        <location filename="ex_flowchartwidget.cpp" line="1884"/>
-        <location filename="ex_flowchartwidget.cpp" line="2100"/>
         <source>TOC</source>
-        <translation type="unfinished">ТОС</translation>
+        <translation type="obsolete">ТОС</translation>
     </message>
     <message>
-        <location filename="ex_flowchartwidget.cpp" line="2222"/>
         <source>Celsius</source>
-        <translation type="unfinished">℃</translation>
+        <translation type="obsolete">℃</translation>
     </message>
     <message>
-        <location filename="ex_flowchartwidget.cpp" line="2226"/>
-        <source>F</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_flowchartwidget.cpp" line="748"/>
-        <location filename="ex_flowchartwidget.cpp" line="1009"/>
-        <location filename="ex_flowchartwidget.cpp" line="1448"/>
-        <location filename="ex_flowchartwidget.cpp" line="1690"/>
-        <location filename="ex_flowchartwidget.cpp" line="2104"/>
         <source>RO Rejection</source>
-        <translation type="unfinished">RO режекция</translation>
-    </message>
-</context>
-<context>
-    <name>Ex_HintDialog</name>
-    <message>
-        <location filename="ex_hintdialog.cpp" line="42"/>
-        <source>~Ex_HintDialog()</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">RO режекция</translation>
     </message>
 </context>
 <context>
     <name>Ex_HistoryPage</name>
     <message>
-        <location filename="ex_historypage.cpp" line="39"/>
         <source>History</source>
-        <translation type="unfinished">История</translation>
+        <translation type="obsolete">История</translation>
     </message>
     <message>
-        <location filename="ex_historypage.cpp" line="60"/>
         <source>Cancel</source>
-        <translation>Отмена</translation>
+        <translation type="obsolete">Отмена</translation>
     </message>
     <message>
-        <location filename="ex_historypage.cpp" line="61"/>
         <source>OK</source>
-        <translation>ОК </translation>
+        <translation type="obsolete">ОК </translation>
     </message>
     <message>
-        <location filename="ex_historypage.cpp" line="63"/>
         <source>Send</source>
-        <translation>Отправить</translation>
+        <translation type="obsolete">Отправить</translation>
     </message>
     <message>
-        <location filename="ex_historypage.cpp" line="64"/>
         <source>Search</source>
-        <translation>Поиск</translation>
+        <translation type="obsolete">Поиск</translation>
     </message>
     <message>
-        <location filename="ex_historypage.cpp" line="65"/>
         <source>Page Up</source>
-        <translation>Вверх</translation>
+        <translation type="obsolete">Вверх</translation>
     </message>
     <message>
-        <location filename="ex_historypage.cpp" line="66"/>
         <source>Page Down</source>
-        <translation>Вниз</translation>
+        <translation type="obsolete">Вниз</translation>
     </message>
     <message>
-        <location filename="ex_historypage.cpp" line="68"/>
         <source>Start Date</source>
-        <translation>Дата начала </translation>
+        <translation type="obsolete">Дата начала </translation>
     </message>
     <message>
-        <location filename="ex_historypage.cpp" line="69"/>
         <source>End Date</source>
-        <translation>Дата окончания</translation>
+        <translation type="obsolete">Дата окончания</translation>
     </message>
     <message>
-        <location filename="ex_historypage.cpp" line="71"/>
-        <location filename="ex_historypage.cpp" line="125"/>
-        <source>Alarm</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_historypage.cpp" line="72"/>
-        <location filename="ex_historypage.cpp" line="125"/>
-        <source>GetW</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_historypage.cpp" line="73"/>
-        <location filename="ex_historypage.cpp" line="125"/>
-        <source>PWater</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_historypage.cpp" line="74"/>
-        <location filename="ex_historypage.cpp" line="125"/>
-        <source>Log</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_historypage.cpp" line="409"/>
-        <location filename="ex_historypage.cpp" line="415"/>
-        <location filename="ex_historypage.cpp" line="421"/>
-        <location filename="ex_historypage.cpp" line="430"/>
-        <location filename="ex_historypage.cpp" line="442"/>
         <source>ID</source>
-        <translation type="unfinished">ID</translation>
+        <translation type="obsolete">ID</translation>
     </message>
     <message>
-        <location filename="ex_historypage.cpp" line="410"/>
-        <source>Ecoid</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_historypage.cpp" line="411"/>
-        <location filename="ex_historypage.cpp" line="424"/>
-        <source>Quality</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_historypage.cpp" line="412"/>
-        <location filename="ex_historypage.cpp" line="418"/>
-        <location filename="ex_historypage.cpp" line="427"/>
-        <location filename="ex_historypage.cpp" line="439"/>
-        <location filename="ex_historypage.cpp" line="446"/>
-        <source>Time</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_historypage.cpp" line="416"/>
-        <source>type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_historypage.cpp" line="417"/>
-        <source>Status</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_historypage.cpp" line="422"/>
-        <source>WName</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_historypage.cpp" line="423"/>
-        <source>Quantity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_historypage.cpp" line="425"/>
         <source>TOC</source>
-        <translation type="unfinished">ТОС</translation>
+        <translation type="obsolete">ТОС</translation>
     </message>
     <message>
-        <location filename="ex_historypage.cpp" line="426"/>
-        <source>Tmp</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_historypage.cpp" line="431"/>
-        <source>Duration</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_historypage.cpp" line="432"/>
-        <source>Ecoroin</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_historypage.cpp" line="433"/>
-        <source>Tmproin</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_historypage.cpp" line="434"/>
-        <source>Ecorores</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_historypage.cpp" line="435"/>
-        <source>eEcoropw</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_historypage.cpp" line="436"/>
-        <source>Tmpropw</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_historypage.cpp" line="437"/>
-        <source>Ecoedi</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_historypage.cpp" line="438"/>
-        <source>Tmpedi</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_historypage.cpp" line="443"/>
         <source>Name</source>
-        <translation type="unfinished">Имя</translation>
-    </message>
-    <message>
-        <location filename="ex_historypage.cpp" line="444"/>
-        <source>Action</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_historypage.cpp" line="445"/>
-        <source>Info</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Имя</translation>
     </message>
 </context>
 <context>
     <name>Ex_InitConsumableInsPage</name>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="28"/>
         <source>Next</source>
-        <translation type="unfinished">Далее</translation>
+        <translation type="obsolete">Далее</translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="29"/>
         <source>Back</source>
-        <translation type="unfinished">Назад</translation>
+        <translation type="obsolete">Назад</translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="31"/>
-        <location filename="ex_initconsumableinspage.cpp" line="37"/>
-        <source>Note:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_initconsumableinspage.cpp" line="32"/>
-        <source>Install the AC Pack after all other components with RFID chip are installed.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_initconsumableinspage.cpp" line="33"/>
-        <location filename="ex_initconsumableinspage.cpp" line="37"/>
-        <source>Scan the final filter and install it to the dispenser after finishing system setting-up.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_initconsumableinspage.cpp" line="36"/>
-        <source>Follow the steps below to install and scan the chip for the consumables.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_initconsumableinspage.cpp" line="37"/>
-        <source>Step 1: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_initconsumableinspage.cpp" line="37"/>
-        <source>Scan the consumables on the RFID tags position</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_initconsumableinspage.cpp" line="38"/>
-        <source>Step 2: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_initconsumableinspage.cpp" line="38"/>
-        <source>Install cartridges</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_initconsumableinspage.cpp" line="274"/>
         <source>U Pack</source>
-        <translation type="unfinished">Картридж U Pack</translation>
+        <translation type="obsolete">Картридж U Pack</translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="288"/>
         <source>H Pack</source>
-        <translation type="unfinished">Картридж H Pack</translation>
+        <translation type="obsolete">Картридж H Pack</translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="303"/>
-        <location filename="ex_initconsumableinspage.cpp" line="313"/>
         <source>P Pack</source>
-        <translation type="unfinished">Картридж P Pack</translation>
+        <translation type="obsolete">Картридж P Pack</translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="328"/>
         <source>AC Pack</source>
-        <translation type="unfinished">Картридж AC Pack </translation>
+        <translation type="obsolete">Картридж AC Pack </translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="341"/>
         <source>AT Pack</source>
-        <translation type="unfinished">Картридж AT Pack</translation>
+        <translation type="obsolete">Картридж AT Pack</translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="368"/>
         <source>RO Membrane</source>
-        <translation type="unfinished">RO мембрана</translation>
+        <translation type="obsolete">RO мембрана</translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="386"/>
         <source>Final Fliter B</source>
-        <translation type="unfinished">Финишный фильтр В</translation>
+        <translation type="obsolete">Финишный фильтр В</translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="390"/>
-        <source>Bio-filter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_initconsumableinspage.cpp" line="412"/>
         <source>Final Fliter A</source>
-        <translation type="unfinished">Финишный фильтр A</translation>
+        <translation type="obsolete">Финишный фильтр A</translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="429"/>
         <source>254 UV Lamp</source>
-        <translation type="unfinished">254 УФ лампа</translation>
+        <translation type="obsolete">254 УФ лампа</translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="448"/>
         <source>185 UV Lamp</source>
-        <translation type="unfinished">185 УФ лампа</translation>
+        <translation type="obsolete">185 УФ лампа</translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="465"/>
         <source>Tank UV Lamp</source>
-        <translation type="unfinished">Бак УФ лампа</translation>
+        <translation type="obsolete">Бак УФ лампа</translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="484"/>
         <source>Tank Vent Filter</source>
-        <translation type="unfinished">Бак вент фильтр</translation>
+        <translation type="obsolete">Бак вент фильтр</translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="502"/>
         <source>Tube UV</source>
-        <translation type="unfinished">Петля УФ </translation>
+        <translation type="obsolete">Петля УФ </translation>
     </message>
     <message>
-        <location filename="ex_initconsumableinspage.cpp" line="522"/>
         <source>Loop Filter</source>
-        <translation type="unfinished">Петля фильтр</translation>
-    </message>
-    <message>
-        <location filename="ex_initconsumableinspage.cpp" line="542"/>
-        <source>Loop DI</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Петля фильтр</translation>
     </message>
 </context>
 <context>
     <name>Ex_Init_HandleCfgpage</name>
     <message>
-        <location filename="ex_init_handlecfgpage.cpp" line="42"/>
         <source>Connecting Device</source>
-        <translation type="unfinished">Подключенное устройство</translation>
+        <translation type="obsolete">Подключенное устройство</translation>
     </message>
     <message>
-        <location filename="ex_init_handlecfgpage.cpp" line="50"/>
         <source>SN</source>
-        <translation>С/Н</translation>
+        <translation type="obsolete">С/Н</translation>
     </message>
     <message>
-        <location filename="ex_init_handlecfgpage.cpp" line="51"/>
         <source>Address</source>
-        <translation>Адрес</translation>
+        <translation type="obsolete">Адрес</translation>
     </message>
     <message>
-        <location filename="ex_init_handlecfgpage.cpp" line="52"/>
         <source>Default</source>
-        <translation>По умолчанию</translation>
+        <translation type="obsolete">По умолчанию</translation>
     </message>
     <message>
-        <location filename="ex_init_handlecfgpage.cpp" line="53"/>
         <source>Type</source>
-        <translation>Тип</translation>
+        <translation type="obsolete">Тип</translation>
     </message>
     <message>
-        <location filename="ex_init_handlecfgpage.cpp" line="54"/>
         <source>Operate</source>
-        <translation>Управлять</translation>
+        <translation type="obsolete">Управлять</translation>
     </message>
     <message>
-        <location filename="ex_init_handlecfgpage.cpp" line="56"/>
         <source>Finished</source>
-        <translation>Готово</translation>
+        <translation type="obsolete">Готово</translation>
     </message>
     <message>
-        <location filename="ex_init_handlecfgpage.cpp" line="57"/>
         <source>Back</source>
-        <translation>Назад</translation>
+        <translation type="obsolete">Назад</translation>
     </message>
     <message>
-        <location filename="ex_init_handlecfgpage.cpp" line="59"/>
         <source>Query</source>
-        <translation>Запрос</translation>
+        <translation type="obsolete">Запрос</translation>
     </message>
     <message>
-        <location filename="ex_init_handlecfgpage.cpp" line="60"/>
         <source>Config.</source>
-        <translation>Настройки</translation>
+        <translation type="obsolete">Настройки</translation>
     </message>
     <message>
-        <location filename="ex_init_handlecfgpage.cpp" line="61"/>
         <source>Reset</source>
-        <translation>Сбросить</translation>
-    </message>
-    <message>
-        <location filename="ex_init_handlecfgpage.cpp" line="99"/>
-        <source>Successfully saved</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Сбросить</translation>
     </message>
     <message>
         <source>Clear</source>
         <translation type="obsolete">Очистись</translation>
     </message>
     <message>
-        <location filename="ex_init_handlecfgpage.cpp" line="63"/>
         <source>Save</source>
-        <translation>Сохранить</translation>
+        <translation type="obsolete">Сохранить</translation>
     </message>
     <message>
-        <location filename="ex_init_handlecfgpage.cpp" line="65"/>
         <source>Dispenser</source>
-        <translation>Диспенсер</translation>
+        <translation type="obsolete">Диспенсер</translation>
     </message>
     <message>
-        <location filename="ex_init_handlecfgpage.cpp" line="176"/>
-        <source>CAN</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_init_handlecfgpage.cpp" line="177"/>
         <source>Zigbee</source>
-        <translation type="unfinished">Wireless</translation>
+        <translation type="obsolete">Wireless</translation>
     </message>
     <message>
-        <location filename="ex_init_handlecfgpage.cpp" line="226"/>
         <source>HANDLER</source>
-        <translation type="unfinished">Диспенсер</translation>
+        <translation type="obsolete">Диспенсер</translation>
     </message>
     <message>
-        <location filename="ex_init_handlecfgpage.cpp" line="312"/>
-        <source>Be sure to save the handsets&apos; configuration when collected all responses!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_init_handlecfgpage.cpp" line="648"/>
         <source>About</source>
-        <translation type="unfinished">Подробнее</translation>
-    </message>
-    <message>
-        <location filename="ex_init_handlecfgpage.cpp" line="648"/>
-        <source>One and only one default handler per category shoud be configured !</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Подробнее</translation>
     </message>
 </context>
 <context>
     <name>Ex_Init_Languagepage</name>
     <message>
-        <location filename="ex_init_languagepage.cpp" line="39"/>
         <source>Language</source>
-        <translation type="unfinished">Язык</translation>
+        <translation type="obsolete">Язык</translation>
     </message>
     <message>
-        <location filename="ex_init_languagepage.cpp" line="47"/>
-        <location filename="ex_init_languagepage.cpp" line="100"/>
         <source>English</source>
-        <translation>English</translation>
+        <translation type="obsolete">English</translation>
     </message>
     <message>
-        <location filename="ex_init_languagepage.cpp" line="48"/>
-        <location filename="ex_init_languagepage.cpp" line="101"/>
         <source>Chinese</source>
-        <translation>中文</translation>
+        <translation type="obsolete">中文</translation>
     </message>
     <message>
-        <location filename="ex_init_languagepage.cpp" line="49"/>
-        <location filename="ex_init_languagepage.cpp" line="102"/>
         <source>Spanish</source>
-        <translation>Español</translation>
+        <translation type="obsolete">Español</translation>
     </message>
     <message>
-        <location filename="ex_init_languagepage.cpp" line="50"/>
-        <location filename="ex_init_languagepage.cpp" line="103"/>
         <source>French</source>
-        <translation>Français</translation>
+        <translation type="obsolete">Français</translation>
     </message>
     <message>
-        <location filename="ex_init_languagepage.cpp" line="51"/>
-        <location filename="ex_init_languagepage.cpp" line="104"/>
         <source>German</source>
-        <translation>Deutsch</translation>
+        <translation type="obsolete">Deutsch</translation>
     </message>
     <message>
-        <location filename="ex_init_languagepage.cpp" line="52"/>
-        <location filename="ex_init_languagepage.cpp" line="105"/>
         <source>Italian</source>
-        <translation>Italiano</translation>
+        <translation type="obsolete">Italiano</translation>
     </message>
     <message>
-        <location filename="ex_init_languagepage.cpp" line="53"/>
-        <location filename="ex_init_languagepage.cpp" line="106"/>
         <source>Korean</source>
-        <translation>한국어</translation>
+        <translation type="obsolete">한국어</translation>
     </message>
     <message>
-        <location filename="ex_init_languagepage.cpp" line="54"/>
-        <location filename="ex_init_languagepage.cpp" line="107"/>
         <source>Russian</source>
-        <translation>русский</translation>
+        <translation type="obsolete">русский</translation>
     </message>
     <message>
-        <location filename="ex_init_languagepage.cpp" line="55"/>
-        <location filename="ex_init_languagepage.cpp" line="108"/>
         <source>Portugese</source>
-        <translation type="unfinished">Português</translation>
+        <translation type="obsolete">Português</translation>
     </message>
     <message>
-        <location filename="ex_init_languagepage.cpp" line="58"/>
         <source>Next</source>
-        <translation>Далее</translation>
+        <translation type="obsolete">Далее</translation>
     </message>
 </context>
 <context>
     <name>Ex_Init_Networkpage</name>
     <message>
-        <location filename="ex_init_networkpage.cpp" line="30"/>
         <source>Connectivity</source>
-        <translation type="unfinished">Подключения</translation>
+        <translation type="obsolete">Подключения</translation>
     </message>
     <message>
-        <location filename="ex_init_networkpage.cpp" line="38"/>
-        <source>CAN</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_init_networkpage.cpp" line="39"/>
         <source>Zigbee</source>
-        <translation type="unfinished">Wireless</translation>
+        <translation type="obsolete">Wireless</translation>
     </message>
     <message>
-        <location filename="ex_init_networkpage.cpp" line="40"/>
-        <source>WIFI</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_init_networkpage.cpp" line="46"/>
         <source>Save</source>
-        <translation type="unfinished">Сохранить</translation>
+        <translation type="obsolete">Сохранить</translation>
     </message>
     <message>
-        <location filename="ex_init_networkpage.cpp" line="47"/>
         <source>Back</source>
-        <translation type="unfinished">Назад</translation>
+        <translation type="obsolete">Назад</translation>
     </message>
     <message>
-        <location filename="ex_init_networkpage.cpp" line="48"/>
         <source>Next</source>
-        <translation type="unfinished">Далее</translation>
+        <translation type="obsolete">Далее</translation>
     </message>
     <message>
-        <location filename="ex_init_networkpage.cpp" line="50"/>
-        <source>SSID:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_init_networkpage.cpp" line="51"/>
         <source>Add</source>
-        <translation type="unfinished">Добавить</translation>
-    </message>
-    <message>
-        <location filename="ex_init_networkpage.cpp" line="52"/>
-        <source>Refresh</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_init_networkpage.cpp" line="53"/>
-        <source>Add network</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Добавить</translation>
     </message>
 </context>
 <context>
     <name>Ex_Init_Syscfgpage</name>
     <message>
-        <location filename="ex_init_syscfgpage.cpp" line="30"/>
-        <source>System Config</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_init_syscfgpage.cpp" line="38"/>
         <source>Configuration</source>
-        <translation>Настройки</translation>
+        <translation type="obsolete">Настройки</translation>
     </message>
     <message>
-        <location filename="ex_init_syscfgpage.cpp" line="40"/>
         <source>Leak Protector</source>
-        <translation>Защита от утечки</translation>
+        <translation type="obsolete">Защита от утечки</translation>
     </message>
     <message>
-        <location filename="ex_init_syscfgpage.cpp" line="41"/>
         <source>Tank UV</source>
-        <translation>Бак УФ лампа</translation>
+        <translation type="obsolete">Бак УФ лампа</translation>
     </message>
     <message>
-        <location filename="ex_init_syscfgpage.cpp" line="44"/>
         <source>Next</source>
-        <translation>Далее</translation>
+        <translation type="obsolete">Далее</translation>
     </message>
     <message>
-        <location filename="ex_init_syscfgpage.cpp" line="45"/>
         <source>Back</source>
-        <translation>Назад</translation>
+        <translation type="obsolete">Назад</translation>
     </message>
 </context>
 <context>
     <name>Ex_Init_Tankcfgpage</name>
     <message>
-        <location filename="ex_init_tankcfgpage.cpp" line="43"/>
-        <source>System Config</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_init_tankcfgpage.cpp" line="51"/>
         <source>Tank Set</source>
-        <translation>Объем бака</translation>
+        <translation type="obsolete">Объем бака</translation>
     </message>
     <message>
-        <location filename="ex_init_tankcfgpage.cpp" line="55"/>
         <source>Pure Water Tank</source>
-        <translation>Бак чистой воды</translation>
+        <translation type="obsolete">Бак чистой воды</translation>
     </message>
     <message>
-        <location filename="ex_init_tankcfgpage.cpp" line="57"/>
-        <location filename="ex_init_tankcfgpage.cpp" line="62"/>
-        <location filename="ex_init_tankcfgpage.cpp" line="132"/>
-        <location filename="ex_init_tankcfgpage.cpp" line="207"/>
-        <source>UDF</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_init_tankcfgpage.cpp" line="58"/>
-        <location filename="ex_init_tankcfgpage.cpp" line="63"/>
-        <location filename="ex_init_tankcfgpage.cpp" line="134"/>
-        <location filename="ex_init_tankcfgpage.cpp" line="208"/>
-        <source>NO</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_init_tankcfgpage.cpp" line="60"/>
         <source>Feed Tank</source>
-        <translation>Бак (пит. вода)</translation>
+        <translation type="obsolete">Бак (пит. вода)</translation>
     </message>
     <message>
-        <location filename="ex_init_tankcfgpage.cpp" line="65"/>
         <source>Next</source>
-        <translation>Далее</translation>
+        <translation type="obsolete">Далее</translation>
     </message>
     <message>
-        <location filename="ex_init_tankcfgpage.cpp" line="66"/>
         <source>Back</source>
-        <translation>Назад</translation>
-    </message>
-    <message>
-        <location filename="ex_init_tankcfgpage.cpp" line="68"/>
-        <location filename="ex_init_tankcfgpage.cpp" line="70"/>
-        <location filename="ex_init_tankcfgpage.cpp" line="152"/>
-        <location filename="ex_init_tankcfgpage.cpp" line="225"/>
-        <source>Height(M)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_init_tankcfgpage.cpp" line="69"/>
-        <location filename="ex_init_tankcfgpage.cpp" line="71"/>
-        <location filename="ex_init_tankcfgpage.cpp" line="166"/>
-        <location filename="ex_init_tankcfgpage.cpp" line="239"/>
-        <source>Volume(L)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_init_tankcfgpage.cpp" line="127"/>
-        <location filename="ex_init_tankcfgpage.cpp" line="202"/>
-        <source>30</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_init_tankcfgpage.cpp" line="128"/>
-        <location filename="ex_init_tankcfgpage.cpp" line="203"/>
-        <source>60</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_init_tankcfgpage.cpp" line="129"/>
-        <location filename="ex_init_tankcfgpage.cpp" line="204"/>
-        <source>100</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_init_tankcfgpage.cpp" line="130"/>
-        <location filename="ex_init_tankcfgpage.cpp" line="205"/>
-        <source>200</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_init_tankcfgpage.cpp" line="131"/>
-        <location filename="ex_init_tankcfgpage.cpp" line="206"/>
-        <source>350</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Назад</translation>
     </message>
 </context>
 <context>
     <name>Ex_Init_TimePage</name>
     <message>
-        <location filename="ex_init_timepage.cpp" line="41"/>
-        <location filename="ex_init_timepage.cpp" line="59"/>
         <source>Time &amp; Date</source>
-        <translation>Дата и Время</translation>
+        <translation type="obsolete">Дата и Время</translation>
     </message>
     <message>
-        <location filename="ex_init_timepage.cpp" line="51"/>
         <source>Select Date</source>
-        <translation>Выберите дату</translation>
+        <translation type="obsolete">Выберите дату</translation>
     </message>
     <message>
-        <location filename="ex_init_timepage.cpp" line="52"/>
         <source>Select Time</source>
-        <translation>Выберите время</translation>
+        <translation type="obsolete">Выберите время</translation>
     </message>
     <message>
-        <location filename="ex_init_timepage.cpp" line="60"/>
         <source>OK</source>
-        <translation>ОК </translation>
+        <translation type="obsolete">ОК </translation>
     </message>
     <message>
-        <location filename="ex_init_timepage.cpp" line="61"/>
         <source>Cancel</source>
-        <translation>Отмена</translation>
+        <translation type="obsolete">Отмена</translation>
     </message>
     <message>
-        <location filename="ex_init_timepage.cpp" line="63"/>
         <source>Next</source>
-        <translation>Далее</translation>
+        <translation type="obsolete">Далее</translation>
     </message>
     <message>
-        <location filename="ex_init_timepage.cpp" line="64"/>
         <source>Back</source>
-        <translation>Назад</translation>
+        <translation type="obsolete">Назад</translation>
     </message>
 </context>
 <context>
     <name>Ex_Languagepage</name>
     <message>
-        <location filename="ex_languagepage.cpp" line="43"/>
         <source>Language</source>
-        <translation type="unfinished">Язык</translation>
+        <translation type="obsolete">Язык</translation>
     </message>
     <message>
-        <location filename="ex_languagepage.cpp" line="51"/>
-        <location filename="ex_languagepage.cpp" line="133"/>
         <source>English</source>
-        <translation type="unfinished">English</translation>
+        <translation type="obsolete">English</translation>
     </message>
     <message>
-        <location filename="ex_languagepage.cpp" line="52"/>
-        <location filename="ex_languagepage.cpp" line="134"/>
         <source>Chinese</source>
-        <translation type="unfinished">中文</translation>
+        <translation type="obsolete">中文</translation>
     </message>
     <message>
-        <location filename="ex_languagepage.cpp" line="53"/>
-        <location filename="ex_languagepage.cpp" line="135"/>
         <source>Spanish</source>
-        <translation type="unfinished">Español</translation>
+        <translation type="obsolete">Español</translation>
     </message>
     <message>
-        <location filename="ex_languagepage.cpp" line="54"/>
-        <location filename="ex_languagepage.cpp" line="136"/>
         <source>French</source>
-        <translation type="unfinished">Français</translation>
+        <translation type="obsolete">Français</translation>
     </message>
     <message>
-        <location filename="ex_languagepage.cpp" line="55"/>
-        <location filename="ex_languagepage.cpp" line="137"/>
         <source>German</source>
-        <translation type="unfinished">Deutsch</translation>
+        <translation type="obsolete">Deutsch</translation>
     </message>
     <message>
-        <location filename="ex_languagepage.cpp" line="56"/>
-        <location filename="ex_languagepage.cpp" line="138"/>
         <source>Italian</source>
-        <translation type="unfinished">Italiano</translation>
+        <translation type="obsolete">Italiano</translation>
     </message>
     <message>
-        <location filename="ex_languagepage.cpp" line="57"/>
-        <location filename="ex_languagepage.cpp" line="139"/>
         <source>Korean</source>
-        <translation type="unfinished">한국어</translation>
+        <translation type="obsolete">한국어</translation>
     </message>
     <message>
-        <location filename="ex_languagepage.cpp" line="58"/>
-        <location filename="ex_languagepage.cpp" line="140"/>
         <source>Russian</source>
-        <translation>русский</translation>
+        <translation type="obsolete">русский</translation>
     </message>
     <message>
-        <location filename="ex_languagepage.cpp" line="59"/>
-        <location filename="ex_languagepage.cpp" line="141"/>
         <source>Portugese</source>
-        <translation type="unfinished">Português</translation>
+        <translation type="obsolete">Português</translation>
     </message>
     <message>
-        <location filename="ex_languagepage.cpp" line="61"/>
         <source>Save</source>
-        <translation>Сохранить</translation>
+        <translation type="obsolete">Сохранить</translation>
     </message>
 </context>
 <context>
     <name>Ex_ManagerSetPage</name>
     <message>
-        <location filename="ex_managersetpage.cpp" line="36"/>
-        <source>Manager Config</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_managersetpage.cpp" line="132"/>
         <source>Flowrate</source>
         <oldsource>Flow Rate</oldsource>
-        <translation>Расход</translation>
+        <translation type="obsolete">Расход</translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="46"/>
-        <location filename="ex_managersetpage.cpp" line="897"/>
         <source>Time &amp; Date</source>
         <oldsource>Time</oldsource>
-        <translation>Дата и Время</translation>
+        <translation type="obsolete">Дата и Время</translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="971"/>
         <source>Language</source>
-        <translation>Язык</translation>
+        <translation type="obsolete">Язык</translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="48"/>
-        <location filename="ex_managersetpage.cpp" line="1043"/>
         <source>Audio</source>
-        <translation>Аудио</translation>
+        <translation type="obsolete">Аудио</translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="1151"/>
         <source>Units</source>
-        <translation>Единицы</translation>
+        <translation type="obsolete">Единицы</translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="49"/>
-        <location filename="ex_managersetpage.cpp" line="1243"/>
         <source>LCD</source>
-        <translation>Экран</translation>
+        <translation type="obsolete">Экран</translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="76"/>
-        <location filename="ex_managersetpage.cpp" line="87"/>
-        <location filename="ex_managersetpage.cpp" line="100"/>
-        <location filename="ex_managersetpage.cpp" line="110"/>
-        <location filename="ex_managersetpage.cpp" line="125"/>
-        <location filename="ex_managersetpage.cpp" line="162"/>
         <source>Save</source>
-        <translation>Сохранить</translation>
+        <translation type="obsolete">Сохранить</translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="60"/>
         <source>Select Date</source>
-        <translation>Выберите дату</translation>
+        <translation type="obsolete">Выберите дату</translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="50"/>
-        <location filename="ex_managersetpage.cpp" line="1308"/>
-        <source>Additional Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_managersetpage.cpp" line="61"/>
         <source>Select Time</source>
-        <translation>Выберите время</translation>
+        <translation type="obsolete">Выберите время</translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="69"/>
         <source>Date &amp; Time</source>
-        <translation>Дата и Время</translation>
+        <translation type="obsolete">Дата и Время</translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="71"/>
         <source>Cancel</source>
-        <translation>Отмена</translation>
+        <translation type="obsolete">Отмена</translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="72"/>
         <source>OK</source>
-        <translation>ОК </translation>
+        <translation type="obsolete">ОК </translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="116"/>
-        <location filename="ex_managersetpage.cpp" line="953"/>
         <source>English</source>
-        <translation>English</translation>
+        <translation type="obsolete">English</translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="117"/>
-        <location filename="ex_managersetpage.cpp" line="954"/>
         <source>Chinese</source>
-        <translation>中文</translation>
+        <translation type="obsolete">中文</translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="118"/>
-        <location filename="ex_managersetpage.cpp" line="955"/>
         <source>Spanish</source>
-        <translation>Español</translation>
+        <translation type="obsolete">Español</translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="119"/>
-        <location filename="ex_managersetpage.cpp" line="956"/>
         <source>French</source>
-        <translation>Français</translation>
+        <translation type="obsolete">Français</translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="120"/>
-        <location filename="ex_managersetpage.cpp" line="957"/>
         <source>German</source>
-        <translation>Deutsch</translation>
+        <translation type="obsolete">Deutsch</translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="121"/>
-        <location filename="ex_managersetpage.cpp" line="958"/>
         <source>Italian</source>
-        <translation>Italiano</translation>
+        <translation type="obsolete">Italiano</translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="122"/>
-        <location filename="ex_managersetpage.cpp" line="959"/>
         <source>Korean</source>
-        <translation>한국어</translation>
+        <translation type="obsolete">한국어</translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="123"/>
-        <location filename="ex_managersetpage.cpp" line="960"/>
         <source>Russian</source>
-        <translation>русский</translation>
+        <translation type="obsolete">русский</translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="79"/>
         <source>Touch-tone</source>
-        <translation>Звук при нажатии</translation>
+        <translation type="obsolete">Звук при нажатии</translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="47"/>
-        <location filename="ex_managersetpage.cpp" line="935"/>
         <source>Calibration</source>
-        <translation type="unfinished">Калибровка</translation>
+        <translation type="obsolete">Калибровка</translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="75"/>
         <source>Disp. Rate</source>
-        <translation type="unfinished">Подача ультрачистой воды</translation>
+        <translation type="obsolete">Подача ультрачистой воды</translation>
     </message>
     <message>
         <source>Audio Alerts</source>
         <translation type="obsolete">Звук оповещения</translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="81"/>
         <source>Audio Alarms</source>
-        <translation>Звук предупреждения</translation>
+        <translation type="obsolete">Звук предупреждения</translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="128"/>
         <source>Resistivity/Conductivity</source>
-        <translation>Сопротивление/ проводимость</translation>
+        <translation type="obsolete">Сопротивление/ проводимость</translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="129"/>
         <source>Temperature</source>
-        <translation>Температура </translation>
+        <translation type="obsolete">Температура </translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="130"/>
         <source>Pressure</source>
-        <translation>Давление</translation>
+        <translation type="obsolete">Давление</translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="131"/>
         <source>Tank Level</source>
-        <translation>Уровень воды в баке</translation>
+        <translation type="obsolete">Уровень воды в баке</translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="134"/>
         <source>omg</source>
-        <translation>MΩ.cm</translation>
+        <translation type="obsolete">MΩ.cm</translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="135"/>
         <source>us</source>
-        <translation>μS/cm</translation>
+        <translation type="obsolete">μS/cm</translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="137"/>
         <source>celsius</source>
-        <translation>℃</translation>
+        <translation type="obsolete">℃</translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="138"/>
         <source>farenheit</source>
-        <translation>F</translation>
+        <translation type="obsolete">F</translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="140"/>
-        <source>bar</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="ex_managersetpage.cpp" line="141"/>
-        <source>MPa</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="ex_managersetpage.cpp" line="142"/>
-        <source>psi</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="ex_managersetpage.cpp" line="144"/>
-        <source>%</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="ex_managersetpage.cpp" line="145"/>
-        <source>L</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="ex_managersetpage.cpp" line="147"/>
-        <source>L/min</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="ex_managersetpage.cpp" line="148"/>
-        <source>gal/min</source>
-        <translation></translation>
-    </message>
-    <message>
-        <location filename="ex_managersetpage.cpp" line="92"/>
         <source>Brightness</source>
-        <translation>Яркость</translation>
+        <translation type="obsolete">Яркость</translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="93"/>
         <source>Energy-saving</source>
-        <translation>Энергосбережение</translation>
+        <translation type="obsolete">Энергосбережение</translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="94"/>
         <source>SleepTime</source>
-        <translation>Заставка</translation>
+        <translation type="obsolete">Заставка</translation>
     </message>
     <message>
-        <location filename="ex_managersetpage.cpp" line="109"/>
         <source>HP Recir.</source>
-        <translation type="unfinished">Рециркуляция HP</translation>
-    </message>
-    <message>
-        <location filename="ex_managersetpage.cpp" line="514"/>
-        <location filename="ex_managersetpage.cpp" line="588"/>
-        <location filename="ex_managersetpage.cpp" line="618"/>
-        <location filename="ex_managersetpage.cpp" line="661"/>
-        <location filename="ex_managersetpage.cpp" line="728"/>
-        <source>Successfully saved</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Рециркуляция HP</translation>
     </message>
 </context>
 <context>
     <name>Ex_PermissionSetPage</name>
     <message>
-        <location filename="ex_permissionsetpage.cpp" line="30"/>
         <source>Permission</source>
-        <translation type="unfinished">Разрешения</translation>
+        <translation type="obsolete">Разрешения</translation>
     </message>
     <message>
-        <location filename="ex_permissionsetpage.cpp" line="37"/>
-        <location filename="ex_permissionsetpage.cpp" line="48"/>
-        <location filename="ex_permissionsetpage.cpp" line="253"/>
         <source>RFID Config</source>
-        <translation type="unfinished">RFID установки</translation>
+        <translation type="obsolete">RFID установки</translation>
     </message>
     <message>
-        <location filename="ex_permissionsetpage.cpp" line="38"/>
-        <location filename="ex_permissionsetpage.cpp" line="52"/>
-        <location filename="ex_permissionsetpage.cpp" line="288"/>
-        <location filename="ex_permissionsetpage.cpp" line="341"/>
         <source>Verification</source>
-        <translation>проверка</translation>
+        <translation type="obsolete">проверка</translation>
     </message>
     <message>
-        <location filename="ex_permissionsetpage.cpp" line="41"/>
-        <location filename="ex_permissionsetpage.cpp" line="42"/>
-        <source>Sub-Account</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_permissionsetpage.cpp" line="43"/>
-        <location filename="ex_permissionsetpage.cpp" line="363"/>
         <source>Name</source>
-        <translation type="unfinished">Имя</translation>
+        <translation type="obsolete">Имя</translation>
     </message>
     <message>
-        <location filename="ex_permissionsetpage.cpp" line="44"/>
         <source>Query</source>
-        <translation type="unfinished">Запрос</translation>
+        <translation type="obsolete">Запрос</translation>
     </message>
     <message>
-        <location filename="ex_permissionsetpage.cpp" line="45"/>
         <source>Display All</source>
-        <translation type="unfinished">Показать все</translation>
+        <translation type="obsolete">Показать все</translation>
     </message>
     <message>
-        <location filename="ex_permissionsetpage.cpp" line="49"/>
         <source>Disable RFID</source>
-        <translation type="unfinished">Отключить RFID</translation>
+        <translation type="obsolete">Отключить RFID</translation>
     </message>
     <message>
-        <location filename="ex_permissionsetpage.cpp" line="50"/>
-        <location filename="ex_permissionsetpage.cpp" line="54"/>
-        <source>Save</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_permissionsetpage.cpp" line="53"/>
-        <source>Users is free of verification.</source>
-        <oldsource>Consumable installation is free of verification</oldsource>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_permissionsetpage.cpp" line="160"/>
-        <location filename="ex_permissionsetpage.cpp" line="180"/>
-        <location filename="ex_permissionsetpage.cpp" line="200"/>
-        <source>Successfully saved</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_permissionsetpage.cpp" line="362"/>
         <source>ID</source>
-        <translation type="unfinished">ID</translation>
-    </message>
-    <message>
-        <location filename="ex_permissionsetpage.cpp" line="364"/>
-        <source>Quantity</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">ID</translation>
     </message>
 </context>
 <context>
     <name>Ex_RFIDCfgPage</name>
     <message>
-        <location filename="ex_rfidcfgpage.cpp" line="28"/>
-        <location filename="ex_rfidcfgpage.cpp" line="36"/>
         <source>RFID Config</source>
-        <translation type="unfinished">RFID установки</translation>
+        <translation type="obsolete">RFID установки</translation>
     </message>
     <message>
-        <location filename="ex_rfidcfgpage.cpp" line="37"/>
         <source>Disable RFID</source>
-        <translation>Отключить RFID</translation>
+        <translation type="obsolete">Отключить RFID</translation>
     </message>
     <message>
-        <location filename="ex_rfidcfgpage.cpp" line="38"/>
         <source>Save</source>
-        <translation>Сохранить</translation>
-    </message>
-</context>
-<context>
-    <name>Ex_ScreenSleepPage</name>
-    <message>
-        <location filename="ex_screensleeppage.cpp" line="95"/>
-        <location filename="ex_screensleeppage.cpp" line="98"/>
-        <location filename="ex_screensleeppage.cpp" line="101"/>
-        <location filename="ex_screensleeppage.cpp" line="104"/>
-        <location filename="ex_screensleeppage.cpp" line="107"/>
-        <location filename="ex_screensleeppage.cpp" line="110"/>
-        <location filename="ex_screensleeppage.cpp" line="113"/>
-        <location filename="ex_screensleeppage.cpp" line="116"/>
-        <location filename="ex_screensleeppage.cpp" line="122"/>
-        <location filename="ex_screensleeppage.cpp" line="134"/>
-        <location filename="ex_screensleeppage.cpp" line="137"/>
-        <location filename="ex_screensleeppage.cpp" line="140"/>
-        <location filename="ex_screensleeppage.cpp" line="143"/>
-        <location filename="ex_screensleeppage.cpp" line="146"/>
-        <location filename="ex_screensleeppage.cpp" line="149"/>
-        <location filename="ex_screensleeppage.cpp" line="152"/>
-        <location filename="ex_screensleeppage.cpp" line="155"/>
-        <location filename="ex_screensleeppage.cpp" line="161"/>
-        <source>%1</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Сохранить</translation>
     </message>
 </context>
 <context>
     <name>Ex_SuperPowerPage</name>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="46"/>
         <source>Super Power</source>
-        <translation type="unfinished">Настройка информации</translation>
+        <translation type="obsolete">Настройка информации</translation>
     </message>
     <message>
         <source>Default State</source>
         <translation type="obsolete">Настройки по умолчанию</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="52"/>
         <source>Initialize</source>
-        <translation>инициализировать</translation>
+        <translation type="obsolete">инициализировать</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="53"/>
-        <location filename="ex_superpowerpage.cpp" line="125"/>
-        <source>Yes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_superpowerpage.cpp" line="54"/>
-        <location filename="ex_superpowerpage.cpp" line="126"/>
-        <source>No</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_superpowerpage.cpp" line="56"/>
         <source>System Type</source>
-        <translation type="unfinished">Тип системы</translation>
+        <translation type="obsolete">Тип системы</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="58"/>
-        <source>Company</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_superpowerpage.cpp" line="59"/>
         <source>Catalog No</source>
-        <translation>Каталожный №</translation>
+        <translation type="obsolete">Каталожный №</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="60"/>
         <source>Serial No</source>
-        <translation>Серийный №</translation>
+        <translation type="obsolete">Серийный №</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="61"/>
         <source>Production Date</source>
-        <translation>Дата производства</translation>
+        <translation type="obsolete">Дата производства</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="62"/>
         <source>Installation Date</source>
-        <translation>Дата установки</translation>
+        <translation type="obsolete">Дата установки</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="63"/>
         <source>Software Version</source>
-        <translation>Версия ПО</translation>
+        <translation type="obsolete">Версия ПО</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="65"/>
         <source>Delete</source>
-        <translation>Удалить</translation>
+        <translation type="obsolete">Удалить</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="66"/>
-        <source>Delete Data</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_superpowerpage.cpp" line="68"/>
-        <source>Delete Cfg</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_superpowerpage.cpp" line="70"/>
         <source>Save</source>
-        <translation>Сохр.</translation>
+        <translation type="obsolete">Сохр.</translation>
     </message>
     <message>
-        <location filename="ex_superpowerpage.cpp" line="234"/>
-        <location filename="ex_superpowerpage.cpp" line="243"/>
-        <source>All</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_superpowerpage.cpp" line="234"/>
-        <location filename="ex_superpowerpage.cpp" line="379"/>
-        <source>Alarm</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_superpowerpage.cpp" line="234"/>
-        <source>GetW</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_superpowerpage.cpp" line="234"/>
-        <source>PWater</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_superpowerpage.cpp" line="234"/>
-        <location filename="ex_superpowerpage.cpp" line="415"/>
-        <source>Log</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_superpowerpage.cpp" line="234"/>
-        <source>Consumables</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_superpowerpage.cpp" line="243"/>
-        <source>Consumables Info</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_superpowerpage.cpp" line="243"/>
-        <source>Config Info</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_superpowerpage.cpp" line="243"/>
-        <source>Cailbration Info</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_superpowerpage.cpp" line="366"/>
-        <source>Water</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_superpowerpage.cpp" line="366"/>
-        <source>Deleting table failed: Water</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_superpowerpage.cpp" line="379"/>
-        <source>Deleting table failed: Alarm</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_superpowerpage.cpp" line="391"/>
-        <source>GetWater</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_superpowerpage.cpp" line="391"/>
-        <source>Deleting table failed: GetW</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_superpowerpage.cpp" line="403"/>
-        <source>Product Water</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_superpowerpage.cpp" line="403"/>
-        <source>Deleting table failed: pWater</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_superpowerpage.cpp" line="415"/>
-        <source>Deleting table failed: Log</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_superpowerpage.cpp" line="428"/>
-        <source>Consumable</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_superpowerpage.cpp" line="428"/>
-        <source>Deleting table failed: Consumable</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_superpowerpage.cpp" line="466"/>
-        <location filename="ex_superpowerpage.cpp" line="492"/>
-        <source>NOTIFY</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_superpowerpage.cpp" line="467"/>
-        <source>Do you want to restart the system immediately
- to enter the initialization interface?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_superpowerpage.cpp" line="492"/>
-        <source>Change Device Type?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_superpowerpage.cpp" line="612"/>
-        <location filename="ex_superpowerpage.cpp" line="617"/>
-        <location filename="ex_superpowerpage.cpp" line="622"/>
-        <location filename="ex_superpowerpage.cpp" line="629"/>
-        <location filename="ex_superpowerpage.cpp" line="636"/>
-        <location filename="ex_superpowerpage.cpp" line="643"/>
         <source>Warning</source>
-        <translation type="unfinished">Внимание</translation>
-    </message>
-    <message>
-        <location filename="ex_superpowerpage.cpp" line="612"/>
-        <location filename="ex_superpowerpage.cpp" line="629"/>
-        <source>Delete Consumables info file failed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_superpowerpage.cpp" line="617"/>
-        <location filename="ex_superpowerpage.cpp" line="636"/>
-        <source>Delete Config info file failed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_superpowerpage.cpp" line="622"/>
-        <location filename="ex_superpowerpage.cpp" line="643"/>
-        <source>Delete Caliration info file failed</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Внимание</translation>
     </message>
 </context>
 <context>
     <name>Ex_SysMsgPage</name>
     <message>
-        <location filename="ex_sysmsgpage.cpp" line="30"/>
         <source>Information</source>
-        <translation type="unfinished">Информация</translation>
+        <translation type="obsolete">Информация</translation>
     </message>
     <message>
-        <location filename="ex_sysmsgpage.cpp" line="139"/>
-        <location filename="ex_sysmsgpage.cpp" line="142"/>
-        <location filename="ex_sysmsgpage.cpp" line="145"/>
-        <location filename="ex_sysmsgpage.cpp" line="148"/>
-        <location filename="ex_sysmsgpage.cpp" line="151"/>
-        <location filename="ex_sysmsgpage.cpp" line="154"/>
-        <location filename="ex_sysmsgpage.cpp" line="157"/>
-        <location filename="ex_sysmsgpage.cpp" line="160"/>
-        <location filename="ex_sysmsgpage.cpp" line="166"/>
-        <location filename="ex_sysmsgpage.cpp" line="178"/>
-        <location filename="ex_sysmsgpage.cpp" line="181"/>
-        <location filename="ex_sysmsgpage.cpp" line="184"/>
-        <location filename="ex_sysmsgpage.cpp" line="187"/>
-        <location filename="ex_sysmsgpage.cpp" line="190"/>
-        <location filename="ex_sysmsgpage.cpp" line="193"/>
-        <location filename="ex_sysmsgpage.cpp" line="196"/>
-        <location filename="ex_sysmsgpage.cpp" line="199"/>
-        <location filename="ex_sysmsgpage.cpp" line="205"/>
-        <source>%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_sysmsgpage.cpp" line="50"/>
         <source>Catalog No.</source>
-        <translation>Каталожный №</translation>
+        <translation type="obsolete">Каталожный №</translation>
     </message>
     <message>
-        <location filename="ex_sysmsgpage.cpp" line="51"/>
         <source>Serial No.</source>
-        <translation>Серийный №</translation>
+        <translation type="obsolete">Серийный №</translation>
     </message>
     <message>
-        <location filename="ex_sysmsgpage.cpp" line="52"/>
         <source>Production Date</source>
-        <translation>Дата изготовления</translation>
+        <translation type="obsolete">Дата изготовления</translation>
     </message>
     <message>
-        <location filename="ex_sysmsgpage.cpp" line="53"/>
         <source>Installation Date</source>
-        <translation>Дата установки</translation>
+        <translation type="obsolete">Дата установки</translation>
     </message>
     <message>
-        <location filename="ex_sysmsgpage.cpp" line="54"/>
         <source>Software Version</source>
-        <translation>Версия ПО</translation>
+        <translation type="obsolete">Версия ПО</translation>
     </message>
 </context>
 <context>
     <name>Ex_UserCfgPage</name>
     <message>
-        <location filename="ex_usercfgpage.cpp" line="38"/>
-        <location filename="ex_usercfgpage.cpp" line="53"/>
         <source>User Config</source>
-        <translation>Пользовательское меню</translation>
+        <translation type="obsolete">Пользовательское меню</translation>
     </message>
     <message>
-        <location filename="ex_usercfgpage.cpp" line="46"/>
         <source>Query</source>
-        <translation>Запрос</translation>
+        <translation type="obsolete">Запрос</translation>
     </message>
     <message>
-        <location filename="ex_usercfgpage.cpp" line="47"/>
         <source>Display All</source>
-        <translation>Показать все</translation>
+        <translation type="obsolete">Показать все</translation>
     </message>
     <message>
-        <location filename="ex_usercfgpage.cpp" line="48"/>
         <source>Submit</source>
-        <translation>Отправить</translation>
+        <translation type="obsolete">Отправить</translation>
     </message>
     <message>
-        <location filename="ex_usercfgpage.cpp" line="49"/>
         <source>Revert</source>
-        <translation>Восстановить </translation>
+        <translation type="obsolete">Восстановить </translation>
     </message>
     <message>
-        <location filename="ex_usercfgpage.cpp" line="50"/>
         <source>Add</source>
-        <translation>Добавить</translation>
+        <translation type="obsolete">Добавить</translation>
     </message>
     <message>
-        <location filename="ex_usercfgpage.cpp" line="51"/>
-        <location filename="ex_usercfgpage.cpp" line="242"/>
         <source>Delete</source>
-        <translation>Удалить</translation>
+        <translation type="obsolete">Удалить</translation>
     </message>
     <message>
-        <location filename="ex_usercfgpage.cpp" line="54"/>
-        <location filename="ex_usercfgpage.cpp" line="171"/>
         <source>Name</source>
-        <translation>Имя</translation>
+        <translation type="obsolete">Имя</translation>
     </message>
     <message>
-        <location filename="ex_usercfgpage.cpp" line="170"/>
         <source>ID</source>
-        <translation>ID</translation>
+        <translation type="obsolete">ID</translation>
     </message>
     <message>
-        <location filename="ex_usercfgpage.cpp" line="172"/>
         <source>Password</source>
-        <translation>Пароль</translation>
+        <translation type="obsolete">Пароль</translation>
     </message>
     <message>
-        <location filename="ex_usercfgpage.cpp" line="173"/>
         <source>Permission</source>
-        <translation>Разрешения</translation>
-    </message>
-    <message>
-        <location filename="ex_usercfgpage.cpp" line="216"/>
-        <source>tableModel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_usercfgpage.cpp" line="217"/>
-        <source>Database Error:%1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_usercfgpage.cpp" line="242"/>
-        <source>Are you sure delete current row?</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Разрешения</translation>
     </message>
 </context>
 <context>
     <name>Ex_UserManualPage</name>
     <message>
-        <location filename="ex_usermanualpage.cpp" line="30"/>
         <source>User Manual</source>
-        <translation type="unfinished">Инструкция пользователя</translation>
+        <translation type="obsolete">Инструкция пользователя</translation>
     </message>
 </context>
 <context>
     <name>Ex_WaterQualityPage</name>
     <message>
-        <location filename="ex_waterqualitypage.cpp" line="53"/>
         <source>Water Quality</source>
-        <translation type="unfinished">Качество воды</translation>
+        <translation type="obsolete">Качество воды</translation>
     </message>
     <message>
-        <location filename="ex_waterqualitypage.cpp" line="61"/>
-        <source>Tap Cond.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_waterqualitypage.cpp" line="62"/>
         <source>RO Feed Cond.</source>
-        <translation type="unfinished">Провод. пит. RO</translation>
+        <translation type="obsolete">Провод. пит. RO</translation>
     </message>
     <message>
-        <location filename="ex_waterqualitypage.cpp" line="63"/>
         <source>RO Product</source>
-        <translation type="unfinished">RO продукт</translation>
+        <translation type="obsolete">RO продукт</translation>
     </message>
     <message>
-        <location filename="ex_waterqualitypage.cpp" line="64"/>
         <source>RO Rejection</source>
-        <translation type="unfinished">RO режекция</translation>
+        <translation type="obsolete">RO режекция</translation>
     </message>
     <message>
-        <location filename="ex_waterqualitypage.cpp" line="65"/>
         <source>EDI Product</source>
-        <translation type="unfinished">EDI продукт</translation>
+        <translation type="obsolete">EDI продукт</translation>
     </message>
     <message>
-        <location filename="ex_waterqualitypage.cpp" line="66"/>
         <source>RO Feed Pressure</source>
-        <translation type="unfinished">Давл. пит. RO</translation>
+        <translation type="obsolete">Давл. пит. RO</translation>
     </message>
     <message>
-        <location filename="ex_waterqualitypage.cpp" line="67"/>
         <source>RO Pressure</source>
-        <translation type="unfinished">RO давление</translation>
+        <translation type="obsolete">RO давление</translation>
     </message>
     <message>
-        <location filename="ex_waterqualitypage.cpp" line="68"/>
-        <source>RO Product Rate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_waterqualitypage.cpp" line="69"/>
-        <source>RO Reject Rate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_waterqualitypage.cpp" line="70"/>
-        <source>RO Feed Rate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_waterqualitypage.cpp" line="71"/>
         <source>Tap Rate</source>
-        <translation type="unfinished">Подача пит.</translation>
+        <translation type="obsolete">Подача пит.</translation>
     </message>
     <message>
-        <location filename="ex_waterqualitypage.cpp" line="72"/>
         <source>EDI Product Rate</source>
-        <translation type="unfinished">EDI подача</translation>
+        <translation type="obsolete">EDI подача</translation>
     </message>
     <message>
-        <location filename="ex_waterqualitypage.cpp" line="73"/>
         <source>EDI Reject Rate</source>
-        <translation type="unfinished">EDI слив</translation>
+        <translation type="obsolete">EDI слив</translation>
     </message>
     <message>
-        <location filename="ex_waterqualitypage.cpp" line="74"/>
-        <source>Source Tank Level</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_waterqualitypage.cpp" line="75"/>
-        <source>Pure Tank Level</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_waterqualitypage.cpp" line="76"/>
-        <source>HP Resis.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_waterqualitypage.cpp" line="77"/>
         <source>HP Disp. rate</source>
-        <translation type="unfinished">Подача HP</translation>
+        <translation type="obsolete">Подача HP</translation>
     </message>
     <message>
-        <location filename="ex_waterqualitypage.cpp" line="78"/>
-        <source>UP IN</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_waterqualitypage.cpp" line="79"/>
-        <source>UP</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_waterqualitypage.cpp" line="80"/>
         <source>TOC</source>
-        <translation type="unfinished">ТОС</translation>
+        <translation type="obsolete">ТОС</translation>
     </message>
     <message>
-        <location filename="ex_waterqualitypage.cpp" line="81"/>
         <source>UP Disp. rate</source>
-        <translation type="unfinished">Подача ультрачистой воды</translation>
+        <translation type="obsolete">Подача ультрачистой воды</translation>
     </message>
     <message>
-        <location filename="ex_waterqualitypage.cpp" line="83"/>
         <source>omg</source>
-        <translation type="unfinished">MΩ.cm</translation>
+        <translation type="obsolete">MΩ.cm</translation>
     </message>
     <message>
-        <location filename="ex_waterqualitypage.cpp" line="84"/>
         <source>us/cm</source>
-        <translation type="unfinished">μS/cm</translation>
+        <translation type="obsolete">μS/cm</translation>
     </message>
     <message>
-        <location filename="ex_waterqualitypage.cpp" line="85"/>
         <source>Celsius</source>
-        <translation type="unfinished">℃</translation>
+        <translation type="obsolete">℃</translation>
     </message>
     <message>
-        <location filename="ex_waterqualitypage.cpp" line="86"/>
         <source>Fahrenheit</source>
-        <translation type="unfinished">F</translation>
-    </message>
-    <message>
-        <location filename="ex_waterqualitypage.cpp" line="87"/>
-        <source>L/h</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_waterqualitypage.cpp" line="88"/>
-        <source>L/min</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_waterqualitypage.cpp" line="89"/>
-        <source>G/h</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_waterqualitypage.cpp" line="90"/>
-        <source>G/min</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_waterqualitypage.cpp" line="91"/>
-        <source>bar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_waterqualitypage.cpp" line="92"/>
-        <source>mpa</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_waterqualitypage.cpp" line="93"/>
-        <source>psi</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_waterqualitypage.cpp" line="94"/>
-        <source>ppb</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_waterqualitypage.cpp" line="95"/>
-        <source>%</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="ex_waterqualitypage.cpp" line="96"/>
-        <source>L</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">F</translation>
     </message>
 </context>
 <context>
@@ -4094,120 +4956,125 @@
 <context>
     <name>MainPage</name>
     <message>
-        <location filename="mainpage.cpp" line="664"/>
+        <location filename="mainpage.cpp" line="693"/>
         <source>Menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="684"/>
-        <location filename="mainpage.cpp" line="692"/>
-        <location filename="mainpage.cpp" line="699"/>
-        <location filename="mainpage.cpp" line="707"/>
-        <location filename="mainpage.cpp" line="809"/>
-        <location filename="mainpage.cpp" line="1658"/>
-        <location filename="mainpage.cpp" line="2155"/>
+        <location filename="mainpage.cpp" line="713"/>
+        <location filename="mainpage.cpp" line="721"/>
+        <location filename="mainpage.cpp" line="728"/>
+        <location filename="mainpage.cpp" line="736"/>
+        <location filename="mainpage.cpp" line="857"/>
+        <location filename="mainpage.cpp" line="1716"/>
+        <location filename="mainpage.cpp" line="2213"/>
         <source>omg</source>
         <translation>MΩ.cm</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="810"/>
-        <location filename="mainpage.cpp" line="1404"/>
-        <location filename="mainpage.cpp" line="1420"/>
-        <location filename="mainpage.cpp" line="1434"/>
-        <location filename="mainpage.cpp" line="1449"/>
-        <location filename="mainpage.cpp" line="1705"/>
-        <location filename="mainpage.cpp" line="1727"/>
-        <location filename="mainpage.cpp" line="1746"/>
+        <location filename="mainpage.cpp" line="858"/>
+        <location filename="mainpage.cpp" line="1462"/>
+        <location filename="mainpage.cpp" line="1478"/>
+        <location filename="mainpage.cpp" line="1492"/>
+        <location filename="mainpage.cpp" line="1507"/>
         <location filename="mainpage.cpp" line="1763"/>
+        <location filename="mainpage.cpp" line="1785"/>
+        <location filename="mainpage.cpp" line="1804"/>
+        <location filename="mainpage.cpp" line="1821"/>
         <source>us</source>
         <translation>μS/cm</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="829"/>
-        <location filename="mainpage.cpp" line="830"/>
+        <location filename="mainpage.cpp" line="877"/>
+        <location filename="mainpage.cpp" line="878"/>
         <source>Celsius</source>
         <translation>℃</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="834"/>
-        <location filename="mainpage.cpp" line="835"/>
+        <location filename="mainpage.cpp" line="882"/>
+        <location filename="mainpage.cpp" line="883"/>
         <source>Fahrenheit</source>
         <translation>F</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="840"/>
+        <location filename="mainpage.cpp" line="888"/>
         <source>%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="844"/>
+        <location filename="mainpage.cpp" line="892"/>
         <source>L</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="1291"/>
+        <location filename="mainpage.cpp" line="1213"/>
+        <source>Signed out</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainpage.cpp" line="1349"/>
         <source>&gt;200</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="1360"/>
+        <location filename="mainpage.cpp" line="1418"/>
         <source>Warning</source>
         <translation>Внимание</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="1361"/>
+        <location filename="mainpage.cpp" line="1419"/>
         <source>Please stop dispensing water before switching system into Standby mode</source>
         <translation>Пожалуйста, прекратите раздачу воды перед переключением системы в режим ожидания.</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="2284"/>
-        <location filename="mainpage.cpp" line="2345"/>
+        <location filename="mainpage.cpp" line="2342"/>
+        <location filename="mainpage.cpp" line="2403"/>
         <source>Tank Full</source>
         <translation>Бак полный</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="2297"/>
-        <location filename="mainpage.cpp" line="2314"/>
+        <location filename="mainpage.cpp" line="2355"/>
+        <location filename="mainpage.cpp" line="2372"/>
         <source>Flush</source>
         <translation>очистка</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="2307"/>
+        <location filename="mainpage.cpp" line="2365"/>
         <source>Rinsing</source>
         <translation>промывка</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="2321"/>
+        <location filename="mainpage.cpp" line="2379"/>
         <source>Filling</source>
         <translation>Наполнение</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="2355"/>
-        <location filename="mainpage.cpp" line="2358"/>
+        <location filename="mainpage.cpp" line="2413"/>
+        <location filename="mainpage.cpp" line="2416"/>
         <source>Pressure Relief</source>
         <translation>Сброс давления</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="2362"/>
-        <location filename="mainpage.cpp" line="2365"/>
+        <location filename="mainpage.cpp" line="2420"/>
+        <location filename="mainpage.cpp" line="2423"/>
         <source>Standby</source>
         <translation>Ожидание</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="2379"/>
-        <location filename="mainpage.cpp" line="2395"/>
+        <location filename="mainpage.cpp" line="2437"/>
+        <location filename="mainpage.cpp" line="2453"/>
         <source>Dispense</source>
         <translation>Раздача</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="2383"/>
-        <location filename="mainpage.cpp" line="2408"/>
+        <location filename="mainpage.cpp" line="2441"/>
+        <location filename="mainpage.cpp" line="2466"/>
         <source>Recirculation</source>
         <translation>рециркуляция</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="2387"/>
-        <location filename="mainpage.cpp" line="2401"/>
+        <location filename="mainpage.cpp" line="2445"/>
+        <location filename="mainpage.cpp" line="2459"/>
         <source>Ready</source>
         <translation>Готов</translation>
     </message>
@@ -4220,119 +5087,119 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8277"/>
+        <location filename="mainwindow.cpp" line="8291"/>
         <source>PRE Pack Not Detected</source>
         <oldsource>No Pre-PACK detected!</oldsource>
         <translation type="unfinished">Картридж Pre Pack не установлен</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8280"/>
+        <location filename="mainwindow.cpp" line="8294"/>
         <source>AC Pack Not Detected</source>
         <oldsource>No AC-PACK detected!</oldsource>
         <translation type="unfinished">Картридж AC Pack не установлен</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8283"/>
+        <location filename="mainwindow.cpp" line="8297"/>
         <source>P Pack Not Detected</source>
         <oldsource>No P-PACK detected!</oldsource>
         <translation type="unfinished">Картридж P Pack не установлен</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8286"/>
+        <location filename="mainwindow.cpp" line="8300"/>
         <source>U Pack Not Detected</source>
         <oldsource>No U-PACK detected!</oldsource>
         <translation type="unfinished">Картридж U Pack не установлен</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8289"/>
+        <location filename="mainwindow.cpp" line="8303"/>
         <source>AT Pack Not Detected</source>
         <oldsource>No AT-PACK detected!</oldsource>
         <translation type="unfinished">Картридж AT Pack не установлен</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8292"/>
+        <location filename="mainwindow.cpp" line="8306"/>
         <source>H Pack Not Detected</source>
         <oldsource>No H-PACK detected!</oldsource>
         <translation type="unfinished">Картридж H Pack не установлен</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8315"/>
+        <location filename="mainwindow.cpp" line="8329"/>
         <source>Pre Pack Error! Do you want to continue?</source>
         <translation>Ошибка Pre-Pack! Вы хотите продолжить?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8319"/>
+        <location filename="mainwindow.cpp" line="8333"/>
         <source>AC Pack Error! Do you want to continue?</source>
         <translation>Ошибка AC-Pack! Вы хотите продолжить?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8323"/>
+        <location filename="mainwindow.cpp" line="8337"/>
         <source>P Pack Error! Do you want to continue?</source>
         <translation>Ошибка P-Pack! Вы хотите продолжить?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8327"/>
+        <location filename="mainwindow.cpp" line="8341"/>
         <source>U Pack Error! Do you want to continue?</source>
         <translation>Ошибка U-Pack! Вы хотите продолжить?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8331"/>
+        <location filename="mainwindow.cpp" line="8345"/>
         <source>AT Pack Error! Do you want to continue?</source>
         <translation>Ошибка AT-Pack! Вы хотите продолжить?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8335"/>
+        <location filename="mainwindow.cpp" line="8349"/>
         <source>H Pack Error! Do you want to continue?</source>
         <translation>Ошибка H-Pack! Вы хотите продолжить?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8541"/>
+        <location filename="mainwindow.cpp" line="8560"/>
         <source>Login failed!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8846"/>
+        <location filename="mainwindow.cpp" line="8855"/>
         <source>Water</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8847"/>
+        <location filename="mainwindow.cpp" line="8856"/>
         <source>Alarm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8848"/>
+        <location filename="mainwindow.cpp" line="8857"/>
         <source>User</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8849"/>
+        <location filename="mainwindow.cpp" line="8858"/>
         <source>GetW</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8850"/>
+        <location filename="mainwindow.cpp" line="8859"/>
         <source>PWater</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8851"/>
+        <location filename="mainwindow.cpp" line="8860"/>
         <source>Log</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="9761"/>
-        <location filename="mainwindow.cpp" line="9767"/>
+        <location filename="mainwindow.cpp" line="9783"/>
+        <location filename="mainwindow.cpp" line="9789"/>
         <source>Warning</source>
         <translation type="unfinished">Внимание</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8256"/>
+        <location filename="mainwindow.cpp" line="8270"/>
         <source>Confirm ALL cartridges are installed. System will START by pressing Confirm!</source>
         <translation>Подтвердите, что все картриджи установлены. Система запуститься после нажатия кнопки &quot;Принять&quot;.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8343"/>
+        <location filename="mainwindow.cpp" line="8357"/>
         <source>Continue</source>
         <translation>Продолжить</translation>
     </message>
@@ -4341,12 +5208,12 @@
         <translation type="obsolete">Выйти</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="9761"/>
+        <location filename="mainwindow.cpp" line="9783"/>
         <source>write install date error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="9767"/>
+        <location filename="mainwindow.cpp" line="9789"/>
         <source>write vol data error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4354,156 +5221,156 @@
 <context>
     <name>MaintenanceCyclePage</name>
     <message>
-        <location filename="maintenancecycle.cpp" line="458"/>
+        <location filename="maintenancecycle.cpp" line="471"/>
         <source>Consumables Life</source>
         <translation type="unfinished">Время работы</translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="476"/>
+        <location filename="maintenancecycle.cpp" line="489"/>
         <source>Prefilter</source>
         <translation>Картридж Pre Pack</translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="477"/>
-        <location filename="maintenancecycle.cpp" line="485"/>
-        <location filename="maintenancecycle.cpp" line="493"/>
-        <location filename="maintenancecycle.cpp" line="501"/>
-        <location filename="maintenancecycle.cpp" line="509"/>
-        <location filename="maintenancecycle.cpp" line="517"/>
-        <location filename="maintenancecycle.cpp" line="525"/>
-        <location filename="maintenancecycle.cpp" line="533"/>
-        <location filename="maintenancecycle.cpp" line="541"/>
-        <location filename="maintenancecycle.cpp" line="549"/>
-        <location filename="maintenancecycle.cpp" line="557"/>
-        <location filename="maintenancecycle.cpp" line="565"/>
+        <location filename="maintenancecycle.cpp" line="490"/>
+        <location filename="maintenancecycle.cpp" line="498"/>
+        <location filename="maintenancecycle.cpp" line="506"/>
+        <location filename="maintenancecycle.cpp" line="514"/>
+        <location filename="maintenancecycle.cpp" line="522"/>
+        <location filename="maintenancecycle.cpp" line="530"/>
+        <location filename="maintenancecycle.cpp" line="538"/>
+        <location filename="maintenancecycle.cpp" line="546"/>
+        <location filename="maintenancecycle.cpp" line="554"/>
+        <location filename="maintenancecycle.cpp" line="562"/>
+        <location filename="maintenancecycle.cpp" line="570"/>
+        <location filename="maintenancecycle.cpp" line="578"/>
         <source>Day</source>
         <translation>Дни</translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="478"/>
-        <location filename="maintenancecycle.cpp" line="486"/>
-        <location filename="maintenancecycle.cpp" line="502"/>
-        <location filename="maintenancecycle.cpp" line="510"/>
-        <location filename="maintenancecycle.cpp" line="518"/>
+        <location filename="maintenancecycle.cpp" line="491"/>
+        <location filename="maintenancecycle.cpp" line="499"/>
+        <location filename="maintenancecycle.cpp" line="515"/>
+        <location filename="maintenancecycle.cpp" line="523"/>
+        <location filename="maintenancecycle.cpp" line="531"/>
         <source>L</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="484"/>
+        <location filename="maintenancecycle.cpp" line="497"/>
         <source>AC Pack</source>
         <translation>Картридж AC Pack </translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="492"/>
+        <location filename="maintenancecycle.cpp" line="505"/>
         <source>T Pack</source>
         <translation>Картридж T Pack </translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="500"/>
+        <location filename="maintenancecycle.cpp" line="513"/>
         <source>P PACK</source>
         <translation>Картридж P Pack</translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="508"/>
+        <location filename="maintenancecycle.cpp" line="521"/>
         <source>U PACK</source>
         <translation>Картридж U Pack</translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="516"/>
+        <location filename="maintenancecycle.cpp" line="529"/>
         <source>AT PACK</source>
         <translation>Картридж AT Pack</translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="524"/>
+        <location filename="maintenancecycle.cpp" line="537"/>
         <source>H PACK</source>
         <translation>Картридж H Pack</translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="526"/>
+        <location filename="maintenancecycle.cpp" line="539"/>
         <source>Litre</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="532"/>
+        <location filename="maintenancecycle.cpp" line="545"/>
         <source>254 UV</source>
         <translation>254 УФ</translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="534"/>
-        <location filename="maintenancecycle.cpp" line="542"/>
-        <location filename="maintenancecycle.cpp" line="550"/>
-        <location filename="maintenancecycle.cpp" line="558"/>
-        <location filename="maintenancecycle.cpp" line="566"/>
+        <location filename="maintenancecycle.cpp" line="547"/>
+        <location filename="maintenancecycle.cpp" line="555"/>
+        <location filename="maintenancecycle.cpp" line="563"/>
+        <location filename="maintenancecycle.cpp" line="571"/>
+        <location filename="maintenancecycle.cpp" line="579"/>
         <source>hr</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="540"/>
+        <location filename="maintenancecycle.cpp" line="553"/>
         <source>185 UV</source>
         <translation>185 УФ</translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="548"/>
+        <location filename="maintenancecycle.cpp" line="561"/>
         <source>Tank UV</source>
         <translation>Бак УФ лампа</translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="556"/>
+        <location filename="maintenancecycle.cpp" line="569"/>
         <source>Tube UV</source>
         <translation>Петля УФ </translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="564"/>
+        <location filename="maintenancecycle.cpp" line="577"/>
         <source>TOC UV</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="572"/>
+        <location filename="maintenancecycle.cpp" line="585"/>
         <source>Tank Vent Filter</source>
         <translation>Бак вент фильтр</translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="573"/>
-        <location filename="maintenancecycle.cpp" line="587"/>
-        <location filename="maintenancecycle.cpp" line="594"/>
-        <location filename="maintenancecycle.cpp" line="601"/>
-        <location filename="maintenancecycle.cpp" line="608"/>
-        <location filename="maintenancecycle.cpp" line="615"/>
+        <location filename="maintenancecycle.cpp" line="586"/>
+        <location filename="maintenancecycle.cpp" line="600"/>
+        <location filename="maintenancecycle.cpp" line="607"/>
+        <location filename="maintenancecycle.cpp" line="614"/>
+        <location filename="maintenancecycle.cpp" line="621"/>
+        <location filename="maintenancecycle.cpp" line="628"/>
         <source>days</source>
         <translation>дней</translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="581"/>
+        <location filename="maintenancecycle.cpp" line="594"/>
         <source>Final Fliter B</source>
         <translation>Финишный фильтр В</translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="585"/>
+        <location filename="maintenancecycle.cpp" line="598"/>
         <source>Bio-filter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="593"/>
+        <location filename="maintenancecycle.cpp" line="606"/>
         <source>Final Fliter A</source>
         <translation>Финишный фильтр A</translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="600"/>
+        <location filename="maintenancecycle.cpp" line="613"/>
         <source>Loop Filter</source>
         <translation>Петля фильтр</translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="607"/>
+        <location filename="maintenancecycle.cpp" line="620"/>
         <source>Loop DI</source>
         <translation>Петля деиониз. фильтр</translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="614"/>
+        <location filename="maintenancecycle.cpp" line="627"/>
         <source>RO Chlorine Cleaning</source>
         <translation>Cl промывка RO мембран</translation>
     </message>
     <message>
-        <location filename="maintenancecycle.cpp" line="713"/>
+        <location filename="maintenancecycle.cpp" line="726"/>
         <source>Save</source>
         <translation>Сохранить</translation>
     </message>
@@ -4597,181 +5464,181 @@
 <context>
     <name>ParameterCalibrationPage</name>
     <message>
-        <location filename="parametercalibration.cpp" line="323"/>
+        <location filename="parametercalibration.cpp" line="331"/>
         <source>Calibration</source>
         <translation type="unfinished">Калибровка</translation>
     </message>
     <message>
-        <location filename="parametercalibration.cpp" line="342"/>
-        <location filename="parametercalibration.cpp" line="362"/>
+        <location filename="parametercalibration.cpp" line="350"/>
+        <location filename="parametercalibration.cpp" line="370"/>
         <source>Tap Cond.</source>
         <translation>Провод. вх. воды </translation>
     </message>
     <message>
-        <location filename="parametercalibration.cpp" line="344"/>
-        <location filename="parametercalibration.cpp" line="364"/>
-        <location filename="parametercalibration.cpp" line="370"/>
-        <location filename="parametercalibration.cpp" line="410"/>
-        <location filename="parametercalibration.cpp" line="438"/>
-        <location filename="parametercalibration.cpp" line="464"/>
+        <location filename="parametercalibration.cpp" line="352"/>
+        <location filename="parametercalibration.cpp" line="372"/>
+        <location filename="parametercalibration.cpp" line="378"/>
+        <location filename="parametercalibration.cpp" line="418"/>
+        <location filename="parametercalibration.cpp" line="446"/>
+        <location filename="parametercalibration.cpp" line="472"/>
         <source>C:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="parametercalibration.cpp" line="345"/>
-        <location filename="parametercalibration.cpp" line="365"/>
-        <location filename="parametercalibration.cpp" line="371"/>
+        <location filename="parametercalibration.cpp" line="353"/>
+        <location filename="parametercalibration.cpp" line="373"/>
+        <location filename="parametercalibration.cpp" line="379"/>
         <source>us/cm</source>
         <translation>μS/cm</translation>
     </message>
     <message>
-        <location filename="parametercalibration.cpp" line="351"/>
-        <location filename="parametercalibration.cpp" line="382"/>
+        <location filename="parametercalibration.cpp" line="359"/>
+        <location filename="parametercalibration.cpp" line="390"/>
         <source>Tap Temp.</source>
         <translation>RO темп. пит.</translation>
     </message>
     <message>
-        <location filename="parametercalibration.cpp" line="353"/>
-        <location filename="parametercalibration.cpp" line="384"/>
-        <location filename="parametercalibration.cpp" line="389"/>
-        <location filename="parametercalibration.cpp" line="430"/>
-        <location filename="parametercalibration.cpp" line="447"/>
-        <location filename="parametercalibration.cpp" line="482"/>
+        <location filename="parametercalibration.cpp" line="361"/>
+        <location filename="parametercalibration.cpp" line="392"/>
+        <location filename="parametercalibration.cpp" line="397"/>
+        <location filename="parametercalibration.cpp" line="438"/>
+        <location filename="parametercalibration.cpp" line="455"/>
+        <location filename="parametercalibration.cpp" line="490"/>
         <source>celsius</source>
         <translation>℃</translation>
     </message>
     <message>
-        <location filename="parametercalibration.cpp" line="368"/>
+        <location filename="parametercalibration.cpp" line="376"/>
         <source>RO Cond.</source>
         <translation>RO провод.</translation>
     </message>
     <message>
-        <location filename="parametercalibration.cpp" line="387"/>
+        <location filename="parametercalibration.cpp" line="395"/>
         <source>RO Temp.</source>
         <translation>RO темп.</translation>
     </message>
     <message>
-        <location filename="parametercalibration.cpp" line="401"/>
+        <location filename="parametercalibration.cpp" line="409"/>
         <source>HP Conduct</source>
         <translation>Проводимость очищенной воды</translation>
     </message>
     <message>
-        <location filename="parametercalibration.cpp" line="404"/>
+        <location filename="parametercalibration.cpp" line="412"/>
         <source>EDI Conduct</source>
         <translation>EDI сопр.</translation>
     </message>
     <message>
-        <location filename="parametercalibration.cpp" line="411"/>
+        <location filename="parametercalibration.cpp" line="419"/>
         <source>omg</source>
         <translation>MΩ.cm</translation>
     </message>
     <message>
-        <location filename="parametercalibration.cpp" line="422"/>
+        <location filename="parametercalibration.cpp" line="430"/>
         <source>HP Temp</source>
         <translation>Темп. очищенной воды</translation>
     </message>
     <message>
-        <location filename="parametercalibration.cpp" line="425"/>
+        <location filename="parametercalibration.cpp" line="433"/>
         <source>EDI Temp</source>
         <translation>EDI темп.</translation>
     </message>
     <message>
-        <location filename="parametercalibration.cpp" line="436"/>
+        <location filename="parametercalibration.cpp" line="444"/>
         <source>UP Conduct</source>
         <translation>Сопр. ультрачистой воды</translation>
     </message>
     <message>
-        <location filename="parametercalibration.cpp" line="439"/>
+        <location filename="parametercalibration.cpp" line="447"/>
         <source>omage</source>
         <translation>MΩ.cm</translation>
     </message>
     <message>
-        <location filename="parametercalibration.cpp" line="445"/>
+        <location filename="parametercalibration.cpp" line="453"/>
         <source>UP Temp</source>
         <translation>Температура UP</translation>
     </message>
     <message>
-        <location filename="parametercalibration.cpp" line="456"/>
+        <location filename="parametercalibration.cpp" line="464"/>
         <source>UP TOC Conduct</source>
         <translation>Сопр. TOC</translation>
     </message>
     <message>
-        <location filename="parametercalibration.cpp" line="459"/>
+        <location filename="parametercalibration.cpp" line="467"/>
         <source>TOC Conduct</source>
         <translation>Проводимость HP</translation>
     </message>
     <message>
-        <location filename="parametercalibration.cpp" line="465"/>
+        <location filename="parametercalibration.cpp" line="473"/>
         <source>ppb</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="parametercalibration.cpp" line="474"/>
+        <location filename="parametercalibration.cpp" line="482"/>
         <source>UP TOC Temp</source>
         <translation>Темп. TOC</translation>
     </message>
     <message>
-        <location filename="parametercalibration.cpp" line="477"/>
+        <location filename="parametercalibration.cpp" line="485"/>
         <source>TOC Temp</source>
         <translation>Температура HP</translation>
     </message>
     <message>
-        <location filename="parametercalibration.cpp" line="488"/>
+        <location filename="parametercalibration.cpp" line="496"/>
         <source>Disp. Rate</source>
         <oldsource>UP Rate</oldsource>
         <translation type="unfinished">Подача ультрачистой воды</translation>
     </message>
     <message>
-        <location filename="parametercalibration.cpp" line="490"/>
         <location filename="parametercalibration.cpp" line="498"/>
         <location filename="parametercalibration.cpp" line="506"/>
         <location filename="parametercalibration.cpp" line="514"/>
+        <location filename="parametercalibration.cpp" line="522"/>
         <source>L/Min</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="parametercalibration.cpp" line="496"/>
+        <location filename="parametercalibration.cpp" line="504"/>
         <source>RO Feed. Rate</source>
         <translation>RO расх. пит.</translation>
     </message>
     <message>
-        <location filename="parametercalibration.cpp" line="504"/>
+        <location filename="parametercalibration.cpp" line="512"/>
         <source>RO Prod. Rate</source>
         <translation>RO подача продукта</translation>
     </message>
     <message>
-        <location filename="parametercalibration.cpp" line="512"/>
+        <location filename="parametercalibration.cpp" line="520"/>
         <source>RO Drain Rate</source>
         <translation>RO расх. реж.</translation>
     </message>
     <message>
-        <location filename="parametercalibration.cpp" line="520"/>
+        <location filename="parametercalibration.cpp" line="528"/>
         <source>Pure Tank Level</source>
         <translation type="unfinished">Уровень HP  в баке</translation>
     </message>
     <message>
-        <location filename="parametercalibration.cpp" line="522"/>
         <location filename="parametercalibration.cpp" line="530"/>
+        <location filename="parametercalibration.cpp" line="538"/>
         <source>m</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="parametercalibration.cpp" line="528"/>
+        <location filename="parametercalibration.cpp" line="536"/>
         <source>Feed Tank Level</source>
         <translation>Ур. пит. воды в баке</translation>
     </message>
     <message>
-        <location filename="parametercalibration.cpp" line="536"/>
+        <location filename="parametercalibration.cpp" line="544"/>
         <source>Pres. Sensor</source>
         <translation>Датчик давления</translation>
     </message>
     <message>
-        <location filename="parametercalibration.cpp" line="538"/>
+        <location filename="parametercalibration.cpp" line="546"/>
         <source>bar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="parametercalibration.cpp" line="619"/>
+        <location filename="parametercalibration.cpp" line="627"/>
         <source>Save</source>
         <translation>Сохранить</translation>
     </message>
@@ -5310,260 +6177,260 @@
 <context>
     <name>SetPoint</name>
     <message>
-        <location filename="setpoint.cpp" line="383"/>
+        <location filename="setpoint.cpp" line="415"/>
         <source>Alarm S.P</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="401"/>
+        <location filename="setpoint.cpp" line="429"/>
         <source>Tap Pressure</source>
         <translation>Давление вх. воды</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="402"/>
-        <location filename="setpoint.cpp" line="408"/>
-        <location filename="setpoint.cpp" line="427"/>
-        <location filename="setpoint.cpp" line="452"/>
-        <location filename="setpoint.cpp" line="476"/>
-        <location filename="setpoint.cpp" line="497"/>
-        <location filename="setpoint.cpp" line="503"/>
-        <location filename="setpoint.cpp" line="600"/>
+        <location filename="setpoint.cpp" line="430"/>
+        <location filename="setpoint.cpp" line="436"/>
+        <location filename="setpoint.cpp" line="455"/>
+        <location filename="setpoint.cpp" line="480"/>
+        <location filename="setpoint.cpp" line="504"/>
+        <location filename="setpoint.cpp" line="525"/>
+        <location filename="setpoint.cpp" line="531"/>
+        <location filename="setpoint.cpp" line="628"/>
         <source>Lower Limit</source>
         <translation>Нижний предел</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="403"/>
-        <location filename="setpoint.cpp" line="623"/>
+        <location filename="setpoint.cpp" line="431"/>
+        <location filename="setpoint.cpp" line="651"/>
         <source>bar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="407"/>
+        <location filename="setpoint.cpp" line="435"/>
         <source>RO Rejection</source>
         <translation>RO режекция</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="409"/>
-        <location filename="setpoint.cpp" line="436"/>
         <location filename="setpoint.cpp" line="437"/>
-        <location filename="setpoint.cpp" line="461"/>
-        <location filename="setpoint.cpp" line="462"/>
+        <location filename="setpoint.cpp" line="464"/>
+        <location filename="setpoint.cpp" line="465"/>
+        <location filename="setpoint.cpp" line="489"/>
+        <location filename="setpoint.cpp" line="490"/>
         <source>%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="415"/>
+        <location filename="setpoint.cpp" line="443"/>
         <source>UP Feed Cond.</source>
         <translation>Сопр. пит. воды</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="419"/>
+        <location filename="setpoint.cpp" line="447"/>
         <source>RO Cond.</source>
         <translation>RO провод.</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="421"/>
-        <location filename="setpoint.cpp" line="482"/>
+        <location filename="setpoint.cpp" line="449"/>
+        <location filename="setpoint.cpp" line="510"/>
         <source>Upper Limit</source>
         <translation>Верхний предел</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="422"/>
-        <location filename="setpoint.cpp" line="483"/>
+        <location filename="setpoint.cpp" line="450"/>
+        <location filename="setpoint.cpp" line="511"/>
         <source>us/cm</source>
         <translation type="unfinished">μS/cm</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="426"/>
+        <location filename="setpoint.cpp" line="454"/>
         <source>EDI Resis.</source>
         <translation>EDI сопр.</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="428"/>
-        <location filename="setpoint.cpp" line="453"/>
-        <location filename="setpoint.cpp" line="470"/>
-        <location filename="setpoint.cpp" line="471"/>
-        <location filename="setpoint.cpp" line="477"/>
-        <location filename="setpoint.cpp" line="504"/>
-        <location filename="setpoint.cpp" line="601"/>
-        <location filename="setpoint.cpp" line="609"/>
-        <location filename="setpoint.cpp" line="617"/>
+        <location filename="setpoint.cpp" line="456"/>
+        <location filename="setpoint.cpp" line="481"/>
+        <location filename="setpoint.cpp" line="498"/>
+        <location filename="setpoint.cpp" line="499"/>
+        <location filename="setpoint.cpp" line="505"/>
+        <location filename="setpoint.cpp" line="532"/>
+        <location filename="setpoint.cpp" line="629"/>
+        <location filename="setpoint.cpp" line="637"/>
+        <location filename="setpoint.cpp" line="645"/>
         <source>omg</source>
         <translation type="unfinished">MΩ.cm</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="433"/>
+        <location filename="setpoint.cpp" line="461"/>
         <source>Pure Tank Level</source>
         <translation>Ур. очищенной воды в баке</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="434"/>
-        <location filename="setpoint.cpp" line="459"/>
+        <location filename="setpoint.cpp" line="462"/>
+        <location filename="setpoint.cpp" line="487"/>
         <source>Empty</source>
         <translation>Пустой</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="435"/>
-        <location filename="setpoint.cpp" line="460"/>
+        <location filename="setpoint.cpp" line="463"/>
+        <location filename="setpoint.cpp" line="488"/>
         <source>Refill</source>
         <translation>Наполнение</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="449"/>
+        <location filename="setpoint.cpp" line="477"/>
         <source>UP Resis.</source>
         <translation>Сопр. ультрачистой воды</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="458"/>
+        <location filename="setpoint.cpp" line="486"/>
         <source>Feed Tank Level</source>
         <translation>Ур. пит. воды в баке</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="467"/>
+        <location filename="setpoint.cpp" line="495"/>
         <source>Tank Resis.</source>
         <translation>Бак сопр.</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="468"/>
-        <location filename="setpoint.cpp" line="489"/>
-        <location filename="setpoint.cpp" line="512"/>
-        <location filename="setpoint.cpp" line="530"/>
-        <location filename="setpoint.cpp" line="541"/>
-        <location filename="setpoint.cpp" line="568"/>
-        <location filename="setpoint.cpp" line="579"/>
-        <location filename="setpoint.cpp" line="590"/>
-        <location filename="setpoint.cpp" line="622"/>
+        <location filename="setpoint.cpp" line="496"/>
+        <location filename="setpoint.cpp" line="517"/>
+        <location filename="setpoint.cpp" line="540"/>
+        <location filename="setpoint.cpp" line="558"/>
+        <location filename="setpoint.cpp" line="569"/>
+        <location filename="setpoint.cpp" line="596"/>
+        <location filename="setpoint.cpp" line="607"/>
+        <location filename="setpoint.cpp" line="618"/>
+        <location filename="setpoint.cpp" line="650"/>
         <source>Max.</source>
         <translation>Максимум</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="469"/>
-        <location filename="setpoint.cpp" line="490"/>
-        <location filename="setpoint.cpp" line="513"/>
-        <location filename="setpoint.cpp" line="531"/>
-        <location filename="setpoint.cpp" line="542"/>
-        <location filename="setpoint.cpp" line="569"/>
-        <location filename="setpoint.cpp" line="580"/>
-        <location filename="setpoint.cpp" line="591"/>
+        <location filename="setpoint.cpp" line="497"/>
+        <location filename="setpoint.cpp" line="518"/>
+        <location filename="setpoint.cpp" line="541"/>
+        <location filename="setpoint.cpp" line="559"/>
+        <location filename="setpoint.cpp" line="570"/>
+        <location filename="setpoint.cpp" line="597"/>
+        <location filename="setpoint.cpp" line="608"/>
+        <location filename="setpoint.cpp" line="619"/>
         <source>Min.</source>
         <translation>Минимум</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="475"/>
+        <location filename="setpoint.cpp" line="503"/>
         <source>HP Resis.</source>
         <translation>Сопр. очищенной воды</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="481"/>
+        <location filename="setpoint.cpp" line="509"/>
         <source>Tap Cond.</source>
         <translation>Провод. пит. </translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="488"/>
+        <location filename="setpoint.cpp" line="516"/>
         <source>RO Product Rate</source>
         <translation>RO подача продукта</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="491"/>
-        <location filename="setpoint.cpp" line="492"/>
-        <location filename="setpoint.cpp" line="498"/>
+        <location filename="setpoint.cpp" line="519"/>
+        <location filename="setpoint.cpp" line="520"/>
+        <location filename="setpoint.cpp" line="526"/>
         <source>L/h</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="496"/>
+        <location filename="setpoint.cpp" line="524"/>
         <source>RO Reject Rate</source>
         <translation>RO реж. расх.</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="502"/>
+        <location filename="setpoint.cpp" line="530"/>
         <source>Loop Resis.</source>
         <translation>Петля сопр.</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="511"/>
+        <location filename="setpoint.cpp" line="539"/>
         <source>Tap Temp.</source>
         <translation>Темп. пит. воды</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="514"/>
-        <location filename="setpoint.cpp" line="515"/>
-        <location filename="setpoint.cpp" line="532"/>
-        <location filename="setpoint.cpp" line="533"/>
+        <location filename="setpoint.cpp" line="542"/>
         <location filename="setpoint.cpp" line="543"/>
-        <location filename="setpoint.cpp" line="544"/>
-        <location filename="setpoint.cpp" line="570"/>
+        <location filename="setpoint.cpp" line="560"/>
+        <location filename="setpoint.cpp" line="561"/>
         <location filename="setpoint.cpp" line="571"/>
-        <location filename="setpoint.cpp" line="581"/>
-        <location filename="setpoint.cpp" line="582"/>
-        <location filename="setpoint.cpp" line="592"/>
-        <location filename="setpoint.cpp" line="593"/>
+        <location filename="setpoint.cpp" line="572"/>
+        <location filename="setpoint.cpp" line="598"/>
+        <location filename="setpoint.cpp" line="599"/>
+        <location filename="setpoint.cpp" line="609"/>
+        <location filename="setpoint.cpp" line="610"/>
+        <location filename="setpoint.cpp" line="620"/>
+        <location filename="setpoint.cpp" line="621"/>
         <source>Celsius</source>
         <translation>℃</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="524"/>
+        <location filename="setpoint.cpp" line="552"/>
         <source>UP Feed Temp.</source>
         <translation>Темп. пит. воды</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="528"/>
+        <location filename="setpoint.cpp" line="556"/>
         <source>RO Temp.</source>
         <translation>RO темп.</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="540"/>
+        <location filename="setpoint.cpp" line="568"/>
         <source>EDI Temp.</source>
         <translation>EDI темп.</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="559"/>
+        <location filename="setpoint.cpp" line="587"/>
         <source>UP Temp.</source>
         <translation type="unfinished">Температура UP</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="565"/>
+        <location filename="setpoint.cpp" line="593"/>
         <source>HP Temp.</source>
         <translation>Темп. очищенной воды</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="578"/>
+        <location filename="setpoint.cpp" line="606"/>
         <source>Loop Temp.</source>
         <translation>Петля темп.</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="589"/>
+        <location filename="setpoint.cpp" line="617"/>
         <source>TOC Temp.</source>
         <translation>ТОС темп.</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="599"/>
+        <location filename="setpoint.cpp" line="627"/>
         <source>TOC Feed Resis.</source>
         <translation>ТОС пит. сопр.</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="607"/>
+        <location filename="setpoint.cpp" line="635"/>
         <source>Cir Water Quality</source>
         <translation>Сопр. рецирк. воды</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="608"/>
-        <location filename="setpoint.cpp" line="616"/>
+        <location filename="setpoint.cpp" line="636"/>
+        <location filename="setpoint.cpp" line="644"/>
         <source>Lower threshold</source>
         <translation>Нижняя граница</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="615"/>
+        <location filename="setpoint.cpp" line="643"/>
         <source>HP Produce Water Quality</source>
         <translation>Сопротивление HP</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="621"/>
+        <location filename="setpoint.cpp" line="649"/>
         <source>Work Pressure</source>
         <translation>Рабочее давление</translation>
     </message>
     <message>
-        <location filename="setpoint.cpp" line="628"/>
+        <location filename="setpoint.cpp" line="656"/>
         <source>Save</source>
         <translation>Сохранить</translation>
     </message>
@@ -5594,98 +6461,100 @@
 <context>
     <name>SterilizePage</name>
     <message>
-        <location filename="SterilizePage.cpp" line="61"/>
+        <location filename="SterilizePage.cpp" line="52"/>
         <source>Cleaning &amp; Sanitization</source>
         <translation type="unfinished">Очистка и сан. обработка</translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="71"/>
+        <location filename="SterilizePage.cpp" line="62"/>
         <source>RO CL Cleaning</source>
         <translation>Cl промывка RO</translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="72"/>
+        <location filename="SterilizePage.cpp" line="63"/>
         <source>RO pH Cleaning</source>
         <translation>pH промывка RO</translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="76"/>
+        <location filename="SterilizePage.cpp" line="67"/>
         <source>Last Maintenance:</source>
         <translation>Последнее обслуживание</translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="92"/>
+        <location filename="SterilizePage.cpp" line="83"/>
         <source>Next Due Date:</source>
         <translation>Следующая дата работ</translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="103"/>
+        <location filename="SterilizePage.cpp" line="94"/>
         <source>Install Case First</source>
         <translation>Сначала установите картридж для промывки, затем нажмите &quot;Промывка&quot;</translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="105"/>
+        <location filename="SterilizePage.cpp" line="96"/>
         <source>Cleaning</source>
         <translation>Промывка</translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="106"/>
-        <location filename="SterilizePage.cpp" line="283"/>
+        <location filename="SterilizePage.cpp" line="97"/>
+        <location filename="SterilizePage.cpp" line="279"/>
+        <location filename="SterilizePage.cpp" line="288"/>
         <source>Clean</source>
         <translation>Промывка</translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="261"/>
+        <location filename="SterilizePage.cpp" line="252"/>
         <source>Detergent Casette Removed!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="265"/>
+        <location filename="SterilizePage.cpp" line="256"/>
         <source>Detergent Casette Inserted!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="283"/>
+        <location filename="SterilizePage.cpp" line="279"/>
+        <location filename="SterilizePage.cpp" line="288"/>
         <source>Please Insert Detergent Casette!</source>
         <translation>Пожалуйста, установите картридж для промывки!</translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="302"/>
-        <location filename="SterilizePage.cpp" line="305"/>
-        <location filename="SterilizePage.cpp" line="308"/>
-        <location filename="SterilizePage.cpp" line="311"/>
-        <location filename="SterilizePage.cpp" line="314"/>
-        <location filename="SterilizePage.cpp" line="317"/>
+        <location filename="SterilizePage.cpp" line="307"/>
+        <location filename="SterilizePage.cpp" line="310"/>
+        <location filename="SterilizePage.cpp" line="313"/>
+        <location filename="SterilizePage.cpp" line="316"/>
+        <location filename="SterilizePage.cpp" line="319"/>
+        <location filename="SterilizePage.cpp" line="322"/>
         <source>About</source>
         <translation>Подробнее</translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="302"/>
+        <location filename="SterilizePage.cpp" line="307"/>
         <source>No Pre-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="305"/>
+        <location filename="SterilizePage.cpp" line="310"/>
         <source>No AC-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="308"/>
+        <location filename="SterilizePage.cpp" line="313"/>
         <source>No Clean-PACK detected!</source>
         <translation>Картридж для промывки не установлен!</translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="311"/>
+        <location filename="SterilizePage.cpp" line="316"/>
         <source>No U-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="314"/>
+        <location filename="SterilizePage.cpp" line="319"/>
         <source>No AT-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="317"/>
+        <location filename="SterilizePage.cpp" line="322"/>
         <source>No H-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5776,175 +6645,175 @@
 <context>
     <name>SysTestPage</name>
     <message>
-        <location filename="systestpage.cpp" line="343"/>
+        <location filename="systestpage.cpp" line="365"/>
         <source>Test</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="354"/>
+        <location filename="systestpage.cpp" line="376"/>
         <source>OFF</source>
         <translation>Выкл.</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="355"/>
+        <location filename="systestpage.cpp" line="377"/>
         <source>Low</source>
         <translation>Низкая </translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="356"/>
+        <location filename="systestpage.cpp" line="378"/>
         <source>Middle</source>
         <translation>Средняя</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="357"/>
+        <location filename="systestpage.cpp" line="379"/>
         <source>High</source>
         <translation>Высокая</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="367"/>
+        <location filename="systestpage.cpp" line="389"/>
         <source>RO Inlet Valve</source>
         <translation>RO вх. клапан</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="373"/>
+        <location filename="systestpage.cpp" line="395"/>
         <source>RO Reject Valve</source>
         <translation>RO клапан режекции</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="379"/>
+        <location filename="systestpage.cpp" line="401"/>
         <source>RO Drain Valve</source>
         <translation>RO сливной клапан</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="393"/>
+        <location filename="systestpage.cpp" line="415"/>
         <source>UP Inlet Valve</source>
         <translation>Вх. клапан UP</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="399"/>
+        <location filename="systestpage.cpp" line="421"/>
         <source>HP Inlet Valve</source>
         <translation>Вх. клапан очищенной воды</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="407"/>
+        <location filename="systestpage.cpp" line="429"/>
         <source>UP Recirculation Valve</source>
         <translation>Рецирк. клапан UP</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="413"/>
+        <location filename="systestpage.cpp" line="435"/>
         <source>HP Recirculation Valve</source>
         <translation>Рецирк. клапан HP</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="419"/>
+        <location filename="systestpage.cpp" line="441"/>
         <source>TOC Flush Valve</source>
         <translation>TOC клапан промывки </translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="426"/>
+        <location filename="systestpage.cpp" line="448"/>
         <source>Feed Water Valve</source>
         <translation>Клапан пит. воды</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="432"/>
+        <location filename="systestpage.cpp" line="454"/>
         <source>Feed Pump</source>
         <translation>Пит. насос</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="433"/>
-        <location filename="systestpage.cpp" line="441"/>
-        <location filename="systestpage.cpp" line="448"/>
         <location filename="systestpage.cpp" line="455"/>
-        <location filename="systestpage.cpp" line="462"/>
-        <location filename="systestpage.cpp" line="469"/>
+        <location filename="systestpage.cpp" line="463"/>
+        <location filename="systestpage.cpp" line="470"/>
         <location filename="systestpage.cpp" line="477"/>
-        <location filename="systestpage.cpp" line="503"/>
+        <location filename="systestpage.cpp" line="484"/>
+        <location filename="systestpage.cpp" line="491"/>
+        <location filename="systestpage.cpp" line="499"/>
+        <location filename="systestpage.cpp" line="525"/>
         <source>Current</source>
         <translation>Текущий</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="440"/>
+        <location filename="systestpage.cpp" line="462"/>
         <source>Dist. Pump</source>
         <translation>Раздаточный насос</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="447"/>
+        <location filename="systestpage.cpp" line="469"/>
         <source>254 UV Lamp</source>
         <translation>254 УФ лампа</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="454"/>
+        <location filename="systestpage.cpp" line="476"/>
         <source>185 UV Lamp</source>
         <translation>185 УФ лампа</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="461"/>
+        <location filename="systestpage.cpp" line="483"/>
         <source>Tank UV Lamp</source>
         <translation>Бак УФ лампа</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="468"/>
+        <location filename="systestpage.cpp" line="490"/>
         <source>EDI Power</source>
         <translation>EDI модуль</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="476"/>
+        <location filename="systestpage.cpp" line="498"/>
         <source>RO Pump</source>
         <translation>RO насос</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="478"/>
-        <location filename="systestpage.cpp" line="504"/>
+        <location filename="systestpage.cpp" line="500"/>
+        <location filename="systestpage.cpp" line="526"/>
         <source>Voltage</source>
         <translation>Скорость</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="494"/>
+        <location filename="systestpage.cpp" line="516"/>
         <source>UP Pump</source>
         <translation>ультрачистой воды насос</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="500"/>
+        <location filename="systestpage.cpp" line="522"/>
         <source>HP Pump</source>
         <translation>очищенной воды насос</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="508"/>
+        <location filename="systestpage.cpp" line="530"/>
         <source>UP Product Valve</source>
         <translation>Клапан прод. UP</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="511"/>
+        <location filename="systestpage.cpp" line="533"/>
         <source>HP Product Valve</source>
         <translation>Клапан прод. HP</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="521"/>
+        <location filename="systestpage.cpp" line="543"/>
         <source>UP Out Valve</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="526"/>
+        <location filename="systestpage.cpp" line="548"/>
         <source>Source Pump</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="532"/>
+        <location filename="systestpage.cpp" line="554"/>
         <source>TOC Cir Valve</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="537"/>
+        <location filename="systestpage.cpp" line="559"/>
         <source>HP Out Valve</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="542"/>
+        <location filename="systestpage.cpp" line="564"/>
         <source>Allocated Pump</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="547"/>
+        <location filename="systestpage.cpp" line="569"/>
         <source>Tube UV Light</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6160,191 +7029,191 @@
 <context>
     <name>SystemMonitorPage</name>
     <message>
-        <location filename="systemmonitorpage.cpp" line="219"/>
+        <location filename="systemmonitorpage.cpp" line="244"/>
         <source>Components Status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="236"/>
+        <location filename="systemmonitorpage.cpp" line="261"/>
         <source>Device Connect</source>
         <translation>Подключение устр.</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="240"/>
+        <location filename="systemmonitorpage.cpp" line="265"/>
         <source>Runing Status</source>
         <translation>Статус процесса</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="244"/>
+        <location filename="systemmonitorpage.cpp" line="269"/>
         <source>RO Inlet Valve</source>
         <translation>RO вх. клапан</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="247"/>
+        <location filename="systemmonitorpage.cpp" line="272"/>
         <source>RO Reject Valve</source>
         <translation>RO клапан режекции</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="251"/>
+        <location filename="systemmonitorpage.cpp" line="276"/>
         <source>RO Drain Valve</source>
         <translation>RO сливной клапан</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="254"/>
+        <location filename="systemmonitorpage.cpp" line="279"/>
         <source>HP Inlet Valve</source>
         <translation>Вх. клапан HP</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="258"/>
+        <location filename="systemmonitorpage.cpp" line="283"/>
         <source>UP Recir. Valve</source>
         <translation>Клапан рецирк. UP</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="261"/>
+        <location filename="systemmonitorpage.cpp" line="286"/>
         <source>HP Recir. Valve</source>
         <translation>Рецирк. клапан HP</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="265"/>
+        <location filename="systemmonitorpage.cpp" line="290"/>
         <source>TOC Flush Valve</source>
         <translation>TOC клапан промывки </translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="268"/>
+        <location filename="systemmonitorpage.cpp" line="293"/>
         <source>Tap Inlet Valve</source>
         <translation>Вх. клапан пит. воды</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="273"/>
+        <location filename="systemmonitorpage.cpp" line="298"/>
         <source>254 UV Lamp</source>
         <translation>254 УФ лампа</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="276"/>
+        <location filename="systemmonitorpage.cpp" line="301"/>
         <source>185 UV Lamp</source>
         <translation>185 УФ лампа</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="280"/>
+        <location filename="systemmonitorpage.cpp" line="305"/>
         <source>TANK UV Lamp</source>
         <translation>Бак УФ лампа</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="283"/>
+        <location filename="systemmonitorpage.cpp" line="308"/>
         <source>EDI Module</source>
         <translation>EDI модуль</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="287"/>
+        <location filename="systemmonitorpage.cpp" line="312"/>
         <source>Feed Pump</source>
         <translation>Пит. насос</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="290"/>
+        <location filename="systemmonitorpage.cpp" line="315"/>
         <source>Dist. Pump</source>
         <translation>Раздаточный насос</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="294"/>
+        <location filename="systemmonitorpage.cpp" line="319"/>
         <source>RO Pump</source>
         <translation>RO насос</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="298"/>
+        <location filename="systemmonitorpage.cpp" line="323"/>
         <source>Recir. Pump</source>
         <translation>Рецирк. насос</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="819"/>
+        <location filename="systemmonitorpage.cpp" line="844"/>
         <source>Tank Full</source>
         <translation>Бак полный</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="829"/>
+        <location filename="systemmonitorpage.cpp" line="854"/>
         <source>Fill Feed Tank</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="835"/>
+        <location filename="systemmonitorpage.cpp" line="860"/>
         <source>Flush</source>
         <translation>очистка</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="841"/>
+        <location filename="systemmonitorpage.cpp" line="866"/>
         <source>Rinsing</source>
         <translation>промывка</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="846"/>
+        <location filename="systemmonitorpage.cpp" line="871"/>
         <source>Filling</source>
         <translation>Наполнение</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="851"/>
+        <location filename="systemmonitorpage.cpp" line="876"/>
         <source>LPP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="854"/>
+        <location filename="systemmonitorpage.cpp" line="879"/>
         <source>KP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="861"/>
-        <location filename="systemmonitorpage.cpp" line="862"/>
+        <location filename="systemmonitorpage.cpp" line="886"/>
+        <location filename="systemmonitorpage.cpp" line="887"/>
         <source>Standby</source>
         <translation>Ожидание</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="867"/>
-        <location filename="systemmonitorpage.cpp" line="884"/>
+        <location filename="systemmonitorpage.cpp" line="892"/>
+        <location filename="systemmonitorpage.cpp" line="909"/>
         <source>Dispense</source>
         <translation>Раздача</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="871"/>
-        <location filename="systemmonitorpage.cpp" line="895"/>
+        <location filename="systemmonitorpage.cpp" line="896"/>
+        <location filename="systemmonitorpage.cpp" line="920"/>
         <source>Recirculation</source>
         <translation>рециркуляция</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="875"/>
-        <location filename="systemmonitorpage.cpp" line="888"/>
+        <location filename="systemmonitorpage.cpp" line="900"/>
+        <location filename="systemmonitorpage.cpp" line="913"/>
         <source>Ready</source>
         <translation>Готов</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="920"/>
+        <location filename="systemmonitorpage.cpp" line="945"/>
         <source>Excution Board OK</source>
         <translation>Платформа ОК</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="924"/>
+        <location filename="systemmonitorpage.cpp" line="949"/>
         <source>Excution Board Fault</source>
         <translation>Платформа Ошибка</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="930"/>
+        <location filename="systemmonitorpage.cpp" line="955"/>
         <source>RFID OK</source>
         <translation>RFID ОК</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="934"/>
+        <location filename="systemmonitorpage.cpp" line="959"/>
         <source>RFID Fault</source>
         <translation>RFID Ошибка</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="941"/>
+        <location filename="systemmonitorpage.cpp" line="966"/>
         <source>Dispenser OK</source>
         <translation>Диспенсер ОК</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="946"/>
+        <location filename="systemmonitorpage.cpp" line="971"/>
         <source>Dispenser Partial</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="951"/>
+        <location filename="systemmonitorpage.cpp" line="976"/>
         <source>Dispenser Fault</source>
         <translation>Диспенсер Ошибка</translation>
     </message>

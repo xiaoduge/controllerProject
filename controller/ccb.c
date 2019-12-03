@@ -4017,7 +4017,21 @@ void work_normal_run_fail(int iWorkId)
         CcbUpdateIAndBs(iWorkId,0,iTmp,0);
     }
 
-    iTmp = (1 << APP_FM_FM2_NO)|(1<<APP_FM_FM3_NO)|(1<<APP_FM_FM4_NO);
+	if(gCcb.ulMachineType == MACHINE_L_EDI_LOOP)
+	{
+		if(gMachineFlow >= 500)
+		{
+			iTmp = (1 << APP_FM_FM1_NO)|(1 << APP_FM_FM2_NO)|(1<<APP_FM_FM3_NO)|(1<<APP_FM_FM4_NO);
+		}
+		else
+		{
+			iTmp = (1 << APP_FM_FM2_NO)|(1<<APP_FM_FM3_NO)|(1<<APP_FM_FM4_NO);
+		}
+	}
+	else
+	{
+    	iTmp = (1 << APP_FM_FM2_NO)|(1<<APP_FM_FM3_NO)|(1<<APP_FM_FM4_NO);
+	}
 
     if (CcbGetFmObjState(iTmp))
     {
@@ -10778,8 +10792,25 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
                     cbf(pWorkItem->id);        
                     return ;
                 }       
-         
-                iTmp  = (1 << APP_FM_FM2_NO)|(1<<APP_FM_FM3_NO)|(1<<APP_FM_FM4_NO);
+
+				//
+                if(pCcb->ulMachineType == MACHINE_L_EDI_LOOP)
+	            {
+            		if(500 <= gMachineFlow)
+            		{
+            			iTmp = (1 << APP_FM_FM1_NO)|(1 << APP_FM_FM2_NO)|(1<<APP_FM_FM3_NO)|(1<<APP_FM_FM4_NO);
+            		}
+                    else
+                    {
+                        iTmp  = (1 << APP_FM_FM2_NO)|(1<<APP_FM_FM3_NO)|(1<<APP_FM_FM4_NO);
+                    }
+	            }
+                else
+                {
+                    iTmp  = (1 << APP_FM_FM2_NO)|(1<<APP_FM_FM3_NO)|(1<<APP_FM_FM4_NO);
+                }
+				
+                
                 iRet = CcbUpdateFms(pWorkItem->id,0,iTmp,iTmp);
                 if (iRet )
                 {

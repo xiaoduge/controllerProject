@@ -78,6 +78,7 @@ typedef struct
     EX_AUTO_CIR_TICK Ex_Auto_Cir_Tick;
 }EX_CCB;
 
+extern unsigned int gMachineFlow;
 extern Ex_DISP_PARAM_CALI_STRU gCaliParam;
 extern EX_CCB  ex_gCcb;
 

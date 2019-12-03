@@ -288,6 +288,7 @@ void DSuperPowerPage::update()
     m_ExLineEdit[SYSCFGPAGE_LB_SOFTVER]->setText(gAdditionalCfgParam.productInfo.strVersion);
 
     m_cmbDeviceType->setCurrentIndex(gGlobalParam.iMachineType);
+    m_cmbDeviceFlow->setEditText(QString("%1").arg(gAdditionalCfgParam.machineInfo.iMachineFlow));
     checkLoginInfo();
 }
 
