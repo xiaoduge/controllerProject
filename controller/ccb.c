@@ -6860,7 +6860,7 @@ void CanCcbDinProcess(void)
 
 }
 
-void DispC1Regulator(void)
+void DispC1Regulator(int iC1Regulator)
 {
 //    if((!gCcb.bit1B1Check4RuningState) && (DISP_ACT_TYPE_SWITCH & gCcb.ExeBrd.aRPumpObjs[0].iActive))
     if(!gCcb.bit1B1Check4RuningState)
@@ -6875,6 +6875,11 @@ void DispC1Regulator(void)
         float ft = (0.1 * gCcb.ExeBrd.aEcoObjs[APP_EXE_I1_NO].Value.eV.usTemp);
         float fv = 0.012*ft*ft - 0.8738*ft + 33;  //0.012*水温2 - 0.8738*水温 + 33
 
+		if(!iC1Regulator)
+		{
+			fv = 24.0;
+		}
+		
         int speed = DispConvertVoltage2RPumpSpeed(fv);
 
         if (speed != (0X00FF & gCcb.ExeBrd.ausHoldRegister[APP_EXE_HOLD_REG_RPUMP_OFFSET]))

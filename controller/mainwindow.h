@@ -370,8 +370,8 @@ public:
     void readCMInfoFromRFID(int iRfId, int type);
     void writeCMInfoToRFID(int iRfId, int type);
 
-    void updateExConsumableMsg(int iMachineType,CATNO cn,LOTNO ln,int iIndex, int category, QDate& date, int iRfid);
-    const QDate resetExConsumableMsg(QDate& date, int iRfid, int iType);
+    void updateExConsumableMsg(int iMachineType,CATNO cn,LOTNO ln,int iIndex, int category, QDate& date, int iRfid, bool bRfidWork = false);
+    const QDate resetExConsumableMsg(QDate& date, int iRfid, int iType, bool bRfidWork = false);
     const QString& consumableInitDate() const;
 
     int getActiveExeBrds() { return m_iExeActiveMask ? 1 : 0;}
@@ -419,6 +419,8 @@ public:
     void setStartCheckConsumable(bool isStart);
 
     void stopBuzzing();
+
+    const QString& machineName();
 
 public slots:
     void retriveLastRunState();
@@ -525,6 +527,9 @@ private:
     //2019.10.15 add, for sub-account
     void doSubAccountWork(double value, int iType);
 
+	void initMachineName();
+	void initMachineNameRephile();
+    void initMachineNameVWR();
     //
 public:
     void showWifiConfigDlg(const QString& name);
@@ -700,6 +705,8 @@ private:
 
     QString m_consuambleInitDate; //Used to determine if it is a new consumable
 
+	QString m_strMachineName;
+	
     class RFIDPackInfo
     {
     public:

@@ -76,7 +76,6 @@ SOURCES += main.cpp\
     alarmsetlistwidgtitem.cpp \
     alarmdisplaypage.cpp \
     alarmdisplaylistitem.cpp \
-    sysmsgpage.cpp \
     systemmonitorpage.cpp \
     systemmonitorlistwidgtitem.cpp \
     ToastDlg.cpp \
@@ -179,7 +178,6 @@ HEADERS  += mainwindow.h \
     alarmsetlistwidgtitem.h \
     alarmdisplaypage.h \
     alarmdisplaylistitem.h \
-    sysmsgpage.h \
     systemmonitorpage.h \
     systemmonitorlistwidgtitem.h \
     ToastDlg.h \

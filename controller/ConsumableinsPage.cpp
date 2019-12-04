@@ -4,404 +4,20 @@
 #include "exconfig.h"
 #include <QListWidget>
 
-ConsumableInsPage::ConsumableInsPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : CSubPage(parent,widget,wndMain)
+ConsumableInsPage::ConsumableInsPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain, short instanceType)
+                                          : CSubPage(parent,widget,wndMain), m_bRfidWork(false)
 {
-    int iIdx = 0;
-
     initTypeMap();
 
-    if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter)) //DISP_SM_PreFilterColumn
+    switch(instanceType)
     {
-        aIds[iIdx].iType = 0;
-        aIds[iIdx].iId   = DISP_PRE_PACK;
-        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
-        iIdx++;
-    }
-
-    //2018.10.22 ADD AC PACK
-    switch(gGlobalParam.iMachineType)
-    {
-    case MACHINE_L_Genie:
-    case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-        break;
-    case MACHINE_Genie:
-    case MACHINE_UP:
-    case MACHINE_EDI:
-    case MACHINE_RO:
-        aIds[iIdx].iType = 0;
-        aIds[iIdx].iId   = DISP_AC_PACK;
-        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
-        iIdx++;
-        break;
-    case MACHINE_PURIST:
-    case MACHINE_ADAPT:
-        break;
-     }
-
-    //2018.10.12 add T PACK
-    if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
-    {
-        aIds[iIdx].iType = 0;
-        aIds[iIdx].iId   = DISP_T_PACK;
-        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
-        iIdx++;
-    }
-    
-    switch(gGlobalParam.iMachineType)
-    {
-    case MACHINE_L_Genie:
-    case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-        aIds[iIdx].iType = 0;
-        aIds[iIdx].iId   = DISP_P_PACK;
-        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
-        iIdx++;
-        break;
-    case MACHINE_Genie:
-    case MACHINE_UP:
-    case MACHINE_EDI:
-    case MACHINE_RO:
-    case MACHINE_ADAPT:
-        aIds[iIdx].iType = 0;
-        aIds[iIdx].iId   = DISP_P_PACK;
-        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_PPACK_CLEANPACK;
-        iIdx++;
-        break;
-    case MACHINE_PURIST:
-        break;
-     }
-    
-    switch(gGlobalParam.iMachineType)
-    {
-    case MACHINE_L_Genie:
-    case MACHINE_L_EDI_LOOP:
-        aIds[iIdx].iType = 0;
-        aIds[iIdx].iId   = DISP_AT_PACK;
-        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_HPACK_ATPACK;
-        iIdx++;
-        break;
-    }
-    
-    switch(gGlobalParam.iMachineType)
-    {
-    case MACHINE_L_UP:  
-    case MACHINE_UP:
-    case MACHINE_PURIST:
-        aIds[iIdx].iType = 0;
-        aIds[iIdx].iId   = DISP_H_PACK;
-        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_HPACK_ATPACK;
-        iIdx++;
-        break;
-    case MACHINE_L_Genie:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-    case MACHINE_Genie:
-    case MACHINE_EDI:
-    case MACHINE_RO:
-    case MACHINE_ADAPT:
+    case 0:
+        initManualItem();
         break;
     default:
+        initNormalItem();
         break;
-    }
-    
-    switch(gGlobalParam.iMachineType)
-    {
-    case MACHINE_L_Genie:
-    case MACHINE_L_UP:
-    case MACHINE_Genie:
-    case MACHINE_UP:
-    case MACHINE_PURIST:
-    case MACHINE_ADAPT:
-        aIds[iIdx].iType = 0;
-        aIds[iIdx].iId   = DISP_U_PACK;
-        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_UPACK_HPACK;
-        iIdx++;
-        break;
-    default:
-        break;
-    }
-    
-    switch(gGlobalParam.iMachineType)
-    {
-    case MACHINE_L_Genie:
-    case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-    case MACHINE_Genie:
-    case MACHINE_EDI:
-        aIds[iIdx].iType = 0;
-        aIds[iIdx].iId   = DISP_N1_UV; //254
-        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
-        iIdx++;
-        break;
-    case MACHINE_RO:
-    case MACHINE_UP:
-        break;
-    default:
-        break;
-    }
-    
-    switch(gGlobalParam.iMachineType)
-    {
-    case MACHINE_L_Genie:
-    case MACHINE_L_UP:
-    case MACHINE_Genie:
-    case MACHINE_UP:
-    case MACHINE_PURIST:
-    case MACHINE_ADAPT:
-        aIds[iIdx].iType = 0;
-        aIds[iIdx].iId   = DISP_N2_UV;
-        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
-        iIdx++;
-        break;
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-        break;
-    default:
-        break;
-    }
-    
-    switch(gGlobalParam.iMachineType)
-    {
-    case MACHINE_L_Genie:
-    case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-    case MACHINE_Genie:
-    case MACHINE_UP:
-    case MACHINE_EDI:
-    case MACHINE_RO:
-        aIds[iIdx].iType = 0;
-        aIds[iIdx].iId   = DISP_N3_UV;
-        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
-        iIdx++;
-        break;
-    }
-    //0628
-    switch(gGlobalParam.iMachineType)
-    {
-    case MACHINE_L_Genie:
-    case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-    {
-        if (gGlobalParam.SubModSetting.ulFlags & (1 <<DISP_SM_TubeUV))
-        {
-            aIds[iIdx].iType = 0;
-            aIds[iIdx].iId   = DISP_N4_UV;
-            aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
-            iIdx++;
-        }
-        break;
-    }
-    case MACHINE_Genie:
-    case MACHINE_RO:
-    case MACHINE_EDI:
-    case MACHINE_PURIST:
-    case MACHINE_UP:
-        break;
-    }
-
-/*2018/05/21 TOC UV*/
-#if 0
-    switch(gGlobalParam.iMachineType) /*TOC UV E9*/
-    {
-    case MACHINE_L_Genie:
-    case MACHINE_L_UP:
-    case MACHINE_Genie:
-        {
-            if (gGlobalParam.SubModSetting.ulFlags &(1 << DISP_SM_HaveTOC))
-           {
-                aIds[iIdx].iType = 0;
-                aIds[iIdx].iId   = DISP_N5_UV;
-                aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
-                iIdx++;
-           }
-        }
-        break;
-    }
-#endif
-     
-    switch(gGlobalParam.iMachineType)
-    {
-    case MACHINE_L_Genie:
-    case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-    case MACHINE_Genie:
-    case MACHINE_UP:
-    case MACHINE_EDI:
-    case MACHINE_RO:
-        aIds[iIdx].iType = 0;
-        aIds[iIdx].iId   = DISP_W_FILTER;
-        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
-        iIdx++;
-        break;
-    }
-    
-    switch(gGlobalParam.iMachineType)
-    {
-    case MACHINE_L_Genie:
-    case MACHINE_L_UP:
-    case MACHINE_Genie:
-    case MACHINE_UP:
-    case MACHINE_ADAPT:
-        aIds[iIdx].iType = 0;
-        aIds[iIdx].iId   = DISP_T_B_FILTER;
-        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
-        iIdx++;
-        break;
-    }
-    
-    switch(gGlobalParam.iMachineType)
-    {
-    case MACHINE_L_Genie:
-    case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-    case MACHINE_Genie:
-    case MACHINE_UP:
-    case MACHINE_EDI:
-    case MACHINE_RO:
-    case MACHINE_PURIST:
-    case MACHINE_ADAPT:
-        aIds[iIdx].iType = 0;
-        aIds[iIdx].iId   = DISP_T_A_FILTER;
-        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
-        iIdx++;
-        break;
-    }
-     //0628
-    switch(gGlobalParam.iMachineType)
-    {
-    case MACHINE_L_Genie:
-    case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-    {
-        if (gGlobalParam.SubModSetting.ulFlags & DISP_SM_HaveTubeFilter)
-        {
-            aIds[iIdx].iType = 0;
-            aIds[iIdx].iId   = DISP_TUBE_FILTER;
-            aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
-            iIdx++;
-        }
-
-        if (gGlobalParam.SubModSetting.ulFlags & DISP_SM_TubeDI)
-        {
-            aIds[iIdx].iType = 0;
-            aIds[iIdx].iId   = DISP_TUBE_DI;
-            aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
-        }
-        break;
-    }
-    case MACHINE_Genie:
-    case MACHINE_UP:
-    case MACHINE_EDI:
-    case MACHINE_PURIST:
-    case MACHINE_ADAPT:
-    case MACHINE_RO:
-        break;
-    }
-
-    switch(gGlobalParam.iMachineType)
-    {
-    case MACHINE_L_Genie:
-    case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-        aIds[iIdx].iType = 1; //0
-        aIds[iIdx].iId   = DISP_MACHINERY_SOURCE_BOOSTER_PUMP;
-        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
-        iIdx++;
-        break;
-    }
-
-    switch(gGlobalParam.iMachineType)
-    {
-    case MACHINE_L_Genie:
-    case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-        aIds[iIdx].iType = 1; //0
-        aIds[iIdx].iId   = DISP_MACHINERY_TUBE_CIR_PUMP;
-        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
-        iIdx++;
-        break;
-    }
-
-    switch(gGlobalParam.iMachineType)
-    {
-    case MACHINE_L_Genie:
-    case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-    case MACHINE_Genie:
-    case MACHINE_UP:
-    case MACHINE_EDI:
-    case MACHINE_RO:
-    case MACHINE_PURIST:
-    case MACHINE_ADAPT:
-        aIds[iIdx].iType = 1; //0
-        aIds[iIdx].iId   = DISP_MACHINERY_CIR_PUMP;
-        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
-        iIdx++;
-        break;
-    }
-
-    switch(gGlobalParam.iMachineType)
-    {
-    case MACHINE_L_Genie:
-    case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-    case MACHINE_Genie:
-    case MACHINE_UP:
-    case MACHINE_EDI:
-    case MACHINE_RO:
-    case MACHINE_ADAPT:
-        aIds[iIdx].iType = 1; //0
-        aIds[iIdx].iId   = DISP_MACHINERY_RO_MEMBRANE;
-        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
-        iIdx++;
-        break;
-    }
-
-    switch(gGlobalParam.iMachineType)
-    {
-    case MACHINE_L_Genie:
-    case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-    case MACHINE_Genie:
-    case MACHINE_UP:
-    case MACHINE_EDI:
-    case MACHINE_RO:
-    case MACHINE_ADAPT:
-        aIds[iIdx].iType = 1; //0
-        aIds[iIdx].iId   = DISP_MACHINERY_RO_BOOSTER_PUMP;
-        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
-        iIdx++;
-        break;
-    }
-
-    switch(gGlobalParam.iMachineType)
-    {
-    case MACHINE_L_Genie:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_Genie:
-    case MACHINE_EDI:
-        aIds[iIdx].iType = 1; //0
-        aIds[iIdx].iId   = DISP_MACHINERY_EDI;
-        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
-        iIdx++;
-        break;
-    }     
-     
-    m_iRealItemNum = iIdx;
+    }  
 
     creatTitle();
 
@@ -727,7 +343,11 @@ void ConsumableInsPage::fade()
 
 void ConsumableInsPage::updateRfidInfo(int iRfId)
 {
-   /* search item */
+	if(!m_bRfidWork)
+	{
+		return;
+	}
+	
     int index = m_aInsListItem[m_iCurrentItem]->getItemId();
    
     if (aIds[index].iRfid != iRfId)
@@ -806,6 +426,661 @@ void ConsumableInsPage::initTypeMap()
     m_typeMap.insert(TANKVENTFILTER_CATNO, DISP_W_FILTER);
 }
 
+void ConsumableInsPage::initNormalItem()
+{
+    int iIdx = 0;
+	m_bRfidWork = true;
+    if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter)) //DISP_SM_PreFilterColumn
+    {
+        aIds[iIdx].iType = 0;
+        aIds[iIdx].iId   = DISP_PRE_PACK;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        iIdx++;
+    }
+
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+        break;
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_EDI:
+    case MACHINE_RO:
+        aIds[iIdx].iType = 0;
+        aIds[iIdx].iId   = DISP_AC_PACK;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        iIdx++;
+        break;
+    case MACHINE_PURIST:
+    case MACHINE_ADAPT:
+        break;
+     }
+
+    if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
+    {
+        aIds[iIdx].iType = 0;
+        aIds[iIdx].iId   = DISP_T_PACK;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        iIdx++;
+    }
+    
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+        aIds[iIdx].iType = 0;
+        aIds[iIdx].iId   = DISP_P_PACK;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        iIdx++;
+        break;
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_EDI:
+    case MACHINE_RO:
+    case MACHINE_ADAPT:
+        aIds[iIdx].iType = 0;
+        aIds[iIdx].iId   = DISP_P_PACK;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_PPACK_CLEANPACK;
+        iIdx++;
+        break;
+    case MACHINE_PURIST:
+        break;
+     }
+    
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_EDI_LOOP:
+        aIds[iIdx].iType = 0;
+        aIds[iIdx].iId   = DISP_AT_PACK;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_HPACK_ATPACK;
+        iIdx++;
+        break;
+    }
+    
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_UP:  
+    case MACHINE_UP:
+    case MACHINE_PURIST:
+        aIds[iIdx].iType = 0;
+        aIds[iIdx].iId   = DISP_H_PACK;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_HPACK_ATPACK;
+        iIdx++;
+        break;
+    case MACHINE_L_Genie:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    case MACHINE_Genie:
+    case MACHINE_EDI:
+    case MACHINE_RO:
+    case MACHINE_ADAPT:
+        break;
+    default:
+        break;
+    }
+    
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_PURIST:
+    case MACHINE_ADAPT:
+        aIds[iIdx].iType = 0;
+        aIds[iIdx].iId   = DISP_U_PACK;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_UPACK_HPACK;
+        iIdx++;
+        break;
+    default:
+        break;
+    }
+    
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    case MACHINE_Genie:
+    case MACHINE_EDI:
+        aIds[iIdx].iType = 0;
+        aIds[iIdx].iId   = DISP_N1_UV; //254
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        iIdx++;
+        break;
+    case MACHINE_RO:
+    case MACHINE_UP:
+        break;
+    default:
+        break;
+    }
+    
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_PURIST:
+    case MACHINE_ADAPT:
+        aIds[iIdx].iType = 0;
+        aIds[iIdx].iId   = DISP_N2_UV;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        iIdx++;
+        break;
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+        break;
+    default:
+        break;
+    }
+    
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_EDI:
+    case MACHINE_RO:
+        aIds[iIdx].iType = 0;
+        aIds[iIdx].iId   = DISP_N3_UV;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        iIdx++;
+        break;
+    }
+
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    {
+        if (gGlobalParam.SubModSetting.ulFlags & (1 <<DISP_SM_TubeUV))
+        {
+            aIds[iIdx].iType = 0;
+            aIds[iIdx].iId   = DISP_N4_UV;
+            aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+            iIdx++;
+        }
+        break;
+    }
+    case MACHINE_Genie:
+    case MACHINE_RO:
+    case MACHINE_EDI:
+    case MACHINE_PURIST:
+    case MACHINE_UP:
+        break;
+    }
+     
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_EDI:
+    case MACHINE_RO:
+        aIds[iIdx].iType = 0;
+        aIds[iIdx].iId   = DISP_W_FILTER;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        iIdx++;
+        break;
+    }
+    
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_ADAPT:
+        aIds[iIdx].iType = 0;
+        aIds[iIdx].iId   = DISP_T_B_FILTER;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        iIdx++;
+        break;
+    }
+    
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_EDI:
+    case MACHINE_RO:
+    case MACHINE_PURIST:
+    case MACHINE_ADAPT:
+        aIds[iIdx].iType = 0;
+        aIds[iIdx].iId   = DISP_T_A_FILTER;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        iIdx++;
+        break;
+    }
+
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    {
+        if (gGlobalParam.SubModSetting.ulFlags & DISP_SM_HaveTubeFilter)
+        {
+            aIds[iIdx].iType = 0;
+            aIds[iIdx].iId   = DISP_TUBE_FILTER;
+            aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+            iIdx++;
+        }
+
+        if (gGlobalParam.SubModSetting.ulFlags & DISP_SM_TubeDI)
+        {
+            aIds[iIdx].iType = 0;
+            aIds[iIdx].iId   = DISP_TUBE_DI;
+            aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        }
+        break;
+    }
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_EDI:
+    case MACHINE_PURIST:
+    case MACHINE_ADAPT:
+    case MACHINE_RO:
+        break;
+    }
+
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+        aIds[iIdx].iType = 1; //0
+        aIds[iIdx].iId   = DISP_MACHINERY_SOURCE_BOOSTER_PUMP;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        iIdx++;
+        break;
+    }
+
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+        aIds[iIdx].iType = 1; //0
+        aIds[iIdx].iId   = DISP_MACHINERY_TUBE_CIR_PUMP;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        iIdx++;
+        break;
+    }
+
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_EDI:
+    case MACHINE_RO:
+    case MACHINE_PURIST:
+    case MACHINE_ADAPT:
+        aIds[iIdx].iType = 1; //0
+        aIds[iIdx].iId   = DISP_MACHINERY_CIR_PUMP;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        iIdx++;
+        break;
+    }
+
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_EDI:
+    case MACHINE_RO:
+    case MACHINE_ADAPT:
+        aIds[iIdx].iType = 1; //0
+        aIds[iIdx].iId   = DISP_MACHINERY_RO_MEMBRANE;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        iIdx++;
+        break;
+    }
+
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_EDI:
+    case MACHINE_RO:
+    case MACHINE_ADAPT:
+        aIds[iIdx].iType = 1; //0
+        aIds[iIdx].iId   = DISP_MACHINERY_RO_BOOSTER_PUMP;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        iIdx++;
+        break;
+    }
+
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_Genie:
+    case MACHINE_EDI:
+        aIds[iIdx].iType = 1; //0
+        aIds[iIdx].iId   = DISP_MACHINERY_EDI;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        iIdx++;
+        break;
+    }     
+    m_iRealItemNum = iIdx;
+}
+
+void ConsumableInsPage::initManualItem()
+{
+	int iIdx = 0;
+	m_bRfidWork = false;
+    if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter)) //DISP_SM_PreFilterColumn
+    {
+        aIds[iIdx].iType = 0;
+        aIds[iIdx].iId   = DISP_PRE_PACK;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        iIdx++;
+    }
+
+
+    if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
+    {
+        aIds[iIdx].iType = 0;
+        aIds[iIdx].iId   = DISP_T_PACK;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        iIdx++;
+    }
+
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    case MACHINE_Genie:
+    case MACHINE_EDI:
+        aIds[iIdx].iType = 0;
+        aIds[iIdx].iId   = DISP_N1_UV; //254
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        iIdx++;
+        break;
+    case MACHINE_RO:
+    case MACHINE_UP:
+        break;
+    default:
+        break;
+    }
+    
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_PURIST:
+    case MACHINE_ADAPT:
+        aIds[iIdx].iType = 0;
+        aIds[iIdx].iId   = DISP_N2_UV;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        iIdx++;
+        break;
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+        break;
+    default:
+        break;
+    }
+    
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_EDI:
+    case MACHINE_RO:
+        aIds[iIdx].iType = 0;
+        aIds[iIdx].iId   = DISP_N3_UV;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        iIdx++;
+        break;
+    }
+
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    {
+        if (gGlobalParam.SubModSetting.ulFlags & (1 <<DISP_SM_TubeUV))
+        {
+            aIds[iIdx].iType = 0;
+            aIds[iIdx].iId   = DISP_N4_UV;
+            aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+            iIdx++;
+        }
+        break;
+    }
+    case MACHINE_Genie:
+    case MACHINE_RO:
+    case MACHINE_EDI:
+    case MACHINE_PURIST:
+    case MACHINE_UP:
+        break;
+    }
+     
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_EDI:
+    case MACHINE_RO:
+        aIds[iIdx].iType = 0;
+        aIds[iIdx].iId   = DISP_W_FILTER;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        iIdx++;
+        break;
+    }
+    
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_ADAPT:
+        aIds[iIdx].iType = 0;
+        aIds[iIdx].iId   = DISP_T_B_FILTER;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        iIdx++;
+        break;
+    }
+    
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_EDI:
+    case MACHINE_RO:
+    case MACHINE_PURIST:
+    case MACHINE_ADAPT:
+        aIds[iIdx].iType = 0;
+        aIds[iIdx].iId   = DISP_T_A_FILTER;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        iIdx++;
+        break;
+    }
+
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    {
+        if (gGlobalParam.SubModSetting.ulFlags & DISP_SM_HaveTubeFilter)
+        {
+            aIds[iIdx].iType = 0;
+            aIds[iIdx].iId   = DISP_TUBE_FILTER;
+            aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+            iIdx++;
+        }
+
+        if (gGlobalParam.SubModSetting.ulFlags & DISP_SM_TubeDI)
+        {
+            aIds[iIdx].iType = 0;
+            aIds[iIdx].iId   = DISP_TUBE_DI;
+            aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        }
+        break;
+    }
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_EDI:
+    case MACHINE_PURIST:
+    case MACHINE_ADAPT:
+    case MACHINE_RO:
+        break;
+    }
+
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+        aIds[iIdx].iType = 1; //0
+        aIds[iIdx].iId   = DISP_MACHINERY_SOURCE_BOOSTER_PUMP;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        iIdx++;
+        break;
+    }
+
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+        aIds[iIdx].iType = 1; //0
+        aIds[iIdx].iId   = DISP_MACHINERY_TUBE_CIR_PUMP;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        iIdx++;
+        break;
+    }
+
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_EDI:
+    case MACHINE_RO:
+    case MACHINE_PURIST:
+    case MACHINE_ADAPT:
+        aIds[iIdx].iType = 1; //0
+        aIds[iIdx].iId   = DISP_MACHINERY_CIR_PUMP;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        iIdx++;
+        break;
+    }
+
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_EDI:
+    case MACHINE_RO:
+    case MACHINE_ADAPT:
+        aIds[iIdx].iType = 1; //0
+        aIds[iIdx].iId   = DISP_MACHINERY_RO_MEMBRANE;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        iIdx++;
+        break;
+    }
+
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_EDI:
+    case MACHINE_RO:
+    case MACHINE_ADAPT:
+        aIds[iIdx].iType = 1; //0
+        aIds[iIdx].iId   = DISP_MACHINERY_RO_BOOSTER_PUMP;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        iIdx++;
+        break;
+    }
+
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_Genie:
+    case MACHINE_EDI:
+        aIds[iIdx].iType = 1; //0
+        aIds[iIdx].iId   = DISP_MACHINERY_EDI;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        iIdx++;
+        break;
+    }     
+    m_iRealItemNum = iIdx;
+}
+
 void ConsumableInsPage::on_btn_clicked(int index)
 {  
     int iOffset = 0;
@@ -828,11 +1103,9 @@ void ConsumableInsPage::on_btn_clicked(int index)
 
         toCurrentItem(index);
 
-        if (strCn.isEmpty()
-            || strLn.isEmpty())
+        if((strCn.isEmpty() || strLn.isEmpty()) && m_bRfidWork)
         {
-          /* try to read info by RFID */
-          
+            /* try to read info by RFID */
             if ( aIds[iMapIdx].iRfid < APP_RF_READER_MAX_NUMBER)
             {
                 int  iRet;
@@ -902,8 +1175,14 @@ void ConsumableInsPage::on_btn_clicked(int index)
               /* install */
             strncpy(cn,strCn.toAscii(),APP_CAT_LENGTH);
             strncpy(ln,strLn.toAscii(),APP_LOT_LENGTH);
-   
-            m_wndMain->updateExConsumableMsg(gGlobalParam.iMachineType, cn, ln, cmIdx, 0, installDate, aIds[iMapIdx].iRfid);
+   			if(m_bRfidWork)
+   			{
+            	m_wndMain->updateExConsumableMsg(gGlobalParam.iMachineType, cn, ln, cmIdx, 0, installDate, aIds[iMapIdx].iRfid, true);
+   			}
+			else
+			{
+				m_wndMain->updateExConsumableMsg(gGlobalParam.iMachineType, cn, ln, cmIdx, 0, installDate, aIds[iMapIdx].iRfid, false);
+			}
               
             strncpy(gGlobalParam.cmSn.aCn[cmIdx],cn,APP_CAT_LENGTH);
             strncpy(gGlobalParam.cmSn.aLn[cmIdx],ln,APP_LOT_LENGTH);
@@ -937,9 +1216,15 @@ void ConsumableInsPage::on_btn_clicked(int index)
              /* install */
             strncpy(cn,strCn.toAscii(),APP_CAT_LENGTH);
             strncpy(ln,strLn.toAscii(),APP_LOT_LENGTH);
-             
-            m_wndMain->updateExConsumableMsg(gGlobalParam.iMachineType, cn, ln, macIdx, 1, installDate, aIds[iMapIdx].iRfid);
 
+			if(m_bRfidWork)
+			{
+                m_wndMain->updateExConsumableMsg(gGlobalParam.iMachineType, cn, ln, macIdx, 1, installDate, aIds[iMapIdx].iRfid, true);
+			}
+            else
+            {
+                m_wndMain->updateExConsumableMsg(gGlobalParam.iMachineType, cn, ln, macIdx, 1, installDate, aIds[iMapIdx].iRfid, false);
+            }
              /* reset state info */
             m_wndMain->MainWriteMacInstallInfo2Db(macIdx,0,cn,ln);
         }        

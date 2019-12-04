@@ -171,7 +171,8 @@ I5  UP产水电阻率
 ** @release    version phase
 **
 ****************************************************************************/
-QString strSoftwareVersion = QString("0.1.9.191203_debug");
+//QString strSoftwareVersion = QString("0.1.9.191203_debug");
+QString strSoftwareVersion = QString("0.2.1 Built on %1 %2").arg(__DATE__).arg(__TIME__);
 
 MainWindow *gpMainWnd;
 
@@ -937,7 +938,7 @@ void MainRetriveFmParam(int iMachineType,DISP_FM_SETTING_STRU  &Param)
 
         strV += QString::number(iLoop);
 
-        int iValue = config->value(strV,gaMachineType[iMachineType].iDefaultFmPulse).toInt();
+        int iValue = config->value(strV, gaMachineType[iMachineType].iDefaultFmPulse).toInt();
         
         Param.aulCfg[iLoop] = iValue;
     }    
@@ -3294,6 +3295,7 @@ MainWindow::MainWindow(QMainWindow *parent) :
 
     //Set the factory default time for RFID tags
     m_consuambleInitDate = QString("2014-05-22");
+	initMachineName();
 
     MainRetriveExConsumableMsg(gGlobalParam.iMachineType,gGlobalParam.cmSn,gGlobalParam.macSn);
 
@@ -4163,8 +4165,9 @@ MainWindow::MainWindow(QMainWindow *parent) :
             mainDisplay();
         }
     }
-    initScreenSleep(); //ex
-    initMachineFlow();  //ex 2018.11.19
+
+    initScreenSleep();
+    initMachineFlow();
 
 #ifdef D_HTTPWORK
     for(int i = 0; i < HTTP_NOTIFY_NUM; i++)
@@ -4250,6 +4253,14 @@ void MainWindow::stopAlarm()
 void MainWindow::stopBuzzing()
 {
     setRelay(BUZZER_CTL_BUZZ,0);
+}
+
+/**
+ * @return [機型名稱]
+ */
+const QString &MainWindow::machineName()
+{
+    return m_strMachineName;
 }
 
 void MainWindow::prepareKeyStroke()
@@ -5850,6 +5861,104 @@ void MainWindow::doSubAccountWork(double value, int iType)
     }
 }
 
+void MainWindow::initMachineName()
+{
+    switch(gAdditionalCfgParam.productInfo.iCompany)
+    {
+    case 0:
+        initMachineNameRephile();
+        break;
+    case 1:
+        initMachineNameVWR();
+        break;
+    default:
+        initMachineNameRephile();
+        break;
+    }
+}
+
+void MainWindow::initMachineNameRephile()
+{
+    unsigned int iMachineFlow = gAdditionalCfgParam.machineInfo.iMachineFlow;
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+        m_strMachineName = QString("Super Genie G") + tr(" %1").arg(iMachineFlow);
+        break;
+    case MACHINE_L_UP:
+        m_strMachineName = QString("Super Genie U") + tr(" %1").arg(iMachineFlow);
+        break;
+    case MACHINE_L_EDI_LOOP:
+        m_strMachineName = QString("Super Genie E") + tr(" %1").arg(iMachineFlow);
+        break;
+    case MACHINE_L_RO_LOOP:
+        m_strMachineName = QString("Super Genie R") + tr(" %1").arg(iMachineFlow);
+        break;
+    case MACHINE_Genie:
+        m_strMachineName = QString("Genie G") + tr(" %1").arg(iMachineFlow);
+        break;
+    case MACHINE_UP:
+        m_strMachineName = QString("Genie U") + tr(" %1").arg(iMachineFlow);
+        break;
+    case MACHINE_EDI:
+        m_strMachineName = QString("Genie E") + tr(" %1").arg(iMachineFlow);
+        break;
+    case MACHINE_RO:
+        m_strMachineName = QString("Genie R") + tr(" %1").arg(iMachineFlow);
+        break;
+    case MACHINE_PURIST:
+        m_strMachineName = QString("Genie PURIST");
+        break;
+    case MACHINE_ADAPT:
+        m_strMachineName = QString("Genie A") + tr(" %1").arg(iMachineFlow);
+        break;
+    default:
+		m_strMachineName = QString("unknow");
+        break;
+    }
+}
+
+void MainWindow::initMachineNameVWR()
+{
+    unsigned int iMachineFlow = gAdditionalCfgParam.machineInfo.iMachineFlow;
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+        m_strMachineName = QString("Super Genie G ") + tr(" %1").arg(iMachineFlow);
+        break;
+    case MACHINE_L_UP:
+        m_strMachineName = QString("Super Genie U") + tr(" %1").arg(iMachineFlow);
+        break;
+    case MACHINE_L_EDI_LOOP:
+        m_strMachineName = QString("Super Genie E") + tr(" %1").arg(iMachineFlow);
+        break;
+    case MACHINE_L_RO_LOOP:
+        m_strMachineName = QString("Super Genie R") + tr(" %1").arg(iMachineFlow);
+        break;
+    case MACHINE_Genie:
+        m_strMachineName = QString("VWR G") + tr(" %1").arg(iMachineFlow);
+        break;
+    case MACHINE_UP:
+        m_strMachineName = QString("VWR U") + tr(" %1").arg(iMachineFlow);
+        break;
+    case MACHINE_EDI:
+        m_strMachineName = QString("VWR E") + tr(" %1").arg(iMachineFlow);
+        break;
+    case MACHINE_RO:
+        m_strMachineName = QString("VWR R") + tr(" %1").arg(iMachineFlow);
+        break;
+    case MACHINE_PURIST:
+        m_strMachineName = QString("VWR P");
+        break;
+    case MACHINE_ADAPT:
+        m_strMachineName = QString("VWR A") + tr(" %1").arg(iMachineFlow);
+        break;
+    default:
+		m_strMachineName = QString("unknow");
+        break;
+    }
+}
+
 void MainWindow::showWifiConfigDlg(const QString& name)
 {
     m_pWifiConfigDlg->setSSIDName(name);
@@ -6685,7 +6794,7 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                             alarmCommProc(false,DISP_ALARM_PART1,DISP_ALARM_PART1_HIGHER_SOURCE_WATER_TEMPERATURE);
                             alarmCommProc(false,DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_TEMPERATURE);
                         }
-                       if ( m_bC1Regulator ) DispC1Regulator();  //test c1
+                        DispC1Regulator(m_bC1Regulator);  
                         break;
                     case APP_EXE_I2_NO:
                         if (DispGetPwFlag())
@@ -9724,8 +9833,9 @@ void MainWindow::writeCMInfoToRFID(int iRfId, int type)
     }
 }
 
+
 void MainWindow::updateExConsumableMsg(int iMachineType, CATNO cn, LOTNO ln, int iIndex,
-                                       int category, QDate &date, int iRfid)
+                                       int category, QDate &date, int iRfid, bool bRfidWork)
 {
     Q_UNUSED(iMachineType);
     QSqlQuery query;
@@ -9739,13 +9849,13 @@ void MainWindow::updateExConsumableMsg(int iMachineType, CATNO cn, LOTNO ln, int
     {
             QString lotno = query.value(0).toString();
             if(ln == lotno)
-            {
-                resetExConsumableMsg(date, iRfid, iIndex);
+            {	
+                resetExConsumableMsg(date, iRfid, iIndex, bRfidWork);
                 return; // do nothing
             }
             else
             {
-                QString installDate = resetExConsumableMsg(date, iRfid, iIndex).toString("yyyy-MM-dd");
+                QString installDate = resetExConsumableMsg(date, iRfid, iIndex, bRfidWork).toString("yyyy-MM-dd");
                 QSqlQuery queryUpdate;
                 queryUpdate.prepare(update_sql_Consumable);
                 queryUpdate.addBindValue(cn);
@@ -9758,7 +9868,7 @@ void MainWindow::updateExConsumableMsg(int iMachineType, CATNO cn, LOTNO ln, int
     }
     else
     {
-        QString installDate = resetExConsumableMsg(date, iRfid, iIndex).toString("yyyy-MM-dd");
+        QString installDate = resetExConsumableMsg(date, iRfid, iIndex, bRfidWork).toString("yyyy-MM-dd");
         QSqlQuery queryInsert;
         queryInsert.prepare(insert_sql_Consumable);
         queryInsert.bindValue(":iPackType", iIndex);
@@ -9770,8 +9880,13 @@ void MainWindow::updateExConsumableMsg(int iMachineType, CATNO cn, LOTNO ln, int
     }
 }
 
-const QDate MainWindow::resetExConsumableMsg(QDate &date, int iRfid, int iType)
+const QDate MainWindow::resetExConsumableMsg(QDate &date, int iRfid, int iType, bool bRfidWork)
 {
+    if(!bRfidWork)
+    {
+        QDate curDate = QDate::currentDate();
+    }
+
     switch(iType)
     {
     case DISP_AC_PACK:

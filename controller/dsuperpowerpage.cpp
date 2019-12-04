@@ -144,6 +144,7 @@ void DSuperPowerPage::createControl()
     flowList << "5" << "10" << "12" << "15"<< "24" << "32"
              << "30" << "50" << "60" << "125" << "150" << "250" << "300" << "500" << "600";
     m_cmbDeviceFlow->addItems(flowList);
+    updateMachineFlow();
 
     //系统机型
     rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN + 10);
@@ -288,8 +289,21 @@ void DSuperPowerPage::update()
     m_ExLineEdit[SYSCFGPAGE_LB_SOFTVER]->setText(gAdditionalCfgParam.productInfo.strVersion);
 
     m_cmbDeviceType->setCurrentIndex(gGlobalParam.iMachineType);
-    m_cmbDeviceFlow->setEditText(QString("%1").arg(gAdditionalCfgParam.machineInfo.iMachineFlow));
     checkLoginInfo();
+    updateMachineFlow();
+}
+
+void DSuperPowerPage::updateMachineFlow()
+{
+    QString strFlow = QString("%1").arg(gAdditionalCfgParam.machineInfo.iMachineFlow);
+    for(int iLoop = 0; iLoop < m_cmbDeviceFlow->count(); ++iLoop)
+    {
+        if(strFlow == m_cmbDeviceFlow->itemText(iLoop))
+        {
+            m_cmbDeviceFlow->setCurrentIndex(iLoop);
+            break;
+        }
+    }
 }
 
 void DSuperPowerPage::connectData()

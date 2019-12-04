@@ -248,9 +248,20 @@ SysTestPage::SysTestPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMai
     } 
     switch(gGlobalParam.iMachineType)/*185UV   ON/OFF   电流：000*/
     {
+    case MACHINE_L_EDI_LOOP:
+    	if(gAdditionalCfgParam.machineInfo.iMachineFlow != 500)
+    	{
+            aSwitchs[iIdx].type = SYSTEM_TEST_ITEM_TYPE_SWITCH_AND_VALUE;
+            aSwitchs[iIdx].id   = APP_EXE_N2_NO; 
+            if (-1 == m_aiIndex[DISP_NOT_RECT])
+            {
+                m_aiIndex[DISP_NOT_RECT] = iIdx - (APP_EXE_N2_NO - APP_EXE_N1_NO);
+            }
+            iIdx++;
+    	}
+        break;
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
     case MACHINE_Genie:
     case MACHINE_UP:
@@ -320,6 +331,17 @@ SysTestPage::SysTestPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMai
     switch(gGlobalParam.iMachineType)/*UP/HP泵 OFF/低/中/高 电压：000电流：000*/
     {
     case MACHINE_L_EDI_LOOP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow != 500)
+        {
+            aSwitchs[iIdx].type = SYSTEM_TEST_ITEM_TYPE_RADIO_AND_VALUE;
+            aSwitchs[iIdx].id   = APP_EXE_C2_NO;            
+            if (-1 == m_aiIndex[DISP_NOT_RPUMP])
+            {
+                m_aiIndex[DISP_NOT_RPUMP] = iIdx - (APP_EXE_C2_NO - APP_EXE_C1_NO);
+            }
+            iIdx++;
+        }
+        break;
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
     case MACHINE_L_RO_LOOP:
@@ -373,11 +395,24 @@ void SysTestPage::buildTranslation()
     int iLoop;
 
     QStringList strList;
-    strList << tr("OFF");
-    strList << tr("Low");
-    strList << tr("Middle");
-    strList << tr("High");
-    
+
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_EDI_LOOP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow == 500)
+        {
+            strList << tr("OFF");
+            strList << tr("ON");
+            break;
+        }
+    default:
+        strList << tr("OFF");
+        strList << tr("Low");
+        strList << tr("Middle");
+        strList << tr("High");
+        break;
+    }
+
     for (iLoop = 0; iLoop < m_iRealItems; iLoop++)
     {
         switch(aSwitchs[iLoop].id)
@@ -791,6 +826,26 @@ void SysTestPage::on_item_cmb_changed(int value)
     case 3: 
         /* High speed */
         tmp = DispConvertVoltage2RPumpSpeed(24);
+        break;
+    default:
+        break;
+    }
+
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_EDI_LOOP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow == 500)
+        {
+            switch(iSel)
+            {
+            case 1: 
+                tmp = DispConvertVoltage2RPumpSpeed(24);
+                break;
+            default:
+                tmp = -1;
+                break;
+            }
+        }
         break;
     default:
         break;

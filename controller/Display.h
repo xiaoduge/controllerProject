@@ -1219,7 +1219,7 @@ int CcbScanRfid(int iIndex,int iTime);
 int CcbGetRfidCont(int iIndex,int offset,int len,unsigned char *pucData);
 int CcbSetRPump(int id,int iChl,unsigned int ulValue);
 int DispSetRPump(int iChl,unsigned int ulValue);
-void DispC1Regulator(void);
+void DispC1Regulator(int iC1Regulator);
 
 #ifdef __cplusplus
 }

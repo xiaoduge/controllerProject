@@ -184,8 +184,6 @@ SystemMonitorPage::SystemMonitorPage(QObject *parent,CBaseWidget *widget ,MainWi
         break;      
     }
 
-    
-
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_L_Genie:
@@ -211,10 +209,24 @@ SystemMonitorPage::SystemMonitorPage(QObject *parent,CBaseWidget *widget ,MainWi
         break;
     }
 
-    aIds[iIdx].iType = SYSMONI_LIST_ITEM_SINGLE_SWITCH_DOUBLE_VALUE;
-    aIds[iIdx].iId   = SYSTEMPAGE_ITEM_NAME_C2_STATE;
-    aIds[iIdx].num   = 0XFF;
-    iIdx++;
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_EDI_LOOP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow != 500)
+        {
+            aIds[iIdx].iType = SYSMONI_LIST_ITEM_SINGLE_SWITCH_DOUBLE_VALUE;
+            aIds[iIdx].iId   = SYSTEMPAGE_ITEM_NAME_C2_STATE;
+            aIds[iIdx].num   = 0XFF;
+            iIdx++;
+        }
+        break;
+    default:
+        aIds[iIdx].iType = SYSMONI_LIST_ITEM_SINGLE_SWITCH_DOUBLE_VALUE;
+        aIds[iIdx].iId   = SYSTEMPAGE_ITEM_NAME_C2_STATE;
+        aIds[iIdx].num   = 0XFF;
+        iIdx++;
+        break;
+    }
 
     m_iRealNum = iIdx;
 

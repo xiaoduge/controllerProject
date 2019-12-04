@@ -637,80 +637,9 @@ void SystemCfgPage::update()
 
 void SystemCfgPage::setDeviceType()
 {
-    QString strTypeName;
-    switch(gAdditionalCfgParam.productInfo.iCompany)
-    {
-    case 0:
-        strTypeName = setDeviceTypeRephile();
-        break;
-    case 1:
-        strTypeName = setDeviceTypeTypeVWR();
-        break;
-    default:
-        strTypeName = "Unknow";
-        break;
-    }
+    QString strTypeName = m_wndMain->machineName();
     m_lbDeviceType->setText(strTypeName);
 }
-
-const QString SystemCfgPage::setDeviceTypeRephile()
-{
-    switch(gGlobalParam.iMachineType)
-    {
-    case MACHINE_L_Genie:
-        return QString("Super-Genie G ") + tr("%1").arg(gAdditionalCfgParam.machineInfo.iMachineFlow);
-    case MACHINE_L_UP:
-        return QString("Super-Genie U ") + tr("%1").arg(gAdditionalCfgParam.machineInfo.iMachineFlow);
-    case MACHINE_L_EDI_LOOP:
-        return QString("Super-Genie E ") + tr("%1").arg(gAdditionalCfgParam.machineInfo.iMachineFlow);
-    case MACHINE_L_RO_LOOP:
-        return QString("Super-Genie R ") + tr("%1").arg(gAdditionalCfgParam.machineInfo.iMachineFlow);
-    case MACHINE_Genie:
-        return QString("Genie G ") + tr("%1").arg(gAdditionalCfgParam.machineInfo.iMachineFlow);
-    case MACHINE_UP:
-        return QString("Genie U ") + tr("%1").arg(gAdditionalCfgParam.machineInfo.iMachineFlow);
-    case MACHINE_EDI:
-        return QString("Genie E ") + tr("%1").arg(gAdditionalCfgParam.machineInfo.iMachineFlow);
-    case MACHINE_RO:
-        return QString("Genie R ") + tr("%1").arg(gAdditionalCfgParam.machineInfo.iMachineFlow);
-    case MACHINE_PURIST:
-        return QString("Genie PURIST");
-    case MACHINE_ADAPT:
-        return QString("Genie A ") + tr("%1").arg(gAdditionalCfgParam.machineInfo.iMachineFlow);
-    default:
-        return QString("Unknow");
-    }
-}
-
-const QString SystemCfgPage::setDeviceTypeTypeVWR()
-{
-    switch(gGlobalParam.iMachineType)
-    {
-    case MACHINE_L_Genie:
-        return QString("Super-Genie G ") + tr("%1").arg(gAdditionalCfgParam.machineInfo.iMachineFlow);
-    case MACHINE_L_UP:
-        return QString("Super-Genie U ") + tr("%1").arg(gAdditionalCfgParam.machineInfo.iMachineFlow);
-    case MACHINE_L_EDI_LOOP:
-        return QString("Super-Genie E ") + tr("%1").arg(gAdditionalCfgParam.machineInfo.iMachineFlow);
-    case MACHINE_L_RO_LOOP:
-        return QString("Super-Genie R ") + tr("%1").arg(gAdditionalCfgParam.machineInfo.iMachineFlow);
-    case MACHINE_Genie:
-        return QString("VWR G ") + tr("%1").arg(gAdditionalCfgParam.machineInfo.iMachineFlow);
-    case MACHINE_UP:
-        return QString("VWR U ") + tr("%1").arg(gAdditionalCfgParam.machineInfo.iMachineFlow);
-    case MACHINE_EDI:
-        return QString("VWR E ") + tr("%1").arg(gAdditionalCfgParam.machineInfo.iMachineFlow);
-    case MACHINE_RO:
-        return QString("VWR R ") + tr("%1").arg(gAdditionalCfgParam.machineInfo.iMachineFlow);
-    case MACHINE_PURIST:
-        return QString("VWR P");
-    case MACHINE_ADAPT:
-        return QString("VWR A ") + tr("%1").arg(gAdditionalCfgParam.machineInfo.iMachineFlow);
-    default:
-        return QString("Unknow");
-    }
-}
-
 
 void SystemCfgPage::connectData()
 {

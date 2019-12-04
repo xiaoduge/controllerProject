@@ -2,6 +2,7 @@
 #include "cbitmapbutton.h"
 #include "mainwindow.h"
 #include "systestpage.h"
+#include "exconfig.h"
 
 #define LEFT_MARGIN       5
 #define TOP_MARGIN        5
@@ -85,10 +86,24 @@ Systestlistwidgtitem::Systestlistwidgtitem(QWidget *parent,SysTestPage *owner,in
             m_lbP2Value->setStyleSheet("QLabel{border-width:2;border-style:outset}");
 
             m_cmbAction = new QComboBox(this);
-            m_cmbAction->addItem(tr("OFF"));
-            m_cmbAction->addItem(tr("LOW"));
-            m_cmbAction->addItem(tr("MID"));
-            m_cmbAction->addItem(tr("HIGH"));
+
+            switch(gGlobalParam.iMachineType)
+            {
+            case MACHINE_L_EDI_LOOP:
+                if(gAdditionalCfgParam.machineInfo.iMachineFlow == 500)
+                {
+                    m_cmbAction->addItem(tr("OFF"));
+                    m_cmbAction->addItem(tr("ON"));
+					break;
+                }
+            default:
+                m_cmbAction->addItem(tr("OFF"));
+                m_cmbAction->addItem(tr("LOW"));
+                m_cmbAction->addItem(tr("MID"));
+                m_cmbAction->addItem(tr("HIGH"));
+                break;
+            }
+
             m_cmbAction->setCurrentIndex(0);
 
             m_cmbAction->setGeometry(SYSTEM_TEST_LIST_WIDGET_WIDTH - 50 - 100,TOP_MARGIN,100,SYSTEM_TEST_LIST_WIDGET_HEIGHT - 2*TOP_MARGIN);

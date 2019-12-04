@@ -189,5 +189,6 @@
         <file alias="user manual.png">pics/buttonIcon/user manual.png</file>
         <file alias="Water Quality.png">pics/buttonIcon/Water Quality.png</file>
         <file alias="alarm alert.png">pics/buttonIcon/alarm alert.png</file>
+        <file alias="Manual Installation.png">pics/buttonIcon/Manual Installation.png</file>
     </qresource>
 </RCC>

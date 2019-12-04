@@ -821,198 +821,198 @@
 <context>
     <name>ConsumableInsPage</name>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="427"/>
+        <location filename="ConsumableinsPage.cpp" line="43"/>
         <source>Components Installation</source>
         <translation type="unfinished">Instalación Componentes</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="450"/>
+        <location filename="ConsumableinsPage.cpp" line="66"/>
         <source>Prefilter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="451"/>
-        <location filename="ConsumableinsPage.cpp" line="458"/>
-        <location filename="ConsumableinsPage.cpp" line="465"/>
-        <location filename="ConsumableinsPage.cpp" line="472"/>
-        <location filename="ConsumableinsPage.cpp" line="479"/>
-        <location filename="ConsumableinsPage.cpp" line="486"/>
-        <location filename="ConsumableinsPage.cpp" line="493"/>
-        <location filename="ConsumableinsPage.cpp" line="500"/>
-        <location filename="ConsumableinsPage.cpp" line="507"/>
-        <location filename="ConsumableinsPage.cpp" line="514"/>
-        <location filename="ConsumableinsPage.cpp" line="521"/>
-        <location filename="ConsumableinsPage.cpp" line="528"/>
-        <location filename="ConsumableinsPage.cpp" line="537"/>
-        <location filename="ConsumableinsPage.cpp" line="556"/>
-        <location filename="ConsumableinsPage.cpp" line="563"/>
-        <location filename="ConsumableinsPage.cpp" line="570"/>
-        <location filename="ConsumableinsPage.cpp" line="577"/>
-        <location filename="ConsumableinsPage.cpp" line="584"/>
-        <location filename="ConsumableinsPage.cpp" line="591"/>
-        <location filename="ConsumableinsPage.cpp" line="598"/>
-        <location filename="ConsumableinsPage.cpp" line="605"/>
-        <location filename="ConsumableinsPage.cpp" line="613"/>
-        <location filename="ConsumableinsPage.cpp" line="620"/>
+        <location filename="ConsumableinsPage.cpp" line="67"/>
+        <location filename="ConsumableinsPage.cpp" line="74"/>
+        <location filename="ConsumableinsPage.cpp" line="81"/>
+        <location filename="ConsumableinsPage.cpp" line="88"/>
+        <location filename="ConsumableinsPage.cpp" line="95"/>
+        <location filename="ConsumableinsPage.cpp" line="102"/>
+        <location filename="ConsumableinsPage.cpp" line="109"/>
+        <location filename="ConsumableinsPage.cpp" line="116"/>
+        <location filename="ConsumableinsPage.cpp" line="123"/>
+        <location filename="ConsumableinsPage.cpp" line="130"/>
+        <location filename="ConsumableinsPage.cpp" line="137"/>
+        <location filename="ConsumableinsPage.cpp" line="144"/>
+        <location filename="ConsumableinsPage.cpp" line="153"/>
+        <location filename="ConsumableinsPage.cpp" line="172"/>
+        <location filename="ConsumableinsPage.cpp" line="179"/>
+        <location filename="ConsumableinsPage.cpp" line="186"/>
+        <location filename="ConsumableinsPage.cpp" line="193"/>
+        <location filename="ConsumableinsPage.cpp" line="200"/>
+        <location filename="ConsumableinsPage.cpp" line="207"/>
+        <location filename="ConsumableinsPage.cpp" line="214"/>
+        <location filename="ConsumableinsPage.cpp" line="221"/>
+        <location filename="ConsumableinsPage.cpp" line="229"/>
+        <location filename="ConsumableinsPage.cpp" line="236"/>
         <source>Install</source>
         <translation>Instalar</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="457"/>
+        <location filename="ConsumableinsPage.cpp" line="73"/>
         <source>AC Pack</source>
         <translation>Pack AC</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="464"/>
+        <location filename="ConsumableinsPage.cpp" line="80"/>
         <source>T Pack</source>
         <translation>Pack T</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="471"/>
+        <location filename="ConsumableinsPage.cpp" line="87"/>
         <source>P Pack</source>
         <translation>Pack P</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="478"/>
+        <location filename="ConsumableinsPage.cpp" line="94"/>
         <source>U Pack</source>
         <translation>Pack U</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="485"/>
+        <location filename="ConsumableinsPage.cpp" line="101"/>
         <source>AT Pack</source>
         <translation>Pack AT</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="492"/>
+        <location filename="ConsumableinsPage.cpp" line="108"/>
         <source>H Pack</source>
         <translation>Pack H</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="499"/>
+        <location filename="ConsumableinsPage.cpp" line="115"/>
         <source>254 UV Lamp</source>
         <translation>Lámpara UV 254</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="506"/>
+        <location filename="ConsumableinsPage.cpp" line="122"/>
         <source>185 UV Lamp</source>
         <translation>Lámpara UV 185</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="513"/>
+        <location filename="ConsumableinsPage.cpp" line="129"/>
         <source>Tank UV Lamp</source>
         <translation>Lámpara Depósito UV</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="520"/>
+        <location filename="ConsumableinsPage.cpp" line="136"/>
         <source>TUBE UV</source>
         <translation>Lazo UV</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="527"/>
+        <location filename="ConsumableinsPage.cpp" line="143"/>
         <source>TOC UV</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="536"/>
+        <location filename="ConsumableinsPage.cpp" line="152"/>
         <source>Tank Vent Filter</source>
         <translation>Filtro Venteo Depósito</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="550"/>
+        <location filename="ConsumableinsPage.cpp" line="166"/>
         <source>Final Fliter B</source>
         <translation>Filtro RephiBio</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="554"/>
+        <location filename="ConsumableinsPage.cpp" line="170"/>
         <source>Bio-filter</source>
         <translation>Filtro Bio</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="562"/>
+        <location filename="ConsumableinsPage.cpp" line="178"/>
         <source>Final Fliter A</source>
         <translation>Filtro final 0.2 μm </translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="569"/>
+        <location filename="ConsumableinsPage.cpp" line="185"/>
         <source>Loop Filter</source>
         <translation>Filtro Lazo</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="576"/>
+        <location filename="ConsumableinsPage.cpp" line="192"/>
         <source>Loop DI</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="583"/>
+        <location filename="ConsumableinsPage.cpp" line="199"/>
         <source>Feed Pump</source>
         <translation>Bomba Alimentación</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="590"/>
+        <location filename="ConsumableinsPage.cpp" line="206"/>
         <source>Dist. Pump</source>
         <translation>Bomba Distribución</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="597"/>
+        <location filename="ConsumableinsPage.cpp" line="213"/>
         <source>Recir. Pump</source>
         <translation>Bomba Recirculación</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="604"/>
+        <location filename="ConsumableinsPage.cpp" line="220"/>
         <source>RO Membrane</source>
         <translation>Membrana RO</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="612"/>
+        <location filename="ConsumableinsPage.cpp" line="228"/>
         <source>RO Pump</source>
         <translation>Bomba RO</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="619"/>
+        <location filename="ConsumableinsPage.cpp" line="235"/>
         <source>EDI Module</source>
         <translation>Módulo EDI</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="629"/>
+        <location filename="ConsumableinsPage.cpp" line="245"/>
         <source>CAT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="630"/>
+        <location filename="ConsumableinsPage.cpp" line="246"/>
         <source>LOT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="855"/>
+        <location filename="ConsumableinsPage.cpp" line="1128"/>
         <source>Alarm</source>
         <translation type="unfinished">Alarmas</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="855"/>
+        <location filename="ConsumableinsPage.cpp" line="1128"/>
         <source>Failed to read RFID,please make sure the part is installed correctly.</source>
         <translation>Fallo al leer la tarjeta RFID, por favor asegúrese que la pieza está instalada correctamente</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="870"/>
-        <location filename="ConsumableinsPage.cpp" line="881"/>
+        <location filename="ConsumableinsPage.cpp" line="1143"/>
+        <location filename="ConsumableinsPage.cpp" line="1154"/>
         <source>About</source>
         <translation type="unfinished">Sobre</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="870"/>
-        <location filename="ConsumableinsPage.cpp" line="881"/>
+        <location filename="ConsumableinsPage.cpp" line="1143"/>
+        <location filename="ConsumableinsPage.cpp" line="1154"/>
         <source>Please Input Serial Number !</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="895"/>
-        <location filename="ConsumableinsPage.cpp" line="925"/>
+        <location filename="ConsumableinsPage.cpp" line="1168"/>
+        <location filename="ConsumableinsPage.cpp" line="1204"/>
         <source>Warning</source>
         <translation type="unfinished">Advertencia</translation>
     </message>
     <message>
-        <location filename="ConsumableinsPage.cpp" line="896"/>
-        <location filename="ConsumableinsPage.cpp" line="926"/>
+        <location filename="ConsumableinsPage.cpp" line="1169"/>
+        <location filename="ConsumableinsPage.cpp" line="1205"/>
         <source>The type of consumable is wrong, failed installation!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5175,129 +5175,129 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8291"/>
+        <location filename="mainwindow.cpp" line="8297"/>
         <source>PRE Pack Not Detected</source>
         <oldsource>No Pre-PACK detected!</oldsource>
         <translation type="unfinished">Pack Pre No Detectado</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8294"/>
+        <location filename="mainwindow.cpp" line="8300"/>
         <source>AC Pack Not Detected</source>
         <oldsource>No AC-PACK detected!</oldsource>
         <translation type="unfinished">Pack AC No Detectado</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8297"/>
+        <location filename="mainwindow.cpp" line="8303"/>
         <source>P Pack Not Detected</source>
         <oldsource>No P-PACK detected!</oldsource>
         <translation type="unfinished">P Pack No Detectado</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8300"/>
+        <location filename="mainwindow.cpp" line="8306"/>
         <source>U Pack Not Detected</source>
         <oldsource>No U-PACK detected!</oldsource>
         <translation type="unfinished">U Pack No Detectado</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8303"/>
+        <location filename="mainwindow.cpp" line="8309"/>
         <source>AT Pack Not Detected</source>
         <oldsource>No AT-PACK detected!</oldsource>
         <translation type="unfinished">AT Pack No Detectado</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8306"/>
+        <location filename="mainwindow.cpp" line="8312"/>
         <source>H Pack Not Detected</source>
         <oldsource>No H-PACK detected!</oldsource>
         <translation type="unfinished">H Pack No Detectado</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8329"/>
+        <location filename="mainwindow.cpp" line="8335"/>
         <source>Pre Pack Error! Do you want to continue?</source>
         <translation>Pre-Pack ¡Error! ¿Quieres continuar?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8333"/>
+        <location filename="mainwindow.cpp" line="8339"/>
         <source>AC Pack Error! Do you want to continue?</source>
         <translation>AC-Pack ¡Error! ¿Quieres continuar?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8337"/>
+        <location filename="mainwindow.cpp" line="8343"/>
         <source>P Pack Error! Do you want to continue?</source>
         <translation>P-Pack ¡Error! ¿Quieres continuar?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8341"/>
+        <location filename="mainwindow.cpp" line="8347"/>
         <source>U Pack Error! Do you want to continue?</source>
         <translation>U-Pack ¡Error! ¿Quieres continuar?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8345"/>
+        <location filename="mainwindow.cpp" line="8351"/>
         <source>AT Pack Error! Do you want to continue?</source>
         <translation>AT-Pack ¡Error! ¿Quieres continuar?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8349"/>
+        <location filename="mainwindow.cpp" line="8355"/>
         <source>H Pack Error! Do you want to continue?</source>
         <translation>H-Pack ¡Error! ¿Quieres continuar?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8560"/>
+        <location filename="mainwindow.cpp" line="8566"/>
         <source>Login failed!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8855"/>
+        <location filename="mainwindow.cpp" line="8861"/>
         <source>Water</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8856"/>
+        <location filename="mainwindow.cpp" line="8862"/>
         <source>Alarm</source>
         <translation type="unfinished">Alarmas</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8857"/>
+        <location filename="mainwindow.cpp" line="8863"/>
         <source>User</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8858"/>
+        <location filename="mainwindow.cpp" line="8864"/>
         <source>GetW</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8859"/>
+        <location filename="mainwindow.cpp" line="8865"/>
         <source>PWater</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8860"/>
+        <location filename="mainwindow.cpp" line="8866"/>
         <source>Log</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="9783"/>
-        <location filename="mainwindow.cpp" line="9789"/>
+        <location filename="mainwindow.cpp" line="9795"/>
+        <location filename="mainwindow.cpp" line="9801"/>
         <source>Warning</source>
         <translation type="unfinished">Advertencia</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8270"/>
+        <location filename="mainwindow.cpp" line="8276"/>
         <source>Confirm ALL cartridges are installed. System will START by pressing Confirm!</source>
         <translation>Confirmar que TODOS los cartuchos están instalados. El sistema empezará al presionar Confirmar.</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8357"/>
+        <location filename="mainwindow.cpp" line="8363"/>
         <source>Continue</source>
         <translation>Continuar</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="9783"/>
+        <location filename="mainwindow.cpp" line="9795"/>
         <source>write install date error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="9789"/>
+        <location filename="mainwindow.cpp" line="9801"/>
         <source>write vol data error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5883,50 +5883,55 @@
 <context>
     <name>ServicePage</name>
     <message>
-        <location filename="servicepage.cpp" line="173"/>
-        <location filename="servicepage.cpp" line="187"/>
+        <location filename="servicepage.cpp" line="172"/>
+        <location filename="servicepage.cpp" line="186"/>
         <source>Service</source>
         <translation>Servicio</translation>
     </message>
     <message>
-        <location filename="servicepage.cpp" line="181"/>
+        <location filename="servicepage.cpp" line="180"/>
         <source>Cleaning &amp; Sanitization</source>
         <translation>Limpieza &amp; Sanitización</translation>
     </message>
     <message>
-        <location filename="servicepage.cpp" line="183"/>
+        <location filename="servicepage.cpp" line="182"/>
         <source>Dist. Control</source>
         <translation>Control de distribución</translation>
     </message>
     <message>
-        <location filename="servicepage.cpp" line="186"/>
+        <location filename="servicepage.cpp" line="185"/>
         <source>Permission</source>
         <translation type="unfinished">Niveles de permiso</translation>
     </message>
     <message>
-        <location filename="servicepage.cpp" line="188"/>
+        <location filename="servicepage.cpp" line="187"/>
         <source>Select Language</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="servicepage.cpp" line="423"/>
+        <location filename="servicepage.cpp" line="189"/>
+        <source>Manual Installation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="servicepage.cpp" line="421"/>
         <source>Signed out</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="servicepage.cpp" line="469"/>
-        <location filename="servicepage.cpp" line="521"/>
-        <location filename="servicepage.cpp" line="581"/>
+        <location filename="servicepage.cpp" line="467"/>
+        <location filename="servicepage.cpp" line="519"/>
+        <location filename="servicepage.cpp" line="579"/>
         <source>Login failed!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="servicepage.cpp" line="517"/>
+        <location filename="servicepage.cpp" line="515"/>
         <source>User&apos;s privilege is low, please use the manager account or service account to log in!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="servicepage.cpp" line="576"/>
+        <location filename="servicepage.cpp" line="574"/>
         <source>User&apos;s privilege is low, please use the service account to log in!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5943,17 +5948,17 @@
         <translation type="obsolete">Audio</translation>
     </message>
     <message>
-        <location filename="servicepage.cpp" line="189"/>
+        <location filename="servicepage.cpp" line="188"/>
         <source>Units</source>
         <translation type="unfinished">Unidades</translation>
     </message>
     <message>
-        <location filename="servicepage.cpp" line="184"/>
+        <location filename="servicepage.cpp" line="183"/>
         <source>User Config</source>
         <translation type="unfinished">Configuración de usuario</translation>
     </message>
     <message>
-        <location filename="servicepage.cpp" line="185"/>
+        <location filename="servicepage.cpp" line="184"/>
         <source>History</source>
         <translation>Historial</translation>
     </message>
@@ -5962,7 +5967,7 @@
         <translation type="obsolete">LCD</translation>
     </message>
     <message>
-        <location filename="servicepage.cpp" line="182"/>
+        <location filename="servicepage.cpp" line="181"/>
         <source>Setting</source>
         <translation type="unfinished">Ajustes</translation>
     </message>
@@ -5972,13 +5977,13 @@
     </message>
     <message>
         <location filename="servicepage.cpp" line="309"/>
-        <location filename="servicepage.cpp" line="318"/>
+        <location filename="servicepage.cpp" line="317"/>
         <source>Notice</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="servicepage.cpp" line="309"/>
-        <location filename="servicepage.cpp" line="318"/>
+        <location filename="servicepage.cpp" line="317"/>
         <source>Please Stop System First!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6725,175 +6730,181 @@
 <context>
     <name>SysTestPage</name>
     <message>
-        <location filename="systestpage.cpp" line="365"/>
+        <location filename="systestpage.cpp" line="387"/>
         <source>Test</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="376"/>
+        <location filename="systestpage.cpp" line="404"/>
+        <location filename="systestpage.cpp" line="409"/>
         <source>OFF</source>
         <translation>OFF</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="377"/>
+        <location filename="systestpage.cpp" line="405"/>
+        <source>ON</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="systestpage.cpp" line="410"/>
         <source>Low</source>
         <translation>Baja</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="378"/>
+        <location filename="systestpage.cpp" line="411"/>
         <source>Middle</source>
         <translation>Media</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="379"/>
+        <location filename="systestpage.cpp" line="412"/>
         <source>High</source>
         <translation>Alta</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="389"/>
+        <location filename="systestpage.cpp" line="424"/>
         <source>RO Inlet Valve</source>
         <translation>Válvula Entrada RO</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="395"/>
+        <location filename="systestpage.cpp" line="430"/>
         <source>RO Reject Valve</source>
         <translation>Válvula Rechazo RO</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="401"/>
+        <location filename="systestpage.cpp" line="436"/>
         <source>RO Drain Valve</source>
         <translation>Válvula Drenaje RO</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="415"/>
+        <location filename="systestpage.cpp" line="450"/>
         <source>UP Inlet Valve</source>
         <translation>Válvula Entrada UP</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="421"/>
+        <location filename="systestpage.cpp" line="456"/>
         <source>HP Inlet Valve</source>
         <translation>Válvula Entrada HP</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="429"/>
+        <location filename="systestpage.cpp" line="464"/>
         <source>UP Recirculation Valve</source>
         <translation>Válvula Recirculación UP</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="435"/>
+        <location filename="systestpage.cpp" line="470"/>
         <source>HP Recirculation Valve</source>
         <translation>Válvula Recirculación HP</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="441"/>
+        <location filename="systestpage.cpp" line="476"/>
         <source>TOC Flush Valve</source>
         <translation>Válvula Flush TOC</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="448"/>
+        <location filename="systestpage.cpp" line="483"/>
         <source>Feed Water Valve</source>
         <translation>Válvula Entrada Agua</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="454"/>
+        <location filename="systestpage.cpp" line="489"/>
         <source>Feed Pump</source>
         <translation>Bomba Entrada</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="455"/>
-        <location filename="systestpage.cpp" line="463"/>
-        <location filename="systestpage.cpp" line="470"/>
-        <location filename="systestpage.cpp" line="477"/>
-        <location filename="systestpage.cpp" line="484"/>
-        <location filename="systestpage.cpp" line="491"/>
-        <location filename="systestpage.cpp" line="499"/>
-        <location filename="systestpage.cpp" line="525"/>
+        <location filename="systestpage.cpp" line="490"/>
+        <location filename="systestpage.cpp" line="498"/>
+        <location filename="systestpage.cpp" line="505"/>
+        <location filename="systestpage.cpp" line="512"/>
+        <location filename="systestpage.cpp" line="519"/>
+        <location filename="systestpage.cpp" line="526"/>
+        <location filename="systestpage.cpp" line="534"/>
+        <location filename="systestpage.cpp" line="560"/>
         <source>Current</source>
         <translation>Actual</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="462"/>
+        <location filename="systestpage.cpp" line="497"/>
         <source>Dist. Pump</source>
         <translation>Bomba Distribución</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="469"/>
+        <location filename="systestpage.cpp" line="504"/>
         <source>254 UV Lamp</source>
         <translation>Lámpara 254UV</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="476"/>
+        <location filename="systestpage.cpp" line="511"/>
         <source>185 UV Lamp</source>
         <translation>Lámpara 185 UV</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="483"/>
+        <location filename="systestpage.cpp" line="518"/>
         <source>Tank UV Lamp</source>
         <translation>Lámpara UV Depósito</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="490"/>
+        <location filename="systestpage.cpp" line="525"/>
         <source>EDI Power</source>
         <translation>MóduloEDI</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="498"/>
+        <location filename="systestpage.cpp" line="533"/>
         <source>RO Pump</source>
         <translation>Bomba RO</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="500"/>
-        <location filename="systestpage.cpp" line="526"/>
+        <location filename="systestpage.cpp" line="535"/>
+        <location filename="systestpage.cpp" line="561"/>
         <source>Voltage</source>
         <translation>Voltaje</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="516"/>
+        <location filename="systestpage.cpp" line="551"/>
         <source>UP Pump</source>
         <translation>Bomba Recirculación</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="522"/>
+        <location filename="systestpage.cpp" line="557"/>
         <source>HP Pump</source>
         <translation>Bomba Recirculación</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="530"/>
+        <location filename="systestpage.cpp" line="565"/>
         <source>UP Product Valve</source>
         <translation>Válvula Producto UP</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="533"/>
+        <location filename="systestpage.cpp" line="568"/>
         <source>HP Product Valve</source>
         <translation>Válvula Producto HP</translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="543"/>
+        <location filename="systestpage.cpp" line="578"/>
         <source>UP Out Valve</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="548"/>
+        <location filename="systestpage.cpp" line="583"/>
         <source>Source Pump</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="554"/>
+        <location filename="systestpage.cpp" line="589"/>
         <source>TOC Cir Valve</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="559"/>
+        <location filename="systestpage.cpp" line="594"/>
         <source>HP Out Valve</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="564"/>
+        <location filename="systestpage.cpp" line="599"/>
         <source>Allocated Pump</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systestpage.cpp" line="569"/>
+        <location filename="systestpage.cpp" line="604"/>
         <source>Tube UV Light</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7109,191 +7120,191 @@
 <context>
     <name>SystemMonitorPage</name>
     <message>
-        <location filename="systemmonitorpage.cpp" line="244"/>
+        <location filename="systemmonitorpage.cpp" line="256"/>
         <source>Components Status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="261"/>
+        <location filename="systemmonitorpage.cpp" line="273"/>
         <source>Device Connect</source>
         <translation>Conectar Dispositivo</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="265"/>
+        <location filename="systemmonitorpage.cpp" line="277"/>
         <source>Runing Status</source>
         <translation>Estado Ejecución</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="269"/>
+        <location filename="systemmonitorpage.cpp" line="281"/>
         <source>RO Inlet Valve</source>
         <translation>Válvula RO Inle</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="272"/>
+        <location filename="systemmonitorpage.cpp" line="284"/>
         <source>RO Reject Valve</source>
         <translation>Válvula Rechazo RO</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="276"/>
+        <location filename="systemmonitorpage.cpp" line="288"/>
         <source>RO Drain Valve</source>
         <translation>Válvula Drenaje RO</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="279"/>
+        <location filename="systemmonitorpage.cpp" line="291"/>
         <source>HP Inlet Valve</source>
         <translation>Válvula Entrada HP</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="283"/>
+        <location filename="systemmonitorpage.cpp" line="295"/>
         <source>UP Recir. Valve</source>
         <translation>Válvula Recir. UP</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="286"/>
+        <location filename="systemmonitorpage.cpp" line="298"/>
         <source>HP Recir. Valve</source>
         <translation>Válvula Recirculación HP</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="290"/>
+        <location filename="systemmonitorpage.cpp" line="302"/>
         <source>TOC Flush Valve</source>
         <translation>Válvula Flush TOC</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="293"/>
+        <location filename="systemmonitorpage.cpp" line="305"/>
         <source>Tap Inlet Valve</source>
         <translation>Válvula Entrada Agua</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="298"/>
+        <location filename="systemmonitorpage.cpp" line="310"/>
         <source>254 UV Lamp</source>
         <translation>Lámpara 254 UV</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="301"/>
+        <location filename="systemmonitorpage.cpp" line="313"/>
         <source>185 UV Lamp</source>
         <translation>Lámpara UV 185</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="305"/>
+        <location filename="systemmonitorpage.cpp" line="317"/>
         <source>TANK UV Lamp</source>
         <translation>Lámpara UV Depósito</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="308"/>
+        <location filename="systemmonitorpage.cpp" line="320"/>
         <source>EDI Module</source>
         <translation>Módulo EDI</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="312"/>
+        <location filename="systemmonitorpage.cpp" line="324"/>
         <source>Feed Pump</source>
         <translation>Bomba Entrada</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="315"/>
+        <location filename="systemmonitorpage.cpp" line="327"/>
         <source>Dist. Pump</source>
         <translation>Bomba Distribución</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="319"/>
+        <location filename="systemmonitorpage.cpp" line="331"/>
         <source>RO Pump</source>
         <translation>RO PumpBomba RO</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="323"/>
+        <location filename="systemmonitorpage.cpp" line="335"/>
         <source>Recir. Pump</source>
         <translation>Bomba Recirculación</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="844"/>
+        <location filename="systemmonitorpage.cpp" line="856"/>
         <source>Tank Full</source>
         <translation>Tanque lleno</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="854"/>
+        <location filename="systemmonitorpage.cpp" line="866"/>
         <source>Fill Feed Tank</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="860"/>
+        <location filename="systemmonitorpage.cpp" line="872"/>
         <source>Flush</source>
         <translation>Descarga</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="866"/>
+        <location filename="systemmonitorpage.cpp" line="878"/>
         <source>Rinsing</source>
         <translation>Enjuague</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="871"/>
+        <location filename="systemmonitorpage.cpp" line="883"/>
         <source>Filling</source>
         <translation>Relleno</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="876"/>
+        <location filename="systemmonitorpage.cpp" line="888"/>
         <source>LPP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="879"/>
+        <location filename="systemmonitorpage.cpp" line="891"/>
         <source>KP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="886"/>
-        <location filename="systemmonitorpage.cpp" line="887"/>
+        <location filename="systemmonitorpage.cpp" line="898"/>
+        <location filename="systemmonitorpage.cpp" line="899"/>
         <source>Standby</source>
         <translation>Standby</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="892"/>
-        <location filename="systemmonitorpage.cpp" line="909"/>
+        <location filename="systemmonitorpage.cpp" line="904"/>
+        <location filename="systemmonitorpage.cpp" line="921"/>
         <source>Dispense</source>
         <translation>Dispensar</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="896"/>
-        <location filename="systemmonitorpage.cpp" line="920"/>
+        <location filename="systemmonitorpage.cpp" line="908"/>
+        <location filename="systemmonitorpage.cpp" line="932"/>
         <source>Recirculation</source>
         <translation>Recirculación</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="900"/>
-        <location filename="systemmonitorpage.cpp" line="913"/>
+        <location filename="systemmonitorpage.cpp" line="912"/>
+        <location filename="systemmonitorpage.cpp" line="925"/>
         <source>Ready</source>
         <translation>Ready</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="945"/>
+        <location filename="systemmonitorpage.cpp" line="957"/>
         <source>Excution Board OK</source>
         <translation>Placa Principal OK</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="949"/>
+        <location filename="systemmonitorpage.cpp" line="961"/>
         <source>Excution Board Fault</source>
         <translation>Placa Principal Fallo</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="955"/>
+        <location filename="systemmonitorpage.cpp" line="967"/>
         <source>RFID OK</source>
         <translation>RFID  OK</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="959"/>
+        <location filename="systemmonitorpage.cpp" line="971"/>
         <source>RFID Fault</source>
         <translation>RFID  Falla</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="966"/>
+        <location filename="systemmonitorpage.cpp" line="978"/>
         <source>Dispenser OK</source>
         <translation>Dispensador OK</translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="971"/>
+        <location filename="systemmonitorpage.cpp" line="983"/>
         <source>Dispenser Partial</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="systemmonitorpage.cpp" line="976"/>
+        <location filename="systemmonitorpage.cpp" line="988"/>
         <source>Dispenser Fault</source>
         <translation>Dispensador Fault</translation>
     </message>
@@ -7301,22 +7312,28 @@
 <context>
     <name>Systestlistwidgtitem</name>
     <message>
-        <location filename="systestlistwidgtitem.cpp" line="88"/>
+        <location filename="systestlistwidgtitem.cpp" line="95"/>
+        <location filename="systestlistwidgtitem.cpp" line="100"/>
         <source>OFF</source>
         <translation type="unfinished">OFF</translation>
     </message>
     <message>
-        <location filename="systestlistwidgtitem.cpp" line="89"/>
+        <location filename="systestlistwidgtitem.cpp" line="96"/>
+        <source>ON</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="systestlistwidgtitem.cpp" line="101"/>
         <source>LOW</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systestlistwidgtitem.cpp" line="90"/>
+        <location filename="systestlistwidgtitem.cpp" line="102"/>
         <source>MID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="systestlistwidgtitem.cpp" line="91"/>
+        <location filename="systestlistwidgtitem.cpp" line="103"/>
         <source>HIGH</source>
         <translation type="unfinished"></translation>
     </message>

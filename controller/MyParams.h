@@ -9,6 +9,9 @@ extern "C"
 {
 #endif
 
+/**
+ * 以下宏关联配置文件名称，不能轻易修改
+ */
 #define GLOBAL_CFG_INI           "global.ini"
 
 #define MACH_NAME_LGenie         "Super-Genie G"
@@ -21,6 +24,7 @@ extern "C"
 #define MACH_NAME_RO             "Genie R"
 #define MACH_NAME_PURIST         "Genie PURIST"
 #define MACH_NAME_Adapt          "Genie A"
+//end
 
 typedef enum
 {

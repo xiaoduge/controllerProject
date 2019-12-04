@@ -1,5 +1,6 @@
 #include "dxmlgenerator.h"
 #include "exconfig.h"
+#include "mainwindow.h"
 #include <QDateTime>
 #include <QStringList>
 #include <QDebug>
@@ -513,43 +514,7 @@ void DXmlGenerator::writeDispenseElements(QXmlStreamWriter &xmlWriter, const QLi
 
 void DXmlGenerator::initMachineInfo()
 {
-    unsigned int machineFlow = gAdditionalCfgParam.machineInfo.iMachineFlow;
-    switch(gGlobalParam.iMachineType)
-    {
-    case MACHINE_L_Genie:
-        m_machineInfo = QString("Super-Genie G %1").arg(machineFlow);
-        break;
-    case MACHINE_L_UP:
-        m_machineInfo = QString("Super-Genie U %1").arg(machineFlow);
-        break;
-    case MACHINE_L_EDI_LOOP:
-        m_machineInfo = QString("Super-Genie E %1").arg(machineFlow);
-        break;
-    case MACHINE_L_RO_LOOP:
-        m_machineInfo = QString("Super-Genie R %1").arg(machineFlow);
-        break;
-    case MACHINE_Genie:
-        m_machineInfo = QString("Genie G %1").arg(machineFlow);
-        break;
-    case MACHINE_UP:
-        m_machineInfo = QString("Genie U %1").arg(machineFlow);
-        break;
-    case MACHINE_EDI:
-        m_machineInfo = QString("Genie E %1").arg(machineFlow);
-        break;
-    case MACHINE_RO:
-        m_machineInfo = QString("Genie R %1").arg(machineFlow);
-        break;
-    case MACHINE_PURIST:
-        m_machineInfo = QString("Genie PURIST");
-        break;
-    case MACHINE_ADAPT:
-        m_machineInfo = QString("Genie A %1").arg(machineFlow);
-        break;
-    default:
-        m_machineInfo = QString("unknow");
-        break;
-    }
+	m_machineInfo = gpMainWnd->machineName();
 }
 
 void DXmlGenerator::createHeartDataList(QList<QStringList> &elementsList, const DNetworkData &data)

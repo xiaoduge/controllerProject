@@ -32,7 +32,7 @@ static QString SubPageName[SERVICE_BTN_NUMBER] =
 {    
     "Language",
     "Units",
-//    "Material Install",
+    "Material Install",
     "ManagerConfig",
     "User Config",
     "Permission",
@@ -46,6 +46,7 @@ static ButtonInfo Btninfos[SERVICE_BTN_NUMBER] =
 {
     {QString("Select Language"), QString(":/ButtonIcon/language.png")},
     {QString("Units"), QString(":/ButtonIcon/units.png")},
+    {QString("Manual Installation"), QString(":/ButtonIcon/Manual Installation.png")},
     {QString("Setting"), QString(":/ButtonIcon/setting.png")},
     {QString("User Config"), QString(":/ButtonIcon/userconfig.png")},
     {QString("Permission"), QString(":/ButtonIcon/permission.png")},
@@ -98,14 +99,12 @@ void ServicePage::Create_subPage()
             tmpWidget->setGeometry(0,0,800,600);
             m_pSubPages[SERVICE_BTN_MANAGERCONFIG] = new DManagerSetPage(this , tmpWidget , m_wndMain);
             break;
-#if 0
         case SERVICE_BTN_INSTALL:
             tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
             tmpWidget->setObjectName(SubPageName[index]);
             tmpWidget->setGeometry(0,0,800,600);
             m_pSubPages[SERVICE_BTN_INSTALL] = new ConsumableInsPage(this , tmpWidget , m_wndMain);
             break;
-#endif
         case SET_BTN_SYSTEM_ALLOCATION:
             tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
             tmpWidget->setObjectName(SubPageName[index]);
@@ -187,6 +186,7 @@ void ServicePage::buildTranslation()
     m_pBtns[SET_BTN_SERVICE]->setText(tr("Service"));
     m_pBtns[SET_BTN_LANGUAGE]->setText(tr("Select Language"));
     m_pBtns[SET_BTN_UNITS]->setText(tr("Units"));
+	m_pBtns[SERVICE_BTN_INSTALL]->setText(tr("Manual Installation"));
 
     for(int i = 0; i < SERVICE_BTN_NUMBER; ++i)
     {
@@ -311,7 +311,6 @@ void ServicePage::on_btn_clicked()
             return;
         }
         break;
-#if 0
     case SERVICE_BTN_INSTALL:
         if (DISP_WORK_STATE_IDLE != DispGetWorkState())
         {
@@ -320,7 +319,6 @@ void ServicePage::on_btn_clicked()
             return;
         }
         break;
-#endif
     }
 
     if (m_pSubPages[index])
@@ -332,7 +330,7 @@ void ServicePage::on_btn_clicked()
         case SET_BTN_UNITS:
             notVerify(index);
             break;
-//        case SERVICE_BTN_INSTALL:
+        case SERVICE_BTN_INSTALL:
         case SET_BTN_HISTORY_RECORD:
         case SET_BTN_SYSTEM_ALLOCATION:
         case SERVICE_BTN_STERILIZE:

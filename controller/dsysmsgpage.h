@@ -1,12 +1,9 @@
 #ifndef DSYSMSGPAGE_H
 #define DSYSMSGPAGE_H
 
-
 #include "subpage.h"
 
-
 class MainWindow;
-
 
 class DSysMsgPage : public CSubPage
 {
@@ -39,15 +36,12 @@ private:
     void setNameMsg(int iIdx,QString strInfo);
     void updateNameMsg();
 
-    void buildTranslationTitleRephile();
-    void buildTranslationTitleVWR();
-
     void buildTitles();
 
 private:
-    QWidget       *m_pWidget;
-    QLabel* m_pExmsgLabel[SYSMS_PAGE_LB_NUM];
+    QLabel *m_pExmsgLabel[SYSMS_PAGE_LB_NUM];
     QString m_ExMsgName[SYSMS_PAGE_LB_NUM];
+	QLabel *m_pNullLabel;
 
 public slots:
 };

@@ -44,6 +44,7 @@ public:
     virtual void update();
 
 private:
+    void updateMachineFlow();
     void buildTitles();
     void save();
     void setBackColor();

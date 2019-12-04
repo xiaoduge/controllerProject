@@ -145,7 +145,6 @@ void MenuPage::Create_subPage()
             tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
             tmpWidget->setObjectName(SubPageName[index]);
             tmpWidget->setGeometry(0,0,800,600);
-            //m_pSubPages[index] = new WaterQualityPage(this , tmpWidget , m_wndMain);
             m_pSubPages[index] = new DWaterQualityPage(this , tmpWidget , m_wndMain);
             break;
         case MENU_BTN_CONSUMPATION_MATERAIL_SATUS:
@@ -153,7 +152,6 @@ void MenuPage::Create_subPage()
             tmpWidget->setObjectName(SubPageName[index]);
             tmpWidget->setGeometry(0,0,800,600);
             m_pSubPages[index] = new ConsumableStatePage(this , tmpWidget , m_wndMain);
-            
             break;
         case MENU_BTN_SYSTEM_MONITOR:
             tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
@@ -171,10 +169,8 @@ void MenuPage::Create_subPage()
             tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
             tmpWidget->setObjectName(SubPageName[index]);
             tmpWidget->setGeometry(0,0,800,600);
-//            m_pSubPages[index] = new SysMsgPage(this , tmpWidget , m_wndMain);
             m_pSubPages[index] = new DSysMsgPage(this , tmpWidget , m_wndMain);
             break;
-
         case MENU_BTN_USER_MANU:
             tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
             tmpWidget->setObjectName(SubPageName[index]);

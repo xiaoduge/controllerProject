@@ -36,8 +36,6 @@ private:
     void connectData();
 
     void setDeviceType();
-    const QString setDeviceTypeRephile();
-    const QString setDeviceTypeTypeVWR();
 
 private:
     QLabel    *m_lbPWTankName;

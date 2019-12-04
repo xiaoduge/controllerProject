@@ -31,9 +31,6 @@ private:
     void initUi();
     int randomPos(int max);
 
-    void buildTranslationTitleRephile();
-    void buildTranslationTitleVWR();
-
 private:
     DSleepWidget* m_pdwidget;
     QLabel* m_msgLabel;

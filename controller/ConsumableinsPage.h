@@ -17,7 +17,7 @@ class ConsumableInsPage : public CSubPage
     Q_OBJECT
 
 public:
-    ConsumableInsPage(QObject *parent = 0,CBaseWidget *widget = 0 , MainWindow *wndMain = 0);
+    ConsumableInsPage(QObject *parent = 0,CBaseWidget *widget = 0 , MainWindow *wndMain = 0, short instanceType = 0);
 
     virtual void creatTitle();
 
@@ -44,6 +44,10 @@ private:
 
     void initTypeMap();
 
+    //initNormalItem和initScanItem 只能单独调用一个
+    void initNormalItem();
+    void initManualItem();
+
 private:
     QListWidget *listWidget;
 
@@ -66,6 +70,8 @@ private:
     }aIds[MAX_ConsumableNum];
 
     QMap<short int, short int> m_typeMap;
+
+	bool m_bRfidWork;
 
 public slots:
     void on_btn_clicked(int index);
