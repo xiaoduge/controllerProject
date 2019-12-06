@@ -163,16 +163,14 @@ I5  UP产水电阻率
 
 /****************************************************************************
 **
-** @Version:   0.1.2.181119.release
+** @Version:   0.1.2 Built on Dec 6 2019 11:19:48
 ** @0          Major version number
 ** @1          Minor version number
 ** @2          Revision number
-** @181119     Date version number
-** @release    version phase
+** @Built on   Date version number
 **
 ****************************************************************************/
-//QString strSoftwareVersion = QString("0.1.9.191203_debug");
-QString strSoftwareVersion = QString("0.2.1 Built on %1 %2").arg(__DATE__).arg(__TIME__);
+//static const QString strSoftwareVersion = QString("0.2.1 Built on %1 %2").arg(__DATE__).arg(__TIME__);
 
 MainWindow *gpMainWnd;
 
@@ -225,6 +223,7 @@ DLoginState gUserLoginState;
 
 AdditionalGlobalCfg gAdditionalCfgParam;
 EX_CCB  ex_gCcb;
+SENSOR_RANGE gSensorRange;
 
 unsigned int gScreenSleepTimer;
 bool gScreenSleeping;
@@ -465,6 +464,26 @@ void MainRetriveMachineInfo(int iMachineType) //ex_dcj
     }
 }
 
+void MainRetriveSensorRange(int iMachineType)
+{
+    QString strCfgName = gaMachineType[iMachineType].strName;
+    strCfgName += ".ini";
+    QSettings *config = new QSettings(strCfgName, QSettings::IniFormat);
+
+    QString strV = "/SensorRange/PureTankSensorRange/";
+    gSensorRange.fPureSRange = config->value(strV, 0.2).toFloat();
+
+	strV = "/SensorRange/FeedTankSensorRange/";
+    gSensorRange.fFeedSRange = config->value(strV, 0.2).toFloat();
+
+    if (config)
+    {
+        delete config;
+        config = NULL;
+    }
+}
+
+
 void MainRetriveProductMsg(int iMachineType) //ex_dcj
 {
     QString strCfgName = gaMachineType[iMachineType].strName;
@@ -483,9 +502,6 @@ void MainRetriveProductMsg(int iMachineType) //ex_dcj
 
     strV = "/ProductMsg/ProductionDate/";
     gAdditionalCfgParam.productInfo.strProductDate = config->value(strV, "unknow").toString();
-
-    strV = "/ProductMsg/SoftwareVersion/";
-    gAdditionalCfgParam.productInfo.strVersion = strSoftwareVersion;
 
     if (config)
     {
@@ -1466,6 +1482,29 @@ void MainRetriveMacSn(int iMachineType,DISP_MACHINERY_SN_STRU  &Param)
     }
 }
 
+void MainSaveSensorRange(int iMachineType)
+{
+    QString strCfgName = gaMachineType[iMachineType].strName;
+    strCfgName += ".ini";
+    QSettings *config = new QSettings(strCfgName, QSettings::IniFormat);
+
+    QString strV = "/SensorRange/PureTankSensorRange/";
+	float value = gSensorRange.fPureSRange;
+	config->setValue(strV, value);
+
+	strV = "/SensorRange/FeedTankSensorRange/";
+	value = gSensorRange.fFeedSRange;
+	config->setValue(strV, value);
+
+    if (config)
+    {
+        delete config;
+        config = NULL;
+    }
+
+}
+
+
 void MainSaveLastRunState(int iMachineType)
 {
     QString strCfgName = gaMachineType[iMachineType].strName;
@@ -1542,9 +1581,6 @@ void MainSaveProductMsg(int iMachineType) //ex_dcj
 
     strV = "/ProductMsg/ProductionDate/";
     config->setValue(strV, gAdditionalCfgParam.productInfo.strProductDate);
-
-    strV = "/ProductMsg/SoftwareVersion/";
-    config->setValue(strV, gAdditionalCfgParam.productInfo.strVersion);
 
     if (config)
     {
@@ -2486,6 +2522,7 @@ void MainRetriveGlobalParam(void)
     MainRetriveLastRunState(gGlobalParam.iMachineType);
     MainRetriveDefaultState(gGlobalParam.iMachineType);
     MainRetriveMachineInfo(gGlobalParam.iMachineType);
+	MainRetriveSensorRange(gGlobalParam.iMachineType); //2019.12.5
     MainRetriveProductMsg(gGlobalParam.iMachineType);
     MainRetriveInstallMsg(gGlobalParam.iMachineType);
     MainRetriveExConfigParam(gGlobalParam.iMachineType);
@@ -3332,12 +3369,18 @@ MainWindow::MainWindow(QMainWindow *parent) :
     m_pCurPage              = NULL;
     m_curExInitPage         = NULL;
 
+    /*
+     RASP22045 (增压泵)、RASP22046 (增压泵)
+     */
+
     m_strConsuamble[ACPACK_CATNO] << "RR700AC01" << "171-1254";
 
     m_strConsuamble[TPACK_CATNO] << "RR700T101" << "171-1259" << "RR504T101";
+
     m_strConsuamble[PPACK_CATNO] << "RR700CP01" << "RR700CP02"
                                  << "RR504CP01" << "RR504CPC1"
-                                 << "171-1255" << "171-1256";
+                                 << "171-1255" << "171-1256"
+                                 << "RR504CPC1";
 
     m_strConsuamble[UPACK_CATNO] << "RR700Q101" << "RR700Q201" << "RR700Q301"
                                  << "RR700Q501" << "RR700Q601" << "RR700Q701"
@@ -3356,10 +3399,12 @@ MainWindow::MainWindow(QMainWindow *parent) :
 
     m_strConsuamble[UVTANK_CATNO] << "RAUV357A7" << "171-1270";
 
-    m_strConsuamble[TANKVENTFILTER_CATNO] << "RATANKVN7" << "RATANKVL1" << "171-1267";
-
+    m_strConsuamble[TANKVENTFILTER_CATNO] << "RATANKVN7" << "RATANKVL1" 
+                                          << "RATANKVT1" << "RATANKVT2" 
+                                          << "171-1267";
+ 
     //0.2 um Final Filter   A
-    m_strConsuamble[FINALFILTER_A_CATNO] << "RAFFC7250" << "171-1262";
+    m_strConsuamble[FINALFILTER_A_CATNO] << "RAFFC7250" << "RASP524" << "171-1262";
 
     //Rephibio Filter   B
     m_strConsuamble[FINALFILTER_B_CATNO]  << "RAFFB7201" << "171-1263";
@@ -3367,11 +3412,12 @@ MainWindow::MainWindow(QMainWindow *parent) :
     m_strConsuamble[UPPUMP_CATNO] << "RASP743" << "RASP740KT" << "171-1280";
 
     m_strConsuamble[ROPACK_CATNO] << "RR70R0501" << "RR70R1001" << "RR70R1501"
-                                  << "RAR050001" << "RAR01H001"
+                                  << "RAR050001" << "RAR01H001" << "RAR03H001"
                                   << "171-1276" << "171-1277";
 
     m_strConsuamble[ROPUMP_CATNO] << "RASP742"
                                   << "WRLPM07HP" << "WRLPM02HP" << "WRLPM03HP"
+                                  << "WRLPA1001" << "WRLPA0601" << "WRLPA0301"
                                   << "171-1279";
 
     m_strConsuamble[EDI_CATNO] << "W3T101572" << "W3T101573" << "W3T262701"
@@ -3381,7 +3427,9 @@ MainWindow::MainWindow(QMainWindow *parent) :
 
     m_strConsuamble[LOOPFILTER_CATNO] << "RAFF12201" << "RAFF22201";
     m_strConsuamble[LOOPUV_CATNO] << "RAUV620A1" << "RAUV834A1";
-
+	m_strConsuamble[LOOPDI_CATNO] << "LAB1000IE" << "LAB0200IE" << "LAB0500IE" 
+		                          << "LAB1500IE";
+	
     m_strConsuamble[PREPACK_CATNO] << "LAB02CP71" << "LAB02CP74";
 
     gCMUsage.ulUsageState = 0;

@@ -81,6 +81,7 @@ void DCheckConsumaleInstall::initRfid()
 
     m_iRfid[LOOPFILTER_CATNO] = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
     m_iRfid[LOOPUV_CATNO] = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+	m_iRfid[LOOPDI_CATNO] = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
 
 }
 
@@ -194,6 +195,7 @@ void DCheckConsumaleInstall::initTypeMap()
 
     m_typeMap.insert(LOOPFILTER_CATNO, DISP_TUBE_FILTER);
     m_typeMap.insert(LOOPUV_CATNO, DISP_N4_UV);
+	m_typeMap.insert(LOOPDI_CATNO, DISP_TUBE_DI);
 }
 
 void DCheckConsumaleInstall::initCategoryMap()
@@ -219,6 +221,7 @@ void DCheckConsumaleInstall::initCategoryMap()
 
     m_categoryMap.insert(LOOPFILTER_CATNO, 0);
     m_categoryMap.insert(LOOPUV_CATNO, 0);
+	m_categoryMap.insert(LOOPDI_CATNO, 0);
 }
 
 bool DCheckConsumaleInstall::checkDatabaseConnect()

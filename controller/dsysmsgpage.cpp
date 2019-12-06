@@ -100,7 +100,7 @@ void DSysMsgPage::updateNameMsg()
     setNameMsg(SYSMS_PAGE_LB_2, gAdditionalCfgParam.productInfo.strSerialNo);
     setNameMsg(SYSMS_PAGE_LB_3, gAdditionalCfgParam.productInfo.strProductDate);
     setNameMsg(SYSMS_PAGE_LB_4, gAdditionalCfgParam.productInfo.strInstallDate);
-    setNameMsg(SYSMS_PAGE_LB_5, gAdditionalCfgParam.productInfo.strVersion);
+    setNameMsg(SYSMS_PAGE_LB_5, gApp->applicationVersion());
 }
 
 void DSysMsgPage::initUi()

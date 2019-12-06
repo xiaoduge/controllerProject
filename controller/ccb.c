@@ -796,7 +796,6 @@ void CcbZigbeeModeBroadcast(unsigned char *data, int iPayLoadLen)
     CcbSndZigbeeCmd(&addr,SAPP_CMD_DATA,data,iPayLoadLen);
 }
 
-
 float CcbConvert2Pm3Data(unsigned int ulValue)
 {
     float fValue = (ulValue * 3300);
@@ -810,7 +809,7 @@ float CcbConvert2Pm3Data(unsigned int ulValue)
 
     fValue = (fValue - 4) / 16; /* to percent */
     
-    return fValue * B3_LEVEL;
+    return fValue * gSensorRange.fFeedSRange * 10;//B3_LEVEL;
 }
 
 // Source Tank
@@ -842,7 +841,7 @@ float CcbConvert2Pm2Data(unsigned int ulValue)
 
     fValue = (fValue - 4) / 16; 
     
-    return fValue * B2_LEVEL;
+    return fValue * gSensorRange.fPureSRange * 10; //B2_LEVEL;
 }
 
 //Pure Tank

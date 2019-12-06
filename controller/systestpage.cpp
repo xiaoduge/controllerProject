@@ -398,6 +398,9 @@ void SysTestPage::buildTranslation()
 
     switch(gGlobalParam.iMachineType)
     {
+    case MACHINE_L_Genie:
+	case MACHINE_L_UP:
+	case MACHINE_L_RO_LOOP:
     case MACHINE_L_EDI_LOOP:
         if(gAdditionalCfgParam.machineInfo.iMachineFlow == 500)
         {
@@ -833,6 +836,9 @@ void SysTestPage::on_item_cmb_changed(int value)
 
     switch(gGlobalParam.iMachineType)
     {
+    case MACHINE_L_Genie:
+	case MACHINE_L_UP:
+	case MACHINE_L_RO_LOOP:
     case MACHINE_L_EDI_LOOP:
         if(gAdditionalCfgParam.machineInfo.iMachineFlow == 500)
         {

@@ -130,7 +130,8 @@ SOURCES += main.cpp\
     dsuperpowerpage.cpp \
     dsysmsgpage.cpp \
     dusercfgpage.cpp \
-    duserinfochecker.cpp
+    duserinfochecker.cpp \
+    exconfig.cpp
 HEADERS  += mainwindow.h \
     ctrlapplication.h \
     log.h \

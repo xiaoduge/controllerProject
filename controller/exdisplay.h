@@ -15,6 +15,12 @@ typedef struct
 
 typedef struct
 {
+	float fPureSRange;
+	float fFeedSRange;
+}SENSOR_RANGE; //Sensor range
+
+typedef struct
+{
     Ex_DISP_PARAM_CALI_ITEM_STRU pc[DISP_PC_COFF_NUM];
 
 }Ex_DISP_PARAM_CALI_STRU;
@@ -76,11 +82,15 @@ typedef struct
     EX_CHECK_STATE EX_Check_State;
 
     EX_AUTO_CIR_TICK Ex_Auto_Cir_Tick;
+
 }EX_CCB;
 
 extern unsigned int gMachineFlow;
 extern Ex_DISP_PARAM_CALI_STRU gCaliParam;
 extern EX_CCB  ex_gCcb;
+
+extern SENSOR_RANGE gSensorRange;
+
 
 extern unsigned int ex_gulSecond;
 extern unsigned short ex_isPackNew;

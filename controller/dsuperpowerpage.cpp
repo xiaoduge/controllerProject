@@ -286,7 +286,7 @@ void DSuperPowerPage::update()
     m_ExLineEdit[SYSCFGPAGE_LB_SERIALNO]->setText(gAdditionalCfgParam.productInfo.strSerialNo);
     m_ExLineEdit[SYSCFGPAGE_LB_PRODATE]->setText(gAdditionalCfgParam.productInfo.strProductDate);
     m_ExLineEdit[SYSCFGPAGE_LB_INSTALLDATE]->setText(gAdditionalCfgParam.productInfo.strInstallDate);
-    m_ExLineEdit[SYSCFGPAGE_LB_SOFTVER]->setText(gAdditionalCfgParam.productInfo.strVersion);
+    m_ExLineEdit[SYSCFGPAGE_LB_SOFTVER]->setText(gApp->applicationVersion());
 
     m_cmbDeviceType->setCurrentIndex(gGlobalParam.iMachineType);
     checkLoginInfo();
@@ -475,7 +475,6 @@ void DSuperPowerPage::save()
     gAdditionalCfgParam.productInfo.strSerialNo = m_ExLineEdit[SYSCFGPAGE_LB_SERIALNO]->text();
     gAdditionalCfgParam.productInfo.strProductDate = m_ExLineEdit[SYSCFGPAGE_LB_PRODATE]->text();
     gAdditionalCfgParam.productInfo.strInstallDate = m_ExLineEdit[SYSCFGPAGE_LB_INSTALLDATE]->text();
-//    gAdditionalCfgParam.productInfo.strVersion = m_ExLineEdit[SYSCFGPAGE_LB_SOFTVER]->text();
 
     gAdditionalCfgParam.machineInfo.iMachineFlow = m_cmbDeviceFlow->currentText().toInt();
 

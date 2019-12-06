@@ -38,7 +38,6 @@ enum MachineFlow
  * @ strSerialNo    : 设备序列号
  * @ strProductDate : 设备生产日期   
  * @ strInstallDate : 设备安装日期    
- * @ strVersion     : 程序版本号  
  */
 struct ProductInfo
 {
@@ -47,7 +46,6 @@ struct ProductInfo
     QString strSerialNo;
     QString strProductDate;
     QString strInstallDate;
-    QString strVersion;
 };
 
 /**
@@ -89,5 +87,7 @@ extern AdditionalGlobalCfg gAdditionalCfgParam;
 extern unsigned int gScreenSleepTimer;
 extern bool gScreenSleeping;
 extern unsigned int gAutoLogoutTimer;
+
+extern const QString gAppVersion;
 
 #endif // EXTRADISPLAY_H

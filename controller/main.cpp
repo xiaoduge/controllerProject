@@ -16,7 +16,7 @@
 #include "syszuxim.h"
 #include "syszuxpinyin.h"
 #include "cminterface.h"
-
+#include "exconfig.h"
 #include "deventfilter.h"
 
 CtrlApplication *gApp;
@@ -354,6 +354,7 @@ int main(int argc, char *argv[])
 
     CtrlApplication a(argc, argv);
     gApp = &a;
+    gApp->setApplicationVersion(gAppVersion);
 
     //ex
     DEventFilter eventF;

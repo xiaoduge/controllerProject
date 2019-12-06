@@ -74,6 +74,14 @@ private:
 
     bool               m_bHaveToc;
 
+    QLabel *m_pPureRangeLab;
+    DLineEdit *m_pPureRangeEdit;
+	QLabel *m_pPureRangeUnit;
+	
+    QLabel *m_pFeedRangeLab;
+    DLineEdit *m_pFeedRangeEdit;
+	QLabel *m_pFeedRangeUnit;
+
     QCheckBox *m_aChks[32];
 
     struct CHK_ITEM_TYPE {

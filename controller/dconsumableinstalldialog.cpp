@@ -272,6 +272,8 @@ void DConsumableInstallDialog::setConsumableName(int iType, const QString &catNo
     case DISP_N4_UV:
         m_pcomboBox->addItem(tr("Tube UV"));
         break;
+	case DISP_TUBE_DI:
+		m_pcomboBox->addItem(tr("Loop DI"));
     default:
         break;
     }

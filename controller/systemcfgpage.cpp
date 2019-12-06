@@ -3,6 +3,9 @@
 #include "exconfig.h"
 #include "dlineedit.h"
 #include "cbitmapbutton.h"
+#include <QScrollArea>
+#include <QVBoxLayout>
+#include <QScrollBar>
 
 #define ControlNum 6
 
@@ -207,6 +210,8 @@ void SystemCfgPage::buildTranslation()
 
     m_pBtnSave->setTip(tr("Save"),QColor(228, 231, 240),BITMAPBUTTON_TIP_CENTER);
 
+    m_pPureRangeLab->setText(tr("Pure Tank Level Sensor Range"));
+    m_pFeedRangeLab->setText(tr("Feed Tank Level Sensor Range"));
 }
 
 void SystemCfgPage::switchLanguage()
@@ -245,22 +250,26 @@ void SystemCfgPage::createControl()
     QString strQss4Chk = m_wndMain->getQss4Chk();
 
     QRegExp double_rx("([0-9]{0,1}[\.][0-9]{0,2})"); 
+    QRegExp sensorRangerx("([0-9]{1}[\.][0-9]{0,3})");
 
+    const int tmpWidgetWidth = 740;
     int yOffset = BACKWIDGET_START_Y ;
     QWidget *tmpWidget = NULL;
     QRect    rectTmp;
 
+    QScrollArea *scrollWidget = new QScrollArea(m_widget);
+    QWidget *mainWidget = new QWidget(m_widget);
+
+    QVBoxLayout *mainLayout = new QVBoxLayout;
     /* line 1*/
-    tmpWidget = new QWidget(m_widget);
+    tmpWidget = new QWidget;
     
     QPalette pal(tmpWidget->palette());
     pal.setColor(QPalette::Background, QColor(255,255,255));
     
     tmpWidget->setAutoFillBackground(true);
     tmpWidget->setPalette(pal);
-    
-    tmpWidget->setGeometry(QRect(BACKWIDGET_START_X , yOffset, BACKWIDGET_WIDTH ,BACKWIDGET_HEIGHT));
-    yOffset += BACKWIDGET_START_HIATUS;
+    tmpWidget->setFixedSize(tmpWidgetWidth ,BACKWIDGET_HEIGHT);
 
     rectTmp = sQrectAry[0];
 
@@ -306,16 +315,16 @@ void SystemCfgPage::createControl()
     int iRows = (m_iRealChkNum + iCols - 1)/ iCols;
     int iRow,iCol;
     
+    mainLayout->addWidget(tmpWidget);
+
     for (iRow = 0;iRow < iRows; iRow++)
     {
         /* line 2*/
-        tmpWidget = new QWidget(m_widget);
+        tmpWidget = new QWidget;
         
         tmpWidget->setAutoFillBackground(true);
         tmpWidget->setPalette(pal);
-        
-        tmpWidget->setGeometry(QRect(BACKWIDGET_START_X , yOffset, BACKWIDGET_WIDTH ,BACKWIDGET_HEIGHT));
-        yOffset += BACKWIDGET_START_HIATUS;
+        tmpWidget->setFixedSize(tmpWidgetWidth ,BACKWIDGET_HEIGHT);
 
         rectTmp = sQrectAry[0];
         rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 60);
@@ -332,11 +341,11 @@ void SystemCfgPage::createControl()
                 rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 60);
             }
         }
-        
+        mainLayout->addWidget(tmpWidget);
     }
 
     /* line 4*/
-    tmpWidget = new QWidget(m_widget);
+    tmpWidget = new QWidget;
 
     switch(gGlobalParam.iMachineType)
     {
@@ -350,9 +359,7 @@ void SystemCfgPage::createControl()
         tmpWidget->setPalette(pal);
         break;
     }
-    
-    tmpWidget->setGeometry(QRect(BACKWIDGET_START_X , yOffset, BACKWIDGET_WIDTH ,BACKWIDGET_HEIGHT));
-    yOffset += BACKWIDGET_START_HIATUS;
+    tmpWidget->setFixedSize(tmpWidgetWidth ,BACKWIDGET_HEIGHT);
 
     rectTmp = sQrectAry[0];
     rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 60);
@@ -394,17 +401,14 @@ void SystemCfgPage::createControl()
         m_lbPWTankUVUnit->show();
         break;
     }
-
+    mainLayout->addWidget(tmpWidget);
     /* line 5*/
-    tmpWidget = new QWidget(m_widget);
+    tmpWidget = new QWidget;
     
     tmpWidget->setAutoFillBackground(true);
     tmpWidget->setPalette(pal);
-    
-    tmpWidget->setGeometry(QRect(BACKWIDGET_START_X , yOffset, BACKWIDGET_WIDTH ,BACKWIDGET_HEIGHT));
-    yOffset += BACKWIDGET_START_HIATUS;
+    tmpWidget->setFixedSize(tmpWidgetWidth ,BACKWIDGET_HEIGHT);
 
-    
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_PURIST:
@@ -462,18 +466,16 @@ void SystemCfgPage::createControl()
     rectTmp.setWidth(X_ITEM_WIDTH);
     m_lbLoginLingerUnit = new QLabel(tmpWidget);
     m_lbLoginLingerUnit->setGeometry(rectTmp);
-
+    mainLayout->addWidget(tmpWidget);
     /* line 6*/
-    tmpWidget = new QWidget(m_widget);
+    tmpWidget = new QWidget;
     
     tmpWidget->setAutoFillBackground(true);
     tmpWidget->setPalette(pal);
-    
-    tmpWidget->setGeometry(QRect(BACKWIDGET_START_X , yOffset, BACKWIDGET_WIDTH ,BACKWIDGET_HEIGHT));
-    yOffset += BACKWIDGET_START_HIATUS;
+    tmpWidget->setFixedSize(tmpWidgetWidth ,BACKWIDGET_HEIGHT);
 
     rectTmp = sQrectAry[0];
-    rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 60);
+    rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 70);
     m_lbPWTankName = new QLabel(tmpWidget);
     m_lbPWTankName->setGeometry(rectTmp);
     m_lbPWTankName->hide();
@@ -539,19 +541,58 @@ void SystemCfgPage::createControl()
         m_lbPWCUnit->show();
         break;
     }
+    mainLayout->addWidget(tmpWidget);
 
-    /* line 7*/
-    tmpWidget = new QWidget(m_widget);
+    //line 7
+    tmpWidget = new QWidget;
 
     tmpWidget->setAutoFillBackground(true);
     tmpWidget->setPalette(pal);
-
-    tmpWidget->setGeometry(QRect(BACKWIDGET_START_X , yOffset, BACKWIDGET_WIDTH ,BACKWIDGET_HEIGHT));
-    yOffset += BACKWIDGET_START_HIATUS;
+    tmpWidget->setFixedSize(tmpWidgetWidth ,BACKWIDGET_HEIGHT);
 
     rectTmp = sQrectAry[0];
-    rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 60);
+    rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 70);
+    m_pPureRangeLab = new QLabel(tmpWidget);
+    m_pPureRangeLab->setGeometry(rectTmp);
+    m_pPureRangeLab->hide();
 
+    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
+    rectTmp.setWidth(X_ITEM_WIDTH + 60);
+    m_pPureRangeEdit = new DLineEdit(tmpWidget);
+    m_pPureRangeEdit->setValidator(new QRegExpValidator(sensorRangerx, this));
+    m_pPureRangeEdit->setGeometry(rectTmp);
+	m_pPureRangeEdit->setText(QString("%1").arg(gSensorRange.fPureSRange));
+    m_pPureRangeEdit->hide();
+
+	rectTmp.setX(rectTmp.x() + rectTmp.width() + 10);
+    rectTmp.setWidth(90);
+	m_pPureRangeUnit = new QLabel(tmpWidget);
+	m_pPureRangeUnit->setText(tr("bar"));
+	m_pPureRangeUnit->setGeometry(rectTmp);
+	m_pPureRangeUnit->hide();
+
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_ADAPT:
+        tmpWidget->setAutoFillBackground(false);
+        break;
+    default:
+        m_pPureRangeLab->show();
+        m_pPureRangeEdit->show();
+		m_pPureRangeUnit->show();
+        break;
+    }
+    mainLayout->addWidget(tmpWidget);
+    //
+    /* line 8*/
+    tmpWidget = new QWidget;
+
+    tmpWidget->setAutoFillBackground(true);
+    tmpWidget->setPalette(pal);
+    tmpWidget->setFixedSize(tmpWidgetWidth ,BACKWIDGET_HEIGHT);
+
+    rectTmp = sQrectAry[0];
+    rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 70);
     m_lbSWTankName = new QLabel(tmpWidget);
     m_lbSWTankName->setGeometry(rectTmp);
     
@@ -604,6 +645,52 @@ void SystemCfgPage::createControl()
         tmpWidget->show();
         break;
     }
+    mainLayout->addWidget(tmpWidget);
+
+    //line 9
+    tmpWidget = new QWidget;
+
+    tmpWidget->setAutoFillBackground(true);
+    tmpWidget->setPalette(pal);
+    tmpWidget->setFixedSize(tmpWidgetWidth ,BACKWIDGET_HEIGHT);
+
+    rectTmp = sQrectAry[0];
+    rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 70);
+    m_pFeedRangeLab = new QLabel(tmpWidget);
+    m_pFeedRangeLab->setGeometry(rectTmp);
+
+    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
+    rectTmp.setWidth(X_ITEM_WIDTH + 60);
+    m_pFeedRangeEdit = new DLineEdit(tmpWidget);
+    m_pFeedRangeEdit->setValidator(new QRegExpValidator(sensorRangerx, this));
+    m_pFeedRangeEdit->setGeometry(rectTmp);
+	m_pFeedRangeEdit->setText(QString("%1").arg(gSensorRange.fFeedSRange));
+
+	rectTmp.setX(rectTmp.x() + rectTmp.width() + 10);
+    rectTmp.setWidth(90);
+	m_pFeedRangeUnit = new QLabel(tmpWidget);
+	m_pFeedRangeUnit->setText(tr("bar"));
+	m_pFeedRangeUnit->setGeometry(rectTmp);
+
+    tmpWidget->hide();
+    switch(gGlobalParam.iMachineType)
+    {
+     case MACHINE_L_Genie:
+     case MACHINE_L_UP:
+     case MACHINE_L_EDI_LOOP:
+     case MACHINE_L_RO_LOOP:
+        tmpWidget->show();
+        break;
+    }
+
+    mainLayout->addWidget(tmpWidget);
+        //
+    mainWidget->setLayout(mainLayout);
+
+    scrollWidget->setWidget(mainWidget);
+    scrollWidget->setGeometry(QRect(5, 60, 780, 490));
+
+    scrollWidget->setStyleSheet("QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical{background: transparent;}");
 
     m_pBtnSave = new CBitmapButton(m_widget,BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL,SYSCFGPAGE_BTN_SAVE);
     
@@ -1174,6 +1261,10 @@ void SystemCfgPage::save()
    MainSaveSubModuleSetting(gGlobalParam.iMachineType,smParam);
    MainSaveMiscParam(gGlobalParam.iMachineType,miscParam);
    MainUpdateGlobalParam();
+
+   gSensorRange.fPureSRange = m_pPureRangeEdit->text().toFloat();
+   gSensorRange.fFeedSRange = m_pFeedRangeEdit->text().toFloat();
+   MainSaveSensorRange(gGlobalParam.iMachineType);
 
    m_wndMain->ClearToc();
    m_wndMain->MainWriteLoginOperationInfo2Db(SETPAGE_SYSTEM_DEVICE_CONFIG);

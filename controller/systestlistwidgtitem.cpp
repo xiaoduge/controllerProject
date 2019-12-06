@@ -89,13 +89,13 @@ Systestlistwidgtitem::Systestlistwidgtitem(QWidget *parent,SysTestPage *owner,in
 
             switch(gGlobalParam.iMachineType)
             {
+            case MACHINE_L_Genie:
+			case MACHINE_L_UP:
+			case MACHINE_L_RO_LOOP:
             case MACHINE_L_EDI_LOOP:
-                if(gAdditionalCfgParam.machineInfo.iMachineFlow == 500)
-                {
                     m_cmbAction->addItem(tr("OFF"));
                     m_cmbAction->addItem(tr("ON"));
 					break;
-                }
             default:
                 m_cmbAction->addItem(tr("OFF"));
                 m_cmbAction->addItem(tr("LOW"));
