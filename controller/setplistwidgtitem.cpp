@@ -14,7 +14,7 @@ SetPlistwidgtitem::SetPlistwidgtitem(QWidget *parent,int iItems) :
     QWidget(parent)
 {
     int xOffset = LEFT_MARGIN;
-    QRegExp double_rx("([0-9]{0,2}[\.][0-9]{1,1})"); 
+    QRegExp double_rx("([0-9]{0,4}[\.][0-9]{1,1})"); 
 
     
     m_iItems = iItems;

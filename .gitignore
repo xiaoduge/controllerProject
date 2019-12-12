@@ -4,3 +4,8 @@
 # 忽略构建文件夹
 controller-build-desktop-Qt_4_8_5__qt4_8_5____
 
+#
+copyController
+
+#
+*.sh~

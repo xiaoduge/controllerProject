@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 #当前目录
 projectPath=$(pwd)
@@ -73,6 +73,6 @@ cd $builtPath
 
 make
 
-echo "编译完成"
-exit $?
+echo "编译完成: $?"
+
 

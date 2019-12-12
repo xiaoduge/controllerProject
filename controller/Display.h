@@ -276,17 +276,7 @@ typedef struct
 
 typedef enum
 {
-    TIME_PARAM_RoWashT1 = 0,
-    TIME_PARAM_RoWashT2,
-    TIME_PARAM_RoWashT3,
-    
-    TIME_PARAM_PhWashT1,
-    TIME_PARAM_PhWashT2,
-    TIME_PARAM_PhWashT3,
-    TIME_PARAM_PhWashT4,
-    TIME_PARAM_PhWashT5,
-    
-    TIME_PARAM_InitRunT1, //  系统冲洗时间 
+    TIME_PARAM_InitRunT1 = 0, //  系统冲洗时间 
     
     TIME_PARAM_NormRunT1,
     TIME_PARAM_NormRunT2,
@@ -311,35 +301,6 @@ typedef enum
 }TIME_PARAM_ENUM;
 typedef struct
 {
-#if 0
-    unsigned int ulRoWashT1;
-    unsigned int ulRoWashT2;
-    unsigned int ulRoWashT3;
-
-    unsigned int ulPhWashT1;
-    unsigned int ulPhWashT2;
-    unsigned int ulPhWashT3;
-    unsigned int ulPhWashT4;
-    unsigned int ulPhWashT5;
-
-    unsigned int ulInitRunT1;
-    
-    unsigned int ulNormRunT1;
-    unsigned int ulNormRunT2;
-    unsigned int ulNormRunT3;
-    unsigned int ulNormRunT4;
-    unsigned int ulNormRunT5;
-
-    unsigned int ulN3Period;
-    unsigned int ulN3Duration;
-
-    unsigned int ulTOCT1;
-    unsigned int ulTOCT2;
-    unsigned int ulTOCT3;
-
-    unsigned int ulIdleCirPeriod;
-    unsigned int ulInterCirDuration;
-#endif
     unsigned int aulTime[TIME_PARAM_NUM];
 }DISP_TIME_PARAM_STRU;
 
@@ -1005,8 +966,6 @@ typedef struct
 typedef struct
 {
    int iStart;    /* 0 : for stop ,otherwise start */
-   int iDuration; /* duration in minutes */
-   
 }DISP_CMD_TC_STRU; /*Tube circulation */
 
 typedef struct

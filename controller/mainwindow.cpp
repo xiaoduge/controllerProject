@@ -233,6 +233,23 @@ unsigned int ex_gulSecond = 0;
 unsigned short ex_isPackNew;
 QMutex ex_gMutex;
 
+//RO 清洗时间定义
+const unsigned int gROWashDuration[ROWashTimeNum] = 
+{
+    13*60*1000, //ROClWash_FirstStep   13min
+    5*60*1000,  //ROClWash_SecondStep  5min
+
+    10*1000,    //ROPHWash_FirstStep   10s
+    60*60*1000, //ROPHWash_SecondStep  60min
+    10*60*1000, //ROPHWash_ThirdStep   10min
+    10*60*1000, //ROPHWash_FourthStep  10min
+
+    35*1000,    //ROPHWash_FirstStep_L  35s
+    60*60*1000, //ROPHWash_SecondStep_L 60min
+    40*60*1000, //ROPHWash_ThirdStep_L  40min
+};
+
+
 DISP_CM_USAGE_STRU     gCMUsage ;
 
 MACHINE_TYPE_STRU gaMachineType[MACHINE_NUM] =
@@ -250,9 +267,7 @@ MACHINE_TYPE_STRU gaMachineType[MACHINE_NUM] =
 };
 
 QString gastrTmCfgName[] = 
-{
-   "RoWashT1","RoWashT2","RoWashT3",
-   "PhWashT1","PhWashT2","PhWashT3","PhWashT4","PhWashT5",    
+{   
    "InitRunT1",
    "NormRunT1","NormRunT2","NormRunT3","NormRunT4","NormRunT5",
    "N3Period", "N3Duration",
@@ -363,7 +378,7 @@ extern QString select_sql_subAccount;
 extern QString insert_sql_subAccount;
 extern QString update_sql_subAccount;
 
-char *State_info[] =
+const char *State_info[] =
 {
     "INIT","ROWASH",
     "PHWASH","RUN",
@@ -2484,18 +2499,7 @@ void MainSaveMacSnItem(int iMachineType,CATNO cn,LOTNO ln,int iIndex)
 
 void MainRetriveGlobalParam(void)
 {
-
     gGlobalParam.iMachineType   = MACHINE_L_Genie;
-
-    gGlobalParam.TMParam.aulTime[TIME_PARAM_RoWashT1] = DEFAULT_RoWashT1;
-    gGlobalParam.TMParam.aulTime[TIME_PARAM_RoWashT2] = DEFAULT_RoWashT2;
-    gGlobalParam.TMParam.aulTime[TIME_PARAM_RoWashT3] = DEFAULT_RoWashT3;
-    
-    gGlobalParam.TMParam.aulTime[TIME_PARAM_PhWashT1] = DEFAULT_PhWashT1;
-    gGlobalParam.TMParam.aulTime[TIME_PARAM_PhWashT2] = DEFAULT_PhWashT2;
-    gGlobalParam.TMParam.aulTime[TIME_PARAM_PhWashT3] = DEFAULT_PhWashT3;
-    gGlobalParam.TMParam.aulTime[TIME_PARAM_PhWashT4] = DEFAULT_PhWashT4;
-    gGlobalParam.TMParam.aulTime[TIME_PARAM_PhWashT5] = DEFAULT_PhWashT5;
     
     gGlobalParam.TMParam.aulTime[TIME_PARAM_InitRunT1] = DEFAULT_InitRunT1;
     
@@ -2540,12 +2544,7 @@ void MainRetriveGlobalParam(void)
     MainRetriveCleanParam(gGlobalParam.iMachineType,gGlobalParam.CleanParam);
 //    MainRetriveCMSn(gGlobalParam.iMachineType,gGlobalParam.cmSn);
 //    MainRetriveMacSn(gGlobalParam.iMachineType,gGlobalParam.macSn);
-    MainRetriveCalibrateParam(gGlobalParam.iMachineType);
-
-#ifdef SYSTEM_TEST
-    //gGlobalParam.MMParam.SP[MACHINE_PARAM_SP1] = -100000;
-    //gGlobalParam.MMParam.SP[MACHINE_PARAM_SP6] = -100000;
-#endif    
+    MainRetriveCalibrateParam(gGlobalParam.iMachineType); 
 
     /* Init */
     switch(gGlobalParam.iMachineType)
@@ -3360,7 +3359,7 @@ MainWindow::MainWindow(QMainWindow *parent) :
         qss.close();
     }
     
-    m_iTubeCirFlags = -1;
+    m_bTubeCirFlags = false;
     m_fd4buzzer     = -1;
     m_iNotState     = 0;
     m_iLevel        = 0;
@@ -5052,41 +5051,59 @@ void MainWindow::on_timerEvent()
         
     }
 
-    /* tube circulation check */
+    // WARNING: 管路循环控制，2019.12.11修改，需要测试
     if (gGlobalParam.MiscParam.ulAllocMask & (1 << DISPLAY_ALLOC_FLAG_SWITCHON))
     {
-       /* get hour */
-       QDateTime dt = QDateTime::currentDateTime();
-       int wd       = dt.date().dayOfWeek();
-       int hour = dt.time().hour();
-       int min  = dt.time().minute();
+        /* get hour */
+        QDateTime dt = QDateTime::currentDateTime();
+        int wd   = dt.date().dayOfWeek();
+        int hour = dt.time().hour();
+        int min  = dt.time().minute();
 
-       if ( (1 << wd) & gGlobalParam.MiscParam.ulAllocMask)
-       {
-           /* check current minute */
-           if (m_iTubeCirFlags != min)
-           {
-               int tgtMin = hour*60 + min;
-
-               if (tgtMin >= m_iStartMinute && tgtMin < m_iEndMinute)
-               {
-                   if ( 0 == ((tgtMin - m_iStartMinute) %  m_iTubeCirCycle))
-                   {
-
-                        DISP_CMD_TC_STRU tc;
-
-                        tc.iStart    = 1;
-                        tc.iDuration = gGlobalParam.MiscParam.iTubeCirDuration;
-                        
-                        /* lets go */
-                        if (DISP_INVALID_HANDLE != DispCmdEntry(DISP_CMD_TUBE_CIR,(unsigned char *)&tc,sizeof(DISP_CMD_TC_STRU)))
-                        {
-                            m_iTubeCirFlags = min;
-                        }
-                   }
-               }
-           }
-       }
+        if ( (1 << wd) & gGlobalParam.MiscParam.ulAllocMask)
+        {
+            /* check current minute */
+            int tgtMin = hour*60 + min;
+            if (tgtMin >= m_iStartMinute && tgtMin < m_iEndMinute)
+            {
+                if (!m_bTubeCirFlags)
+                {
+                    DISP_CMD_TC_STRU tc;
+                    tc.iStart    = 1;
+                    /* lets go */
+                    if (DISP_INVALID_HANDLE != DispCmdEntry(DISP_CMD_TUBE_CIR,(unsigned char *)&tc,sizeof(DISP_CMD_TC_STRU)))
+                    {
+                        m_bTubeCirFlags = true;
+                    }
+                }
+            }
+            else
+            {
+                if(m_bTubeCirFlags)
+                {
+                    DISP_CMD_TC_STRU tc;
+                    tc.iStart    = 0;
+                    /* lets go */
+                    if (DISP_INVALID_HANDLE != DispCmdEntry(DISP_CMD_TUBE_CIR,(unsigned char *)&tc,sizeof(DISP_CMD_TC_STRU)))
+                    {
+                        m_bTubeCirFlags = false;
+                    }
+                }
+            }
+        }
+		else
+		{
+            if(m_bTubeCirFlags)
+            {
+                DISP_CMD_TC_STRU tc;
+                tc.iStart    = 0;
+                /* lets go */
+                if (DISP_INVALID_HANDLE != DispCmdEntry(DISP_CMD_TUBE_CIR,(unsigned char *)&tc,sizeof(DISP_CMD_TC_STRU)))
+                {
+                    m_bTubeCirFlags = false;
+                }
+            }
+		}
        
     }
     
@@ -6403,11 +6420,11 @@ void MainWindow::on_timerNetworkEvent()
         return;
     }
 
-    if(gGlobalParam.MiscParam.iNetworkMask & (1 << DISPLAY_NETWORK_WIFI))
-    {
-        DDispenseData dispenseData(QString("UP"), 1.0, 18.2, 25.0, 3, strDateTime);
-        emit sendDispenseData(dispenseData);
-    }
+//    if(gGlobalParam.MiscParam.iNetworkMask & (1 << DISPLAY_NETWORK_WIFI))
+//    {
+//        DDispenseData dispenseData(QString("UP"), 1.0, 18.2, 25.0, 3, strDateTime);
+//        emit sendDispenseData(dispenseData);
+//    }
 
     if(gGlobalParam.MiscParam.iNetworkMask & (1 << DISPLAY_NETWORK_WIFI))
     {
@@ -8480,10 +8497,6 @@ void MainWindow::run(bool bRun)
 
             if (iRet <= 0)
             {
-                if (typeid(*m_pCurPage) == typeid(MainPage))
-                {
-                    pMainPage->updateRunInfo(false);
-                }
                 bool isError = false;
                 QString warningMsg;
                 switch(-iRet)
@@ -8522,6 +8535,13 @@ void MainWindow::run(bool bRun)
                     {
                         gAdditionalCfgParam.lastRunState = 0;
                         MainSaveLastRunState(gGlobalParam.iMachineType);
+
+                        if (NULL != m_pSubPages[PAGE_MAIN])
+                        {
+                            MainPage *page = (MainPage *)m_pSubPages[PAGE_MAIN];
+                            page->updateRunInfo(false);
+                        }
+                        
                         return;
                     }
                }

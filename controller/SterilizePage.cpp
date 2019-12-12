@@ -3,6 +3,8 @@
 #include "mainwindow.h"
 #include "ToastDlg.h"
 #include "exconfig.h"
+#include "exdisplay.h"
+#include <QProgressBar>
 
 #define ControlNum 6
 
@@ -34,6 +36,7 @@ SterilizePage::SterilizePage(QObject *parent,CBaseWidget *widget ,MainWindow *wn
     initUi();
 
     buildTranslation();
+
 }
 
 void SterilizePage::creatTitle()
@@ -53,6 +56,25 @@ void SterilizePage::buildTitles()
 
     setTitles(stringList);
 
+}
+
+void SterilizePage::startCleanProgress(int iType)
+{
+    m_pCleanProBar->show();
+	m_curProgreeValue = 0;
+    switch(iType)
+    {
+    case DISP_CLEAN_RO:
+        m_pCleanProBar->setRange(0, m_iWashDuration[DISP_CLEAN_RO]);
+        break;
+    case DISP_CLEAN_PH:
+        m_pCleanProBar->setRange(0, m_iWashDuration[DISP_CLEAN_PH]);
+        break;
+    default:
+        break;
+    }
+    m_pCleanProBar->setValue(m_curProgreeValue);
+    m_cleanTimerId = startTimer(1000);
 }
 
 void SterilizePage::buildTranslation()
@@ -97,7 +119,6 @@ void SterilizePage::buildTranslation()
         m_aSterilize[iLoop].btnClean->setText(tr("Clean"),BITMAPBUTTON_STATE_UNSEL);
         m_aSterilize[iLoop].btnClean->setColor(QColor(0x00,0x99,0xfa),BITMAPBUTTON_STATE_SEL);
         m_aSterilize[iLoop].btnClean->setColor(QColor(255,255,255),BITMAPBUTTON_STATE_UNSEL);
-        
         
     }
 
@@ -216,13 +237,38 @@ void SterilizePage::createControl()
         connect(m_aSterilize[iLoop].btnClean, SIGNAL(clicked(int)), this, SLOT(on_btn_clicked(int)));
        
     }
-    
+
+    // NOTE: 新增加进度条
+	m_iWashDuration[DISP_CLEAN_RO] = gROWashDuration[ROClWash_FirstStep] + gROWashDuration[ROClWash_SecondStep];
+    m_iWashDuration[DISP_CLEAN_RO] /= 1000;  //单位秒
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+        m_iWashDuration[DISP_CLEAN_PH] = gROWashDuration[ROPHWash_FirstStep_L] + gROWashDuration[ROPHWash_SecondStep_L] 
+                                       + gROWashDuration[ROPHWash_ThirdStep_L];
+        break;
+    default:
+        m_iWashDuration[DISP_CLEAN_PH] = gROWashDuration[ROPHWash_FirstStep] + gROWashDuration[ROPHWash_SecondStep] 
+                                       + gROWashDuration[ROPHWash_ThirdStep] + gROWashDuration[ROPHWash_FourthStep];
+        break;
+    }
+    m_iWashDuration[DISP_CLEAN_PH] /= 1000; //单位秒
+
+    m_pCleanProBar = new QProgressBar(m_widget);
+    m_pCleanProBar->setGeometry(100, 420, 600, 40);
+    m_pCleanProBar->hide();
 }
 
 void SterilizePage::updateRunInfo(int index,bool bRun)
 {
+    Q_UNUSED(bRun);
     m_aSterilize[index].btnClean->setState(BITMAPBUTTON_STATE_UNSEL);
 
+    m_pCleanProBar->hide();
+    killTimer(m_cleanTimerId);
 }
 
 void SterilizePage::initUi()
@@ -339,6 +385,10 @@ void SterilizePage::on_btn_clicked(int index)
             {
                 m_aSterilize[index].btnClean->setState(BITMAPBUTTON_STATE_UNSEL);
             }
+            else
+            {
+                startCleanProgress(index);
+            }
         }
         break;
     default:
@@ -346,5 +396,14 @@ void SterilizePage::on_btn_clicked(int index)
     }
     m_wndMain->prepareKeyStroke();
 
+}
+
+void SterilizePage::timerEvent(QTimerEvent *event)
+{
+    if(event->timerId() == m_cleanTimerId)
+    {
+        ++m_curProgreeValue;
+        m_pCleanProBar->setValue(m_curProgreeValue);
+    }
 }
 

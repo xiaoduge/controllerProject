@@ -58,7 +58,7 @@ typedef enum
 
 typedef struct
 {
-    char *strName;
+    const char *strName;
     int iType;
     int iFunctions;
     int iDefaultModule;

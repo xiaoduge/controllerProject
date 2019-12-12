@@ -660,10 +660,10 @@ private:
     bool        m_bLockupDlg;
 
     /* for tube circulation */
-    int         m_iTubeCirFlags; /* circulation in progress flag */
+    int         m_bTubeCirFlags; /* circulation in progress flag */
     int         m_iStartMinute;
     int         m_iEndMinute;
-    int         m_iTubeCirCycle;
+    int         m_iTubeCirCycle; 
     
     float       m_afWQuantity[APP_DEV_HS_SUB_NUM]; /* unit: 100ml */
 

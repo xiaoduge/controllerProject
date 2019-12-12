@@ -328,7 +328,8 @@ typedef struct
    /* 2018/01/05 add accroding to ZHANG chunhe*/
    unsigned int     ulB1UnderPressureTick;
    
-   unsigned int     ulTubeCirTick;
+   unsigned int     ulTubeIdleCirTick;
+   unsigned int     ulTubeIdleCirIntervalTick;
    unsigned int     ulProduceWaterBgnTime;
 
    unsigned int     ulCirTick;
@@ -336,8 +337,6 @@ typedef struct
             int     iCirType;           /* refer APP_CIR_TYPE_ENUM */
             int     iTocStage;          /* refer TOC_STAGE_ENUM */
             int     iTocStageTimer;
-
-            int     iTubeCirTime;       /* in minutes */
             
             int     iInitRunTimer;
 
@@ -375,11 +374,10 @@ typedef struct
    unsigned int     ulLstRopTick;
    int              iRopVCheckLowEventCount;
    int              iRopVCheckLowRestoreCount;
-
-#if 0   
+ 
    int              iRopVCheckHighEventCount;
    int              iRopVCheckHighRestoreCount;
-#endif   
+   
    unsigned int     ulRodVelocity;
    unsigned int     ulLstRodFlow;
    unsigned int     ulLstRodTick;
