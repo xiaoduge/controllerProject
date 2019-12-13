@@ -12,7 +12,6 @@
 #include <errno.h>
 #include <sys/time.h>
 
-
 #include "SatIpc.h"
 #include "msgdef.h"
 #include "msg.h"

@@ -6,8 +6,7 @@
 #include <QListWidget>
 #include "dhintdialog.h"
 #include "dlineedit.h"
-
-
+#include <QFile>
 
 NetworkPage::NetworkPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : CSubPage(parent,widget,wndMain)
 {
@@ -58,6 +57,8 @@ void NetworkPage::buildTranslation()
     m_pAddSSIDBtn->setText(tr("Add"));
     m_pRefreshWifiBtn->setText(tr("Refresh"));
     m_pAddCheckBox->setText(tr("Add network"));
+	
+	m_pGetNetInfoBtn->setText(tr("Information"));
 }
 
 void NetworkPage::switchLanguage()
@@ -154,6 +155,9 @@ void NetworkPage::initUi()
     m_pRefreshWifiBtn = new QPushButton(m_pWifiConfigWidget);
     m_pRefreshWifiBtn->setGeometry(210, 208, 100, 30);
 
+	m_pGetNetInfoBtn = new QPushButton(m_pWifiConfigWidget);
+	m_pGetNetInfoBtn->setGeometry(50, 208, 100, 30);
+
     m_pAddCheckBox = new QCheckBox(m_pWifiConfigWidget);
     m_pAddCheckBox->setGeometry(390, 208, 120, 30);
     connect(m_pAddCheckBox, SIGNAL(stateChanged(int)), this, SLOT(on_addCheckBox_stateChanged(int)));
@@ -179,13 +183,18 @@ void NetworkPage::initUi()
 
     connect(m_pAddSSIDBtn, SIGNAL(clicked()), this, SLOT(on_addSSIDBtn_clicked()));
     connect(m_pRefreshWifiBtn, SIGNAL(clicked()), this, SLOT(on_wifiRefreshBtn_clicked()));
-
+	
     connect(m_pWifiMsgListWidget, SIGNAL(itemClicked(QListWidgetItem*)),
             this, SLOT(on_wifiListWidget_itemClicked(QListWidgetItem*)));
+
+	connect(m_pGetNetInfoBtn, SIGNAL(clicked()), this, SLOT(on_getNetInfoBtn_clicked()));
 
     m_pProcess = new QProcess(this);
     connect(m_pProcess, SIGNAL(readyReadStandardOutput()), this, SLOT(on_refreshWifiMsg()));
 
+	m_pGetInfoProcess = new QProcess(this);
+	connect(m_pGetInfoProcess, SIGNAL(readyReadStandardOutput()), this, SLOT(on_getNetInfo()));
+	
     if(!(Qt::Checked == m_chkSwitchs[DISPLAY_NETWORK_WIFI]->checkState()))
     {
         m_pWifiConfigWidget->hide();
@@ -198,7 +207,6 @@ void NetworkPage::initUi()
     }
 
     //end
-    
     m_pBtnSave = new CBitmapButton(m_widget,BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL,NETWORKPAGE_BTN_SAVE);
     
     m_pBtnSave->setButtonPicture(gpGlobalPixmaps[GLOBAL_BMP_PAGE_NAVI_NORMAL]);
@@ -303,6 +311,13 @@ void NetworkPage::on_wifiRefreshBtn_clicked()
     m_pWifiMsgListWidget->addItem("Searching");
 }
 
+void NetworkPage::on_getNetInfoBtn_clicked()
+{
+	m_pGetInfoProcess->start("ifconfig");
+    m_pWifiMsgListWidget->clear();
+    m_pWifiMsgListWidget->addItem("Searching");
+}
+
 void NetworkPage::on_refreshWifiMsg()
 {
     QString strAll = m_pProcess->readAllStandardOutput();
@@ -323,6 +338,62 @@ void NetworkPage::on_refreshWifiMsg()
     for(it = ssidSet.begin(); it != ssidSet.end(); ++it)
     {
         m_pWifiMsgListWidget->addItem(*it);
+    }
+}
+
+void NetworkPage::on_getNetInfo()
+{
+    m_pWifiMsgListWidget->clear();
+
+    //读取连接的网络名称
+    QString strFileName(WIFICONFIG_FILE);
+    if(strFileName.isEmpty())
+    {
+        return;
+    }
+
+    QFile sourceFile(strFileName);
+    if(!sourceFile.open(QIODevice::ReadOnly))
+    {
+        qDebug() << "Open wifi config file failed: 1";
+        return;
+    }
+    QString strWifiCfg = sourceFile.readAll();
+    QRegExp rxSSID("ssid=\"([^\"]*)\"");
+
+    int iPos = rxSSID.indexIn(strWifiCfg);
+    if(iPos > -1)
+    {
+        m_pWifiMsgListWidget->addItem(rxSSID.cap(0));
+
+        if(sourceFile.isOpen())
+        {
+            sourceFile.close();
+        }
+    }
+    else
+    {
+        m_pWifiMsgListWidget->addItem(tr("No internet connection"));
+        if(sourceFile.isOpen())
+        {
+            sourceFile.close();
+        }
+        return;
+    }
+    //读取IP地址
+    QString strAll = m_pGetInfoProcess->readAllStandardOutput();
+	int index = strAll.indexOf("wlan0");
+	QString strDest = strAll.mid(index);
+
+    QRegExp rxIP("inet addr:[0-9]{1,3}[\.][0-9]{1,3}[\.][0-9]{1,3}[\.][0-9]{1,3}");
+    int pos = rxIP.indexIn(strDest);
+    if(pos > -1)
+    {
+        m_pWifiMsgListWidget->addItem(rxIP.cap(0));
+    }
+    else
+    {
+        m_pWifiMsgListWidget->addItem(tr("No internet connection"));
     }
 }
 

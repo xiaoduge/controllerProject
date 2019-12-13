@@ -11,7 +11,6 @@
 #include <QTabWidget>
 #include "dlineedit.h"
 
-
 DFactoryTestPage::DFactoryTestPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain)
                                    : CSubPage(parent,widget,wndMain)
 {
@@ -267,6 +266,7 @@ void DFactoryTestPage::initUpdateWifiPage()
     connect(m_pClearWifiMsgBtn, SIGNAL(clicked()), this, SLOT(on_clearWifiMsgBtn_clicked()));
 
     m_pWifiMsgTBrowser = new QTextBrowser(m_pageWidget[FACTORY_PAGE_UPDWIFI]);
+	m_pWifiMsgTBrowser->document()->setMaximumBlockCount(200);
     m_pWifiMsgTBrowser->setGeometry(50, 85, 700, 400);
 
     QIcon icon1(":/pic/unselected.png");
@@ -398,7 +398,6 @@ void DFactoryTestPage::on_updZigbeeBtn_clicked()
 
     QString BIN_FILE =  ":/other/shznApp.bin";
 
-
     QFileInfo info(BIN_FILE);
     if (info.exists())
     {
@@ -416,7 +415,6 @@ void DFactoryTestPage::on_updZigbeeBtn_clicked()
     }
     m_wndMain->prepareKeyStroke();
 }
-
 
 void DFactoryTestPage::initUi()
 {
@@ -462,7 +460,6 @@ void DFactoryTestPage::fade()
     m_wndMain->setWorkMode(APP_WORK_MODE_NORMAL);
     CSubPage::fade();
 }
-
 
 void DFactoryTestPage::updateFlow(int iIndex, int value)
 {
@@ -515,16 +512,7 @@ void DFactoryTestPage::updateRFIDInfo(int iRfId)
 
     memset(cn,0,sizeof(CATNO));
     memset(ln,0,sizeof(LOTNO));
-
-//    if (m_wndMain->getRfidState(iRfId))
-//    {
-//        m_wndMain->getRfidCatNo(iRfId,cn);
-//        m_wndMain->getRfidLotNo(iRfId,ln);
-//        m_wndMain->getRfidInstallDate(iRfId, &installDate);
-//        m_wndMain->getRfidVolofUse(iRfId, volUsed);
-//    }
-
-//    else
+	
     {
         iRet = m_wndMain->readRfid(iRfId);
         if (iRet)
@@ -546,8 +534,8 @@ void DFactoryTestPage::updateRFIDInfo(int iRfId)
 
 void DFactoryTestPage::updateWifiTestMsg(const QString &msg)
 {
-    QString strContent = m_pWifiMsgTBrowser->toPlainText();
-    m_pWifiMsgTBrowser->setText(strContent + "\n" + msg);
+	QString curTime = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
+	m_pWifiMsgTBrowser->append(curTime + " : " + msg);
 }
 
 void DFactoryTestPage::zigbeeUpdResult(int iResult, int iPercent)
@@ -561,15 +549,4 @@ void DFactoryTestPage::zigbeeUpdResult(int iResult, int iPercent)
         m_plbZigbeeUpd->setText(QString::number(iPercent));
     }
 }
-
-
-
-
-
-
-
-
-
-
-
 

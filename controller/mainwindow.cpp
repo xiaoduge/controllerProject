@@ -3335,6 +3335,12 @@ MainWindow::MainWindow(QMainWindow *parent) :
 
     MainRetriveExConsumableMsg(gGlobalParam.iMachineType,gGlobalParam.cmSn,gGlobalParam.macSn);
 
+    //打印产品信息
+    qDebug() << "Catalog No.      : " << gAdditionalCfgParam.productInfo.strCatalogNo;
+    qDebug() << "Serial No.       : " << gAdditionalCfgParam.productInfo.strSerialNo;
+    qDebug() << "Production Date  : " << gAdditionalCfgParam.productInfo.strProductDate;
+    qDebug() << "Software Version : " << gApp->applicationVersion();
+
     gpMainWnd = this;
 
     {
@@ -4928,7 +4934,6 @@ void MainWindow::on_Gif_State_Change()
 {
     if (m_pMovieGif->currentFrameNumber() == (m_pMovieGif->frameCount() - 1))
     {
-        qDebug("GIf frams = %d \r\n",m_pMovieGif->currentFrameNumber());
         mainDisplay();
     }
 }
@@ -4992,7 +4997,8 @@ int MainWindow:: getAlarmState()
     {
         iType |= MAINPAGE_NOTIFY_STATE_ALARM;
 
-        qDebug() << "alarm" << m_iAlarmRcdMask[0][DISP_ALARM_PART0] << m_iAlarmRcdMask[0][DISP_ALARM_PART1];
+        qDebug() << "alarm part0: " << m_iAlarmRcdMask[0][DISP_ALARM_PART0] 
+			     << "alarm part1: " << m_iAlarmRcdMask[0][DISP_ALARM_PART1];
     }
     if (gCMUsage.ulUsageState & getMachineNotifyMask(gGlobalParam.iMachineType,0))
     {
@@ -5432,7 +5438,7 @@ void MainWindow::zigbeeDataMsg(IAP_NOTIFY_STRU *pIapNotify)
 
 void MainWindow::on_IapIndication(IAP_NOTIFY_STRU *pIapNotify)
 {
-    qDebug("in iap \r\n");
+    qDebug("in iap \n");
 
     if (APP_TRX_CAN == pIapNotify->iTrxIndex)
     {
@@ -6519,7 +6525,7 @@ void MainWindow::initHttpWorker()
 
     m_networkTimer = new QTimer(this);
     connect(m_networkTimer, SIGNAL(timeout()), this, SLOT(on_timerNetworkEvent()),Qt::QueuedConnection);
-    m_networkTimer->start(1000*60*2); //
+    m_networkTimer->start(1000*60*10); //
 
     //start mqtt work
 //    initMqtt();
@@ -6618,10 +6624,7 @@ void MainWindow::on_updateText(const QByteArray& array)
 
         DFactoryTestPage *subSubpage = (DFactoryTestPage *)subpage->getSubPage(SET_BTN_SYSTEM_FACTORYTEST);
 
-        if(subSubpage->isVisible())
-        {
-            subSubpage->updateWifiTestMsg(array);
-        }
+        subSubpage->updateWifiTestMsg(array);
     }
 }
 #endif
@@ -6731,7 +6734,7 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
         {
             NOT_GPM_ITEM_STRU *pItem = (NOT_GPM_ITEM_STRU *)pNotify->aucData;
             
-            qDebug("on_dispIndication DISP_NOT_GET_PARAM \r\n");
+            qDebug("on_dispIndication DISP_NOT_GET_PARAM \n");
 
             while(pItem->ucId != 0XFF)
             {
@@ -6781,7 +6784,7 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
         {
             NOT_ASC_INFO_ITEM_STRU *pInfo = (NOT_ASC_INFO_ITEM_STRU *)pNotify->aucData;
             
-            qDebug("on_dispIndication:DISP_NOT_ASC_INFO %s\r\n",DispGetAscInfo(pInfo->ucId));
+            qDebug("on_dispIndication:DISP_NOT_ASC_INFO %s \n",DispGetAscInfo(pInfo->ucId));
         }
         break;
     case DISP_NOT_ECO:
@@ -7652,7 +7655,7 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
             {
             case NOT_STATE_INIT:
                 {
-                    qDebug("on_dispIndication:DISP_NOT_STATE DISP_NOT_STATE NOT_STATE_INIT \r\n");
+                    qDebug("on_dispIndication:DISP_NOT_STATE DISP_NOT_STATE NOT_STATE_INIT \n");
 
                     //2019.6.3
                     gAdditionalCfgParam.lastRunState = 0;
@@ -7668,7 +7671,7 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                 break;
             case NOT_STATE_RUN:
                 {
-                    qDebug("on_dispIndication:DISP_NOT_STATE NOT_STATE_RUN \r\n");
+                    qDebug("on_dispIndication:DISP_NOT_STATE NOT_STATE_RUN \n");
 
                     //2019.6.3
                     gAdditionalCfgParam.lastRunState = 1;
@@ -7684,7 +7687,7 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                 break;
             case NOT_STATE_LPP:
                 {
-                    qDebug("on_dispIndication:DISP_NOT_STATE NOT_STATE_LPP \r\n");
+                    qDebug("on_dispIndication:DISP_NOT_STATE NOT_STATE_LPP \n");
                     if (typeid(*m_pCurPage) == typeid(MainPage))
                     {
                         //pMainPage->updateRunInfo(false);
@@ -7692,13 +7695,13 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                 }
                 break;
             case NOT_STATE_QTW:
-                qDebug("on_dispIndication:DISP_NOT_STATE NOT_STATE_QTW \r\n");
+                qDebug("on_dispIndication:DISP_NOT_STATE NOT_STATE_QTW \n");
                 break;
             case NOT_STATE_CIR:
-                qDebug("on_dispIndication:DISP_NOT_STATE NOT_STATE_CIR \r\n");
+                qDebug("on_dispIndication:DISP_NOT_STATE NOT_STATE_CIR \n");
                 break;
             case NOT_STATE_DEC:
-                qDebug("on_dispIndication:DISP_NOT_STATE NOT_STATE_DEC \r\n");
+                qDebug("on_dispIndication:DISP_NOT_STATE NOT_STATE_DEC \n");
                 break;
             }
 
@@ -7725,7 +7728,7 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
         break;
     case DISP_NOT_ALARM:
         {
-            qDebug("on_dispIndication:DISP_NOT_ALARM \r\n");
+            qDebug("on_dispIndication:DISP_NOT_ALARM \n");
 
             NOT_ALARM_ITEM_STRU *pInfo = (NOT_ALARM_ITEM_STRU *)pNotify->aucData;
 
@@ -7978,7 +7981,7 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
         break;
     case DISP_NOT_SWITCH_STATE:
         {
-            qDebug("on_dispIndication:DISP_NOT_SWITCH_STATE \r\n");
+            qDebug("on_dispIndication:DISP_NOT_SWITCH_STATE \n");
             //updateRectState(); //ex
             
             if (!m_bSplash && (typeid(*m_pCurPage) == typeid(SystemMonitorPage)))
@@ -8200,7 +8203,7 @@ void MainWindow::on_AutoLogin(void)
 
     if (bEnter ) return ;
 
-    qDebug("on_AutoLogin \r\n");
+    qDebug("on_AutoLogin \n");
 
     bEnter = true;
 
@@ -8214,7 +8217,7 @@ void MainWindow::on_AutoLogin(void)
             m_bLoged = true;
         }
         
-        qDebug("close LoginDlg \r\n");
+        qDebug("close LoginDlg \n");
         
     }
     
@@ -9522,6 +9525,7 @@ void MainWindow::checkConsumableInstall(int iRfId)
     {
         return;
     }
+    
     if(m_checkConsumaleInstall[iRfId]->ischeckBusy())
     {
         return;

@@ -406,60 +406,60 @@ int main(int argc, char *argv[])
 
     success = query.exec(CREATE_TABLE_Handler);
     if(success)
-        qDebug()<<"create handler table successed\r\n";
+        qDebug()<<"create handler table successed";
     else
-        qDebug()<<"create handler table failed\r\n";
+        qDebug()<<"create handler table failed";
 
     success = query.exec(CREATE_TABLE_Rfid);
     if(success)
-        qDebug()<<"create rfid table successed\r\n";
+        qDebug()<<"create rfid table successed";
     else
-        qDebug()<<"create rfid table failed\r\n";
+        qDebug()<<"create rfid table failed";
     
 
     success = query.exec(CREATE_TABLE_Alarm);
     if(success)
-        qDebug()<<"create Alarm table successed\r\n";
+        qDebug()<<"create Alarm table successed";
     else
-        qDebug()<<"create Alarm table failed\r\n";
+        qDebug()<<"create Alarm table failed";
 
     success = query.exec(CREATE_TABLE_User);
     if(success)
-        qDebug()<<"create User table successed\r\n";
+        qDebug()<<"create User table successed";
     else
-        qDebug()<<"create User table failed\r\n";
+        qDebug()<<"create User table failed";
 
     success = query.exec(CREATE_TABLE_GetW);
     if(success)
-        qDebug()<<"create gw table successed\r\n";
+        qDebug()<<"create gw table successed";
     else
-        qDebug()<<"create gw table failed\r\n";
+        qDebug()<<"create gw table failed";
 
     success = query.exec(CREATE_TABLE_Produce_Water);
     if(success)
-        qDebug()<<"create pw table successed\r\n";
+        qDebug()<<"create pw table successed";
     else
-        qDebug()<<"create pw table failed\r\n";
+        qDebug()<<"create pw table failed";
 
     success = query.exec(CREATE_TABLE_Log);
     if(success)
-        qDebug()<<"create log table successed\r\n";
+        qDebug()<<"create log table successed";
     else
-        qDebug()<<"create log table failed\r\n";
+        qDebug()<<"create log table failed";
 
     //2019.1.17 add
     success = query.exec(CREATE_TABLE_Consumable);
     if(success)
-        qDebug()<<"create Consumable table successed\r\n";
+        qDebug()<<"create Consumable table successed";
     else
-        qDebug()<<"create Consumable table failed\r\n";
+        qDebug()<<"create Consumable table failed";
 
     //2019.10.15 add
     success = query.exec(CREATE_TABLE_SUBACCOUNT);
     if(success)
-        qDebug()<<"create Sub-account table successed\r\n";
+        qDebug()<<"create Sub-account table successed";
     else
-        qDebug()<<"create Sub-account table failed\r\n";
+        qDebug()<<"create Sub-account table failed";
 
 
     DeleteExpiredData(); //删除两年前的数据

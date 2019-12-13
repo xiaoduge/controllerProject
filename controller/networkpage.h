@@ -55,6 +55,7 @@ private:
     //add for wifi config
     QWidget *m_pWifiConfigWidget;
     QPushButton *m_pRefreshWifiBtn;
+	QPushButton *m_pGetNetInfoBtn;
     QCheckBox *m_pAddCheckBox;
 
     QPushButton *m_pAddSSIDBtn;
@@ -65,6 +66,7 @@ private:
     QWidget *m_pWifiSSIDAddWidget;
 
     QProcess *m_pProcess;
+	QProcess *m_pGetInfoProcess;
 
 public slots:
     void on_btn_clicked(int);
@@ -75,6 +77,9 @@ public slots:
     void on_refreshWifiMsg();
     void on_wifiListWidget_itemClicked(QListWidgetItem *item);
     void on_addCheckBox_stateChanged(int state);
+
+	void on_getNetInfoBtn_clicked();
+	void on_getNetInfo();
 };
 
 #endif // NETWORKPAGE_H

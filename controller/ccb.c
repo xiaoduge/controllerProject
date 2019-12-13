@@ -3456,7 +3456,6 @@ void work_stop_qtw(void *para)
     pCcb->ulAdapterAgingCount = gulSecond;
 }
 
-
 DISPHANDLE CcbInnerWorkStopQtw(int iIndex)
 {
     WORK_ITEM_STRU *pWorkItem = CcbAllocWorkItem();
@@ -3498,15 +3497,12 @@ void work_cir_fail(int iWorkId)
 
 }
 
-
 void work_cir_succ(void)
 {
     int aiCont[1] = {0};
     
     MainSndWorkMsg(WORK_MSG_TYPE_SCIR,(unsigned char *)aiCont,sizeof(aiCont));
 }
-
-
 
 void work_start_toc_cir(void *para)
 {
@@ -3558,7 +3554,6 @@ void work_start_toc_cir(void *para)
     
     DispSetTocState(iTocStage);
 }
-
 
 void work_start_cir(void *para)
 {
@@ -4043,7 +4038,6 @@ void work_normal_run_fail(int iWorkId)
 
     MainSndWorkMsg(WORK_MSG_TYPE_RUN,(unsigned char *)aiCont,sizeof(aiCont));
     
-    
 }
 
 void work_normal_run_succ(int id)
@@ -4091,10 +4085,9 @@ void work_normal_run_wrapper(void *para)
     pCcb->iRoDVCheckRestoreCount  = 0;
     /* 2018/01/15 add end*/
 
-    work_run_comm_proc(pWorkItem,pCcb,work_normal_run_fail,work_normal_run_succ);
+    work_run_comm_proc(pWorkItem, pCcb, work_normal_run_fail, work_normal_run_succ);
 
 }
-
 
 void work_normal_run(void *para)
 {
@@ -4118,8 +4111,6 @@ DISPHANDLE CcbInnerWorkRun(void)
     return (DISPHANDLE)pWorkItem;
 
 }
-
-
 
 DISPHANDLE CcbInnerWorkIdle(void)
 {
@@ -4155,7 +4146,6 @@ int CanCcbAfModbusMsg(MAIN_CANITF_MSG_STRU *pCanItfMsg)
 
 void CanCcbAfRfIdMsg(int mask)
 {
-
     if (gCcb.iRfIdRequest & mask)
     {
         sp_thread_mutex_lock  ( &gCcb.Ipc4Rfid.mutex );
@@ -4215,7 +4205,6 @@ void CanCcbFMReset()
 {
     gCcb.FlowMeter.ulFmValidFlags = 0;
 }
-
 
 void CanCcbInnerReset(int iFlags)
 {
@@ -10341,7 +10330,8 @@ void work_init_run_succ(int iWorkId)
 
 }
 
-void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK cbf,RUN_COMM_CALL_BACK cbs)
+//设备运行10s冲洗，10s测压，清洗，制水
+void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem, CCB *pCcb, RUN_COMM_CALL_BACK cbf, RUN_COMM_CALL_BACK cbs)
 {
     int iRet;
     int iTmp;
@@ -10374,14 +10364,12 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
             if (CcbConvert2Pm2SP(pCcb->ExeBrd.aPMObjs[APP_EXE_PM2_NO].Value.ulV) >= B2_FULL)
             {
                 CanPrepare4Pm2Full();
-
                 /* close all switchs */    
                 iTmp = 0; 
                 iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
                 if (iRet )
                 {
                     VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet);
-                    
                     cbf(pWorkItem->id);        
                     return ;
                 }
@@ -10391,8 +10379,7 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
                 return;
             }       
 
-            /* 2018/01/05 add extra 10 seconds for flush according to ZHANG Chunhe */
-            /* 2018/01/05 add E3 according to ZHANG */
+            // 增加了额外的10s冲洗时间
             if(haveB3(&gCcb))
             {
                 iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C3_NO);
@@ -10407,14 +10394,12 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
             if (iRet )
             {
                 VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet); 
-        
                 cbf(pWorkItem->id);        
-                
                 /* notify ui (late implemnt) */
                 return ;
             }
 
-            iRet = CcbWorkDelayEntry(pWorkItem->id,10000,CcbDelayCallBack);
+            iRet = CcbWorkDelayEntry(pWorkItem->id,10*1000,CcbDelayCallBack);
             if (iRet )
             {
                 VOS_LOG(VOS_LOG_WARNING,"CcbModbusWorkEntry Fail %d",iRet);  
@@ -10429,8 +10414,8 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
             pCcb->bit3RuningState = NOT_RUNING_STATE_CLEAN;
             
             CcbNotState(NOT_STATE_OTHER);
-            /* E1,C3 ON*/
-            /* set  valves */
+
+            /* E1,C3 ON 进水压力测试*/
             if(haveB3(&gCcb))
             {
                 iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_C3_NO);
@@ -10467,28 +10452,23 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
                 if (iRet )
                 {
                     VOS_LOG(VOS_LOG_WARNING,"CcbModbusWorkEntry Fail %d",iRet);  
-                    
                     cbf(pWorkItem->id);        
-                    
                     return;
                 }
-        
-                
             }
             
-             iRet =  CcbGetDinState(0);
-             if (iRet )
-             {
-                 VOS_LOG(VOS_LOG_WARNING,"CcbModbusWorkEntry Fail %d",iRet);  
-                 
-                 cbf(pWorkItem->id);        
-                 
-                 return;
-             }
+            //检测低压开关
+            iRet =  CcbGetDinState(0);
+            if (iRet )
+            {
+                VOS_LOG(VOS_LOG_WARNING,"CcbModbusWorkEntry Fail %d",iRet);  
+                cbf(pWorkItem->id);        
+                return;
+            }
              
-             VOS_LOG(VOS_LOG_DEBUG,"CcbGetDinState ucDinState %d",gCcb.ExeBrd.ucDinState);
+            VOS_LOG(VOS_LOG_DEBUG,"CcbGetDinState ucDinState %d",gCcb.ExeBrd.ucDinState);
              
-             if (!(gCcb.ExeBrd.ucDinState & (1 << APP_EXE_DIN_IWP_KEY)))            
+            if (!(gCcb.ExeBrd.ucDinState & (1 << APP_EXE_DIN_IWP_KEY)))            
             {
                 /* 1. ui promote */
                 iTmp = 0; 
@@ -10496,7 +10476,6 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
                 if (iRet )
                 {
                     VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet);
-        
                     cbf(pWorkItem->id);        
                     return;
                 }
@@ -10505,9 +10484,7 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
                 if (!gCcb.bit1AlarmTapInPress)
                 {
                     gCcb.bit1AlarmTapInPress   = TRUE;
-            
                     gCcb.ulFiredAlarmFlags |= ALARM_TLP;
-            
                     CcbNotAlarmFire(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE,TRUE);
                 }
 
@@ -10518,22 +10495,18 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
                 return;
             }
 
-            /* 2018/01/05 begin : add for B1 under pressure check according to ZHANG chunhe */
             gCcb.bit1B1Check4RuningState  = TRUE;  
-            /* 2018/01/05 end : add for B1 under pressure check */
             
              /* clear alarm */
             if (gCcb.bit1AlarmTapInPress)
             {
                 gCcb.bit1AlarmTapInPress   = FALSE;
-           
                 gCcb.ulFiredAlarmFlags &= ~ALARM_TLP;
-           
                 CcbNotAlarmFire(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE,FALSE);
             }
         
             VOS_LOG(VOS_LOG_WARNING,"E1,E3,C1,C3 ON; I1b,I2,B1,S4"); 
-            /*E1,E3,C1,C3 ON; I1b,I2,B1,S4*/
+            /*清洗：不合格排放；E1,E3,C1,C3 ON; I1b,I2,B1,S4*/
             if(haveB3(&gCcb))
             {
                 iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C1_NO)|(1<<APP_EXE_C3_NO);
@@ -10583,15 +10556,14 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
         
             /* check data */
             {
-                
                 {
                     int iValidCount = 0;
-                    
                     float fRej ;
                     
                     /* check appromixly 5*60 seconds */
-                    for (iLoop = 0; iLoop < DEFAULT_REG_CHECK_DURATION / DEFAULT_REJ_CHECK_PERIOD; iLoop++)                                    {
-                        iRet = CcbWorkDelayEntry(pWorkItem->id,DEFAULT_REJ_CHECK_PERIOD*1000,CcbDelayCallBack);
+                    for (iLoop = 0; iLoop < DEFAULT_REG_CHECK_DURATION / DEFAULT_REJ_CHECK_PERIOD; iLoop++)                                   
+                    {
+                        iRet = CcbWorkDelayEntry(pWorkItem->id, DEFAULT_REJ_CHECK_PERIOD*1000, CcbDelayCallBack);
                         if (iRet )
                         {
                             VOS_LOG(VOS_LOG_WARNING,"CcbModbusWorkEntry Fail %d",iRet);    
@@ -10601,12 +10573,12 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
                         }  
                 
                         fRej = CcbCalcREJ();
-                
+                        
+                        //RO产水水质和截留率10s内连续合格，跳出当前数据检测过程
                         if (fRej >= CcbGetSp2() 
                             && gCcb.ExeBrd.aEcoObjs[APP_EXE_I2_NO].Value.eV.fWaterQ < CcbGetSp3())
                         {
                             iValidCount ++;
-                
                             if (iValidCount >= DEFAULT_REJ_CHECK_NUMBER)
                             {
                                 break;
@@ -10637,8 +10609,8 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
                 CcbNotState(NOT_STATE_OTHER);
                 
                 VOS_LOG(VOS_LOG_WARNING,"E1,C1,C3,T,N1 ON I1b,I2,I3,B1,B2,S2,S3,S4"); 
-                /* produce water */
-                /* E1,C1,C3,T,N1 ON I1b,I2,I3,B1,B2,S2,S3,S4 */
+
+                /* 开始产水：E1,C1,C3,T,N1 ON I1b,I2,I3,B1,B2,S2,S3,S4 */
                 if(haveB3(&gCcb))
                 {
                     iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_C1_NO)|(1<<APP_EXE_C3_NO);
@@ -10670,7 +10642,7 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
                     return ;
                 }       
 
-				//
+				//SuperGenie E 500 使用S1检测EDI产水流量
                 if(pCcb->ulMachineType == MACHINE_L_EDI_LOOP)
 	            {
             		if(500 <= gMachineFlow)
@@ -10687,7 +10659,6 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
                     iTmp  = (1 << APP_FM_FM2_NO)|(1<<APP_FM_FM3_NO)|(1<<APP_FM_FM4_NO);
                 }
 				
-                
                 iRet = CcbUpdateFms(pWorkItem->id,0,iTmp,iTmp);
                 if (iRet )
                 {
@@ -10702,7 +10673,6 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
                 if (iRet )
                 {
                     VOS_LOG(VOS_LOG_WARNING,"CcbModbusWorkEntry Fail %d",iRet);  
-                    
                     /* notify ui (late implemnt) */
                     cbf(pWorkItem->id);   
                     
@@ -10720,40 +10690,35 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
         break;
     case MACHINE_L_UP:
     case MACHINE_L_RO_LOOP:
-         {
-             /* get B2 reports from exe */
-             iRet = CcbGetPmValue(pWorkItem->id,APP_EXE_PM2_NO,1);
-             if (iRet )
-             {
-                 VOS_LOG(VOS_LOG_WARNING,"CcbGetPmValue Fail %d",iRet);    
-                 /* notify ui (late implemnt) */
-                 cbf(pWorkItem->id);   
-                 
-                 return ;
-             }    
+        {
+            /* get B2 reports from exe */
+            iRet = CcbGetPmValue(pWorkItem->id,APP_EXE_PM2_NO,1);
+            if (iRet )
+            {
+                VOS_LOG(VOS_LOG_WARNING,"CcbGetPmValue Fail %d",iRet);    
+                /* notify ui (late implemnt) */
+                cbf(pWorkItem->id);   
+                return ;
+            }    
          
-             if (CcbConvert2Pm2SP(pCcb->ExeBrd.aPMObjs[APP_EXE_PM2_NO].Value.ulV) >= B2_FULL)
-             {
-                 CanPrepare4Pm2Full();
-                 
-                 /* close all switchs */    
-                 iTmp = 0; 
-                 iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
-                 if (iRet )
-                 {
-                     VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet);
-                     
-                     cbf(pWorkItem->id);        
-                     return ;
-                 }
-                 
-                 /* 1. ui promote */
-                 cbs(pWorkItem->id);        
-                 return;
-             }        
+            if (CcbConvert2Pm2SP(pCcb->ExeBrd.aPMObjs[APP_EXE_PM2_NO].Value.ulV) >= B2_FULL)
+            {
+                CanPrepare4Pm2Full();
+                /* close all switchs */    
+                iTmp = 0; 
+                iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
+                if (iRet )
+                {
+                    VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet);
+                    cbf(pWorkItem->id);        
+                    return ;
+                }
+                /* 1. ui promote */
+                cbs(pWorkItem->id);        
+                return;
+            }        
 
-            /* 2018/01/05 add extra 10 seconds for flush according to ZHANG Chunhe */
-            /* 2018/01/05 add E3 according to ZHANG */
+            //增加额外的10s冲洗过程
             if(haveB3(&gCcb))
             {
                 iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C3_NO);
@@ -10790,8 +10755,7 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
             
             VOS_LOG(VOS_LOG_WARNING,"E1,C3 ON"); 
         
-            /* E1,C3 ON*/
-            /* set  valves */
+            /* 压力测试：E1,C3 ON*/
             if(haveB3(&gCcb))
             {
                 iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_C3_NO);
@@ -10801,7 +10765,7 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
                 iTmp = (1 << APP_EXE_E1_NO)|(1 << APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
             }
 
-            iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
+            iRet = CcbUpdateSwitch(pWorkItem->id, 0, pCcb->ulRunMask, iTmp);
             if (iRet )
             {
                 VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet);    
@@ -10824,7 +10788,6 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
         
                 CcbNotSWPressure();
         
-        
                 iRet = CcbWorkDelayEntry(pWorkItem->id,1000,CcbDelayCallBack);
                 if (iRet )
                 {
@@ -10834,8 +10797,6 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
                     
                     return;
                 }
-        
-                
             }
         
             if (CcbConvert2Pm1Data(pCcb->ExeBrd.aPMObjs[APP_EXE_PM1_NO].Value.ulV) < CcbGetSp1())
@@ -10866,10 +10827,8 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
                 return;
             }
 
-             /* 2018/01/05 begin : add for B1 under pressure check according to ZHANG chunhe */
-             gCcb.bit1B1Check4RuningState  = TRUE;  
-             /* 2018/01/05 end : add for B1 under pressure check */
-        
+            gCcb.bit1B1Check4RuningState  = TRUE;  
+
              /* clear alarm */
             if (gCcb.bit1AlarmTapInPress)
             {
@@ -10882,7 +10841,7 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
         
             VOS_LOG(VOS_LOG_WARNING,"E1,E3,C1,C3 ON; I1b,I2,B1,S4"); 
         
-            /*E1,E3,C1,C3 ON; I1b,I2,B1,S4*/
+            /*开始清洗：不合格排放，E1,E3,C1,C3 ON; I1b,I2,B1,S4*/
             if(haveB3(&gCcb))
             {
                 iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C1_NO)|(1<<APP_EXE_C3_NO);
@@ -10890,7 +10849,7 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
             else
             {
                 iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C1_NO)
-                        |(1 << APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
+                      |(1 << APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
             }
             iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
             if (iRet )
@@ -10934,11 +10893,11 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
             {
                 {
                     int iValidCount = 0;
-                    
                     float fRej ;
                     
                     /* check appromixly 5*60 seconds */
-                    for (iLoop = 0; iLoop < DEFAULT_REG_CHECK_DURATION / DEFAULT_REJ_CHECK_PERIOD; iLoop++)                                    {
+                    for (iLoop = 0; iLoop < DEFAULT_REG_CHECK_DURATION / DEFAULT_REJ_CHECK_PERIOD; iLoop++)                                   
+                    {
                         iRet = CcbWorkDelayEntry(pWorkItem->id,DEFAULT_REJ_CHECK_PERIOD*1000,CcbDelayCallBack);
                         if (iRet )
                         {
@@ -10949,12 +10908,11 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
                         }  
                 
                         fRej = CcbCalcREJ();
-                
+                        //RO产水水质和截留率连接10s合格，跳出当前数据检测过程
                         if (fRej >= CcbGetSp2() 
                             && gCcb.ExeBrd.aEcoObjs[APP_EXE_I2_NO].Value.eV.fWaterQ < CcbGetSp3())
                         {
                             iValidCount ++;
-                
                             if (iValidCount >= DEFAULT_REJ_CHECK_NUMBER)
                             {
                                 break;
@@ -10978,15 +10936,14 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
                         gCcb.bit1AlarmRoPw   = TRUE;
                         gCcb.ulAlarmRoPwTick = gulSecond;
                     }
-                    
                 }
 
                 pCcb->bit3RuningState = NOT_RUNING_STATE_NONE;
                 CcbNotState(NOT_STATE_OTHER);
         
                 VOS_LOG(VOS_LOG_WARNING,"E1,C1,C3 ON I1b,I2,B1,B2,S2,S3,S4"); 
-                /* produce water */
-                /* E1,C1,C3 ON I1b,I2,B1,B2,S2,S3,S4 */
+
+                /* 开始产水：E1,C1,C3 ON I1b,I2,B1,B2,S2,S3,S4 */
                 if(haveB3(&gCcb))
                 {
                     iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_C1_NO)|(1<<APP_EXE_C3_NO);
@@ -11038,7 +10995,6 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
                 VOS_LOG(VOS_LOG_WARNING,"CcbGetPmValue Fail %d",iRet);    
                 /* notify ui (late implemnt) */
                 cbf(pWorkItem->id);   
-                
                 return ;
             }    
         
@@ -11440,7 +11396,6 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
     
             CcbNotSWPressure();
     
-    
             iRet = CcbWorkDelayEntry(pWorkItem->id,1000,CcbDelayCallBack);
             if (iRet )
             {
@@ -11451,7 +11406,6 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
                 return;
             }
     
-            
         }
     
         if (CcbConvert2Pm1Data(pCcb->ExeBrd.aPMObjs[APP_EXE_PM1_NO].Value.ulV) < CcbGetSp1())
@@ -11634,6 +11588,7 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem,CCB *pCcb,RUN_COMM_CALL_BACK c
 
 }
 
+//设备运行冲洗过程
 void work_init_run_wrapper(void *para)
 {
     WORK_ITEM_STRU *pWorkItem = (WORK_ITEM_STRU *)para;
@@ -11641,11 +11596,9 @@ void work_init_run_wrapper(void *para)
     CCB *pCcb = (CCB *)pWorkItem->para;
 
     int iTmp;
-
     int iRet;
 
     /* notify ui (late implemnt) */
-
     pCcb->bit1AlarmRej     = FALSE;
     pCcb->bit1ProduceWater = FALSE;
     pCcb->bit1LeakKey4Reset= FALSE;
@@ -11697,15 +11650,13 @@ void work_init_run_wrapper(void *para)
             return ;
         }
     
-        /* get B3 reports from exe */
+        /* 开启冲洗前检测原水箱液位 */
         iRet = CcbGetPmValue(pWorkItem->id,APP_EXE_PM3_NO,1);
         if (iRet )
         {
             VOS_LOG(VOS_LOG_WARNING,"CcbGetPmValue Fail %d",iRet);  
-    
             /* 1. ui promote */
             work_init_run_fail(pWorkItem->id);
-            
             /* notify ui (late implemnt) */
             return ;
         }
@@ -11715,18 +11666,15 @@ void work_init_run_wrapper(void *para)
         {
             /* 1. ui promote */
             work_init_run_fail(pWorkItem->id);
-            
             /* 2. goto primary tank filling procedure */
             pCcb->bit1NeedFillTank = 1;
-            
             return;
         }   
         
-
         VOS_LOG(VOS_LOG_WARNING,"Flush for Init Run"); 
 
-        /* wash state for init run */
-        /* E1,E2,C3 ON*/
+        /* 运行冲洗*/
+        /* E1,E2,E3,C3 ON*/
         /* set  valves */
         if(haveB3(&gCcb))
         {
@@ -11742,9 +11690,7 @@ void work_init_run_wrapper(void *para)
         if (iRet )
         {
             VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet); 
-    
             work_init_run_fail(pWorkItem->id);  
-            
             /* notify ui (late implemnt) */
             return ;
         }
@@ -11755,24 +11701,18 @@ void work_init_run_wrapper(void *para)
         if (iRet )
         {
             VOS_LOG(VOS_LOG_WARNING,"CcbSetFms Fail %d",iRet); 
-    
             work_init_run_fail(pWorkItem->id);  
-            
             /* notify ui (late implemnt) */
             return ;
         }
         
         /* enable I1 reports */
-        
-        /* I ID */
         iTmp = 1 << APP_EXE_I1_NO;
         iRet = CcbUpdateIAndBs(pWorkItem->id,0,iTmp,iTmp);
         if (iRet )
         {
             VOS_LOG(VOS_LOG_WARNING,"CcbSetIAndBs Fail %d",iRet);   
-    
             work_init_run_fail(pWorkItem->id);  
-            
             /* notify ui (late implemnt) */
             return ;
         }
@@ -11781,10 +11721,9 @@ void work_init_run_wrapper(void *para)
 
         CcbNotState(NOT_STATE_OTHER);
 
-        
         VOS_LOG(VOS_LOG_WARNING,"iPowerOnFlushTime %d",pCcb->MiscParam.iPowerOnFlushTime);    
-    
-        // pCcb->TMParam.aulTime[TIME_PARAM_InitRunT1] should be replaced by (pCcb->MiscParam.iPowerOnFlushTime*60*1000)
+        
+        //新P Pack冲洗20min，否则按设置冲洗时间冲洗
         if(ex_isPackNew)
         {
             ex_isPackNew = 0;
@@ -11800,9 +11739,7 @@ void work_init_run_wrapper(void *para)
         if (iRet )
         {
             VOS_LOG(VOS_LOG_WARNING,"CcbWorkDelayEntry Fail %d",iRet);    
-    
             work_init_run_fail(pWorkItem->id);  
-            
             /* notify ui (late implemnt) */
             return ;
         }
@@ -11825,8 +11762,7 @@ void work_init_run_wrapper(void *para)
 
         VOS_LOG(VOS_LOG_WARNING,"Flush for Init Run"); 
 
-
-        /* wash state for init run */
+        /* 运行冲洗 */
         /* E1,E2,E3 ON*/
         /* set  valves */
         if(haveB3(&gCcb))
@@ -11851,8 +11787,6 @@ void work_init_run_wrapper(void *para)
         }
     
         /* enable I1 reports */
-        
-        /* I ID */
         iTmp = 1 << APP_EXE_I1_NO;
         iRet = CcbUpdateIAndBs(pWorkItem->id,0,iTmp,iTmp);
         if (iRet )
@@ -11871,7 +11805,7 @@ void work_init_run_wrapper(void *para)
 
         CcbNotState(NOT_STATE_OTHER);
 
-        // pCcb->TMParam.aulTime[TIME_PARAM_InitRunT1] should be replaced by (pCcb->MiscParam.iPowerOnFlushTime*60*1000)
+         //新P Pack冲洗20min，否则按设置冲洗时间冲洗
         if(ex_isPackNew)
         {
             ex_isPackNew = 0;
@@ -11887,11 +11821,8 @@ void work_init_run_wrapper(void *para)
         if (iRet )
         {
             VOS_LOG(VOS_LOG_WARNING,"CcbWorkDelayEntry Fail %d",iRet);    
-    
             work_init_run_fail(pWorkItem->id);  
-            
             /* notify ui (late implemnt) */
-            //CcbNotState();
             return ;
         }        
         break;
@@ -11911,7 +11842,6 @@ void work_init_run_wrapper(void *para)
 
         VOS_LOG(VOS_LOG_WARNING,"Flush for Init Run"); 
 
-
         /* wash state for init run */
         /* E1,E2,E3 ON*/
         /* set  valves */
@@ -11929,24 +11859,18 @@ void work_init_run_wrapper(void *para)
         if (iRet )
         {
             VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet); 
-    
             work_init_run_fail(pWorkItem->id);  
-            
             /* notify ui (late implemnt) */
             return ;
         }
     
         /* enable I1 reports */
-        
-        /* I ID */
         iTmp = 1 << APP_EXE_I1_NO;
         iRet = CcbUpdateIAndBs(pWorkItem->id,0,iTmp,iTmp);
         if (iRet )
         {
             VOS_LOG(VOS_LOG_WARNING,"CcbSetIAndBs Fail %d",iRet);   
-    
             work_init_run_fail(pWorkItem->id);  
-            
             /* notify ui (late implemnt) */
             return ;
         }
@@ -11957,7 +11881,6 @@ void work_init_run_wrapper(void *para)
 
         CcbNotState(NOT_STATE_OTHER);
 
-        // pCcb->TMParam.aulTime[TIME_PARAM_InitRunT1] should be replaced by (pCcb->MiscParam.iPowerOnFlushTime*60*1000)
         if(ex_isPackNew)
         {
             ex_isPackNew = 0;
@@ -11973,9 +11896,7 @@ void work_init_run_wrapper(void *para)
         if (iRet )
         {
             VOS_LOG(VOS_LOG_WARNING,"CcbWorkDelayEntry Fail %d",iRet);    
-    
             work_init_run_fail(pWorkItem->id);  
-            
             /* notify ui (late implemnt) */
             return ;
         } 
@@ -11992,20 +11913,12 @@ void work_init_run_wrapper(void *para)
             iTmp = 0;
             iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
         }
-        /*
-        iTmp = 0;
-        iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
-        */
         break;
-
     }
-
+    //冲洗完成，进入运行状态
     CanCcbTransState(DISP_WORK_STATE_RUN,DISP_WORK_SUB_RUN_INIT);
-
     /* come to normal RUN proc*/
-    
-    work_run_comm_proc(pWorkItem,pCcb,work_init_run_fail,work_init_run_succ);
-
+    work_run_comm_proc(pWorkItem, pCcb, work_init_run_fail, work_init_run_succ);
 }
 
 void work_init_run(void *para)
@@ -14276,7 +14189,7 @@ void MainSecondTask4MainState()
                 case MACHINE_L_EDI_LOOP:
                 case MACHINE_L_RO_LOOP:
                 case MACHINE_L_UP:
-                    if(haveB3(&gCcb))
+                    if(haveB3(&gCcb) && (!!(gCcb.ulActiveMask & (1 << APP_PAKCET_ADDRESS_EXE))))
                     {
                         float fValue = CcbConvert2Pm3SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM3_NO].Value.ulV);
                         if ( fValue < CcbGetSp8())

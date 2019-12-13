@@ -186,8 +186,8 @@ void DHttpWorker::onHeartReplyFinished()
 {
     if(m_pHeartNetworkReply->error() == QNetworkReply::NoError)
     {
-        QByteArray array = m_pHeartNetworkReply->readAll();
-        qDebug() << "heartData Feed back: " << array;
+        QByteArray array = "HeartData Feed back: " + m_pHeartNetworkReply->readAll();
+        qDebug() << array;
         emit feedback(array);
     }
     else
@@ -208,8 +208,8 @@ void DHttpWorker::onAlarmReplyFinished()
 {
     if(m_pAlarmNetworkReply->error() == QNetworkReply::NoError)
     {
-        QByteArray array = m_pAlarmNetworkReply->readAll();
-        qDebug() << "AlarmInfo Feed back: " << array;
+        QByteArray array = "AlarmInfo Feed back: " + m_pAlarmNetworkReply->readAll();
+        qDebug() << array;
         emit feedback(array);
     }
     else
@@ -231,8 +231,8 @@ void DHttpWorker::onDispenseReplyFinished()
 {
     if(m_pDispenseNetworkReply->error() == QNetworkReply::NoError)
     {
-        QByteArray array = m_pDispenseNetworkReply->readAll();
-        qDebug() << "DispenseData Feed back: " << array;
+        QByteArray array = "DispenseData Feed back: " + m_pDispenseNetworkReply->readAll();
+        qDebug() << array;
         emit feedback(array);
     }
     else

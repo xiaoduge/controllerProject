@@ -93,15 +93,14 @@ bool DCheckConsumaleInstall::check(int iRfId)
     CATNO cn;
     LOTNO ln;
 
-    memset(cn,0,sizeof(CATNO));
-    memset(ln,0,sizeof(LOTNO));
+    memset(cn, 0, sizeof(CATNO));
+    memset(ln, 0, sizeof(LOTNO));
 
     iRet = gpMainWnd->readRfid(m_curRfId);
     if (iRet)
     {
         qDebug() << "readRfid failed";
     }
-
 
     gpMainWnd->getRfidCatNo(m_curRfId, cn);
     gpMainWnd->getRfidLotNo(m_curRfId, ln);
