@@ -41,14 +41,14 @@ void AllocationSetPage::buildTranslation()
     m_lbNameIdleCirTime->setText(tr("Recir. Duration"));
     m_lbNameIdlePeriodUnit->setText(tr("Min"));
     m_lbNameIdleCirTimeUnit->setText(tr("Min"));
-
-    m_pBtns[0]->setTip(tr("Sun."));
-    m_pBtns[1]->setTip(tr("Mon."));
-    m_pBtns[2]->setTip(tr("Tue."));
-    m_pBtns[3]->setTip(tr("Wed."));
-    m_pBtns[4]->setTip(tr("Thu."));
-    m_pBtns[5]->setTip(tr("Fri."));
-    m_pBtns[6]->setTip(tr("Sat."));
+    
+    m_pBtns[ALLOCPAGE_BTN_MONDAY]->setTip(tr("Mon."));
+    m_pBtns[ALLOCPAGE_BTN_TUESDAY]->setTip(tr("Tue."));
+    m_pBtns[ALLOCPAGE_BTN_WEDNESDAY]->setTip(tr("Wed."));
+    m_pBtns[ALLOCPAGE_BTN_THURSDAY]->setTip(tr("Thu."));
+    m_pBtns[ALLOCPAGE_BTN_FRIDAY]->setTip(tr("Fri."));
+    m_pBtns[ALLOCPAGE_BTN_SATURDAY]->setTip(tr("Sat."));
+	m_pBtns[ALLOCPAGE_BTN_SUNDAY]->setTip(tr("Sun."));
     
     m_pBtnSave->setTip(tr("Save"),QColor(228, 231, 240),BITMAPBUTTON_TIP_CENTER);
 
@@ -62,8 +62,6 @@ void AllocationSetPage::switchLanguage()
 
     selectTitle(titleIndex());
 }
-
-
 
 void AllocationSetPage::setBackColor()
 {
