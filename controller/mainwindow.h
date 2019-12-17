@@ -469,7 +469,6 @@ signals:
 protected:
     void mousePressEvent(QMouseEvent *e);
 
-
 private:
     //Ui::MainWindow *ui;
     class CAlarm 
@@ -482,6 +481,12 @@ private:
         bool m_bActive;
     }Alarm;
 
+	void printSystemInfo();
+	void initGlobalStyleSheet();
+	void initConsumablesInfo();
+	void initAlarmCfg();
+	void initConsumablesCfg();
+	void initRFIDCfg();
     void initUI();
 
     
@@ -660,7 +665,7 @@ private:
     bool        m_bLockupDlg;
 
     /* for tube circulation */
-    int         m_bTubeCirFlags; /* circulation in progress flag */
+    bool         m_bTubeCirFlags; /* circulation in progress flag */
     int         m_iStartMinute;
     int         m_iEndMinute;
     int         m_iTubeCirCycle; 

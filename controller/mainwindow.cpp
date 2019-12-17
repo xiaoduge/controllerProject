@@ -2630,7 +2630,6 @@ int DispGetDay(void)
 
 }
 
-
 void CheckConsumptiveMaterialState(void)
 {
     uint32_t ulCurTime = DispGetCurSecond();
@@ -3220,129 +3219,22 @@ void MainWindow::saveAlarmSP()
     }   
 }
 
-void MainWindow::initUI()
+/**
+ * 打印产品信息
+ */
+void MainWindow::printSystemInfo()
 {
-    int /*row,*/index;
-
-    QString astrPageName [PAGE_NUM] = {
-#ifdef FLOWCHART
-        "flowchart",
-#endif
-        "main",
-        "menu",
-        "service",
-//        "set",
-    };
-
-    QString initPageName[Ex_Init_Num] =
-    {
-        "InitLan",
-        "InitTime",
-        "InitTankSet",
-        "InitSysConfig",
-        "InitNetwork",
-        "InitInstallConsumable",
-        "InitHandler",
-    };
-
-    this->resize(800, 600);
-
-    this->setWindowFlags(Qt::FramelessWindowHint|Qt::Widget);
-    this->setMouseTracking(true);
-
-    mainWidget = new QWidget(this);
-    mainWidget->setObjectName(QString::fromUtf8("mainWidget"));
-
-    this->setCentralWidget(mainWidget);
-
-    for (index = 0; index < GLOBAL_BMP_NUM; index++)
-    {
-        gpGlobalPixmaps[index] = new QPixmap(gGlobalPixelmapName[index], 0, Qt::ColorOnly);
-    }
-
-    m_pFonts[GLOBAL_FONT_12] = new QFont("" , 12 ,  QFont::Bold);
-    m_pFonts[GLOBAL_FONT_14] = new QFont("" , 14 ,  QFont::Bold);
-    m_pFonts[GLOBAL_FONT_24] = new QFont("" , 24 ,  QFont::Bold);
-    m_pFonts[GLOBAL_FONT_30] = new QFont("" , 30 ,  QFont::Bold);
-    m_pFonts[GLOBAL_FONT_40] = new QFont("" , 40 ,  QFont::Bold);
-    m_pFonts[GLOBAL_FONT_48] = new QFont("" , 48 ,  QFont::Bold);
-    m_pFonts[GLOBAL_FONT_60] = new QFont("" , 60 ,  QFont::Bold);
-    //ex_dcj
-    if(gAdditionalCfgParam.initMachine == 0)
-    {
-        for(int i = 0; i < Ex_Init_Num; i++)
-        {
-            m_pExInitWidgets[i] = new CBaseWidget(mainWidget);
-            m_pExInitWidgets[i]->setObjectName(initPageName[i]);
-            m_pExInitWidgets[i]->hide();
-            m_pExInitWidgets[i]->setGeometry(0, 0, 800, 600);
-        }
-        m_pExInitPages[Ex_Init_Lan] = new DInitLanguagepage(0,(CBaseWidget *)m_pExInitWidgets[Ex_Init_Lan] , this);
-        m_pExInitPages[Ex_Init_Time] = new DInitTimePage(0,(CBaseWidget *)m_pExInitWidgets[Ex_Init_Time] , this);
-        m_pExInitPages[Ex_Init_Tankcfg] = new DInitTankcfgpage(0,(CBaseWidget *)m_pExInitWidgets[Ex_Init_Tankcfg] , this);
-        m_pExInitPages[Ex_Init_Syscfg] = new DInitSyscfgpage(0,(CBaseWidget *)m_pExInitWidgets[Ex_Init_Syscfg] , this);
-        m_pExInitPages[Ex_Init_Network] = new DInitNetworkpage(0,(CBaseWidget *)m_pExInitWidgets[Ex_Init_Network] , this);
-        m_pExInitPages[Ex_Init_InstallConsumable] = new DInitConsumableInsPage(0,(CBaseWidget *)m_pExInitWidgets[Ex_Init_InstallConsumable] , this);
-        m_pExInitPages[Ex_Init_Handlercfg] = new DInitHandleCfgpage(0,(CBaseWidget *)m_pExInitWidgets[Ex_Init_Handlercfg] , this);
-        m_curExInitPage = m_pExInitPages[Ex_Init_Lan];
-    }
-    //ScreenPage
-    m_pScreenSleepWidget = new CBaseWidget(mainWidget);
-    m_pScreenSleepWidget->setObjectName("ScreenSleepPage");
-    m_pScreenSleepWidget->hide();
-    m_pScreenSleepWidget->setGeometry(0, 0, 800, 600);
-
-    m_pScreenSleepPage = new DScreenSleepPage(0, m_pScreenSleepWidget, this);
-    connect(m_pScreenSleepPage, SIGNAL(pageHide()), this, SLOT(on_Ex_ScreenPageHide()));
-    connect(this, SIGNAL(SleepPageShow(bool)), m_pScreenSleepPage, SLOT(on_SleepPageShow(bool)));
-    m_pPreviousPage = NULL;
-    //end
-
-    for (index = 0; index < PAGE_NUM; index++)
-    {
-        m_pSubWidget[index] = new CBaseWidget(mainWidget);
-        m_pSubWidget[index]->setObjectName(astrPageName[index]);
-        m_pSubWidget[index]->hide();
-        m_pSubWidget[index]->setGeometry(0,0,800,600);
-    }
-#ifdef FLOWCHART
-    m_pSubPages[PAGE_FLOWCHART]    = new DFlowChartPage(0,(CBaseWidget *)m_pSubWidget[PAGE_FLOWCHART] , this);
-    connect(this, SIGNAL(unitsChanged()), m_pSubPages[PAGE_FLOWCHART], SLOT(updateUnits()));
-    connect(this, SIGNAL(updateFlowChartAlarm(const QString&,bool)),
-            m_pSubPages[PAGE_FLOWCHART], SLOT(on_updateAlarmMsg(const QString&, bool)));
-#endif
-
-    m_pSubPages[PAGE_MAIN]    = new MainPage(0,(CBaseWidget *)m_pSubWidget[PAGE_MAIN] , this);
-    m_pSubPages[PAGE_MENU]    = new MenuPage(0 , (CBaseWidget *)m_pSubWidget[PAGE_MENU],this );
-    m_pSubPages[PAGE_SERVICE] = new ServicePage(0 , (CBaseWidget *)m_pSubWidget[PAGE_SERVICE] , this);
-    m_pCurPage   = m_pSubPages[PAGE_MAIN];
-    m_curPageIdx = PAGE_MAIN;
-}
-
-MainWindow::MainWindow(QMainWindow *parent) :
-    QMainWindow(parent)/*, ui(new Ui::MainWindow)*/
-{
-    int iLoop;
-
-    m_bSplash = false;
-
-    m_bC1Regulator = false;
-    ex_isPackNew = 0;
-
-    //Set the factory default time for RFID tags
-    m_consuambleInitDate = QString("2014-05-22");
-	initMachineName();
-
-    MainRetriveExConsumableMsg(gGlobalParam.iMachineType,gGlobalParam.cmSn,gGlobalParam.macSn);
-
-    //打印产品信息
     qDebug() << "Catalog No.      : " << gAdditionalCfgParam.productInfo.strCatalogNo;
     qDebug() << "Serial No.       : " << gAdditionalCfgParam.productInfo.strSerialNo;
     qDebug() << "Production Date  : " << gAdditionalCfgParam.productInfo.strProductDate;
     qDebug() << "Software Version : " << gApp->applicationVersion();
+}
 
-    gpMainWnd = this;
-
+/**
+ * 读取一些全局可用的样式表
+ */
+void MainWindow::initGlobalStyleSheet()
+{
     {
         QFile qss(":/app/checkbox.qss");
         qss.open(QFile::ReadOnly);
@@ -3364,20 +3256,15 @@ MainWindow::MainWindow(QMainWindow *parent) :
         m_strQss4Cmb = QLatin1String (qss.readAll());
         qss.close();
     }
+}
+
+/**
+ * 配置相关耗材的序列号
+ */
+void MainWindow::initConsumablesInfo()
+{
+    //RASP22045 (增压泵)、RASP22046 (增压泵)
     
-    m_bTubeCirFlags = false;
-    m_fd4buzzer     = -1;
-    m_iNotState     = 0;
-    m_iLevel        = 0;
-    m_iRfidDelayedMask      = 0;
-    m_iRfidBufferActiveMask = 0;
-    m_pCurPage              = NULL;
-    m_curExInitPage         = NULL;
-
-    /*
-     RASP22045 (增压泵)、RASP22046 (增压泵)
-     */
-
     m_strConsuamble[ACPACK_CATNO] << "RR700AC01" << "171-1254";
 
     m_strConsuamble[TPACK_CATNO] << "RR700T101" << "171-1259" << "RR504T101";
@@ -3432,92 +3319,19 @@ MainWindow::MainWindow(QMainWindow *parent) :
 
     m_strConsuamble[LOOPFILTER_CATNO] << "RAFF12201" << "RAFF22201";
     m_strConsuamble[LOOPUV_CATNO] << "RAUV620A1" << "RAUV834A1";
-	m_strConsuamble[LOOPDI_CATNO] << "LAB1000IE" << "LAB0200IE" << "LAB0500IE" 
-		                          << "LAB1500IE";
-	
+    m_strConsuamble[LOOPDI_CATNO] << "LAB1000IE" << "LAB0200IE" << "LAB0500IE" 
+                                  << "LAB1500IE";
+    
     m_strConsuamble[PREPACK_CATNO] << "LAB02CP71" << "LAB02CP74";
+}
 
-    gCMUsage.ulUsageState = 0;
-
-    memset(m_iAlarmRcdMask ,0,sizeof(m_iAlarmRcdMask));
-
-    MainRetriveCMInfo(gGlobalParam.iMachineType,gCMUsage.info);
-
-    Write_sys_int(PWMLCD_FILE,gGlobalParam.MiscParam.iBrightness);
-
-    m_bLoged = true;
-
-    iFirst = 1;
-    m_bLockupDlg = false;
-
-    m_iExeActiveMask = 0;
-    m_iFmActiveMask  = 0;
-    m_eWorkMode      = APP_WORK_MODE_NORMAL; /* refer APP_WORK_MODE_NUM */
-
-    for(iLoop = 0; iLoop < APP_EXE_ECO_NUM; iLoop++)
-    {
-        switch(iLoop)
-        {
-        case 0:
-        case 1:
-            m_EcowOfDay[iLoop].iQuality = 2000;
-            break;
-        case 2:
-        case 3:
-        case 4:
-            m_EcowOfDay[iLoop].iQuality = 0;
-            break;
-        default:
-            break;
-        }
-
-    }
-
-    for (iLoop = 0; iLoop < APP_EXE_INPUT_REG_PUMP_NUM; iLoop++)
-    {
-        m_aiRPumpVoltageLevel[iLoop] = PUMP_SPEED_10;
-    }
-    
-    for (iLoop = 0; iLoop < APP_DEV_HS_SUB_NUM; iLoop++)
-    {
-        m_afWQuantity[iLoop] = 0;
-    }
-
-    for (iLoop = 0; iLoop < APP_FM_FLOW_METER_NUM; iLoop++)
-    {
-        m_ulFlowMeter[iLoop]       = 0;
-        m_ulLstFlowMeter[iLoop]    = 0;
-        m_iLstFlowMeterTick[iLoop] = 0;
-        m_ulFlowRptTick[iLoop]     = 0;
-    }
-
-    for(iLoop = APP_EXE_I1_NO; iLoop < APP_EXE_ECO_NUM; ++iLoop)
-    {
-        m_EcoInfo[iLoop].fQuality    = 0;
-        m_EcoInfo[iLoop].fTemperature = 0;
-    }
-
-    m_curToc = 0;
-
-    memset(m_aHandler,0,sizeof(m_aHandler));
-
-    memset(m_aRfid,0,sizeof(m_aRfid));
-    
-    /* ui init, place buildTranslation before initUI */
-    buildTranslation();
-
-    initHandler();
-
-    initRfid();
-
-    initRfIdLayout(&m_RfDataItems);   
-    
-    for (iLoop = 0; iLoop < APP_RFID_SUB_TYPE_NUM; iLoop++)
-    {
-        m_aRfidInfo[iLoop].setLayOut(&m_RfDataItems);
-    }
-
-    for (iLoop = 0; iLoop < MACHINE_NUM; iLoop++)
+/**
+ * 配置不同机型的报警信息，有报警触发时需要验证当前机型是否包含当前报警；
+ * 需要修改相关机型的报警配置时，修改此函数
+ */
+void MainWindow::initAlarmCfg()
+{
+    for (int iLoop = 0; iLoop < MACHINE_NUM; iLoop++)
     {
         switch(iLoop)
         {
@@ -3758,7 +3572,15 @@ MainWindow::MainWindow(QMainWindow *parent) :
         } 
     }
 
-    for (iLoop = 0; iLoop < MACHINE_NUM; iLoop++)
+}
+
+/**
+ * 根据机型配置相关耗材信息，有耗材到期提醒是需要验证当前机型是否包含当前耗材
+ * 需要修改相关机型的耗材配置时，修改此函数
+ */
+void MainWindow::initConsumablesCfg()
+{
+    for(int iLoop = 0; iLoop < MACHINE_NUM; iLoop++)
     {
         switch(iLoop)
         {
@@ -3919,59 +3741,16 @@ MainWindow::MainWindow(QMainWindow *parent) :
            m_cMas[iLoop].aulMask[0] &= ~(1 << DISP_TUBE_DI);
         }
     }
+}
 
-    checkCMParam(); //2019.6.17 add
-
-    initUI();  
-    
-    /* other init */
-    m_iLstDay = DispGetDay();
-
-    mQFALARM.setPointSize(18);
-    mQPALARM.setColor(QPalette::WindowText,Qt::red);
-
-
-    m_timeTimer = new QTimer(this);
-    connect(m_timeTimer, SIGNAL(timeout()), this, SLOT(on_timerEvent()));
-    m_timeTimer->start(1000 * 30); // peroid of half minute
-
-    m_timerPeriodEvent = new QTimer(this);
-    connect(m_timerPeriodEvent, SIGNAL(timeout()), this, SLOT(on_timerPeriodEvent()),Qt::QueuedConnection);
-    m_timerPeriodEvent->start(PERIOD_EVENT_LENGTH); // peroid of one second
-    m_periodEvents = 0;
-
-    m_timeSecondTimer = new QTimer(this);
-    connect(m_timeSecondTimer, SIGNAL(timeout()), this, SLOT(on_timerSecondEvent()),Qt::QueuedConnection);
-    m_timeSecondTimer->start(SECOND_EVENT_LENGTH); // peroid of one second
-
-    connect(this, SIGNAL(dispIndication(unsigned char *,int)),
-     this, SLOT(on_dispIndication(unsigned char *,int))/*,Qt::DirectConnection */);
-
-    connect(this, SIGNAL(iapIndication(IAP_NOTIFY_STRU *)),
-     this, SLOT(on_IapIndication(IAP_NOTIFY_STRU *)));
-
-    connect(this, SIGNAL(autoLogin()),
-     this, SLOT(on_AutoLogin()),Qt::QueuedConnection);
-
-    connect(this, SIGNAL(userNeedLogin()),
-            this, SLOT(on_userLogin()));
-
-    m_timerBuzzer = new QTimer(this);
-    connect(m_timerBuzzer, SIGNAL(timeout()), this, SLOT(on_timerBuzzerEvent()),Qt::QueuedConnection);
-
-    m_fd4buzzer = ::open(BUZZER_FILE, O_RDWR);
-
-    if (m_fd4buzzer < 0)
-    {
-        qDebug() << " open " << BUZZER_FILE << "failed" << endl;
-    }
-
-    CheckConsumptiveMaterialState();
-
-    updateTubeCirCfg();
-
+/**
+ * 根据机型配置RFID和耗材的对应关系，配置柱子脱落报警信息
+ * 需要修改柱子脱落的报警信息时，修改此函数
+ */
+void MainWindow::initRFIDCfg()
+{
     /* 2017/12/26 add begin : for rfid and machine type map */
-    memset(&MacRfidMap,0,sizeof(MacRfidMap));
+    memset(&MacRfidMap, 0, sizeof(MacRfidMap));
     
     switch(gGlobalParam.iMachineType)
     {
@@ -4148,13 +3927,282 @@ MainWindow::MainWindow(QMainWindow *parent) :
 
     m_iRfidBufferActiveMask = MacRfidMap.ulMask4Normlwork;
 
-    for (iLoop = 0; iLoop < APP_RFID_SUB_TYPE_NUM; iLoop++)
+    for (int iLoop = 0; iLoop < APP_RFID_SUB_TYPE_NUM; iLoop++)
     {
         if (m_iRfidBufferActiveMask & (1 << iLoop))
         {
             addRfid2DelayList(iLoop);
         }
     }
+}
+
+void MainWindow::initUI()
+{
+    int /*row,*/index;
+
+    QString astrPageName [PAGE_NUM] = {
+#ifdef FLOWCHART
+        "flowchart",
+#endif
+        "main",
+        "menu",
+        "service",
+//        "set",
+    };
+
+    QString initPageName[Ex_Init_Num] =
+    {
+        "InitLan",
+        "InitTime",
+        "InitTankSet",
+        "InitSysConfig",
+        "InitNetwork",
+        "InitInstallConsumable",
+        "InitHandler",
+    };
+
+    this->resize(800, 600);
+
+    this->setWindowFlags(Qt::FramelessWindowHint|Qt::Widget);
+    this->setMouseTracking(true);
+
+    mainWidget = new QWidget(this);
+    mainWidget->setObjectName(QString::fromUtf8("mainWidget"));
+
+    this->setCentralWidget(mainWidget);
+
+    for (index = 0; index < GLOBAL_BMP_NUM; index++)
+    {
+        gpGlobalPixmaps[index] = new QPixmap(gGlobalPixelmapName[index], 0, Qt::ColorOnly);
+    }
+
+    m_pFonts[GLOBAL_FONT_12] = new QFont("" , 12 ,  QFont::Bold);
+    m_pFonts[GLOBAL_FONT_14] = new QFont("" , 14 ,  QFont::Bold);
+    m_pFonts[GLOBAL_FONT_24] = new QFont("" , 24 ,  QFont::Bold);
+    m_pFonts[GLOBAL_FONT_30] = new QFont("" , 30 ,  QFont::Bold);
+    m_pFonts[GLOBAL_FONT_40] = new QFont("" , 40 ,  QFont::Bold);
+    m_pFonts[GLOBAL_FONT_48] = new QFont("" , 48 ,  QFont::Bold);
+    m_pFonts[GLOBAL_FONT_60] = new QFont("" , 60 ,  QFont::Bold);
+    //ex_dcj
+    if(gAdditionalCfgParam.initMachine == 0)
+    {
+        for(int i = 0; i < Ex_Init_Num; i++)
+        {
+            m_pExInitWidgets[i] = new CBaseWidget(mainWidget);
+            m_pExInitWidgets[i]->setObjectName(initPageName[i]);
+            m_pExInitWidgets[i]->hide();
+            m_pExInitWidgets[i]->setGeometry(0, 0, 800, 600);
+        }
+        m_pExInitPages[Ex_Init_Lan] = new DInitLanguagepage(0,(CBaseWidget *)m_pExInitWidgets[Ex_Init_Lan] , this);
+        m_pExInitPages[Ex_Init_Time] = new DInitTimePage(0,(CBaseWidget *)m_pExInitWidgets[Ex_Init_Time] , this);
+        m_pExInitPages[Ex_Init_Tankcfg] = new DInitTankcfgpage(0,(CBaseWidget *)m_pExInitWidgets[Ex_Init_Tankcfg] , this);
+        m_pExInitPages[Ex_Init_Syscfg] = new DInitSyscfgpage(0,(CBaseWidget *)m_pExInitWidgets[Ex_Init_Syscfg] , this);
+        m_pExInitPages[Ex_Init_Network] = new DInitNetworkpage(0,(CBaseWidget *)m_pExInitWidgets[Ex_Init_Network] , this);
+        m_pExInitPages[Ex_Init_InstallConsumable] = new DInitConsumableInsPage(0,(CBaseWidget *)m_pExInitWidgets[Ex_Init_InstallConsumable] , this);
+        m_pExInitPages[Ex_Init_Handlercfg] = new DInitHandleCfgpage(0,(CBaseWidget *)m_pExInitWidgets[Ex_Init_Handlercfg] , this);
+        m_curExInitPage = m_pExInitPages[Ex_Init_Lan];
+    }
+    //ScreenPage
+    m_pScreenSleepWidget = new CBaseWidget(mainWidget);
+    m_pScreenSleepWidget->setObjectName("ScreenSleepPage");
+    m_pScreenSleepWidget->hide();
+    m_pScreenSleepWidget->setGeometry(0, 0, 800, 600);
+
+    m_pScreenSleepPage = new DScreenSleepPage(0, m_pScreenSleepWidget, this);
+    connect(m_pScreenSleepPage, SIGNAL(pageHide()), this, SLOT(on_Ex_ScreenPageHide()));
+    connect(this, SIGNAL(SleepPageShow(bool)), m_pScreenSleepPage, SLOT(on_SleepPageShow(bool)));
+    m_pPreviousPage = NULL;
+    //end
+
+    for (index = 0; index < PAGE_NUM; index++)
+    {
+        m_pSubWidget[index] = new CBaseWidget(mainWidget);
+        m_pSubWidget[index]->setObjectName(astrPageName[index]);
+        m_pSubWidget[index]->hide();
+        m_pSubWidget[index]->setGeometry(0,0,800,600);
+    }
+#ifdef FLOWCHART
+    m_pSubPages[PAGE_FLOWCHART]    = new DFlowChartPage(0,(CBaseWidget *)m_pSubWidget[PAGE_FLOWCHART] , this);
+    connect(this, SIGNAL(unitsChanged()), m_pSubPages[PAGE_FLOWCHART], SLOT(updateUnits()));
+    connect(this, SIGNAL(updateFlowChartAlarm(const QString&,bool)),
+            m_pSubPages[PAGE_FLOWCHART], SLOT(on_updateAlarmMsg(const QString&, bool)));
+#endif
+
+    m_pSubPages[PAGE_MAIN]    = new MainPage(0,(CBaseWidget *)m_pSubWidget[PAGE_MAIN] , this);
+    m_pSubPages[PAGE_MENU]    = new MenuPage(0 , (CBaseWidget *)m_pSubWidget[PAGE_MENU],this );
+    m_pSubPages[PAGE_SERVICE] = new ServicePage(0 , (CBaseWidget *)m_pSubWidget[PAGE_SERVICE] , this);
+    m_pCurPage   = m_pSubPages[PAGE_MAIN];
+    m_curPageIdx = PAGE_MAIN;
+}
+
+MainWindow::MainWindow(QMainWindow *parent) :
+    QMainWindow(parent)/*, ui(new Ui::MainWindow)*/
+{
+    int iLoop;
+
+    m_bSplash = false;
+
+    m_bC1Regulator = false;
+    ex_isPackNew = 0;
+
+    //Set the factory default time for RFID tags
+    m_consuambleInitDate = QString("2014-05-22");
+	initMachineName();
+	saveLoginfo("unknow");
+
+    MainRetriveExConsumableMsg(gGlobalParam.iMachineType,gGlobalParam.cmSn,gGlobalParam.macSn);
+
+    gpMainWnd = this;
+
+    printSystemInfo();
+
+    initGlobalStyleSheet();
+    
+    m_bTubeCirFlags = false;
+    m_fd4buzzer     = -1;
+    m_iNotState     = 0;
+    m_iLevel        = 0;
+    m_iRfidDelayedMask      = 0;
+    m_iRfidBufferActiveMask = 0;
+    m_pCurPage              = NULL;
+    m_curExInitPage         = NULL;
+
+    initConsumablesInfo();
+
+    gCMUsage.ulUsageState = 0;
+
+    memset(m_iAlarmRcdMask, 0, sizeof(m_iAlarmRcdMask));
+
+    MainRetriveCMInfo(gGlobalParam.iMachineType,gCMUsage.info);
+
+    Write_sys_int(PWMLCD_FILE,gGlobalParam.MiscParam.iBrightness);
+
+    m_bLoged = true;
+
+    iFirst = 1;
+    m_bLockupDlg = false;
+
+    m_iExeActiveMask = 0;
+    m_iFmActiveMask  = 0;
+    m_eWorkMode      = APP_WORK_MODE_NORMAL; /* refer APP_WORK_MODE_NUM */
+
+    for(iLoop = 0; iLoop < APP_EXE_ECO_NUM; iLoop++)
+    {
+        switch(iLoop)
+        {
+        case 0:
+        case 1:
+            m_EcowOfDay[iLoop].iQuality = 2000;
+            break;
+        case 2:
+        case 3:
+        case 4:
+            m_EcowOfDay[iLoop].iQuality = 0;
+            break;
+        default:
+            break;
+        }
+
+    }
+
+    for (iLoop = 0; iLoop < APP_EXE_INPUT_REG_PUMP_NUM; iLoop++)
+    {
+        m_aiRPumpVoltageLevel[iLoop] = PUMP_SPEED_10;
+    }
+    
+    for (iLoop = 0; iLoop < APP_DEV_HS_SUB_NUM; iLoop++)
+    {
+        m_afWQuantity[iLoop] = 0;
+    }
+
+    for (iLoop = 0; iLoop < APP_FM_FLOW_METER_NUM; iLoop++)
+    {
+        m_ulFlowMeter[iLoop]       = 0;
+        m_ulLstFlowMeter[iLoop]    = 0;
+        m_iLstFlowMeterTick[iLoop] = 0;
+        m_ulFlowRptTick[iLoop]     = 0;
+    }
+
+    for(iLoop = APP_EXE_I1_NO; iLoop < APP_EXE_ECO_NUM; ++iLoop)
+    {
+        m_EcoInfo[iLoop].fQuality    = 0;
+        m_EcoInfo[iLoop].fTemperature = 0;
+    }
+
+    m_curToc = 0;
+
+    memset(m_aHandler,0,sizeof(m_aHandler));
+
+    memset(m_aRfid,0,sizeof(m_aRfid));
+    
+    /* ui init, place buildTranslation before initUI */
+    buildTranslation();
+
+    initHandler();
+
+    initRfid();
+
+    initRfIdLayout(&m_RfDataItems);   
+    
+    for (iLoop = 0; iLoop < APP_RFID_SUB_TYPE_NUM; iLoop++)
+    {
+        m_aRfidInfo[iLoop].setLayOut(&m_RfDataItems);
+    }
+
+    initAlarmCfg();
+    
+    initConsumablesCfg();
+    
+    checkCMParam(); //2019.6.17 add
+
+    initUI();  
+    
+    /* other init */
+    m_iLstDay = DispGetDay();
+
+    mQFALARM.setPointSize(18);
+    mQPALARM.setColor(QPalette::WindowText,Qt::red);
+
+    m_timeTimer = new QTimer(this);
+    connect(m_timeTimer, SIGNAL(timeout()), this, SLOT(on_timerEvent()));
+    m_timeTimer->start(1000 * 30); // peroid of half minute
+
+    m_timerPeriodEvent = new QTimer(this);
+    connect(m_timerPeriodEvent, SIGNAL(timeout()), this, SLOT(on_timerPeriodEvent()),Qt::QueuedConnection);
+    m_timerPeriodEvent->start(PERIOD_EVENT_LENGTH); // peroid of one second
+    m_periodEvents = 0;
+
+    m_timeSecondTimer = new QTimer(this);
+    connect(m_timeSecondTimer, SIGNAL(timeout()), this, SLOT(on_timerSecondEvent()),Qt::QueuedConnection);
+    m_timeSecondTimer->start(SECOND_EVENT_LENGTH); // peroid of one second
+
+    connect(this, SIGNAL(dispIndication(unsigned char *,int)),
+     this, SLOT(on_dispIndication(unsigned char *,int))/*,Qt::DirectConnection */);
+
+    connect(this, SIGNAL(iapIndication(IAP_NOTIFY_STRU *)),
+     this, SLOT(on_IapIndication(IAP_NOTIFY_STRU *)));
+
+    connect(this, SIGNAL(autoLogin()),
+     this, SLOT(on_AutoLogin()),Qt::QueuedConnection);
+
+    connect(this, SIGNAL(userNeedLogin()),
+            this, SLOT(on_userLogin()));
+
+    m_timerBuzzer = new QTimer(this);
+    connect(m_timerBuzzer, SIGNAL(timeout()), this, SLOT(on_timerBuzzerEvent()),Qt::QueuedConnection);
+
+    m_fd4buzzer = ::open(BUZZER_FILE, O_RDWR);
+
+    if (m_fd4buzzer < 0)
+    {
+        qDebug() << " open " << BUZZER_FILE << "failed" << endl;
+    }
+
+    CheckConsumptiveMaterialState();
+
+    updateTubeCirCfg();
+
+    initRFIDCfg();
 
     //ex
     for(iLoop = 0; iLoop < APP_RFID_SUB_TYPE_NUM; iLoop++)
@@ -5062,7 +5110,7 @@ void MainWindow::on_timerEvent()
     {
         /* get hour */
         QDateTime dt = QDateTime::currentDateTime();
-        int wd   = dt.date().dayOfWeek();
+        int wd   = dt.date().dayOfWeek() - 1;
         int hour = dt.time().hour();
         int min  = dt.time().minute();
 
@@ -9905,7 +9953,6 @@ void MainWindow::writeCMInfoToRFID(int iRfId, int type)
     }
 }
 
-
 void MainWindow::updateExConsumableMsg(int iMachineType, CATNO cn, LOTNO ln, int iIndex,
                                        int category, QDate &date, int iRfid, bool bRfidWork)
 {
@@ -9996,7 +10043,6 @@ const QString &MainWindow::consumableInitDate() const
 {
     return m_consuambleInitDate;
 }
-
 
 // for printer
 int printerDispenseWater(QString &strMachineType, QString &strSN,QString &strMfd, QString& strTime,QString &strDate,float res,float temp,int toc,float vol,QString& type,QString &user)

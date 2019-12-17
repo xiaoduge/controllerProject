@@ -778,37 +778,37 @@
         <translation>Minuti</translation>
     </message>
     <message>
-        <location filename="allocationsetpage.cpp" line="45"/>
+        <location filename="allocationsetpage.cpp" line="51"/>
         <source>Sun.</source>
         <translation>Dom</translation>
     </message>
     <message>
-        <location filename="allocationsetpage.cpp" line="46"/>
+        <location filename="allocationsetpage.cpp" line="45"/>
         <source>Mon.</source>
         <translation>Lun</translation>
     </message>
     <message>
-        <location filename="allocationsetpage.cpp" line="47"/>
+        <location filename="allocationsetpage.cpp" line="46"/>
         <source>Tue.</source>
         <translation>Mar</translation>
     </message>
     <message>
-        <location filename="allocationsetpage.cpp" line="48"/>
+        <location filename="allocationsetpage.cpp" line="47"/>
         <source>Wed.</source>
         <translation>Mer</translation>
     </message>
     <message>
-        <location filename="allocationsetpage.cpp" line="49"/>
+        <location filename="allocationsetpage.cpp" line="48"/>
         <source>Thu.</source>
         <translation>Gio</translation>
     </message>
     <message>
-        <location filename="allocationsetpage.cpp" line="50"/>
+        <location filename="allocationsetpage.cpp" line="49"/>
         <source>Fri.</source>
         <translation>Ven</translation>
     </message>
     <message>
-        <location filename="allocationsetpage.cpp" line="51"/>
+        <location filename="allocationsetpage.cpp" line="50"/>
         <source>Sat.</source>
         <translation>Sab</translation>
     </message>
@@ -1229,18 +1229,18 @@
 <context>
     <name>DCheckConsumaleInstall</name>
     <message>
-        <location filename="dcheckconsumaleinstall.cpp" line="158"/>
-        <location filename="dcheckconsumaleinstall.cpp" line="169"/>
+        <location filename="dcheckconsumaleinstall.cpp" line="157"/>
+        <location filename="dcheckconsumaleinstall.cpp" line="168"/>
         <source>Warning</source>
         <translation type="unfinished">Avvertimento</translation>
     </message>
     <message>
-        <location filename="dcheckconsumaleinstall.cpp" line="158"/>
+        <location filename="dcheckconsumaleinstall.cpp" line="157"/>
         <source>write install date error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dcheckconsumaleinstall.cpp" line="169"/>
+        <location filename="dcheckconsumaleinstall.cpp" line="168"/>
         <source>write vol data error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1404,157 +1404,157 @@
 <context>
     <name>DFactoryTestPage</name>
     <message>
-        <location filename="dfactorytestpage.cpp" line="35"/>
+        <location filename="dfactorytestpage.cpp" line="34"/>
         <source>Factory Test</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="60"/>
+        <location filename="dfactorytestpage.cpp" line="59"/>
         <source>RFID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="61"/>
-        <location filename="dfactorytestpage.cpp" line="194"/>
+        <location filename="dfactorytestpage.cpp" line="60"/>
+        <location filename="dfactorytestpage.cpp" line="193"/>
         <source>Flow &amp; Pressure</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="62"/>
+        <location filename="dfactorytestpage.cpp" line="61"/>
         <source>Wifi Test</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="63"/>
+        <location filename="dfactorytestpage.cpp" line="62"/>
         <location filename="dfactorytestpage.cpp" line="297"/>
         <source>Maintenance</source>
         <translation type="unfinished">Manutenzione</translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="65"/>
+        <location filename="dfactorytestpage.cpp" line="64"/>
         <source>Cat No.:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="66"/>
+        <location filename="dfactorytestpage.cpp" line="65"/>
         <source>Lot No.:</source>
         <translation type="unfinished">LOTTO NO</translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="67"/>
+        <location filename="dfactorytestpage.cpp" line="66"/>
         <source>Installation Date:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="68"/>
+        <location filename="dfactorytestpage.cpp" line="67"/>
         <source>Volume of Use:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="69"/>
+        <location filename="dfactorytestpage.cpp" line="68"/>
         <source>Address:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="71"/>
+        <location filename="dfactorytestpage.cpp" line="70"/>
         <source>Write</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="72"/>
+        <location filename="dfactorytestpage.cpp" line="71"/>
         <source>Read</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="73"/>
-        <location filename="dfactorytestpage.cpp" line="100"/>
+        <location filename="dfactorytestpage.cpp" line="72"/>
+        <location filename="dfactorytestpage.cpp" line="99"/>
         <source>Clear</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="75"/>
+        <location filename="dfactorytestpage.cpp" line="74"/>
         <source>Flow Test</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="77"/>
+        <location filename="dfactorytestpage.cpp" line="76"/>
         <source>S1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="78"/>
+        <location filename="dfactorytestpage.cpp" line="77"/>
         <source>S2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="79"/>
+        <location filename="dfactorytestpage.cpp" line="78"/>
         <source>S3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="80"/>
+        <location filename="dfactorytestpage.cpp" line="79"/>
         <source>S4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="85"/>
-        <location filename="dfactorytestpage.cpp" line="98"/>
+        <location filename="dfactorytestpage.cpp" line="84"/>
+        <location filename="dfactorytestpage.cpp" line="97"/>
         <source>Start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="88"/>
+        <location filename="dfactorytestpage.cpp" line="87"/>
         <source>Pressure Test</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="90"/>
+        <location filename="dfactorytestpage.cpp" line="89"/>
         <source>Work Pres.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="91"/>
+        <location filename="dfactorytestpage.cpp" line="90"/>
         <source>Pure Tank Level</source>
         <translation type="unfinished">Livello Tank Pura</translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="92"/>
+        <location filename="dfactorytestpage.cpp" line="91"/>
         <source>Source Tank Level</source>
         <translation type="unfinished">Livello serbatoio di </translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="102"/>
+        <location filename="dfactorytestpage.cpp" line="101"/>
         <location filename="dfactorytestpage.cpp" line="291"/>
         <source>Zigbee Upd</source>
         <translation type="unfinished">Aggiornamento Zigbee</translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="211"/>
+        <location filename="dfactorytestpage.cpp" line="210"/>
         <source>20</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="212"/>
+        <location filename="dfactorytestpage.cpp" line="211"/>
         <source>21</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="213"/>
+        <location filename="dfactorytestpage.cpp" line="212"/>
         <source>22</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="214"/>
+        <location filename="dfactorytestpage.cpp" line="213"/>
         <source>23</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="215"/>
+        <location filename="dfactorytestpage.cpp" line="214"/>
         <source>24</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="251"/>
+        <location filename="dfactorytestpage.cpp" line="250"/>
         <source>RFID TEST</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1613,7 +1613,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="557"/>
+        <location filename="dfactorytestpage.cpp" line="545"/>
         <source>FAIL</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5189,151 +5189,151 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8454"/>
+        <location filename="mainwindow.cpp" line="8478"/>
         <source>PRE Pack Not Detected</source>
         <oldsource>No Pre-PACK detected!</oldsource>
         <translation type="unfinished">Pre Pack non rilevato</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8457"/>
+        <location filename="mainwindow.cpp" line="8481"/>
         <source>AC Pack Not Detected</source>
         <oldsource>No AC-PACK detected!</oldsource>
         <translation type="unfinished">AC Pack non rilevato</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8460"/>
+        <location filename="mainwindow.cpp" line="8484"/>
         <source>P Pack Not Detected</source>
         <oldsource>No P-PACK detected!</oldsource>
         <translation type="unfinished">P Pack non rilevato</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8463"/>
+        <location filename="mainwindow.cpp" line="8487"/>
         <source>U Pack Not Detected</source>
         <oldsource>No U-PACK detected!</oldsource>
         <translation type="unfinished">U Pack non rilevato</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8466"/>
+        <location filename="mainwindow.cpp" line="8490"/>
         <source>AT Pack Not Detected</source>
         <oldsource>No AT-PACK detected!</oldsource>
         <translation type="unfinished">AT Pack non rilevato</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8469"/>
+        <location filename="mainwindow.cpp" line="8493"/>
         <source>H Pack Not Detected</source>
         <oldsource>No H-PACK detected!</oldsource>
         <translation type="unfinished">H Pack non rilevato</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8492"/>
+        <location filename="mainwindow.cpp" line="8512"/>
         <source>Pre Pack Error! Do you want to continue?</source>
         <translation>Errore Pre-Pack! Vuoi continuare?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8496"/>
+        <location filename="mainwindow.cpp" line="8516"/>
         <source>AC Pack Error! Do you want to continue?</source>
         <translation>Errore AC-Pack! Vuoi continuare?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8500"/>
+        <location filename="mainwindow.cpp" line="8520"/>
         <source>P Pack Error! Do you want to continue?</source>
         <translation>Errore P-Pack! Vuoi continuare?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8504"/>
+        <location filename="mainwindow.cpp" line="8524"/>
         <source>U Pack Error! Do you want to continue?</source>
         <translation>Errore U-Pack! Vuoi continuare?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8508"/>
+        <location filename="mainwindow.cpp" line="8528"/>
         <source>AT Pack Error! Do you want to continue?</source>
         <translation>Errore AT-Pack! Vuoi continuare?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8512"/>
+        <location filename="mainwindow.cpp" line="8532"/>
         <source>H Pack Error! Do you want to continue?</source>
         <translation>Errore H-Pack! Vuoi continuare?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8723"/>
+        <location filename="mainwindow.cpp" line="8750"/>
         <source>Login failed!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="9018"/>
+        <location filename="mainwindow.cpp" line="9045"/>
         <source>Water</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="9019"/>
+        <location filename="mainwindow.cpp" line="9046"/>
         <source>Alarm</source>
         <translation type="unfinished">Allarmi</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="9020"/>
+        <location filename="mainwindow.cpp" line="9047"/>
         <source>User</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="9021"/>
+        <location filename="mainwindow.cpp" line="9048"/>
         <source>GetW</source>
         <translation type="unfinished">Dispensa</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="9022"/>
+        <location filename="mainwindow.cpp" line="9049"/>
         <source>PWater</source>
         <translation type="unfinished">informazioni di produzione</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="9023"/>
+        <location filename="mainwindow.cpp" line="9050"/>
         <source>Log</source>
         <translation type="unfinished">storico Login</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="9952"/>
-        <location filename="mainwindow.cpp" line="9958"/>
+        <location filename="mainwindow.cpp" line="9980"/>
+        <location filename="mainwindow.cpp" line="9986"/>
         <source>Warning</source>
         <translation type="unfinished">Avvertimento</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8433"/>
+        <location filename="mainwindow.cpp" line="8457"/>
         <source>Confirm ALL cartridges are installed. System will START by pressing Confirm!</source>
         <translation>Verificare che TUTTE le cartucce siano installate. Il sistema si avvierà premendo Conferma!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="5934"/>
-        <location filename="mainwindow.cpp" line="5937"/>
-        <location filename="mainwindow.cpp" line="5940"/>
-        <location filename="mainwindow.cpp" line="5943"/>
-        <location filename="mainwindow.cpp" line="5946"/>
-        <location filename="mainwindow.cpp" line="5949"/>
-        <location filename="mainwindow.cpp" line="5952"/>
-        <location filename="mainwindow.cpp" line="5955"/>
         <location filename="mainwindow.cpp" line="5961"/>
-        <location filename="mainwindow.cpp" line="5975"/>
-        <location filename="mainwindow.cpp" line="5978"/>
-        <location filename="mainwindow.cpp" line="5981"/>
-        <location filename="mainwindow.cpp" line="5984"/>
-        <location filename="mainwindow.cpp" line="5987"/>
-        <location filename="mainwindow.cpp" line="5990"/>
-        <location filename="mainwindow.cpp" line="5993"/>
-        <location filename="mainwindow.cpp" line="5996"/>
+        <location filename="mainwindow.cpp" line="5964"/>
+        <location filename="mainwindow.cpp" line="5967"/>
+        <location filename="mainwindow.cpp" line="5970"/>
+        <location filename="mainwindow.cpp" line="5973"/>
+        <location filename="mainwindow.cpp" line="5976"/>
+        <location filename="mainwindow.cpp" line="5979"/>
+        <location filename="mainwindow.cpp" line="5982"/>
+        <location filename="mainwindow.cpp" line="5988"/>
         <location filename="mainwindow.cpp" line="6002"/>
+        <location filename="mainwindow.cpp" line="6005"/>
+        <location filename="mainwindow.cpp" line="6008"/>
+        <location filename="mainwindow.cpp" line="6011"/>
+        <location filename="mainwindow.cpp" line="6014"/>
+        <location filename="mainwindow.cpp" line="6017"/>
+        <location filename="mainwindow.cpp" line="6020"/>
+        <location filename="mainwindow.cpp" line="6023"/>
+        <location filename="mainwindow.cpp" line="6029"/>
         <source> %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8520"/>
+        <location filename="mainwindow.cpp" line="8540"/>
         <source>Continue</source>
         <translation>Continua</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="9952"/>
+        <location filename="mainwindow.cpp" line="9980"/>
         <source>write install date error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="9958"/>
+        <location filename="mainwindow.cpp" line="9986"/>
         <source>write vol data error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5536,48 +5536,59 @@
 <context>
     <name>NetworkPage</name>
     <message>
-        <location filename="networkpage.cpp" line="37"/>
+        <location filename="networkpage.cpp" line="36"/>
         <source>Connectivity</source>
         <translation type="unfinished">Connettività</translation>
     </message>
     <message>
-        <location filename="networkpage.cpp" line="46"/>
+        <location filename="networkpage.cpp" line="45"/>
         <source>CAN</source>
         <translation type="unfinished">cablato</translation>
     </message>
     <message>
-        <location filename="networkpage.cpp" line="47"/>
+        <location filename="networkpage.cpp" line="46"/>
         <source>Zigbee</source>
         <translation>Wireless</translation>
     </message>
     <message>
-        <location filename="networkpage.cpp" line="48"/>
+        <location filename="networkpage.cpp" line="47"/>
         <source>WIFI</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="networkpage.cpp" line="55"/>
+        <location filename="networkpage.cpp" line="54"/>
         <source>Save</source>
         <translation>Salvare</translation>
     </message>
     <message>
-        <location filename="networkpage.cpp" line="57"/>
+        <location filename="networkpage.cpp" line="56"/>
         <source>SSID:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="networkpage.cpp" line="58"/>
+        <location filename="networkpage.cpp" line="57"/>
         <source>Add</source>
         <translation type="unfinished">Aggiungere</translation>
     </message>
     <message>
-        <location filename="networkpage.cpp" line="59"/>
+        <location filename="networkpage.cpp" line="58"/>
         <source>Refresh</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="networkpage.cpp" line="60"/>
+        <location filename="networkpage.cpp" line="59"/>
         <source>Add network</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="networkpage.cpp" line="61"/>
+        <source>Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="networkpage.cpp" line="376"/>
+        <location filename="networkpage.cpp" line="396"/>
+        <source>No internet connection</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6578,100 +6589,100 @@
 <context>
     <name>SterilizePage</name>
     <message>
-        <location filename="SterilizePage.cpp" line="52"/>
+        <location filename="SterilizePage.cpp" line="55"/>
         <source>Cleaning &amp; Sanitization</source>
         <translation type="unfinished">Pulizia e sanitizzazione</translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="62"/>
+        <location filename="SterilizePage.cpp" line="84"/>
         <source>RO CL Cleaning</source>
         <translation>Pulizia Cl RO</translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="63"/>
+        <location filename="SterilizePage.cpp" line="85"/>
         <source>RO pH Cleaning</source>
         <translation>Pulizia pH RO</translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="67"/>
+        <location filename="SterilizePage.cpp" line="89"/>
         <source>Last Maintenance:</source>
         <translation>Ultima manutenzione</translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="83"/>
+        <location filename="SterilizePage.cpp" line="105"/>
         <source>Next Due Date:</source>
         <translation type="unfinished">prossima data di sanitizzazione</translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="94"/>
+        <location filename="SterilizePage.cpp" line="116"/>
         <source>Install Case First</source>
         <translation>Installare il pack di pulizia prima, poi premere Clean</translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="96"/>
+        <location filename="SterilizePage.cpp" line="118"/>
         <source>Cleaning</source>
         <translation>Cleaning</translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="97"/>
-        <location filename="SterilizePage.cpp" line="279"/>
-        <location filename="SterilizePage.cpp" line="288"/>
+        <location filename="SterilizePage.cpp" line="119"/>
+        <location filename="SterilizePage.cpp" line="325"/>
+        <location filename="SterilizePage.cpp" line="334"/>
         <source>Clean</source>
         <translation>Clean</translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="252"/>
+        <location filename="SterilizePage.cpp" line="298"/>
         <source>Detergent Casette Removed!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="256"/>
+        <location filename="SterilizePage.cpp" line="302"/>
         <source>Detergent Casette Inserted!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="279"/>
-        <location filename="SterilizePage.cpp" line="288"/>
+        <location filename="SterilizePage.cpp" line="325"/>
+        <location filename="SterilizePage.cpp" line="334"/>
         <source>Please Insert Detergent Casette!</source>
         <translation>Installare il Pack di pulizia</translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="307"/>
-        <location filename="SterilizePage.cpp" line="310"/>
-        <location filename="SterilizePage.cpp" line="313"/>
-        <location filename="SterilizePage.cpp" line="316"/>
-        <location filename="SterilizePage.cpp" line="319"/>
-        <location filename="SterilizePage.cpp" line="322"/>
+        <location filename="SterilizePage.cpp" line="353"/>
+        <location filename="SterilizePage.cpp" line="356"/>
+        <location filename="SterilizePage.cpp" line="359"/>
+        <location filename="SterilizePage.cpp" line="362"/>
+        <location filename="SterilizePage.cpp" line="365"/>
+        <location filename="SterilizePage.cpp" line="368"/>
         <source>About</source>
         <translation>Info</translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="307"/>
+        <location filename="SterilizePage.cpp" line="353"/>
         <source>No Pre-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="310"/>
+        <location filename="SterilizePage.cpp" line="356"/>
         <source>No AC-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="313"/>
+        <location filename="SterilizePage.cpp" line="359"/>
         <source>No Clean-PACK detected!</source>
         <translation>Pack di pulizia non rilevato!</translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="316"/>
+        <location filename="SterilizePage.cpp" line="362"/>
         <source>No U-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="319"/>
+        <location filename="SterilizePage.cpp" line="365"/>
         <source>No AT-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="322"/>
+        <location filename="SterilizePage.cpp" line="368"/>
         <source>No H-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
