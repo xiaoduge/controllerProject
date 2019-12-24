@@ -42,6 +42,8 @@ private:
 
     void setBackColor();
 
+	void closeAllSwitch();
+
 
     QListWidget *listWidget;
 

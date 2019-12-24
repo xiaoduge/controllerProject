@@ -47,6 +47,7 @@ private:
     //initNormalItem和initScanItem 只能单独调用一个
     void initNormalItem();
     void initManualItem();
+	void installFeedback(bool result);
 
 private:
     QListWidget *listWidget;

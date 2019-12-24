@@ -3,7 +3,6 @@
 
 #include <QWidget>
 #include <QMap>
-#include <QMutex>
 
 class QTableWidget;
 
@@ -63,7 +62,6 @@ private:
 
     QMap<QString, QPoint> m_coorMap;
 
-    QMutex m_mutex;
 };
 
 #endif // DWATERQUALITYWIDGET_H

@@ -18,7 +18,6 @@ bool DEventFilter::eventFilter(QObject *watched, QEvent *event)
     {
         gpMainWnd->stopBuzzing();
 
-        QMutexLocker locker(&ex_gMutex);
 #ifdef TOUCHTEST
         touchTest(event); //print mouse press point
 #endif

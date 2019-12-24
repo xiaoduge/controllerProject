@@ -227,6 +227,10 @@ void DXmlGenerator::createAlarmPoint(QXmlStreamWriter &xmlWriter)
 
 void DXmlGenerator::createSystemConfig(QXmlStreamWriter &xmlWriter)
 {
+	if(MACHINE_ADAPT == gGlobalParam.iMachineType)
+	{
+		return;
+	}
     QDateTime curDateTime = QDateTime::currentDateTime();
     QString strDateTime = curDateTime.toString("yyyy-MM-dd hh:mm:ss");
     xmlWriter.writeStartElement("SystemConfig");

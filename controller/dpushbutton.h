@@ -2,7 +2,6 @@
 #define DPUSHBUTTON_H
 
 #include <QPushButton>
-#include <QMutex>
 
 class DPushButton : public QPushButton
 {

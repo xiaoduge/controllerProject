@@ -7524,6 +7524,7 @@ int CanCcbAfDataClientRpt4FlowMeter(MAIN_CANITF_MSG_STRU *pCanItfMsg)
                                     }
                                     gCcb.iRopVCheckLowEventCount = 0;
                                 }
+#if 0   //没有定义RO流量高于上限的报警，以下代码里触发的报警为下限异常报警。
                                 // TODO: RO流量上限代码块需要从测试，2019.12.11
                                 if (gCcb.ulRopVelocity > CcbGetSp14()*1000)
                                 {
@@ -7561,7 +7562,7 @@ int CanCcbAfDataClientRpt4FlowMeter(MAIN_CANITF_MSG_STRU *pCanItfMsg)
                                     }
                                     gCcb.iRopVCheckHighEventCount = 0;
                                 }
-                                //
+#endif //
                             }
                         }                   
                     }
@@ -10350,6 +10351,39 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem, CCB *pCcb, RUN_COMM_CALL_BACK
     case MACHINE_L_Genie:
     case MACHINE_L_EDI_LOOP:
         {
+            /* 2019.12.17增加原水箱液位检查 */
+            if(haveB3(pCcb))
+            {
+                iRet = CcbGetPmValue(pWorkItem->id,APP_EXE_PM3_NO,1);
+                if (iRet )
+                {
+                    VOS_LOG(VOS_LOG_WARNING,"CcbGetPmValue Fail %d",iRet);    
+                    /* notify ui (late implemnt) */
+                    cbf(pWorkItem->id);   
+                    
+                    return ;
+                }
+            
+                if (CcbConvert2Pm3SP(pCcb->ExeBrd.aPMObjs[APP_EXE_PM3_NO].Value.ulV) < CcbGetSp9())
+                {
+                    /* close all switchs */  
+                    iTmp = 0; 
+                    iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
+                    if (iRet )
+                    {
+                        VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet);
+                        cbf(pWorkItem->id);        
+                        return ;
+                    }
+                    
+                    /* 1. ui promote */
+                    cbs(pWorkItem->id);  
+                    /* 2. goto primary tank filling procedure */
+                    pCcb->bit1NeedFillTank = 1;
+                    return;
+                } 
+            }
+
             /* get B2 reports from exe */
             iRet = CcbGetPmValue(pWorkItem->id,APP_EXE_PM2_NO,1);
             if (iRet )
@@ -10691,6 +10725,39 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem, CCB *pCcb, RUN_COMM_CALL_BACK
     case MACHINE_L_UP:
     case MACHINE_L_RO_LOOP:
         {
+            /* 2019.12.17增加原水箱液位检查 */
+            if(haveB3(pCcb))
+            {
+                iRet = CcbGetPmValue(pWorkItem->id,APP_EXE_PM3_NO,1);
+                if (iRet )
+                {
+                    VOS_LOG(VOS_LOG_WARNING,"CcbGetPmValue Fail %d",iRet);    
+                    /* notify ui (late implemnt) */
+                    cbf(pWorkItem->id);   
+                    
+                    return ;
+                }
+            
+                if (CcbConvert2Pm3SP(pCcb->ExeBrd.aPMObjs[APP_EXE_PM3_NO].Value.ulV) < CcbGetSp9())
+                {
+                    /* close all switchs */  
+                    iTmp = 0; 
+                    iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
+                    if (iRet )
+                    {
+                        VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet);
+                        cbf(pWorkItem->id);        
+                        return ;
+                    }
+                    
+                    /* 1. ui promote */
+                    cbs(pWorkItem->id);  
+                    /* 2. goto primary tank filling procedure */
+                    pCcb->bit1NeedFillTank = 1;
+                    return;
+                } 
+            }
+            
             /* get B2 reports from exe */
             iRet = CcbGetPmValue(pWorkItem->id,APP_EXE_PM2_NO,1);
             if (iRet )
@@ -11651,25 +11718,27 @@ void work_init_run_wrapper(void *para)
         }
     
         /* 开启冲洗前检测原水箱液位 */
-        iRet = CcbGetPmValue(pWorkItem->id,APP_EXE_PM3_NO,1);
-        if (iRet )
+        if (haveB3(pCcb))
         {
-            VOS_LOG(VOS_LOG_WARNING,"CcbGetPmValue Fail %d",iRet);  
-            /* 1. ui promote */
-            work_init_run_fail(pWorkItem->id);
-            /* notify ui (late implemnt) */
-            return ;
+            iRet = CcbGetPmValue(pWorkItem->id,APP_EXE_PM3_NO,1);
+            if (iRet )
+            {
+                VOS_LOG(VOS_LOG_WARNING,"CcbGetPmValue Fail %d",iRet);  
+                /* 1. ui promote */
+                work_init_run_fail(pWorkItem->id);
+                /* notify ui (late implemnt) */
+                return ;
+            }
+        
+            if (CcbConvert2Pm3SP(pCcb->ExeBrd.aPMObjs[APP_EXE_PM3_NO].Value.ulV) < CcbGetSp9())
+            {
+                /* 1. ui promote */
+                work_init_run_fail(pWorkItem->id);
+                /* 2. goto primary tank filling procedure */
+                pCcb->bit1NeedFillTank = 1;
+                return;
+            }  
         }
-    
-        if (haveB3(pCcb) 
-           && CcbConvert2Pm3SP(pCcb->ExeBrd.aPMObjs[APP_EXE_PM3_NO].Value.ulV) < CcbGetSp9())
-        {
-            /* 1. ui promote */
-            work_init_run_fail(pWorkItem->id);
-            /* 2. goto primary tank filling procedure */
-            pCcb->bit1NeedFillTank = 1;
-            return;
-        }   
         
         VOS_LOG(VOS_LOG_WARNING,"Flush for Init Run"); 
 
@@ -13086,6 +13155,79 @@ DISPHANDLE CcbInnerWorkStopTubeCir(void)
 
 }
 
+/**
+ * 启动分配循环前先检查纯水箱液位，启动条件：纯水箱液位高于(低液位 + 5.0)
+ */
+void CheckToStartAllocCir()
+{
+    if(CcbConvert2Pm2SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM2_NO].Value.ulV) > (CcbGetSp6() + 5.0))
+    {
+        if (!SearchWork(work_start_tube_cir))
+        {
+            CcbInnerWorkStartTubeCir();
+            VOS_LOG(VOS_LOG_DEBUG,"CcbInnerWorkStartTubeCir %d:%d:%d",gCcb.iCirType,gCcb.bit1NeedTubeCir,gCcb.bit1TubeCirOngoing);    
+        }  
+    }
+}
+
+/**
+ * 分配循环开启后，检测纯水箱液位，低液位时关闭分配循环
+ */
+void CheckToStopAllocCir()
+{
+    if(CcbConvert2Pm2SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM2_NO].Value.ulV)  < CcbGetSp6())
+    {
+        if (!SearchWork(work_stop_tube_cir))
+        {
+            CcbInnerWorkStopTubeCir();
+        } 
+    }
+}
+
+/**
+ * 在设置的分配时间段内，启动分配循环
+ */
+void TubeCirWithinSetTime()
+{
+	if (!gCcb.bit1TubeCirOngoing)
+	{
+        CheckToStartAllocCir();
+	}
+	else
+	{
+        CheckToStopAllocCir();
+	}
+
+}
+
+/**
+ * 在设置的分配控制时间段外，启用空闲分配控制
+ */
+void TubeCirWithoutSetTime()
+{
+    if (!gCcb.bit1TubeCirOngoing)
+    {
+        gCcb.ulTubeIdleCirIntervalTick++;
+        if((gCcb.ulTubeIdleCirIntervalTick >= (unsigned int)gCcb.MiscParam.iTubeCirCycle * 60)
+            && (gCcb.MiscParam.iTubeCirDuration > 0))
+        {
+            CheckToStartAllocCir();
+        }
+    }
+    else
+    {
+        gCcb.ulTubeIdleCirTick++;
+        if (gCcb.ulTubeIdleCirTick >= (unsigned int)gCcb.MiscParam.iTubeCirDuration * 60) /* Minute to second */
+        {
+            if (!SearchWork(work_stop_tube_cir))
+            {
+                CcbInnerWorkStopTubeCir();
+            }                      
+        }
+
+        CheckToStopAllocCir();
+    }
+}
 
 DISPHANDLE DispCmdTubeCirProc(unsigned char *pucData, int iLength)
 {
@@ -14412,7 +14554,7 @@ void MainSecondTask4MainState()
         {
         case MACHINE_L_Genie:
         case MACHINE_L_EDI_LOOP:        
-            if (gCcb.bit1AlarmROPLV || gCcb.bit1AlarmROPHV)
+            if (gCcb.bit1AlarmROPLV) //  || gCcb.bit1AlarmROPHV
             {
                 unsigned int ulMask =  (1 << APP_EXE_T1_NO);
                 
@@ -14515,7 +14657,6 @@ void MainSecondTask4MainState()
 
 void MainSecondTask4Pw()
 {
-
     switch(gCcb.curWorkState.iMainWorkState4Pw)
     {
     case DISP_WORK_STATE_RUN:
@@ -14670,80 +14811,19 @@ void MainSecondTask4Pw()
                     CcbInnerWorkStopN3();
                 }              
             }
-        }
-        // NOTE: 纯水分配控制
-        // 在管路分配时间段内
-        if (gCcb.bit1NeedTubeCir)
-        {
-            if (!gCcb.bit1TubeCirOngoing)
-            {
-                //纯水箱液位高于(低液位 + 5.0)时，开启分配循环
-                if(CcbConvert2Pm2SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM2_NO].Value.ulV) > (CcbGetSp6() + 5.0))
-                {
-                    if (!SearchWork(work_start_tube_cir))
-                    {
-                        CcbInnerWorkStartTubeCir();
-                        VOS_LOG(VOS_LOG_DEBUG,"CcbInnerWorkStartTubeCir %d:%d:%d",gCcb.iCirType,gCcb.bit1NeedTubeCir,gCcb.bit1TubeCirOngoing);    
-                    }  
-                }
-            }
-            else
-            {
-                //纯水箱液位低于低液位时，关闭分配循环
-                if(CcbConvert2Pm2SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM2_NO].Value.ulV)  < CcbGetSp6())
-                {
-                    if (!SearchWork(work_stop_tube_cir))
-                    {
-                        CcbInnerWorkStopTubeCir();
-                    } 
-                }
-            }
-
-            
-        }  
-        //不在分配控制时间段内，启用空闲分配控制
-        else
-        {
-            if (!gCcb.bit1TubeCirOngoing)
-            {
-                gCcb.ulTubeIdleCirIntervalTick++;
-                if((gCcb.ulTubeIdleCirIntervalTick >= (unsigned int)gCcb.MiscParam.iTubeCirCycle * 60)
-                    && (gCcb.MiscParam.iTubeCirDuration > 0))
-                {
-                    if(CcbConvert2Pm2SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM2_NO].Value.ulV) > (CcbGetSp6() + 5.0))
-                    {
-                        if (!SearchWork(work_start_tube_cir))
-                        {
-                            CcbInnerWorkStartTubeCir(); 
-                        }  
-                    }
-                }
-            }
-            else
-            {
-                gCcb.ulTubeIdleCirTick++;
-                if (gCcb.ulTubeIdleCirTick >= (unsigned int)gCcb.MiscParam.iTubeCirDuration * 60) /* Minute to second */
-                {
-                    if (!SearchWork(work_stop_tube_cir))
-                    {
-                        CcbInnerWorkStopTubeCir();
-                    }                      
-                }
-
-                if((CcbConvert2Pm2SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM2_NO].Value.ulV)  < CcbGetSp6())
-                    && gCcb.bit1TubeCirOngoing)
-                {
-                    if (!SearchWork(work_stop_tube_cir))
-                    {
-                        CcbInnerWorkStopTubeCir();
-                    } 
-                }
-            }
-            
-        }         
+        }        
         break;
     }
 
+    // NOTE: 纯水分配控制
+    if (gCcb.bit1NeedTubeCir)
+    {
+        TubeCirWithinSetTime();    
+    }  
+    else
+    {
+        TubeCirWithoutSetTime();
+    } 
 }
 
 //ex
@@ -14781,13 +14861,11 @@ void MainSecondTask()
 
 }
 
-
 void MainMinuteTask()
 {
     CcbNvStaticsNotify();
     CcbPumpStaticsNotify();
     CcbFmStaticsNotify();
-
 }
 
 void MainProcTimerMsg(SAT_MSG_HEAD *pMsg)
@@ -14807,11 +14885,9 @@ void MainProcTimerMsg(SAT_MSG_HEAD *pMsg)
     }
 }
 
-
 void CcbParamMsgProc(SAT_MSG_HEAD *pucMsg)
 {
     MAIN_PARAM_MSG_STRU *pWorkMsg = (MAIN_PARAM_MSG_STRU *)pucMsg;
-
 
     switch(pWorkMsg->iSubMsgType)
     {
@@ -14896,7 +14972,6 @@ void CcbParamMsgProc(SAT_MSG_HEAD *pucMsg)
 
 }
 
-
 void MainMsgProc(void *para, SAT_MSG_HEAD *pMsg)
 {
     switch(pMsg->event)
@@ -14935,7 +15010,6 @@ void MainMsgProc(void *para, SAT_MSG_HEAD *pMsg)
         break;
    }
 }
-
 
 void CanMsgMsgProc(void *para,SAT_MSG_HEAD *pMsg)
 {

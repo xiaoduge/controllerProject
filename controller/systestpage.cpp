@@ -694,8 +694,24 @@ void SysTestPage::update()
     DispCmdEntry(DISP_CMD_ENG_MODE,buf,1);
 }
 
+/**
+ * 退出界面前，关闭所有按钮
+ */
+void SysTestPage::closeAllSwitch()
+{
+    for(int iLoop = 0 ; iLoop < m_iRealItems ; iLoop++)
+    {
+        if(BITMAPBUTTON_STATE_SEL == m_pSysTestlistItem[iLoop]->getSwitchState())
+        {
+            m_pSysTestlistItem[iLoop]->setSwitchState(BITMAPBUTTON_STATE_UNSEL);
+        }
+    }
+}
+
 void SysTestPage::fade()
 {
+    closeAllSwitch();
+    
     unsigned char buf[1];
     buf[0] = 0;
     DispCmdEntry(DISP_CMD_ENG_MODE,buf,1);

@@ -126,7 +126,6 @@ SOURCES += main.cpp\
     dpermissionsetpage.cpp \
     drfidcfgpage.cpp \
     dscreensleeppage.cpp \
-    dscreensleepthread.cpp \
     dsuperpowerpage.cpp \
     dsysmsgpage.cpp \
     dusercfgpage.cpp \
@@ -226,7 +225,6 @@ HEADERS  += mainwindow.h \
     dpermissionsetpage.h \
     drfidcfgpage.h \
     dscreensleeppage.h \
-    dscreensleepthread.h \
     dsuperpowerpage.h \
     dsysmsgpage.h \
     dusercfgpage.h \

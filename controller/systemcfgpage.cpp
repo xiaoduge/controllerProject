@@ -551,7 +551,7 @@ void SystemCfgPage::createControl()
     tmpWidget->setFixedSize(tmpWidgetWidth ,BACKWIDGET_HEIGHT);
 
     rectTmp = sQrectAry[0];
-    rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 70);
+    rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 120);
     m_pPureRangeLab = new QLabel(tmpWidget);
     m_pPureRangeLab->setGeometry(rectTmp);
     m_pPureRangeLab->hide();
@@ -655,7 +655,7 @@ void SystemCfgPage::createControl()
     tmpWidget->setFixedSize(tmpWidgetWidth ,BACKWIDGET_HEIGHT);
 
     rectTmp = sQrectAry[0];
-    rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 70);
+    rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 120);
     m_pFeedRangeLab = new QLabel(tmpWidget);
     m_pFeedRangeLab->setGeometry(rectTmp);
 
@@ -712,9 +712,8 @@ void SystemCfgPage::createControl()
 void SystemCfgPage::initUi()
 {
     setBackColor();
-
     createControl();
-
+	connectData();
 }
 
 void SystemCfgPage::update()
@@ -737,6 +736,7 @@ void SystemCfgPage::connectData()
     if (iIdx > DISP_WATER_BARREL_TYPE_NUM )
     {
         iIdx = DISP_WATER_BARREL_TYPE_030L;
+		m_pPureRangeEdit->setEnabled(false);
     }
     
     switch(gGlobalParam.iMachineType)
@@ -757,6 +757,8 @@ void SystemCfgPage::connectData()
                    m_lbPWHUnit->hide();
                    m_lePWTankCap->hide();
                    m_lbPWCUnit->hide();
+				   
+				   m_pPureRangeEdit->setEnabled(false);
                }
                else
                {
@@ -767,7 +769,9 @@ void SystemCfgPage::connectData()
             
                    m_lePWTankHeight->setText(QString::number(gGlobalParam.PmParam.afDepth[DISP_PM_PM2],'f',2));
                    m_lePWTankCap->setText(QString::number(gGlobalParam.PmParam.afCap[DISP_PM_PM2]));
-               }
+				   
+				   m_pPureRangeEdit->setEnabled(true);
+			   }
             }
         }
         break;
@@ -779,6 +783,7 @@ void SystemCfgPage::connectData()
     if (iIdx > DISP_WATER_BARREL_TYPE_NUM )
     {
         iIdx = DISP_WATER_BARREL_TYPE_030L;
+		m_pFeedRangeEdit->setEnabled(false);
     }
     
     switch(gGlobalParam.iMachineType)
@@ -800,6 +805,8 @@ void SystemCfgPage::connectData()
                        m_lbSWHUnit->hide();
                        m_leSWTankCap->hide();
                        m_lbSWCUnit->hide();
+
+					   m_pFeedRangeEdit->setEnabled(false);
                    }
                    else 
                    {
@@ -810,7 +817,8 @@ void SystemCfgPage::connectData()
                 
                        m_leSWTankHeight->setText(QString::number(gGlobalParam.PmParam.afDepth[DISP_PM_PM3],'f',2));
                        m_leSWTankCap->setText(QString::number(gGlobalParam.PmParam.afCap[DISP_PM_PM3]));
-                   }
+					   m_pFeedRangeEdit->setEnabled(true);
+				   }
                 }
             }
         }
@@ -978,135 +986,134 @@ void SystemCfgPage::connectData()
     m_lePWTankUVValue->setText(QString::number(gGlobalParam.MiscParam.iTankUvOnTime));
     m_leLoginLingerValue->setText(QString::number(gGlobalParam.MiscParam.iAutoLogoutTime));
     m_lePOweronFlushValue->setText(QString::number(gGlobalParam.MiscParam.iPowerOnFlushTime));
+
+	m_pPureRangeEdit->setText(QString("%1").arg(gSensorRange.fPureSRange));
+	m_pFeedRangeEdit->setText(QString("%1").arg(gSensorRange.fFeedSRange));
 }
 
 void SystemCfgPage::save()
 {
-   DISP_PM_SETTING_STRU          pmParam = gGlobalParam.PmParam;
-   DISP_SUB_MODULE_SETTING_STRU  smParam = gGlobalParam.SubModSetting;
-   DISP_MISC_SETTING_STRU        miscParam = gGlobalParam.MiscParam;
+    DISP_PM_SETTING_STRU          pmParam = gGlobalParam.PmParam;
+    DISP_SUB_MODULE_SETTING_STRU  smParam = gGlobalParam.SubModSetting;
+    DISP_MISC_SETTING_STRU        miscParam = gGlobalParam.MiscParam;
 
+    pmParam.aiBuckType[DISP_PM_PM2] = m_cmbPWTankVolume->currentIndex();
 
-   pmParam.aiBuckType[DISP_PM_PM2] = m_cmbPWTankVolume->currentIndex();
+    if (m_cmbPWTankVolume->isVisible())
+    {
+        smParam.ulFlags = 1 << DISP_SM_HaveB2;
 
-   if (m_cmbPWTankVolume->isVisible())
-   {
-       smParam.ulFlags = 1 << DISP_SM_HaveB2;
-   
-       switch (pmParam.aiBuckType[DISP_PM_PM2])
-       {
-       case DISP_WATER_BARREL_TYPE_030L:
-           pmParam.afCap[DISP_PM_PM2] = 30;
-           pmParam.afDepth[DISP_PM_PM2] = 0.3;
-           break;
-       case DISP_WATER_BARREL_TYPE_060L:
-           pmParam.afCap[DISP_PM_PM2] = 60;
-           pmParam.afDepth[DISP_PM_PM2] = 0.6;
-           break;
-       case DISP_WATER_BARREL_TYPE_100L:
-           pmParam.afCap[DISP_PM_PM2] = 100;
-           pmParam.afDepth[DISP_PM_PM2] = 0.95;
-           break;
-       case DISP_WATER_BARREL_TYPE_200L:
-           pmParam.afCap[DISP_PM_PM2] = 200;
-           pmParam.afDepth[DISP_PM_PM2] = 0.95;
-           break;
-       case DISP_WATER_BARREL_TYPE_350L:
-           pmParam.afCap[DISP_PM_PM2] = 350;
-           pmParam.afDepth[DISP_PM_PM2] = 0.95;
-           break;
-       case DISP_WATER_BARREL_TYPE_UDF:
-           pmParam.afCap[DISP_PM_PM2] = m_lePWTankCap->text().toInt();
-           pmParam.afDepth[DISP_PM_PM2] = m_lePWTankHeight->text().toFloat();
-           break;
-       case DISP_WATER_BARREL_TYPE_NO:
-           smParam.ulFlags &= ~(1 << DISP_SM_HaveB2);
-           break;
-       }
-   }
-   else
-   {
-       smParam.ulFlags &= ~(1 << DISP_SM_HaveB2);
-   }
-   
-   pmParam.aiBuckType[DISP_PM_PM3] = m_cmbSWTankVolume->currentIndex();
-
-   if (m_cmbSWTankVolume->isVisible())
-   {
-       smParam.ulFlags |= 1 << DISP_SM_HaveB3;
-
-       switch (pmParam.aiBuckType[DISP_PM_PM3])
-       {
-       case DISP_WATER_BARREL_TYPE_030L:
-           pmParam.afCap[DISP_PM_PM3] = 30;
-           pmParam.afDepth[DISP_PM_PM3] = 0.3;
-           break;
-       case DISP_WATER_BARREL_TYPE_060L:
-           pmParam.afCap[DISP_PM_PM3] = 60;
-           pmParam.afDepth[DISP_PM_PM3] = 0.6;
-           break;
-       case DISP_WATER_BARREL_TYPE_100L:
-           pmParam.afCap[DISP_PM_PM3] = 100;
-           pmParam.afDepth[DISP_PM_PM3] = 0.95;
-           break;
-       case DISP_WATER_BARREL_TYPE_200L:
-           pmParam.afCap[DISP_PM_PM3] = 200;
-           pmParam.afDepth[DISP_PM_PM3] = 0.95;
-           break;
-       case DISP_WATER_BARREL_TYPE_350L:
-           pmParam.afCap[DISP_PM_PM3] = 350;
-           pmParam.afDepth[DISP_PM_PM3] = 0.95;
-           break;
-       case DISP_WATER_BARREL_TYPE_UDF:
-           pmParam.afCap[DISP_PM_PM3] = m_leSWTankCap->text().toInt();
-           pmParam.afDepth[DISP_PM_PM3] = m_leSWTankHeight->text().toFloat();
-           break;
-       case DISP_WATER_BARREL_TYPE_NO:
-           smParam.ulFlags &= ~(1 << DISP_SM_HaveB3);
-           break;
-       }   
-   }
-   else
-   {
-       smParam.ulFlags &= ~(1 << DISP_SM_HaveB3);
-   }
-   
-   int iLoop;
-   for (iLoop = 0; iLoop < m_iRealChkNum; iLoop++)
-   {
-       if (!m_aChks[iLoop]->isVisible())
+        switch (pmParam.aiBuckType[DISP_PM_PM2])
         {
-           smParam.ulFlags &= ~(1 << aCHKsIds[iLoop].iId);
-           continue;
+        case DISP_WATER_BARREL_TYPE_030L:
+            pmParam.afCap[DISP_PM_PM2] = 30;
+            pmParam.afDepth[DISP_PM_PM2] = 0.3;
+            break;
+        case DISP_WATER_BARREL_TYPE_060L:
+            pmParam.afCap[DISP_PM_PM2] = 60;
+            pmParam.afDepth[DISP_PM_PM2] = 0.6;
+            break;
+        case DISP_WATER_BARREL_TYPE_100L:
+            pmParam.afCap[DISP_PM_PM2] = 100;
+            pmParam.afDepth[DISP_PM_PM2] = 0.95;
+            break;
+        case DISP_WATER_BARREL_TYPE_200L:
+            pmParam.afCap[DISP_PM_PM2] = 200;
+            pmParam.afDepth[DISP_PM_PM2] = 0.95;
+            break;
+        case DISP_WATER_BARREL_TYPE_350L:
+            pmParam.afCap[DISP_PM_PM2] = 350;
+            pmParam.afDepth[DISP_PM_PM2] = 0.95;
+            break;
+        case DISP_WATER_BARREL_TYPE_UDF:
+            pmParam.afCap[DISP_PM_PM2] = m_lePWTankCap->text().toInt();
+            pmParam.afDepth[DISP_PM_PM2] = m_lePWTankHeight->text().toFloat();
+            break;
+        case DISP_WATER_BARREL_TYPE_NO:
+            smParam.ulFlags &= ~(1 << DISP_SM_HaveB2);
+            break;
         }
-   
-       switch (aCHKsIds[iLoop].iId)
-       {
-       case DISP_SM_HaveSWValve:
+    }
+    else
+    {
+        smParam.ulFlags &= ~(1 << DISP_SM_HaveB2);
+    }
+
+    pmParam.aiBuckType[DISP_PM_PM3] = m_cmbSWTankVolume->currentIndex();
+
+    if (m_cmbSWTankVolume->isVisible())
+    {
+        smParam.ulFlags |= 1 << DISP_SM_HaveB3;
+
+        switch (pmParam.aiBuckType[DISP_PM_PM3])
+        {
+        case DISP_WATER_BARREL_TYPE_030L:
+            pmParam.afCap[DISP_PM_PM3] = 30;
+            pmParam.afDepth[DISP_PM_PM3] = 0.3;
+            break;
+        case DISP_WATER_BARREL_TYPE_060L:
+            pmParam.afCap[DISP_PM_PM3] = 60;
+            pmParam.afDepth[DISP_PM_PM3] = 0.6;
+            break;
+        case DISP_WATER_BARREL_TYPE_100L:
+            pmParam.afCap[DISP_PM_PM3] = 100;
+            pmParam.afDepth[DISP_PM_PM3] = 0.95;
+            break;
+        case DISP_WATER_BARREL_TYPE_200L:
+            pmParam.afCap[DISP_PM_PM3] = 200;
+            pmParam.afDepth[DISP_PM_PM3] = 0.95;
+            break;
+        case DISP_WATER_BARREL_TYPE_350L:
+            pmParam.afCap[DISP_PM_PM3] = 350;
+            pmParam.afDepth[DISP_PM_PM3] = 0.95;
+            break;
+        case DISP_WATER_BARREL_TYPE_UDF:
+            pmParam.afCap[DISP_PM_PM3] = m_leSWTankCap->text().toInt();
+            pmParam.afDepth[DISP_PM_PM3] = m_leSWTankHeight->text().toFloat();
+            break;
+        case DISP_WATER_BARREL_TYPE_NO:
+            smParam.ulFlags &= ~(1 << DISP_SM_HaveB3);
+            break;
+        }   
+    }
+    else
+    {
+        smParam.ulFlags &= ~(1 << DISP_SM_HaveB3);
+    }
+
+    int iLoop;
+    for (iLoop = 0; iLoop < m_iRealChkNum; iLoop++)
+    {
+        if (!m_aChks[iLoop]->isVisible())
+        {
+            smParam.ulFlags &= ~(1 << aCHKsIds[iLoop].iId);
+            continue;
+        }
+
+        switch (aCHKsIds[iLoop].iId)
+        {
+        case DISP_SM_HaveSWValve:
            /* other modules */
-           if ((Qt::Checked == m_aChks[iLoop]->checkState()))
-           {
-               smParam.ulFlags |= 1 << DISP_SM_HaveSWValve;
-           }
-           else
-           {
-               smParam.ulFlags &= ~(1 << DISP_SM_HaveSWValve);
-           }
-
+            if ((Qt::Checked == m_aChks[iLoop]->checkState()))
+            {
+                smParam.ulFlags |= 1 << DISP_SM_HaveSWValve;
+            }
+            else
+            {
+                smParam.ulFlags &= ~(1 << DISP_SM_HaveSWValve);
+            }
            break;
-       case DISP_SM_ElecLeakProtector:
-           if ((Qt::Checked == m_aChks[iLoop]->checkState()))
-           {
-               smParam.ulFlags |= 1 << DISP_SM_ElecLeakProtector;
-           }
-           else
-           {
-               smParam.ulFlags &= ~(1 << DISP_SM_ElecLeakProtector);
-           }
-
-           break;
+        case DISP_SM_ElecLeakProtector:
+            if ((Qt::Checked == m_aChks[iLoop]->checkState()))
+            {
+                smParam.ulFlags |= 1 << DISP_SM_ElecLeakProtector;
+            }
+            else
+            {
+                smParam.ulFlags &= ~(1 << DISP_SM_ElecLeakProtector);
+            }
+            break;
        case DISP_SM_Printer:
-           
            if ((Qt::Checked == m_aChks[iLoop]->checkState()))
            {
                smParam.ulFlags |= 1 << DISP_SM_Printer;
@@ -1136,59 +1143,57 @@ void SystemCfgPage::save()
                smParam.ulFlags &= ~(1 << DISP_SM_TubeDI);
            }
            break;
-       case DISP_SM_HaveTubeFilter:
-           if ((Qt::Checked == m_aChks[iLoop]->checkState()))
-           {
-               smParam.ulFlags |= 1 << DISP_SM_HaveTubeFilter;
-           }
-           else
-           {
-               smParam.ulFlags &= ~(1 << DISP_SM_HaveTubeFilter);
-           }
-           break;
-       case DISP_SM_PreFilterColumn:
-           if ((Qt::Checked == m_aChks[iLoop]->checkState()))
-           {
-               smParam.ulFlags |= 1 << DISP_SM_PreFilterColumn;
-           }
-           else
-           {
-               smParam.ulFlags &= ~(1 << DISP_SM_PreFilterColumn);
-           }
-           break;
-       case DISP_SM_HP_Water_Cir:      
-           if ((Qt::Checked == m_aChks[iLoop]->checkState()))
-           {
-               miscParam.ulMisFlags |= 1 << DISP_SM_HP_Water_Cir;
-           }
-           else
-           {
-               miscParam.ulMisFlags &= ~(1 << DISP_SM_HP_Water_Cir);
-           }
-           break;
-       case DISP_SM_RFID_Authorization:          
-           if ((Qt::Checked == m_aChks[iLoop]->checkState()))
-           {
-               miscParam.ulMisFlags |= 1 << DISP_SM_RFID_Authorization;
-           }
-           else
-           {
-               miscParam.ulMisFlags &= ~(1 << DISP_SM_RFID_Authorization);
-           }
-           break; 
-       case DISP_SM_Pre_Filter:
+        case DISP_SM_HaveTubeFilter:
             if ((Qt::Checked == m_aChks[iLoop]->checkState()))
             {
-//                miscParam.ulMisFlags |= 1 << DISP_SM_Pre_Filter;
+                smParam.ulFlags |= 1 << DISP_SM_HaveTubeFilter;
+            }
+            else
+            {
+                smParam.ulFlags &= ~(1 << DISP_SM_HaveTubeFilter);
+            }
+            break;
+        case DISP_SM_PreFilterColumn:
+            if ((Qt::Checked == m_aChks[iLoop]->checkState()))
+            {
+                smParam.ulFlags |= 1 << DISP_SM_PreFilterColumn;
+            }
+            else
+            {
+                smParam.ulFlags &= ~(1 << DISP_SM_PreFilterColumn);
+            }
+            break;
+        case DISP_SM_HP_Water_Cir:      
+            if ((Qt::Checked == m_aChks[iLoop]->checkState()))
+            {
+                miscParam.ulMisFlags |= 1 << DISP_SM_HP_Water_Cir;
+            }
+            else
+            {
+                miscParam.ulMisFlags &= ~(1 << DISP_SM_HP_Water_Cir);
+            }
+            break;
+        case DISP_SM_RFID_Authorization:          
+            if ((Qt::Checked == m_aChks[iLoop]->checkState()))
+            {
+                miscParam.ulMisFlags |= 1 << DISP_SM_RFID_Authorization;
+            }
+            else
+            {
+                miscParam.ulMisFlags &= ~(1 << DISP_SM_RFID_Authorization);
+            }
+            break; 
+        case DISP_SM_Pre_Filter:
+            if ((Qt::Checked == m_aChks[iLoop]->checkState()))
+            {
                 smParam.ulFlags |= 1 << DISP_SM_Pre_Filter;
             }
             else
             {
-//                miscParam.ulMisFlags &= ~(1 << DISP_SM_Pre_Filter);
                 smParam.ulFlags &= ~(1 << DISP_SM_Pre_Filter);
             }  
             break;
-        case DISP_SM_H_PACK:
+         case DISP_SM_H_PACK:
             if ((Qt::Checked == m_aChks[iLoop]->checkState()))
             {
                 miscParam.ulMisFlags |= 1 << DISP_SM_H_PACK;
@@ -1198,7 +1203,7 @@ void SystemCfgPage::save()
                 miscParam.ulMisFlags &= ~(1 << DISP_SM_H_PACK);
             }  
             break;
-        case DISP_SM_HP_Electrode:
+         case DISP_SM_HP_Electrode:
             if ((Qt::Checked == m_aChks[iLoop]->checkState()))
             {
                 miscParam.ulMisFlags |= 1 << DISP_SM_HP_Electrode;
@@ -1208,7 +1213,7 @@ void SystemCfgPage::save()
                 miscParam.ulMisFlags &= ~(1 << DISP_SM_HP_Electrode);
             }  
             break;
-        case DISP_SM_SW_PUMP:
+         case DISP_SM_SW_PUMP:
             if ((Qt::Checked == m_aChks[iLoop]->checkState()))
             {
                 miscParam.ulMisFlags |= 1 << DISP_SM_SW_PUMP;
@@ -1218,59 +1223,74 @@ void SystemCfgPage::save()
                 miscParam.ulMisFlags &= ~(1 << DISP_SM_SW_PUMP);
             }  
             break;
-       }
-   }
+        }
+    }
 
-   if (!m_chkDeviceTypeTOC->isVisible())
-   {
-       smParam.ulFlags &= ~(1 << DISP_SM_HaveTOC);
-   }
-   else
-   {
-       if ((Qt::Checked == m_chkDeviceTypeTOC->checkState()))
-       {
-           smParam.ulFlags |= 1 << DISP_SM_HaveTOC;
-       }
-       else
-       {
-           smParam.ulFlags &= ~(1 << DISP_SM_HaveTOC);
-       }
-   }
+    if (!m_chkDeviceTypeTOC->isVisible())
+    {
+        smParam.ulFlags &= ~(1 << DISP_SM_HaveTOC);
+    }
+    else
+    {
+        if ((Qt::Checked == m_chkDeviceTypeTOC->checkState()))
+        {
+            smParam.ulFlags |= 1 << DISP_SM_HaveTOC;
+        }
+        else
+        {
+            smParam.ulFlags &= ~(1 << DISP_SM_HaveTOC);
+        }
+    }
 
-   if (!m_chkPWTankUV->isVisible())
-   {
-       smParam.ulFlags &= ~(1 << DISP_SM_TankUV);
-   }
-   else
-   {
-       if ((Qt::Checked == m_chkPWTankUV->checkState()))
-       {
-           smParam.ulFlags |= 1 << DISP_SM_TankUV;
-       }
-       else
-       {
-           smParam.ulFlags &= ~(1 << DISP_SM_TankUV);
-       }
-   }
-   
-   miscParam.iTankUvOnTime     = m_lePWTankUVValue->text().toInt();
-   miscParam.iAutoLogoutTime   = m_leLoginLingerValue->text().toInt();
-   miscParam.iPowerOnFlushTime = m_lePOweronFlushValue->text().toInt();
-   
-   MainSavePMParam(gGlobalParam.iMachineType,pmParam);
-   MainSaveSubModuleSetting(gGlobalParam.iMachineType,smParam);
-   MainSaveMiscParam(gGlobalParam.iMachineType,miscParam);
-   MainUpdateGlobalParam();
+    if (!m_chkPWTankUV->isVisible())
+    {
+        smParam.ulFlags &= ~(1 << DISP_SM_TankUV);
+    }
+    else
+    {
+        if ((Qt::Checked == m_chkPWTankUV->checkState()))
+        {
+            smParam.ulFlags |= 1 << DISP_SM_TankUV;
+        }
+        else
+        {
+            smParam.ulFlags &= ~(1 << DISP_SM_TankUV);
+        }
+    }
 
-   gSensorRange.fPureSRange = m_pPureRangeEdit->text().toFloat();
-   gSensorRange.fFeedSRange = m_pFeedRangeEdit->text().toFloat();
-   MainSaveSensorRange(gGlobalParam.iMachineType);
+    miscParam.iTankUvOnTime     = m_lePWTankUVValue->text().toInt();
+    miscParam.iAutoLogoutTime   = m_leLoginLingerValue->text().toInt();
+    miscParam.iPowerOnFlushTime = m_lePOweronFlushValue->text().toInt();
 
-   m_wndMain->ClearToc();
-   m_wndMain->MainWriteLoginOperationInfo2Db(SETPAGE_SYSTEM_DEVICE_CONFIG);
+    if(DISP_WATER_BARREL_TYPE_UDF == pmParam.aiBuckType[DISP_PM_PM2])
+    {
+        gSensorRange.fPureSRange = m_pPureRangeEdit->text().toFloat();
+    }
+    else
+    {
+        gSensorRange.fPureSRange = 0.2;
+    }
 
-   show(false);
-   m_parent->show(true);
+    if(DISP_WATER_BARREL_TYPE_UDF == pmParam.aiBuckType[DISP_PM_PM3])
+    {
+        gSensorRange.fFeedSRange = m_pFeedRangeEdit->text().toFloat();
+    }
+    else
+    {
+        gSensorRange.fFeedSRange = 0.2;
+    }
+    MainSaveSensorRange(gGlobalParam.iMachineType);
+
+    MainSavePMParam(gGlobalParam.iMachineType,pmParam);
+    MainSaveSubModuleSetting(gGlobalParam.iMachineType,smParam);
+    MainSaveMiscParam(gGlobalParam.iMachineType,miscParam);
+    MainUpdateGlobalParam();
+
+    m_wndMain->ClearToc();
+    m_wndMain->MainWriteLoginOperationInfo2Db(SETPAGE_SYSTEM_DEVICE_CONFIG);
+
+    show(false);
+    m_parent->show(true);
 }
 
 void SystemCfgPage::on_CmbIndexChange_pw(int index)
@@ -1296,6 +1316,7 @@ void SystemCfgPage::on_CmbIndexChange_pw(int index)
                   
                   m_lePWTankHeight->setText(QString::number(gGlobalParam.PmParam.afDepth[DISP_PM_PM2],'f',2));
                   m_lePWTankCap->setText(QString::number(gGlobalParam.PmParam.afCap[DISP_PM_PM2]));
+				  m_pPureRangeEdit->setEnabled(true);
               
               }
               else
@@ -1304,6 +1325,7 @@ void SystemCfgPage::on_CmbIndexChange_pw(int index)
                   m_lbPWHUnit->hide();
                   m_lePWTankCap->hide();
                   m_lbPWCUnit->hide();
+				  m_pPureRangeEdit->setEnabled(false);
               
               }
           }
@@ -1336,13 +1358,15 @@ void SystemCfgPage::on_CmbIndexChange_sw(int index)
                     
                     m_leSWTankHeight->setText(QString::number(gGlobalParam.PmParam.afDepth[DISP_PM_PM3],'f',2));
                     m_leSWTankCap->setText(QString::number(gGlobalParam.PmParam.afCap[DISP_PM_PM3]));
-                }
+                    m_pFeedRangeEdit->setEnabled(true);
+				}
                 else
                 {
                     m_leSWTankHeight->hide();
                     m_lbSWHUnit->hide();
                     m_leSWTankCap->hide();
                     m_lbSWCUnit->hide();
+                    m_pFeedRangeEdit->setEnabled(false);
                 }
             }
         }

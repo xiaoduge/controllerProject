@@ -16,8 +16,6 @@ void DWaterQualityWidget::setConfigList(const QList<DTags> &list)
 
 void DWaterQualityWidget::updateValue(const DTags& t, const QString& value1, const QString& value2)
 {
-    QMutexLocker locker(&m_mutex);
-
     DTags tag = t;
 
     int iType = tag.type();
@@ -69,8 +67,6 @@ void DWaterQualityWidget::initUI()
 
 void DWaterQualityWidget::initLabel(const QList<DTags>& configList)
 {
-    QMutexLocker locker(&m_mutex);
-
     if(configList.isEmpty())
     {
         return;

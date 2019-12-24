@@ -231,7 +231,6 @@ unsigned int gAutoLogoutTimer;
 
 unsigned int ex_gulSecond = 0;
 unsigned short ex_isPackNew;
-QMutex ex_gMutex;
 
 //RO 清洗时间定义
 const unsigned int gROWashDuration[ROWashTimeNum] = 
@@ -1516,7 +1515,7 @@ void MainSaveSensorRange(int iMachineType)
         delete config;
         config = NULL;
     }
-
+	sync();
 }
 
 
@@ -1785,6 +1784,7 @@ void MainSaveTMParam(int iMachineType,DISP_TIME_PARAM_STRU  &Param)
         delete config;
         config = NULL;
     }
+	sync();
 }
 
 void MainSaveAlarmSetting(int iMachineType,DISP_ALARM_SETTING_STRU  &Param)
@@ -3123,7 +3123,6 @@ void SaveConsumptiveMaterialInfo(void)
     {
         return; // nothing to be saved
     }
-
    
     chflag = FALSE;
 
@@ -3322,7 +3321,8 @@ void MainWindow::initConsumablesInfo()
     m_strConsuamble[LOOPDI_CATNO] << "LAB1000IE" << "LAB0200IE" << "LAB0500IE" 
                                   << "LAB1500IE";
     
-    m_strConsuamble[PREPACK_CATNO] << "LAB02CP71" << "LAB02CP74";
+    m_strConsuamble[PREPACK_CATNO] << "LAB02CP71" << "LAB02CP74" 
+		                           << "LAB02CP04" << "LAB02CP01";
 }
 
 /**
@@ -5048,7 +5048,9 @@ int MainWindow:: getAlarmState()
         qDebug() << "alarm part0: " << m_iAlarmRcdMask[0][DISP_ALARM_PART0] 
 			     << "alarm part1: " << m_iAlarmRcdMask[0][DISP_ALARM_PART1];
     }
-    if (gCMUsage.ulUsageState & getMachineNotifyMask(gGlobalParam.iMachineType,0))
+    // NOTE: 2019.12.18针对黄色报警时，没有黄色提醒三角标志修改，待测试
+    // if (gCMUsage.ulUsageState & getMachineNotifyMask(gGlobalParam.iMachineType,0))
+    if (gCMUsage.ulUsageState) 
     {
         qDebug() << "Yellow notify:" << gCMUsage.ulUsageState;
     
@@ -5059,6 +5061,39 @@ int MainWindow:: getAlarmState()
 
 }
 
+/**
+ * 在未开启管路循环的条件下，开启管路循环
+ */
+void MainWindow::startTubeCir()
+{
+    if (!m_bTubeCirFlags)
+    {
+        DISP_CMD_TC_STRU tc;
+        tc.iStart    = 1;
+        /* lets go */
+        if (DISP_INVALID_HANDLE != DispCmdEntry(DISP_CMD_TUBE_CIR,(unsigned char *)&tc,sizeof(DISP_CMD_TC_STRU)))
+        {
+            m_bTubeCirFlags = true;
+        }
+    }
+}
+
+/**
+ * 在开启管路循环的条件下，关闭管路循环
+ */
+void MainWindow::stopTubeCir()
+{
+    if(m_bTubeCirFlags)
+    {
+        DISP_CMD_TC_STRU tc;
+        tc.iStart    = 0;
+        /* lets go */
+        if (DISP_INVALID_HANDLE != DispCmdEntry(DISP_CMD_TUBE_CIR,(unsigned char *)&tc,sizeof(DISP_CMD_TC_STRU)))
+        {
+            m_bTubeCirFlags = false;
+        }
+    }
+}
 
 void MainWindow::on_timerEvent()
 {
@@ -5120,46 +5155,23 @@ void MainWindow::on_timerEvent()
             int tgtMin = hour*60 + min;
             if (tgtMin >= m_iStartMinute && tgtMin < m_iEndMinute)
             {
-                if (!m_bTubeCirFlags)
-                {
-                    DISP_CMD_TC_STRU tc;
-                    tc.iStart    = 1;
-                    /* lets go */
-                    if (DISP_INVALID_HANDLE != DispCmdEntry(DISP_CMD_TUBE_CIR,(unsigned char *)&tc,sizeof(DISP_CMD_TC_STRU)))
-                    {
-                        m_bTubeCirFlags = true;
-                    }
-                }
+                startTubeCir();
             }
             else
             {
-                if(m_bTubeCirFlags)
-                {
-                    DISP_CMD_TC_STRU tc;
-                    tc.iStart    = 0;
-                    /* lets go */
-                    if (DISP_INVALID_HANDLE != DispCmdEntry(DISP_CMD_TUBE_CIR,(unsigned char *)&tc,sizeof(DISP_CMD_TC_STRU)))
-                    {
-                        m_bTubeCirFlags = false;
-                    }
-                }
+                stopTubeCir();
             }
         }
 		else
 		{
-            if(m_bTubeCirFlags)
-            {
-                DISP_CMD_TC_STRU tc;
-                tc.iStart    = 0;
-                /* lets go */
-                if (DISP_INVALID_HANDLE != DispCmdEntry(DISP_CMD_TUBE_CIR,(unsigned char *)&tc,sizeof(DISP_CMD_TC_STRU)))
-                {
-                    m_bTubeCirFlags = false;
-                }
-            }
-		}
-       
+            stopTubeCir();
+		} 
     }
+    else
+    {
+        stopTubeCir();
+    }
+    //
     
     if (savedUsageState != gCMUsage.ulUsageState)
     {
@@ -5278,7 +5290,6 @@ void MainWindow::on_timerSecondEvent()
 
 void MainWindow::on_timerScreenSleepEvent()
 {
-    QMutexLocker locker(&ex_gMutex);
     gScreenSleepTimer++;
 
     if(gScreenSleepTimer == gAdditionalCfgParam.additionalParam.iScreenSleepTime * 6)
@@ -6965,7 +6976,8 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                                 }
 
                                 //??????????????T Pack
-                                if (DispGetTankCirFlag())
+                                int iMask = gpMainWnd->getMachineNotifyMask(gGlobalParam.iMachineType,0);
+                                if (DispGetTankCirFlag() && (iMask & (1 << DISP_T_PACK)))
                                 {
                                     if (m_EcoInfo[pItem->ucId].fQuality < gGlobalParam.MMParam.SP[MACHINE_PARAM_SP31])
                                     {
@@ -7030,7 +7042,9 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                                 alarmCommProc(false,DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_HP_PRODUCT_WATER_CONDUCTIVITY);
                             }
                         }
+								 
                         else if (DispGetTankCirFlag()
+							     && (getMachineNotifyMask(gGlobalParam.iMachineType,0) & (1 << DISP_T_PACK))
                                  && ((gGlobalParam.iMachineType != MACHINE_UP) &&(gGlobalParam.iMachineType != MACHINE_RO)))
                         {
                             //??????????????T Pack
@@ -9597,7 +9611,6 @@ void MainWindow::checkConsumableInstall(int iRfId)
 
 void MainWindow::checkUserLoginStatus()
 {
-    QMutexLocker locker(&ex_gMutex);
 #ifdef SUB_ACCOUNT
     if (gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_SUB_ACCOUNT))
     {
@@ -9953,7 +9966,7 @@ void MainWindow::writeCMInfoToRFID(int iRfId, int type)
     }
 }
 
-void MainWindow::updateExConsumableMsg(int iMachineType, CATNO cn, LOTNO ln, int iIndex,
+bool MainWindow::updateExConsumableMsg(int iMachineType, CATNO cn, LOTNO ln, int iIndex,
                                        int category, QDate &date, int iRfid, bool bRfidWork)
 {
     Q_UNUSED(iMachineType);
@@ -9964,13 +9977,18 @@ void MainWindow::updateExConsumableMsg(int iMachineType, CATNO cn, LOTNO ln, int
     query.addBindValue(iIndex);
     query.addBindValue(category);
     ret = query.exec();
+	if(!ret)
+	{
+		return false;
+	}
+	
     if(query.next())
     {
             QString lotno = query.value(0).toString();
             if(ln == lotno)
             {	
                 resetExConsumableMsg(date, iRfid, iIndex, bRfidWork);
-                return; // do nothing
+                return true; // do nothing
             }
             else
             {
@@ -9982,7 +10000,8 @@ void MainWindow::updateExConsumableMsg(int iMachineType, CATNO cn, LOTNO ln, int
                 queryUpdate.addBindValue(installDate);
                 queryUpdate.addBindValue(iIndex);
                 queryUpdate.addBindValue(category);
-                queryUpdate.exec();
+                ret = queryUpdate.exec();
+				return ret;
             }
     }
     else
@@ -9995,7 +10014,8 @@ void MainWindow::updateExConsumableMsg(int iMachineType, CATNO cn, LOTNO ln, int
         queryInsert.bindValue(":LotNo", ln);
         queryInsert.bindValue(":category", category);
         queryInsert.bindValue(":time", installDate);
-        queryInsert.exec();
+        ret = queryInsert.exec();
+		return ret;
     }
 }
 

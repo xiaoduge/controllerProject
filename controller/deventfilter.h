@@ -12,7 +12,6 @@
 #define DEVENTFILTER_H
 
 #include <QObject>
-#include <QMutex>
 #include "mainwindow.h"
 
 class DEventFilter : public QObject

@@ -15,7 +15,6 @@
 #include "dinithandlecfgpage.h"
 #include "dcalcpackflow.h"
 
-#include <QMutex>
 #include <QThread>
 #include "DNetworkConfig.h"
 #include <QProcess>
@@ -371,7 +370,7 @@ public:
     void readCMInfoFromRFID(int iRfId, int type);
     void writeCMInfoToRFID(int iRfId, int type);
 
-    void updateExConsumableMsg(int iMachineType,CATNO cn,LOTNO ln,int iIndex, int category, QDate& date, int iRfid, bool bRfidWork = false);
+    bool updateExConsumableMsg(int iMachineType,CATNO cn,LOTNO ln,int iIndex, int category, QDate& date, int iRfid, bool bRfidWork = false);
     const QDate resetExConsumableMsg(QDate& date, int iRfid, int iType, bool bRfidWork = false);
     const QString& consumableInitDate() const;
 
@@ -857,6 +856,9 @@ private:
     //Determine the I number of HP history data need to save
     int idForHPGetWHistory();
 
+	void startTubeCir();
+	void stopTubeCir();
+
 private slots:
     void on_ScreenSleep(bool sleep);
 
@@ -867,7 +869,6 @@ extern MACHINE_TYPE_STRU gaMachineType[MACHINE_NUM];
 
 extern QPixmap    *gpGlobalPixmaps[GLOBAL_BMP_NUM];
 void Write_sys_int(char *sysfilename,int value);
-extern QMutex ex_gMutex;
 
 #define PWMLCD_FILE       "/sys/class/backlight/pwm-backlight/brightness"
 

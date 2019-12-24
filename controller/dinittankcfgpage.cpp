@@ -2,6 +2,7 @@
 #include <QMouseEvent>
 #include "mainwindow.h"
 #include "dlineedit.h"
+#include "exdisplay.h"
 #include <QLabel>
 #include <QComboBox>
 
@@ -68,6 +69,9 @@ void DInitTankcfgpage::buildTranslation()
     m_lbPWCUnit->setText(tr("Volume(L)"));
     m_lbSWHUnit->setText(tr("Height(M)"));
     m_lbSWCUnit->setText(tr("Volume(L)"));
+
+    m_pPureRangeLab->setText(tr("Pure Tank Level Sensor Range"));
+    m_pFeedRangeLab->setText(tr("Feed Tank Level Sensor Range"));
 }
 
 void DInitTankcfgpage::switchLanguage()
@@ -97,10 +101,12 @@ void DInitTankcfgpage::setBackColor()
 
 void DInitTankcfgpage::createControl()
 {
+    QRegExp sensorRangerx("([0-9]{1}[\.][0-9]{0,3})");
     QRegExp double_rx("([0-9]{0,1}[\.][0-9]{0,2})");
 
     QWidget *tmpWidget = NULL;
     QRect    rectTmp;
+    int iLine = 0;    
 
     /* line 1*/
     tmpWidget = new QWidget(m_widget);
@@ -110,7 +116,7 @@ void DInitTankcfgpage::createControl()
     tmpWidget->setAutoFillBackground(true);
     tmpWidget->setPalette(pal);
 
-    tmpWidget->setGeometry(QRect(50 , 190 , 640 ,60));
+    tmpWidget->setGeometry(QRect(50 , 150 + 80 * iLine, 640 ,60));
 
     rectTmp = sQrectAry[0];
     rectTmp.setX(10);
@@ -180,9 +186,50 @@ void DInitTankcfgpage::createControl()
         break;
     }
     /* line 2*/
+    ++iLine;
     tmpWidget = new QWidget(m_widget);
+    tmpWidget->setGeometry(QRect(50 , 150 + 80 * iLine, 640 ,60));
+    tmpWidget->setAutoFillBackground(true);
+    tmpWidget->setPalette(pal);
 
-    tmpWidget->setGeometry(QRect(50 , 190 + 90, 640 ,60));
+    rectTmp.setX(10);
+    rectTmp.setWidth(sQrectAry[0].width() + 60);
+
+    m_pPureRangeLab = new QLabel(tmpWidget);
+    m_pPureRangeLab->setGeometry(rectTmp);
+    m_pPureRangeLab->hide();
+
+    rectTmp.setX(300);
+    rectTmp.setWidth(80);
+    m_pPureRangeEdit = new DLineEdit(tmpWidget);
+    m_pPureRangeEdit->setValidator(new QRegExpValidator(sensorRangerx, this));
+    m_pPureRangeEdit->setGeometry(rectTmp);
+    m_pPureRangeEdit->setText(QString("%1").arg(gSensorRange.fPureSRange));
+    m_pPureRangeEdit->hide();
+
+    rectTmp.setX(390);
+    rectTmp.setWidth(60);
+    m_pPureRangeUnit = new QLabel(tmpWidget);
+    m_pPureRangeUnit->setText(tr("bar"));
+    m_pPureRangeUnit->setGeometry(rectTmp);
+    m_pPureRangeUnit->hide();
+
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_ADAPT:
+        tmpWidget->setAutoFillBackground(false);
+        break;
+    default:
+        m_pPureRangeLab->show();
+        m_pPureRangeEdit->show();
+        m_pPureRangeUnit->show();
+        break;
+    }
+
+    /* line 3*/
+    ++iLine;
+    tmpWidget = new QWidget(m_widget);
+    tmpWidget->setGeometry(QRect(50 , 150 + 80 * iLine, 640 ,60));
 
     tmpWidget->setAutoFillBackground(true);
     tmpWidget->setPalette(pal);
@@ -256,14 +303,53 @@ void DInitTankcfgpage::createControl()
         break;
     }
 
+    /* line 4*/
+    ++iLine;
+    tmpWidget = new QWidget(m_widget);
+    tmpWidget->setGeometry(QRect(50 , 150 + 80 * iLine, 640 ,60));
+
+    tmpWidget->setAutoFillBackground(true);
+    tmpWidget->setPalette(pal);
+
+    rectTmp.setX(10);
+    rectTmp.setWidth(sQrectAry[0].width() + 60);
+
+    m_pFeedRangeLab = new QLabel(tmpWidget);
+    m_pFeedRangeLab->setGeometry(rectTmp);
+
+    rectTmp.setX(300);
+    rectTmp.setWidth(80);
+    m_pFeedRangeEdit = new DLineEdit(tmpWidget);
+    m_pFeedRangeEdit->setValidator(new QRegExpValidator(sensorRangerx, this));
+    m_pFeedRangeEdit->setGeometry(rectTmp);
+    m_pFeedRangeEdit->setText(QString("%1").arg(gSensorRange.fFeedSRange));
+
+    rectTmp.setX(390);
+    rectTmp.setWidth(60);
+    m_pFeedRangeUnit = new QLabel(tmpWidget);
+    m_pFeedRangeUnit->setText(tr("bar"));
+    m_pFeedRangeUnit->setGeometry(rectTmp);
+
+    tmpWidget->hide();
+    switch(gGlobalParam.iMachineType)
+    {
+     case MACHINE_L_Genie:
+     case MACHINE_L_UP:
+     case MACHINE_L_EDI_LOOP:
+     case MACHINE_L_RO_LOOP:
+        tmpWidget->show();
+        break;
+    }
+
+    //
     m_pExNextBtn = new QPushButton(m_widget);
     m_pExBackBtn = new QPushButton(m_widget);
 
     connect(m_pExNextBtn, SIGNAL(clicked()), this, SLOT(on_ExNextBtn_clicked()));
     connect(m_pExBackBtn, SIGNAL(clicked()), this, SLOT(on_ExBackBtn_clicked()));
 
-    m_pExBackBtn->move(200, 450);
-    m_pExNextBtn->move(500, 450);
+    m_pExBackBtn->move(200, 470);
+    m_pExNextBtn->move(500, 470);
 }
 
 
@@ -272,6 +358,7 @@ void DInitTankcfgpage::initUi()
     setBackColor();
     createHeader();
     createControl();
+	connectData();
 }
 
 void DInitTankcfgpage::update()
@@ -282,7 +369,7 @@ void DInitTankcfgpage::update()
 void DInitTankcfgpage::createHeader()
 {
     m_pExLbTitle = new QLabel(m_widget);
-    m_pExLbTitle->setGeometry(QRect(50, 135 , 300 , 28));
+    m_pExLbTitle->setGeometry(QRect(50, 100, 300, 28));
     m_pExLbTitle->setStyleSheet(" font-size:24pt;color:#000000;font-family:Arial;QFont::Bold");
 }
 
@@ -328,6 +415,7 @@ void DInitTankcfgpage::connectData()
     if (iIdx > DISP_WATER_BARREL_TYPE_NUM )
     {
         iIdx = DISP_WATER_BARREL_TYPE_030L;
+		m_pPureRangeEdit->setEnabled(false);
     }
 
     switch(gGlobalParam.iMachineType)
@@ -348,6 +436,7 @@ void DInitTankcfgpage::connectData()
                     m_lbPWHUnit->hide();
                     m_lePWTankCap->hide();
                     m_lbPWCUnit->hide();
+					m_pPureRangeEdit->setEnabled(false);
                 }
                 else
                 {
@@ -357,7 +446,8 @@ void DInitTankcfgpage::connectData()
                     m_lbPWCUnit->show();
                     m_lePWTankHeight->setText(QString::number(gGlobalParam.PmParam.afDepth[DISP_PM_PM2],'f',2));
                     m_lePWTankCap->setText(QString::number(gGlobalParam.PmParam.afCap[DISP_PM_PM2]));
-                }
+                    m_pPureRangeEdit->setEnabled(true);
+				}
             }   
         }
         break;
@@ -369,6 +459,7 @@ void DInitTankcfgpage::connectData()
     if (iIdx > DISP_WATER_BARREL_TYPE_NUM )
     {
         iIdx = DISP_WATER_BARREL_TYPE_030L;
+		m_pFeedRangeEdit->setEnabled(false);
     }
 
     switch(gGlobalParam.iMachineType)
@@ -382,30 +473,33 @@ void DInitTankcfgpage::connectData()
         {
             if (iIdx <= DISP_WATER_BARREL_TYPE_NO)
             {
-               m_cmbSWTankVolume->setCurrentIndex(iIdx);
+                m_cmbSWTankVolume->setCurrentIndex(iIdx);
 
-               if (DISP_WATER_BARREL_TYPE_UDF != iIdx)
-               {
-                   m_leSWTankHeight->hide();
-                   m_lbSWHUnit->hide();
-                   m_leSWTankCap->hide();
-                   m_lbSWCUnit->hide();
-               }
-               else
-               {
-                   m_leSWTankHeight->show();
-                   m_lbSWHUnit->show();
-                   m_leSWTankCap->show();
-                   m_lbSWCUnit->show();
-
-                   m_leSWTankHeight->setText(QString::number(gGlobalParam.PmParam.afDepth[DISP_PM_PM3],'f',2));
-                   m_leSWTankCap->setText(QString::number(gGlobalParam.PmParam.afCap[DISP_PM_PM3]));
-               }
+                if (DISP_WATER_BARREL_TYPE_UDF != iIdx)
+                {
+                    m_leSWTankHeight->hide();
+                    m_lbSWHUnit->hide();
+                    m_leSWTankCap->hide();
+                    m_lbSWCUnit->hide();
+                    m_pFeedRangeEdit->setEnabled(false);
+                }
+                else
+                {
+                    m_leSWTankHeight->show();
+                    m_lbSWHUnit->show();
+                    m_leSWTankCap->show();
+                    m_lbSWCUnit->show();
+                    m_leSWTankHeight->setText(QString::number(gGlobalParam.PmParam.afDepth[DISP_PM_PM3],'f',2));
+                    m_leSWTankCap->setText(QString::number(gGlobalParam.PmParam.afCap[DISP_PM_PM3]));
+				    m_pFeedRangeEdit->setEnabled(true);
+                }
             }
         }
     }
         break;
     }
+	m_pPureRangeEdit->setText(QString("%1").arg(gSensorRange.fPureSRange));
+	m_pFeedRangeEdit->setText(QString("%1").arg(gSensorRange.fFeedSRange));
 }
 
 void DInitTankcfgpage::save()
@@ -455,7 +549,7 @@ void DInitTankcfgpage::save()
         smParam.ulFlags &= ~(1 << DISP_SM_HaveB2);
     }
 
-     pmParam.aiBuckType[DISP_PM_PM3] = m_cmbSWTankVolume->currentIndex();
+	pmParam.aiBuckType[DISP_PM_PM3] = m_cmbSWTankVolume->currentIndex();
 
     if (m_cmbSWTankVolume->isVisible())
     {
@@ -497,6 +591,25 @@ void DInitTankcfgpage::save()
         smParam.ulFlags &= ~(1 << DISP_SM_HaveB3);
     }
 
+    if(DISP_WATER_BARREL_TYPE_UDF == pmParam.aiBuckType[DISP_PM_PM2])
+    {
+        gSensorRange.fPureSRange = m_pPureRangeEdit->text().toFloat();
+    }
+    else
+    {
+        gSensorRange.fPureSRange = 0.2;
+    }
+
+    if(DISP_WATER_BARREL_TYPE_UDF == pmParam.aiBuckType[DISP_PM_PM3])
+    {
+        gSensorRange.fFeedSRange = m_pFeedRangeEdit->text().toFloat();
+    }
+    else
+    {
+        gSensorRange.fFeedSRange = 0.2;
+    }
+    MainSaveSensorRange(gGlobalParam.iMachineType);
+
     MainSavePMParam(gGlobalParam.iMachineType,pmParam);
     MainSaveSubModuleSetting(gGlobalParam.iMachineType,smParam);
     MainUpdateGlobalParam();
@@ -524,14 +637,15 @@ void DInitTankcfgpage::on_CmbIndexChange_pw(int index)
                 m_lbPWCUnit->show();
                 m_lePWTankHeight->setText(QString::number(gGlobalParam.PmParam.afDepth[DISP_PM_PM2],'f',2));
                 m_lePWTankCap->setText(QString::number(gGlobalParam.PmParam.afCap[DISP_PM_PM2]));
-            }
+				m_pPureRangeEdit->setEnabled(true);
+			}
             else
             {
                 m_lePWTankHeight->hide();
                 m_lbPWHUnit->hide();
                 m_lePWTankCap->hide();
                 m_lbPWCUnit->hide();
-
+				m_pPureRangeEdit->setEnabled(false);
             }
         }
         break;
@@ -562,13 +676,15 @@ void DInitTankcfgpage::on_CmbIndexChange_sw(int index)
 
                 m_leSWTankHeight->setText(QString::number(gGlobalParam.PmParam.afDepth[DISP_PM_PM3],'f',2));
                 m_leSWTankCap->setText(QString::number(gGlobalParam.PmParam.afCap[DISP_PM_PM3]));
-            }
+				m_pFeedRangeEdit->setEnabled(true);
+			}
             else
             {
                 m_leSWTankHeight->hide();
                 m_lbSWHUnit->hide();
                 m_leSWTankCap->hide();
                 m_lbSWCUnit->hide();
+				m_pFeedRangeEdit->setEnabled(false);
             }
         }
     }

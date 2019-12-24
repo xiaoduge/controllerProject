@@ -2,6 +2,7 @@
 #include "mainwindow.h"
 #include "consumableinslistwidgtitem.h"
 #include "exconfig.h"
+#include "dhintdialog.h"
 #include <QListWidget>
 
 ConsumableInsPage::ConsumableInsPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain, short instanceType)
@@ -1081,6 +1082,19 @@ void ConsumableInsPage::initManualItem()
     m_iRealItemNum = iIdx;
 }
 
+void ConsumableInsPage::installFeedback(bool result)
+{
+	if(result)
+	{
+		DHintDialog::getInstance(tr("Consumable installed successfully."));
+	}
+	else
+	{
+		DHintDialog::getInstance(tr("Consumable installation failed."));
+	}
+
+}
+
 void ConsumableInsPage::on_btn_clicked(int index)
 {  
     int iOffset = 0;
@@ -1175,23 +1189,28 @@ void ConsumableInsPage::on_btn_clicked(int index)
               /* install */
             strncpy(cn,strCn.toAscii(),APP_CAT_LENGTH);
             strncpy(ln,strLn.toAscii(),APP_LOT_LENGTH);
+			bool ret;
    			if(m_bRfidWork)
    			{
-            	m_wndMain->updateExConsumableMsg(gGlobalParam.iMachineType, cn, ln, cmIdx, 0, installDate, aIds[iMapIdx].iRfid, true);
+            	ret = m_wndMain->updateExConsumableMsg(gGlobalParam.iMachineType, cn, ln, cmIdx, 0, installDate, aIds[iMapIdx].iRfid, true);
    			}
 			else
 			{
-				m_wndMain->updateExConsumableMsg(gGlobalParam.iMachineType, cn, ln, cmIdx, 0, installDate, aIds[iMapIdx].iRfid, false);
+				ret = m_wndMain->updateExConsumableMsg(gGlobalParam.iMachineType, cn, ln, cmIdx, 0, installDate, aIds[iMapIdx].iRfid, false);
 			}
               
-            strncpy(gGlobalParam.cmSn.aCn[cmIdx],cn,APP_CAT_LENGTH);
-            strncpy(gGlobalParam.cmSn.aLn[cmIdx],ln,APP_LOT_LENGTH);
+            strncpy(gGlobalParam.cmSn.aCn[cmIdx], cn, APP_CAT_LENGTH);
+            strncpy(gGlobalParam.cmSn.aLn[cmIdx], ln, APP_LOT_LENGTH);
    
             MainResetCmInfo(cmIdx);
    
             m_wndMain->MainWriteCMInstallInfo2Db(cmIdx,0,cn,ln);
-        }
+
+            installFeedback(ret);
+            
             break;
+        }
+            
         case 1:
         {
             int macIdx = aIds[iMapIdx].iId - DISP_MACHINERY_SOURCE_BOOSTER_PUMP;
@@ -1217,18 +1236,23 @@ void ConsumableInsPage::on_btn_clicked(int index)
             strncpy(cn,strCn.toAscii(),APP_CAT_LENGTH);
             strncpy(ln,strLn.toAscii(),APP_LOT_LENGTH);
 
+            bool ret;
 			if(m_bRfidWork)
 			{
-                m_wndMain->updateExConsumableMsg(gGlobalParam.iMachineType, cn, ln, macIdx, 1, installDate, aIds[iMapIdx].iRfid, true);
+                ret = m_wndMain->updateExConsumableMsg(gGlobalParam.iMachineType, cn, ln, macIdx, 1, installDate, aIds[iMapIdx].iRfid, true);
 			}
             else
             {
-                m_wndMain->updateExConsumableMsg(gGlobalParam.iMachineType, cn, ln, macIdx, 1, installDate, aIds[iMapIdx].iRfid, false);
+                ret = m_wndMain->updateExConsumableMsg(gGlobalParam.iMachineType, cn, ln, macIdx, 1, installDate, aIds[iMapIdx].iRfid, false);
             }
              /* reset state info */
             m_wndMain->MainWriteMacInstallInfo2Db(macIdx,0,cn,ln);
+
+            installFeedback(ret);
+
+            break;  
         }        
-            break;       
+                 
         }
     }
    

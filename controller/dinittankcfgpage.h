@@ -57,6 +57,15 @@ private:
     DLineEdit *m_leSWTankCap;
     QLabel    *m_lbSWCUnit;
 
+	//
+	QLabel *m_pPureRangeLab;
+    DLineEdit *m_pPureRangeEdit;
+	QLabel *m_pPureRangeUnit;
+	
+    QLabel *m_pFeedRangeLab;
+    DLineEdit *m_pFeedRangeEdit;
+	QLabel *m_pFeedRangeUnit;
+
     QPushButton* m_pExNextBtn;
     QPushButton* m_pExBackBtn;
 

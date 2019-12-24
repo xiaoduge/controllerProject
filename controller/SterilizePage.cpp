@@ -210,12 +210,20 @@ void SterilizePage::createControl()
         m_aSterilize[iLoop].laPrompt->setWordWrap(true); //
         m_aSterilize[iLoop].laPrompt->setAlignment(Qt::AlignHCenter);
 
-        m_aSterilize[iLoop].laPrompt->show();
+		if( 500 <= gAdditionalCfgParam.machineInfo.iMachineFlow)
+		{
+			m_aSterilize[iLoop].laPrompt->hide();
+		}
+		else
+		{
+			m_aSterilize[iLoop].laPrompt->show();
+		}
+        
         m_aSterilize[iLoop].laPrompt->setFont(ft12);
         m_aSterilize[iLoop].laPrompt->setPalette(paLightblue);
         m_aSterilize[iLoop].laPrompt->setStyleSheet("background-color:transparent");
 
-        
+
         m_aSterilize[iLoop].laMtTime     = new QLabel(m_aSterilize[iLoop].BackWidget);
         m_aSterilize[iLoop].laMtTime->setGeometry(QrectAry[3]);
         m_aSterilize[iLoop].laMtTime->show();
@@ -281,6 +289,7 @@ void SterilizePage::initUi()
 void SterilizePage::update()
 {
    m_wndMain->setWorkMode(APP_WORK_MODE_CLEAN);
+   buildTranslation();
 }
 
 void SterilizePage::fade()
@@ -379,7 +388,7 @@ void SterilizePage::on_btn_clicked(int index)
             gGlobalParam.CleanParam.aCleans[index].lstTime = QDateTime::currentDateTime().toTime_t();
             gGlobalParam.CleanParam.aCleans[index].period = QDateTime::currentDateTime().addDays(gGlobalParam.CMParam.aulCms[DISP_ROC12LIFEDAY]).toTime_t();
 
-            MainSaveCleanParam(gGlobalParam.iMachineType,gGlobalParam.CleanParam);
+            MainSaveCleanParam(gGlobalParam.iMachineType, gGlobalParam.CleanParam);
 
             if (DISP_INVALID_HANDLE == hdl)
             {
