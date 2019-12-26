@@ -9661,15 +9661,13 @@ void MainWindow::updateRunningFlushTime()
 
 int MainWindow::runningFlushTime()
 {
-    if(!ex_isPackNew)
+	int iTimeLeft = gGlobalParam.MiscParam.iPowerOnFlushTime* 60 + 10 - m_runningFlushTime;
+    if(ex_isPackNew)
     {
-        return gGlobalParam.MiscParam.iPowerOnFlushTime* 60 + 10 - m_runningFlushTime;
+    	iTimeLeft = 20 * 60 + 10 - m_runningFlushTime;
+        
     }
-    else
-    {
-        return 20 * 60 + 10 - m_runningFlushTime;
-    }
-
+	return iTimeLeft > 0 ? iTimeLeft : 0;
 }
 
 QStringList MainWindow::consumableCatNo(CONSUMABLE_CATNO iType)

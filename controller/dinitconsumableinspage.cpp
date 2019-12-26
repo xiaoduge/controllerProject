@@ -286,7 +286,31 @@ void DInitConsumableInsPage::mouseReleaseEvent(QMouseEvent *e)
     if (abs(m_curX - m_lstX) >= PAGE_X_DIMENSION
         && abs(m_curY - m_lstY) <= PAGE_Y_DIMENSION)
     {
-        m_wndMain->naviInitPage(Ex_Init_InstallConsumable, m_curX - m_lstX > 0 ? 1 : 0);
+        switch(gGlobalParam.iMachineType)
+        {
+        case MACHINE_L_EDI_LOOP:
+            if((gAdditionalCfgParam.machineInfo.iMachineFlow == 500) && !( m_curX - m_lstX > 0))
+            {
+                QDate curDate = QDate::currentDate();
+                QString strDate = curDate.toString("yyyy-MM-dd");
+                gAdditionalCfgParam.productInfo.strInstallDate = strDate;
+                MainSaveInstallMsg(gGlobalParam.iMachineType);
+
+                gAdditionalCfgParam.initMachine = 1;
+                MainSaveDefaultState(gGlobalParam.iMachineType);
+                MainUpdateGlobalParam();
+
+                m_wndMain->restart();
+            }
+            else
+            {
+                m_wndMain->naviInitPage(Ex_Init_InstallConsumable, m_curX - m_lstX > 0 ? 1 : 0);
+            }
+            break;
+        default:
+            m_wndMain->naviInitPage(Ex_Init_InstallConsumable, m_curX - m_lstX > 0 ? 1 : 0);
+            break;
+        }
     }
     m_lstFlag = 0;
 }
