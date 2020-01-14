@@ -213,6 +213,11 @@ class QSslError;
 class DWifiConfigDialog;
 class QFileSystemWatcher;
 
+class DispenseDataPrint;
+class ProductDataPrint;
+class AlarmPrint;
+class ServiceLogPrint;
+
 typedef struct
 {
      unsigned int ulMask4Normlwork;
@@ -858,7 +863,14 @@ private:
 
 	void startTubeCir();
 	void stopTubeCir();
+	void checkTubeCir();
 
+    // for printer
+    void printWorker(const DispenseDataPrint &data);
+    void printWorker(const ProductDataPrint &data);
+    void printWorker(const AlarmPrint &data);
+    void printWorker(const ServiceLogPrint & data);
+    
 private slots:
     void on_ScreenSleep(bool sleep);
 

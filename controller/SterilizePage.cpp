@@ -4,7 +4,9 @@
 #include "ToastDlg.h"
 #include "exconfig.h"
 #include "exdisplay.h"
+#include "drunwarningdialog.h"
 #include <QProgressBar>
+#include <QMessageBox>
 
 #define ControlNum 6
 
@@ -149,6 +151,11 @@ void SterilizePage::setBackColor()
 
     m_widget->setAutoFillBackground(true);
     m_widget->setPalette(pal);
+}
+
+void SterilizePage::leaveSubPage()
+{
+	CSubPage::leaveSubPage();
 }
 
 void SterilizePage::createControl()
@@ -383,7 +390,21 @@ void SterilizePage::on_btn_clicked(int index)
                     }
                 }
             }
-            hdl = m_wndMain->startClean(index,(state == BITMAPBUTTON_STATE_SEL));
+            if(state == BITMAPBUTTON_STATE_SEL)
+            {
+                hdl = m_wndMain->startClean(index, true);
+            }
+            else
+            {
+                DRunWarningDialog runDlg(tr("Residual chlorine and pH wash agents left may damage the system. Are you sure to abort?"));
+                if(QDialog::Accepted != runDlg.exec())
+                {
+                    m_aSterilize[index].btnClean->setState(BITMAPBUTTON_STATE_SEL);
+                    return;
+                }
+                hdl = m_wndMain->startClean(index, false);
+            }
+            //hdl = m_wndMain->startClean(index,(state == BITMAPBUTTON_STATE_SEL));
 
             gGlobalParam.CleanParam.aCleans[index].lstTime = QDateTime::currentDateTime().toTime_t();
             gGlobalParam.CleanParam.aCleans[index].period = QDateTime::currentDateTime().addDays(gGlobalParam.CMParam.aulCms[DISP_ROC12LIFEDAY]).toTime_t();
@@ -409,6 +430,10 @@ void SterilizePage::on_btn_clicked(int index)
 
 void SterilizePage::timerEvent(QTimerEvent *event)
 {
+	if(DispGetRoWashPauseFlag())
+	{
+		return;
+	}
     if(event->timerId() == m_cleanTimerId)
     {
         ++m_curProgreeValue;

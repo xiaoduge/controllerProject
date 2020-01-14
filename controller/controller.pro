@@ -93,7 +93,6 @@ SOURCES += main.cpp\
     dlineedit.cpp \
     dsqltablemodelforuser.cpp \
     dloginwarningdialog.cpp \
-    dconsumableinstallwidget.cpp \
     dpushbutton.cpp \
     drunwarningdialog.cpp \
     printer.cpp \
@@ -130,7 +129,11 @@ SOURCES += main.cpp\
     dsysmsgpage.cpp \
     dusercfgpage.cpp \
     duserinfochecker.cpp \
-    exconfig.cpp
+    exconfig.cpp \
+    dleakalarmdlg.cpp \
+    dwarningdlg.cpp \
+    dcheckboxlistitemwidget.cpp \
+    dinittankcfgwidget.cpp
 HEADERS  += mainwindow.h \
     ctrlapplication.h \
     log.h \
@@ -191,7 +194,6 @@ HEADERS  += mainwindow.h \
     dlineedit.h \
     dsqltablemodelforuser.h \
     dloginwarningdialog.h \
-    dconsumableinstallwidget.h \
     dpushbutton.h \
     drunwarningdialog.h \
     escpos/init_parser.h \
@@ -230,7 +232,11 @@ HEADERS  += mainwindow.h \
     dusercfgpage.h \
     dusermanualpage.h \
     dwaterqualitypage.h \
-    duserinfochecker.h
+    duserinfochecker.h \
+    dleakalarmdlg.h \
+    dwarningdlg.h \
+    dcheckboxlistitemwidget.h \
+    dinittankcfgwidget.h
 
 FORMS    += mainwindow.ui \
     syszuxpinyin.ui \

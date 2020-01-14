@@ -357,9 +357,9 @@ void DCheckConsumaleInstall::updateSql()
 
     if(ret)
     {
-        if((DISP_P_PACK == m_iType) && (!ex_isPackNew))
+        if((DISP_P_PACK == m_iType) && (!g_bNewPPack))
         {
-            ex_isPackNew = 1;
+            g_bNewPPack = 1;
         }
     }
 
@@ -379,9 +379,9 @@ void DCheckConsumaleInstall::insertSql()
 
     if(ret)
     {
-        if((DISP_P_PACK == m_iType) && (!ex_isPackNew))
+        if((DISP_P_PACK == m_iType) && (!g_bNewPPack))
         {
-            ex_isPackNew = 1;
+            g_bNewPPack = 1;
         }
     }
 

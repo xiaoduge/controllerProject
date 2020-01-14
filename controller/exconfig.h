@@ -81,6 +81,49 @@ struct AdditionalGlobalCfg
     int lastRunState;  //0:standby 1:run
 };
 
+/**
+ * @ fRes     :  水质
+ * @ fTemp    :  水温
+ * @ iToc     :  TOC值
+ * @ fVol     :  设备参数
+ * @ strType  :  取水类型：HP、UP
+ * @ strUser  :  取水用户
+ */
+struct DispenseDataPrint
+{
+	float fRes;
+    float fTemp;
+    int   iToc;
+    float fVol;
+    QString strType;
+};
+
+struct ProductDataPrint
+{
+	float fFeedCond;
+	float fFeedTemp;
+	float fRoCond;
+	float fRoTemp;
+	float fRej;
+	float fEdiRes;
+	float fEdiTemp;
+	int   duration;
+};
+
+struct AlarmPrint
+{
+	int iType; //0:报警信息; 1:耗材提醒;
+	QString strInfo;
+	bool bTrigger;
+};
+
+struct ServiceLogPrint
+{
+    QString strUserName;
+	QString strActionInfo;
+    QString strInfo;
+};
+
 extern DLoginState gUserLoginState; //ex
 extern AdditionalGlobalCfg gAdditionalCfgParam;
 

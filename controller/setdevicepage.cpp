@@ -10,14 +10,33 @@
 #include "sapp.h"
 #include "Interface.h"
 #include "ToastDlg.h"
+#include "exconfig.h"
 
 SetDevicePage::SetDevicePage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : CSubPage(parent,widget,wndMain)
 {
     creatTitle();
-
     initUi();
-
     buildTranslation();
+}
+
+SetDevicePage::~SetDevicePage()
+{
+	switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow >= 500)
+        {
+        	if(m_pTabPageWidget[1])
+        	{
+        		m_pTabPageWidget[1]->deleteLater();
+				m_pTabPageWidget[1] = NULL;
+        	}
+        }
+        break;
+    default:
+        break;
+    }
 
 }
 
@@ -42,6 +61,37 @@ void SetDevicePage::buildTitles()
 
 void SetDevicePage::buildTranslation()
 {
+    translateDeviceTagPage(); //设备
+    translateHandlerTagPage(); //手柄
+    translateRFIDTagPage(); //RFID读卡器
+
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
+        {
+            m_pTblWidget->setTabText(0, tr("Device"));
+            m_pTblWidget->setTabText(1, tr("Dispenser"));
+            m_pTblWidget->setTabText(2, tr("RF Reader"));
+        }
+        else
+        {
+            m_pTblWidget->setTabText(0, tr("Device"));
+            m_pTblWidget->setTabText(1, tr("RF Reader"));
+        }
+        break;
+    default:
+        m_pTblWidget->setTabText(0, tr("Device"));
+        m_pTblWidget->setTabText(1, tr("Dispenser"));
+        m_pTblWidget->setTabText(2, tr("RF Reader"));
+        break;
+    }
+
+}
+
+void SetDevicePage::translateDeviceTagPage()
+{
     m_pBtnQueryId->setText(tr("QueryId"));
     m_pBtnQueryVersion->setText(tr("QueryVer"));
     m_pBtnRmvDevice->setText(tr("Clear Screen"));
@@ -50,7 +100,10 @@ void SetDevicePage::buildTranslation()
     m_plbDeviceAdr->setText(tr("Address"));     
     m_plbDeviceType->setText(tr("Type"));
     m_plbDeviceVers->setText(tr("Version"));
+}
 
+void SetDevicePage::translateHandlerTagPage()
+{
     m_plbHandlerSN->setText(tr("SN"));
     m_plbHandlerAdr->setText(tr("Address"));     
     m_plbHandlerDef->setText(tr("Default"));
@@ -60,9 +113,11 @@ void SetDevicePage::buildTranslation()
     m_pBtnQueryHandler->setText(tr("Query"));
     m_pBtnCfgHandler->setText(tr("Config."));
     m_pBtnResetHandler->setText(tr("Reset"));
-//    m_pBtnRmvHandler->setText(tr("Clear"));
     m_pBtnSaveHandler->setText(tr("Save"));
+}
 
+void SetDevicePage::translateRFIDTagPage()
+{
 #ifdef AUTO_CFG_RF_READER    
     m_pBtnCfgRfReader->setText(tr("Cfg Rfid"));
     m_pBtnResetRfReader->setText(tr("Reset Rfid"));
@@ -78,25 +133,15 @@ void SetDevicePage::buildTranslation()
     m_pBtnSaveRfReader->setText(tr("Save"));
 
     m_plbRfReaderSN->setText(tr("SN"));
-    m_plbRfReaderAdr->setText(tr("Address"));     
-
-    m_pBtnZigbeeUpd->setText(tr("Zigbee Upd"));
-
-    m_pTblWidget->setTabText(0,tr("Device"));
-    m_pTblWidget->setTabText(1,tr("Dispenser"));
-    m_pTblWidget->setTabText(2,tr("RF Reader"));
-//    m_pTblWidget->setTabText(3,tr("Maintenance"));
+    m_plbRfReaderAdr->setText(tr("Address"));  
 }
 
 void SetDevicePage::switchLanguage()
 {
     buildTranslation();
-
     buildTitles();
-
     selectTitle(titleIndex());
 }
-
 
 void SetDevicePage::setBackColor()
 {
@@ -137,26 +182,32 @@ void SetDevicePage::on_CmbIndexChange_trx_type(int index)
 void SetDevicePage::initUi()
 {
     setBackColor();
-
-    //QFile qss(":/app/checkbox.qss");
-    //qss.open(QFile::ReadOnly);
-    //m_strQss4Chk = QLatin1String (qss.readAll());
-    //qss.close();    
+   
     m_strQss4Chk = m_wndMain->getQss4Chk();
 
     QHBoxLayout *layout = new QHBoxLayout(); 
 
-    m_widgetLayout = m_widget;
-
     m_widgetLayout = new QWidget(m_widget);
-
-    m_widgetLayout->setGeometry(QRect(0,55,800,height() - 55));
-
+    m_widgetLayout->setGeometry(QRect(0, 55, 800, height() - 55));
     layout->setGeometry(QRect(0,100,m_widgetLayout->geometry().width(),m_widgetLayout->geometry().height()-120));
 
     m_pTblWidget = new QTabWidget();  
 
-    QWidget *widget = new QWidget();  
+        //设备
+    initDeviceTabPage();
+
+	initHandlerTabPage(); //手柄
+    //RFID读卡器
+    initRFIDTabPage();
+
+    layout->addWidget(m_pTblWidget); 
+
+    m_widgetLayout->setLayout(layout);
+}
+
+void SetDevicePage::initDeviceTabPage()
+{
+    m_pTabPageWidget[0] = new QWidget();  
 
     QGridLayout *pCfg1Top     =  new QGridLayout; //QGridLayout
     QHBoxLayout *pCfg1Bottom  =  new QHBoxLayout;
@@ -194,20 +245,25 @@ void SetDevicePage::initUi()
     pCfg1Main->addLayout(pCfg1Top,0,0);
     pCfg1Main->addLayout(pCfg1Bottom,1,0,1,2);
 
-    widget->setLayout(pCfg1Main);  
+    m_pTabPageWidget[0]->setLayout(pCfg1Main);  
 
     QIcon icon1(":/pic/unselected.png");  
-    m_pTblWidget->addTab(widget, icon1, tr("Device"));     
+    m_pTblWidget->addTab(m_pTabPageWidget[0], icon1, tr("Device")); 
 
-    /* CFG 2*/
-    widget = new QWidget();
+    connect(m_pBtnQueryId,SIGNAL(clicked()),this,SLOT(on_pushButton_QueryId()));
+    connect(m_pBtnQueryVersion,SIGNAL(clicked()),this,SLOT(on_pushButton_QueryVersion()));
+    connect(m_pBtnRmvDevice,SIGNAL(clicked()),this,SLOT(on_pushButton_RmvDevice()));
+}
+
+void SetDevicePage::initHandlerTabPage()
+{
+    m_pTabPageWidget[1] = new QWidget();
     QGridLayout  *pcfg2Top =  new QGridLayout;
     QHBoxLayout  *pcfg2HBox =  new QHBoxLayout;
     QGridLayout  *pcfg2Grid = new QGridLayout;
     QHBoxLayout  *pcfg2TilHBox =  new QHBoxLayout;
 
     m_pListWgtHandler   = new QListWidget();
-   
     
     m_plbHandlerSN = new QLabel;
     m_plbHandlerSN->setAlignment(Qt::AlignCenter);
@@ -230,7 +286,6 @@ void SetDevicePage::initUi()
     m_pBtnQueryHandler  = new QPushButton;
     m_pBtnCfgHandler   = new QPushButton;
     m_pBtnResetHandler   = new QPushButton;
-//    m_pBtnRmvHandler   = new QPushButton;
     m_pBtnSaveHandler   = new QPushButton;
 
     pcfg2TilHBox->addWidget(m_plbHandlerSN);
@@ -239,7 +294,6 @@ void SetDevicePage::initUi()
     pcfg2TilHBox->addWidget(m_plbHandlerType);
     pcfg2TilHBox->addWidget(m_plbHandlerOper);
 
-    //m_pListWgtHandler->setLayout(pcfg2TilHBox);
     pcfg2Top->addLayout(pcfg2TilHBox,0,0);
     pcfg2Top->addWidget(m_pListWgtHandler);
 
@@ -247,19 +301,38 @@ void SetDevicePage::initUi()
     pcfg2HBox->addWidget(m_pBtnQueryHandler);
     pcfg2HBox->addWidget(m_pBtnCfgHandler);
     pcfg2HBox->addWidget(m_pBtnResetHandler);
-//    pcfg2HBox->addWidget(m_pBtnRmvHandler);
     pcfg2HBox->addWidget(m_pBtnSaveHandler);
 
     pcfg2Grid->addLayout(pcfg2Top,0,0);
     pcfg2Grid->addLayout(pcfg2HBox,1,0,1,2);
 
-    widget->setLayout(pcfg2Grid);  
+    m_pTabPageWidget[1]->setLayout(pcfg2Grid);  
 
     QIcon icon2(":/pic/unselected.png");  
-    m_pTblWidget->addTab(widget, icon2, tr("HANDLER"));
 
-    /* CFG 3*/
-    widget = new QWidget();
+	switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
+        {
+            m_pTblWidget->addTab(m_pTabPageWidget[1], icon2, tr("HANDLER"));
+        }
+        break;
+    default:
+        m_pTblWidget->addTab(m_pTabPageWidget[1], icon2, tr("HANDLER"));
+        break;
+    }
+
+    connect(m_pBtnQueryHandler,SIGNAL(clicked()),this,SLOT(on_pushButton_QueryHandler()));
+    connect(m_pBtnCfgHandler,SIGNAL(clicked()),this,SLOT(on_pushButton_CfgHandler()));
+    connect(m_pBtnResetHandler,SIGNAL(clicked()),this,SLOT(on_pushButton_ResetHandler()));
+    connect(m_pBtnSaveHandler,SIGNAL(clicked()),this,SLOT(on_pushButton_SaveHandler()));
+}
+
+void SetDevicePage::initRFIDTabPage()
+{
+    m_pTabPageWidget[2] = new QWidget();
     QGridLayout  *pcfg3Top =  new QGridLayout;
     QHBoxLayout  *pcfg3HBox =  new QHBoxLayout;
     QGridLayout *pcfg3Grid = new QGridLayout;
@@ -298,44 +371,10 @@ void SetDevicePage::initUi()
     pcfg3Grid->addLayout(pcfg3Top,0,0);
     pcfg3Grid->addLayout(pcfg3HBox,1,0,1,2);
 
-    widget->setLayout(pcfg3Grid);  
+    m_pTabPageWidget[2]->setLayout(pcfg3Grid);  
 
     QIcon icon3(":/pic/unselected.png");  
-    m_pTblWidget->addTab(widget, icon3, tr("RFReader"));   
-
-    /* CFG 4*/
-    widget = new QWidget();
-    QHBoxLayout  *pcfg4HBox =  new QHBoxLayout;
-
-
-    m_plbZigbeeUpd = new QLabel;
-    m_plbZigbeeUpd->setAlignment(Qt::AlignCenter);
-    m_plbZigbeeUpd->setText("00");
-    pcfg4HBox->addWidget(m_plbZigbeeUpd);
-
-    m_pBtnZigbeeUpd  = new QPushButton;
-    m_pBtnZigbeeUpd->setText(tr("Zigbee Upd"));
-    pcfg4HBox->addWidget(m_pBtnZigbeeUpd);
-
-    widget->setLayout(pcfg4HBox);  
-
-//    QIcon icon4(":/pic/unselected.png");
-//    m_pTblWidget->addTab(widget, icon4, tr("Maintenance"));
-
-
-    layout->addWidget(m_pTblWidget); 
-
-    m_widgetLayout->setLayout(layout);
-
-    connect(m_pBtnQueryId,SIGNAL(clicked()),this,SLOT(on_pushButton_QueryId()));
-    connect(m_pBtnQueryVersion,SIGNAL(clicked()),this,SLOT(on_pushButton_QueryVersion()));
-    connect(m_pBtnRmvDevice,SIGNAL(clicked()),this,SLOT(on_pushButton_RmvDevice()));
-
-    connect(m_pBtnQueryHandler,SIGNAL(clicked()),this,SLOT(on_pushButton_QueryHandler()));
-    connect(m_pBtnCfgHandler,SIGNAL(clicked()),this,SLOT(on_pushButton_CfgHandler()));
-    connect(m_pBtnResetHandler,SIGNAL(clicked()),this,SLOT(on_pushButton_ResetHandler()));
-//    connect(m_pBtnRmvHandler,SIGNAL(clicked()),this,SLOT(on_pushButton_RmvHandler()));
-    connect(m_pBtnSaveHandler,SIGNAL(clicked()),this,SLOT(on_pushButton_SaveHandler()));
+    m_pTblWidget->addTab(m_pTabPageWidget[2], icon3, tr("RFReader"));   
 
     connect(m_pBtnQueryRfReader,SIGNAL(clicked()),this,SLOT(on_pushButton_QueryRfReader()));
 #ifdef AUTO_CFG_RF_READER    
@@ -344,10 +383,8 @@ void SetDevicePage::initUi()
 #endif
     connect(m_pBtnRmvRfReader,SIGNAL(clicked()),this,SLOT(on_pushButton_RmvRfReader()));
     connect(m_pBtnSaveRfReader,SIGNAL(clicked()),this,SLOT(on_pushButton_SaveRfReader()));
-
-    connect(m_pBtnZigbeeUpd,SIGNAL(clicked()),this,SLOT(on_pushButton_ZigbeeUpd()));
-
 }
+
 
 void SetDevicePage::on_btn_clicked(int index)
 {
@@ -1021,44 +1058,6 @@ void SetDevicePage::on_pushButton_SaveRfReader()
     m_wndMain->prepareKeyStroke();
 }
 
-
-void SetDevicePage::on_pushButton_ZigbeeUpd()
-{
-    int iLength;
-    
-    QString BIN_FILE =  ":/other/shznApp.bin";
-
-
-    QFileInfo info(BIN_FILE);
-    if (info.exists())
-    {
-        iLength = info.size();
-    }
-
-    if (iLength <= MAX_FILE_SIZE)
-    {
-        QFile tmpfile(BIN_FILE);  
-        tmpfile.open(QIODevice::ReadOnly);  
-        tmpfile.read((char*)gFileMem, iLength);  
-        tmpfile.close();  
-        
-        DispStartZigbeeUpd(iLength,NULL);
-    }
-    m_wndMain->prepareKeyStroke();
-}
-
-void SetDevicePage::zigbeeUpdResult(int iResult,int iPercent)
-{
-    if (iResult)
-    {
-        m_plbZigbeeUpd->setText(tr("FAIL"));
-    }
-    else
-    {
-        m_plbZigbeeUpd->setText(QString::number(iPercent));
-    }
-}
-
 void SetDevicePage::addDevice(const QString& text0,const QString& text1, const QString& text2)
 {
     if (!searchDeviceByElecId(text0))
@@ -1286,7 +1285,7 @@ QListWidgetItem * SetDevicePage::searchHandlerByAddress(const QString& info)
 }
 
 void SetDevicePage::addHandler(int iType,const QString& text0,const QString& text1)
-{
+{		
     QListWidgetItem * item = searchHandlerBySN(text0);
     HandlerItem *pHandler;
 

@@ -8,6 +8,7 @@ class MainWindow;
 class QPushButton;
 class QLabel;
 class QCheckBox;
+class QListWidget;
 
 class DInitSyscfgpage : public CSubPage
 {
@@ -34,6 +35,7 @@ public:
 
     virtual void update();
     void createHeader();
+
 protected:
     void mousePressEvent(QMouseEvent *e);
     void mouseMoveEvent(QMouseEvent *e);
@@ -45,14 +47,20 @@ private:
     void setBackColor();
     void createControl();
     void connectData();
-
+	void initCfgMap();
+	
+private:
     QLabel* m_pExLbTitle;
 
     QCheckBox *m_chCfg[DISP_CFG_NUMBER];
 
+	QListWidget *m_pListWidget;
+
+	QMap<int, int> m_cfgMap;
+
     QPushButton* m_pExNextBtn;
     QPushButton* m_pExBackBtn;
-
+	
 public slots:
     void on_ExNextBtn_clicked();
     void on_ExBackBtn_clicked();

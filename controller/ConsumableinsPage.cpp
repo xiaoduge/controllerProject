@@ -694,6 +694,7 @@ void ConsumableInsPage::initNormalItem()
             aIds[iIdx].iType = 0;
             aIds[iIdx].iId   = DISP_TUBE_DI;
             aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+			iIdx++;
         }
         break;
     }
@@ -814,7 +815,6 @@ void ConsumableInsPage::initManualItem()
         iIdx++;
     }
 
-
     if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
     {
         aIds[iIdx].iType = 0;
@@ -836,9 +836,6 @@ void ConsumableInsPage::initManualItem()
         aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
         iIdx++;
         break;
-    case MACHINE_RO:
-    case MACHINE_UP:
-        break;
     default:
         break;
     }
@@ -855,9 +852,6 @@ void ConsumableInsPage::initManualItem()
         aIds[iIdx].iId   = DISP_N2_UV;
         aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
         iIdx++;
-        break;
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
         break;
     default:
         break;
@@ -878,29 +872,7 @@ void ConsumableInsPage::initManualItem()
         aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
         iIdx++;
         break;
-    }
-
-    switch(gGlobalParam.iMachineType)
-    {
-    case MACHINE_L_Genie:
-    case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-    {
-        if (gGlobalParam.SubModSetting.ulFlags & (1 <<DISP_SM_TubeUV))
-        {
-            aIds[iIdx].iType = 0;
-            aIds[iIdx].iId   = DISP_N4_UV;
-            aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
-            iIdx++;
-        }
-        break;
-    }
-    case MACHINE_Genie:
-    case MACHINE_RO:
-    case MACHINE_EDI:
-    case MACHINE_PURIST:
-    case MACHINE_UP:
+    default:
         break;
     }
      
@@ -919,6 +891,8 @@ void ConsumableInsPage::initManualItem()
         aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
         iIdx++;
         break;
+    default:
+        break;
     }
     
     switch(gGlobalParam.iMachineType)
@@ -933,14 +907,24 @@ void ConsumableInsPage::initManualItem()
         aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
         iIdx++;
         break;
+    default:
+        break;
     }
     
     switch(gGlobalParam.iMachineType)
     {
-    case MACHINE_L_Genie:
-    case MACHINE_L_UP:
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
+		if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
+		{
+			aIds[iIdx].iType = 0;
+	        aIds[iIdx].iId   = DISP_T_A_FILTER;
+	        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+	        iIdx++;
+		}
+		break;
+	case MACHINE_L_Genie:
+    case MACHINE_L_UP:
     case MACHINE_Genie:
     case MACHINE_UP:
     case MACHINE_EDI:
@@ -952,6 +936,8 @@ void ConsumableInsPage::initManualItem()
         aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
         iIdx++;
         break;
+    default:
+        break;
     }
 
     switch(gGlobalParam.iMachineType)
@@ -960,44 +946,36 @@ void ConsumableInsPage::initManualItem()
     case MACHINE_L_UP:
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
-    {
-        if (gGlobalParam.SubModSetting.ulFlags & DISP_SM_HaveTubeFilter)
+        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_TubeUV))
+        {
+            aIds[iIdx].iType = 0;
+            aIds[iIdx].iId   = DISP_N4_UV;
+            aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+            iIdx++;
+        }
+        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveTubeFilter))
         {
             aIds[iIdx].iType = 0;
             aIds[iIdx].iId   = DISP_TUBE_FILTER;
             aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
             iIdx++;
         }
-
-        if (gGlobalParam.SubModSetting.ulFlags & DISP_SM_TubeDI)
+        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_TubeDI))
         {
             aIds[iIdx].iType = 0;
             aIds[iIdx].iId   = DISP_TUBE_DI;
             aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+			iIdx++;
         }
         break;
-    }
-    case MACHINE_Genie:
-    case MACHINE_UP:
-    case MACHINE_EDI:
-    case MACHINE_PURIST:
-    case MACHINE_ADAPT:
-    case MACHINE_RO:
+    default:
         break;
     }
 
-    switch(gGlobalParam.iMachineType)
-    {
-    case MACHINE_L_Genie:
-    case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-        aIds[iIdx].iType = 1; //0
-        aIds[iIdx].iId   = DISP_MACHINERY_SOURCE_BOOSTER_PUMP;
-        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
-        iIdx++;
-        break;
-    }
+    aIds[iIdx].iType = 1; //0
+    aIds[iIdx].iId   = DISP_MACHINERY_SOURCE_BOOSTER_PUMP;
+    aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+    iIdx++;
 
     switch(gGlobalParam.iMachineType)
     {
@@ -1010,14 +988,24 @@ void ConsumableInsPage::initManualItem()
         aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
         iIdx++;
         break;
+    default:
+        break;
     }
 
     switch(gGlobalParam.iMachineType)
     {
-    case MACHINE_L_Genie:
-    case MACHINE_L_UP:
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
+		if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
+		{
+            aIds[iIdx].iType = 1; //0
+            aIds[iIdx].iId   = DISP_MACHINERY_CIR_PUMP;
+            aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+            iIdx++;
+		}
+        break;
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
     case MACHINE_Genie:
     case MACHINE_UP:
     case MACHINE_EDI:
@@ -1028,6 +1016,8 @@ void ConsumableInsPage::initManualItem()
         aIds[iIdx].iId   = DISP_MACHINERY_CIR_PUMP;
         aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
         iIdx++;
+        break;
+    default:
         break;
     }
 
@@ -1047,6 +1037,8 @@ void ConsumableInsPage::initManualItem()
         aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
         iIdx++;
         break;
+    default:
+        break;
     }
 
     switch(gGlobalParam.iMachineType)
@@ -1065,6 +1057,8 @@ void ConsumableInsPage::initManualItem()
         aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
         iIdx++;
         break;
+    default:
+        break;
     }
 
     switch(gGlobalParam.iMachineType)
@@ -1077,6 +1071,8 @@ void ConsumableInsPage::initManualItem()
         aIds[iIdx].iId   = DISP_MACHINERY_EDI;
         aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
         iIdx++;
+        break;
+    default:
         break;
     }     
     m_iRealItemNum = iIdx;

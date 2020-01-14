@@ -1,7 +1,6 @@
 #ifndef MAINPAGE_H
 #define MAINPAGE_H
 
-
 #include "page.h"
 #include "Display.h"
 
@@ -92,108 +91,84 @@ public:
     MainPage(QObject *parent = 0,CBaseWidget *widget = 0,MainWindow *wndMain=0 );
 
     virtual void creatTitle();
-
     virtual  void update();
-
     virtual void switchLanguage();
-
     virtual void buildTranslation();
-
     virtual void initUi();
 
     virtual void mousePressEvent(QMouseEvent *);
     virtual void mouseReleaseEvent(QMouseEvent *);
     virtual void mouseMoveEvent(QMouseEvent *);
 
-    void    updTankState(int iLevel);
-    void    updEcoInfo(int iIndex,ECO_INFO_STRU *info,bool bForceUpd = false);
-    
-    void    updIsInfo(int iIndex,ECO_INFO_STRU *info);
-    
-    void    updTank(int iIndex,float fVolume);
-
-    void    updQtwState(int iType,bool bStart);
-    
-    void    updateRunInfo(bool bRun);
-    
-    void    updAlarmState(int iType);
-    
-    void    updSpeed(int itype,int iLevel);
-    
-    void    updDecPressureState(int itype,int iAction);
-    
-    void    updMainpageState(void);
-    
-    void    updOtherState(void);
-
-    void    updToc(float fToc);
-
-    void    InitNames(void);
-
-    void  updRealTimeQtwVolume(unsigned int uIValue);
-
-    void  showLogoutBtn(bool bShow);
-
-private:
-    void buildTitles();
-
-    void DrawTank(int index);
-    void DrawSpeed(int index , int type);
-
-    void SetSpeed(int iType,int index);
-    
-    void updQtwInfo(int iType,float fValue);
-    void startTimer(bool bStart);
-    void changeWaterQuantity(int iType,bool bAdd,float fValue);
-
-    CBitmapButton *m_pBtns[BTN_NUMBER];
-    
-    QLabel        *m_pLabels[LABEL_NUMBER];
-    
-    QPixmap       *m_pBmpTankWaterLevels[TANK_WATER_LEVEL_SCALE_NUM]; 
-    QPixmap       *m_pBmpPumpSpeeds[PUMP_SPEED_NUM];
-    
-    navigatorBar *m_pNaviBar;
-    
-    QLabel        *m_pLbPageId[3];
-
-
-
-    int           m_iVolumeBtnId;
-    QTimer        *m_timeTimer;
-
-    int           m_iTimerCnt;
-    
-    float         m_afWQuantity[APP_DEV_HS_SUB_NUM];
-    bool          m_abQtwFlag[APP_DEV_HS_SUB_NUM];
-
-    int           m_iNotState;
-
-    float         m_fToc;
-
-    bool          m_bSingleMachine;
-
-    int           m_aiLblMap[LABEL_NUMBER];
-    int           m_aiBtnMap[BTN_NUMBER];
-
-    QString       m_aWaterType[MACHINE_NUM][2]; /* EDI / UP / RO */
-    QString       m_aWaterTLD[MACHINE_NUM][2];  /* TOC / LOOP / DIST */
-    
-    QString       m_aWaterUnit[MACHINE_NUM][2];  /* ppb/ omg */
-
-    ECO_INFO_STRU m_aHistoryEco[APP_EXE_ECO_NUM];
-
-    int           m_abDecFlag[APP_DEV_HS_SUB_NUM];
-
-    DPushButton   *m_pLogoutBtn;
+    void updTankState(int iLevel);
+    void updEcoInfo(int iIndex, ECO_INFO_STRU *info);
+    void updIsInfo(int iIndex, ECO_INFO_STRU *info);
+    void updTank(int iIndex,float fVolume);
+    void updQtwState(int iType,bool bStart);
+    void updateRunInfo(bool bRun);
+    void updAlarmState(int iType);
+    void updSpeed(int itype,int iLevel);
+    void updDecPressureState(int itype,int iAction);
+    void updMainpageState(void);
+    void updOtherState(void);
+    void updToc(float fToc);
+    void InitNames(void);
+    void updRealTimeQtwVolume(unsigned int uIValue);
+    void showLogoutBtn(bool bShow);
 
 public slots:
     void on_btn_clicked(int tmp);
     void on_navi_clicked(int tmp);
     void on_btn_clicking(int index);
     void on_timerEvent();
-
     void on_logoutBtn_clicked();
+
+private:
+    void buildTitles();
+    void DrawTank(int index);
+    void DrawSpeed(int index , int type);
+    void SetSpeed(int iType,int index);
+    void updQtwInfo(int iType,float fValue);
+    void startTimer(bool bStart);
+    void changeWaterQuantity(int iType,bool bAdd,float fValue);
+
+    float getTemperature(ECO_INFO_STRU *info);
+    float getResistivity(ECO_INFO_STRU *info);
+    void updI1Info(ECO_INFO_STRU *info, bool bVisible, bool bForceUpd = false);
+    void updI2Info(ECO_INFO_STRU *info, bool bVisible, bool bForceUpd = false);
+    void updI3Info(ECO_INFO_STRU *info, bool bVisible, bool bForceUpd = false);
+    void updI4Info(ECO_INFO_STRU *info, bool bVisible, bool bForceUpd = false);
+    void updI5Info(ECO_INFO_STRU *info, bool bVisible, bool bForceUpd = false);
+
+private:
+    CBitmapButton *m_pBtns[BTN_NUMBER];
+    QLabel        *m_pLabels[LABEL_NUMBER];
+    QPixmap       *m_pBmpTankWaterLevels[TANK_WATER_LEVEL_SCALE_NUM]; 
+    QPixmap       *m_pBmpPumpSpeeds[PUMP_SPEED_NUM];
+    navigatorBar *m_pNaviBar;
+    QLabel        *m_pLbPageId[3];
+    int           m_iVolumeBtnId;
+    QTimer        *m_timeTimer;
+    int           m_iTimerCnt;
+
+    float         m_afWQuantity[APP_DEV_HS_SUB_NUM];
+    bool          m_abQtwFlag[APP_DEV_HS_SUB_NUM];
+
+    int           m_iNotState;
+    float         m_fToc;
+    bool          m_bSingleMachine;
+    int           m_aiLblMap[LABEL_NUMBER];
+    int           m_aiBtnMap[BTN_NUMBER];
+
+    QString       m_aWaterType[MACHINE_NUM][2]; /* EDI / UP / RO */
+    QString       m_aWaterTLD[MACHINE_NUM][2];  /* TOC / LOOP / DIST */
+    QString       m_aWaterUnit[MACHINE_NUM][2];  /* ppb/ omg */
+
+    ECO_INFO_STRU m_aHistoryEco[APP_EXE_ECO_NUM];
+    int           m_abDecFlag[APP_DEV_HS_SUB_NUM];
+
+    DPushButton   *m_pLogoutBtn;
+
 };
 
 #endif // RUNPAGE_H

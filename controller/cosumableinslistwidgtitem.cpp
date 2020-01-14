@@ -34,7 +34,7 @@ CosumableInsListWidgtItem::CosumableInsListWidgtItem(QWidget *parent,ConsumableI
     m_editP1Value->setAlignment(Qt::AlignCenter);
     m_editP1Value->setStyleSheet("QLineEdit{border-width:2;border-style:outset;}");
     m_editP1Value->setMaxLength (ITEM_MAX_CHARS);
-    xOffset += VALUE_ITEM_WIDTH;
+    xOffset += VALUE_ITEM_WIDTH + 5;
 
     m_lbLotName = new QLabel(this);
     m_lbLotName->setGeometry(QRect(xOffset, TOP_MARGIN ,SHORT_ITEM_WIDTH , CI_LIST_WIDGET_HEIGHT - (TOP_MARGIN + BOTTOM_MARGIN)));

@@ -4,6 +4,23 @@
 #include <QWidget>
 #include <QLabel>
 
+
+enum SYSTEMPAGE_ITEM_NAME_ENUM
+{
+    SYSTEMPAGE_ITEM_NAME_DEVICE_STATE = 0,
+    SYSTEMPAGE_ITEM_NAME_WORKING_STATE,
+    SYSTEMPAGE_ITEM_NAME_E1E2_STATE,
+    SYSTEMPAGE_ITEM_NAME_E3E4_STATE,
+    SYSTEMPAGE_ITEM_NAME_E5E6_STATE,
+    SYSTEMPAGE_ITEM_NAME_E9E10_STATE,
+    SYSTEMPAGE_ITEM_NAME_N1N2_STATE,
+    SYSTEMPAGE_ITEM_NAME_N3T1_STATE,
+    SYSTEMPAGE_ITEM_NAME_C3C4_STATE,
+    SYSTEMPAGE_ITEM_NAME_C1_STATE,
+    SYSTEMPAGE_ITEM_NAME_C2_STATE,
+    SYSTEMPAGE_ITEM_NAME_NUM
+};
+
 enum SYSMONI_LIST_ITEM_ENUM
 {
     SYSMONI_LIST_ITEM_SINGLE_TEXT = 0,
@@ -35,7 +52,8 @@ public:
     void setValue2(QString &strValue) {if (m_lbValue2) m_lbValue2->setText(strValue);}
     void setValue3(QString &strValue) {if (m_lbValue3) m_lbValue3->setText(strValue);}
 
-    
+    void setItemValueVisible(bool bVisible = false);
+
 private:
     QLabel *m_lbName1;
     QLabel *m_lbSwitch1;

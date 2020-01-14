@@ -5,8 +5,6 @@
 #include "cbitmapbutton.h"
 #include <QListWidget>
 
-
-
 #define MAKEID(major,minor) (((major)<<16) + (minor))
 
 AlarmSetPage::AlarmSetPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : CSubPage(parent,widget,wndMain)

@@ -65,8 +65,6 @@ unsigned char gaucIapBuffer[1024];
 
 #define is_B3_FULL(ulValue) ((ulValue / gCcb.PMParam.afDepth[DISP_PM_PM3] * 100) >= B3_FULL)
 
-//#define is_B2_FULL(ulValue) ((ulValue / gCcb.PMParam.afDepth[DISP_PM_PM2] * 100) >= B2_FULL)
-
 #define is_SWPUMP_FRONT(pCcb) ((pCcb)->MiscParam.ulMisFlags & (1 << DISP_SM_SW_PUMP))
 
 #define haveB1(pCcb)((pCcb)->SubModSetting.ulFlags & (1 << DISP_SM_HaveB1))
@@ -77,13 +75,7 @@ unsigned char gaucIapBuffer[1024];
 #define haveHPCir(pCcb)((pCcb)->MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
 #define haveZigbee(pCcb)((pCcb)->MiscParam.iNetworkMask & (1 << DISPLAY_NETWORK_ZIGBEE))
 
-//ex
-int Check_TOC_Alarm = 0;
-int AlarmHighWorkPress = 0;
-const float cor_H_PurtTank = 0.08;
-int isAdaptQtwFlush = 0;
-
-//end
+static const float s_fTankHOffset = 0.08; //水箱高度偏差
 
 int is_B2_FULL(ulValue)
 {
@@ -93,7 +85,7 @@ int is_B2_FULL(ulValue)
     }
     else
     {
-        float correction = cor_H_PurtTank;
+        float correction = s_fTankHOffset;
         if(ulValue > correction)
         {
             ulValue = ulValue - correction;
@@ -142,20 +134,34 @@ typedef enum
 
 char *notify_info[] = 
 {
-    "start taking water succ","start taking water fail",
-    "stop taking water succ","",
-    "init run succ","init run fail",
-    "wash succ","wash fail",
-    "run succ","run fail",
-    "start filling tank","fill tank fail",
-    "stop filling tank ","",
-    "start circulation","circulation fail",
-    "stop circulation ","",
-    "start n3","n3 fail",
-    "stop n3 ","",
-    "start key handle succ","start key handle fail",
-    "stop key handle ","",
-    "return to idle ","",
+    "start taking water succ",
+    "start taking water fail",
+    "stop taking water succ",
+    "",
+    "init run succ",
+    "init run fail",
+    "wash succ",
+    "wash fail",
+    "run succ",
+    "run fail",
+    "start filling tank",
+    "fill tank fail",
+    "stop filling tank ",
+    "",
+    "start circulation",
+    "circulation fail",
+    "stop circulation ",
+    "",
+    "start n3",
+    "n3 fail",
+    "stop n3 ",
+    "",
+    "start key handle succ",
+    "start key handle fail",
+    "stop key handle ",
+    "",
+    "return to idle ",
+    "",
 };
 
 void WorkCommEntry(void *para);
@@ -322,6 +328,28 @@ int DispGetEdiQtwFlag(void)
 
 }
 
+int DispGetROWashFlag(void)
+{
+    if (DISP_WORK_STATE_IDLE == gCcb.curWorkState.iMainWorkState
+        && DISP_WORK_SUB_WASH == gCcb.curWorkState.iSubWorkState)
+    {
+       return 1;
+    }
+
+    return 0;
+}
+
+int DispGetRoWashPauseFlag(void)
+{
+	if (DISP_WORK_STATE_IDLE == gCcb.curWorkState.iMainWorkState
+        && DISP_WORK_SUB_WASH == gCcb.curWorkState.iSubWorkState)
+    {
+       return gCcb.bit1ROWashPause;
+    }
+
+    return 0;
+}
+
 
 int DispGetREJ(float *pfValue)
 {
@@ -365,7 +393,6 @@ void DispGetOtherCurrent(int iChlNo,int *pmA)
    }
 }
 
-
 void DispGetRPumpRti(int iChlNo,int *pmV,int *pmA)
 {
    if (iChlNo >= APP_EXE_C1_NO && iChlNo <= APP_EXE_C2_NO )
@@ -378,7 +405,6 @@ void DispGetRPumpRti(int iChlNo,int *pmV,int *pmA)
    
    }
 }
-
 
 int CcbGetTwFlag(void)
 {
@@ -393,7 +419,6 @@ int CcbGetTwFlag(void)
 
     return iFlags;
 }
-
 
 int CcbGetTwPendingFlag(void)
 {
@@ -410,8 +435,6 @@ int CcbGetTwPendingFlag(void)
     
 }
 
-
-
 int DispGetInitRunFlag(void)
 {
     if (DISP_WORK_STATE_PREPARE == gCcb.curWorkState.iMainWorkState
@@ -421,16 +444,12 @@ int DispGetInitRunFlag(void)
     }
 
     return 0;
-
 }
 
 int DispGetTubeCirFlag(void)
 {
-
    return !!gCcb.bit1TubeCirOngoing;
-
 }
-
 
 int DispGetPwFlag(void)
 {
@@ -508,7 +527,6 @@ int CcbGetHandlerTwFlag(int iDevId)
     return 0;
     
 }
-
 
 int CcbGetHandlerId2Index(int iDevId)
 {
@@ -769,7 +787,6 @@ void CcbZigbeeModeDedicate(unsigned char *data, int iPayLoadLen)
     }
 }
 
-
 void CcbZigbeeModeSingle(int iIdx,unsigned char *data, int iPayLoadLen)
 {
     sAddr_t addr ;
@@ -786,7 +803,6 @@ void CcbZigbeeModeSingle(int iIdx,unsigned char *data, int iPayLoadLen)
           
     }
 }
-
 
 void CcbZigbeeModeBroadcast(unsigned char *data, int iPayLoadLen)
 {
@@ -859,7 +875,7 @@ float CcbConvert2Pm2SP(unsigned int ulValue)
 
     if(DISP_WATER_BARREL_TYPE_UDF != gCcb.PMParam.aiBuckType[DISP_PM_PM2])
     {
-        correction = cor_H_PurtTank;
+        correction = s_fTankHOffset;
         if(fValue > correction)
         {
             correction_fValue = fValue - correction;
@@ -1011,10 +1027,12 @@ float CcbGetSp7(void)
     return gCcb.MMParam.SP[MACHINE_PARAM_SP7];
 }
 
+//原水箱补水液位
 float CcbGetSp8(void)
 {
     return gCcb.MMParam.SP[MACHINE_PARAM_SP8];
 }
+
 //原水低液位
 float CcbGetSp9(void)
 {
@@ -2509,8 +2527,27 @@ void work_stop_pw(void *para)
     WORK_ITEM_STRU *pWorkItem = (WORK_ITEM_STRU *)para;
 
     CCB *pCcb = (CCB *)pWorkItem->para;
-    
-    iTmp = pCcb->ulRunMask;
+
+	iTmp = pCcb->ulRunMask;
+	//大机型针对是否配置原水箱决定在停止产水时是否操作原水阀
+	switch(pCcb->ulMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_EDI_LOOP:
+	case MACHINE_L_RO_LOOP:
+	case MACHINE_L_UP:
+        if(haveB3(pCcb))
+        {
+            iTmp &= ~(1 << APP_EXE_E10_NO);
+        }
+		else
+		{
+			iTmp |= (1 << APP_EXE_E10_NO);
+		}
+		break;
+    default:
+        break;
+    }
 
     iRet = CcbUpdateSwitch(pWorkItem->id,0,iTmp,0);
     
@@ -4171,7 +4208,7 @@ void CcbReset(void)
 
     gCcb.iWorkStateStackDepth = 0;
     gCcb.bit1LeakKey4Reset    = 0;
-    gCcb.bit1NeedTubeCir      = 0;
+    //gCcb.bit1NeedTubeCir      = 0;
     gCcb.bit1TubeCirOngoing   = 0;
     gCcb.bit1PeriodFlushing   = 0;
 
@@ -4751,6 +4788,214 @@ int CanCcbAfDataHeartBeatRspMsg(MAIN_CANITF_MSG_STRU *pCanItfMsg)
     return 0;
 }
 
+/**
+ * 在运行产水状态实时检查工作压力
+ * @param iPmId [description]
+ */
+void checkB1DuringRunState()
+{
+    if (gCcb.bit1B1Check4RuningState)
+    {
+        float fValue = CcbConvert2Pm1Data(gCcb.ExeBrd.aPMObjs[APP_EXE_PM1_NO].Value.ulV);
+        float fThd = 2; /* for desktop machine(unit Bar) */
+
+        switch(gCcb.ulMachineType)
+        {
+        case MACHINE_L_Genie :
+        case MACHINE_L_UP:
+        case MACHINE_L_EDI_LOOP:
+        case MACHINE_L_RO_LOOP:
+            fThd = 5.0 ; /* for Large Machine (unit Bar) */
+            break;
+        default:
+            break;
+        }
+        //2019.3.14
+        if(MACHINE_ADAPT == gCcb.ulMachineType)
+        {
+            if(CcbGetTwFlag() || CcbGetTwPendingFlag())
+            {
+                if (fValue >= fThd)
+                {
+                    gCcb.bit1B1UnderPressureDetected = 0;
+                }
+                else
+                {
+                    if (!gCcb.bit1B1UnderPressureDetected)
+                    {
+                        gCcb.bit1B1UnderPressureDetected = TRUE;
+                        gCcb.ulB1UnderPressureTick = gulSecond;
+                    }
+                }
+            }
+        }
+        else
+        {
+            if (fValue >= fThd)
+            {
+                gCcb.bit1B1UnderPressureDetected = 0;
+            }
+            else
+            {
+                if (!gCcb.bit1B1UnderPressureDetected)
+                {
+                    gCcb.bit1B1UnderPressureDetected = TRUE;
+                    gCcb.ulB1UnderPressureTick = gulSecond;
+                }
+            }
+        }
+
+        //high work pressure
+        if(fValue >= CcbGetSp33())
+        {
+            if(!gCcb.bit1AlarmWorkPressHigh)
+            {
+                gCcb.bit1AlarmWorkPressHigh = TRUE;
+                CcbNotAlarmFire(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGH_WORK_PRESSURE,TRUE);
+            }
+        }
+        else
+        {
+            if(gCcb.bit1AlarmWorkPressHigh)
+            {
+                gCcb.bit1AlarmWorkPressHigh = FALSE;
+                CcbNotAlarmFire(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGH_WORK_PRESSURE,FALSE);
+            }
+        }
+        //end     
+    }
+}
+
+/**
+ * 检查纯水箱是否为空以确定是否停止取水
+ * @param iPmId [压力传感器id]
+ */
+void checkB2ToProcessB2Empty()
+{
+    if (haveB2(&gCcb))
+    {
+        if (CcbConvert2Pm2SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM2_NO].Value.ulV) < CcbGetSp6())
+        {
+            gCcb.bit1B2Empty = TRUE;
+            /* stop taking water */
+            CcbStopQtw();
+        }
+        else
+        {
+            gCcb.bit1B2Empty = FALSE;
+        } 
+    }
+}
+
+/**
+ * 检查纯水箱是否已满，满则停止产水
+ * @param iPmId [压力传感器id]
+ */
+void checkB2ToProcessB2Full()
+{
+    if (haveB2(&gCcb))
+    {
+        float fValue = CcbConvert2Pm2SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM2_NO].Value.ulV);
+        if (fValue >= B2_FULL)
+        {
+            /* check if EXE already stopped producing water */
+            CanPrepare4Pm2Full();
+            
+            if (gCcb.bit1ProduceWater )
+            {
+               /* stop producing water */
+               if (!SearchWork(work_stop_pw))
+               {
+                   CcbInnerWorkStopProduceWater();
+               }
+            }
+        }
+    } 
+}
+
+/**
+ * 检查原水箱是否已满，满则停止原水箱注水
+ * @param iPmId [压力传感器id]
+ */
+void checkB3ToProcessB3Full()
+{
+    float fValue = CcbConvert2Pm3SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM3_NO].Value.ulV);
+    if((fValue >= B3_FULL) || (getKeyState() & (1 << APP_EXE_DIN_LEAK_KEY)))
+    {
+        if (!SearchWork(work_stop_fill_water))
+        {
+            CcbInnerWorkStopFillWater();
+        }                
+    }  
+}
+
+/**
+ * 检查原水箱是否需要启动补水
+ * @param iPmId [压力传感器id]
+ */
+void checkB3ToProcessB3NeedFill()
+{
+    float fValue = CcbConvert2Pm3SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM3_NO].Value.ulV);
+
+	if(getKeyState() & (1 << APP_EXE_DIN_LEAK_KEY))
+	{
+		return;
+	}
+	
+    if(fValue < CcbGetSp8())
+    {
+        gCcb.bit1NeedFillTank = 1;
+        if (!SearchWork(work_start_fill_water))
+        {
+            CcbInnerWorkStartFillWater();
+        }                
+    } 
+}
+
+/**
+ * 检查原水箱是否为空，空则停止产水
+ * @param iPmId [压力传感器id]
+ */
+void checkB3ToProcessB3Empty()
+{
+    float fValue = CcbConvert2Pm3SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM3_NO].Value.ulV);
+    if(fValue < CcbGetSp9())
+    {
+        gCcb.bit1NeedFillTank = 1;
+        if (gCcb.bit1ProduceWater)
+        {
+            /* stop producing water */
+            if (!SearchWork(work_stop_pw))
+            {
+                CcbInnerWorkStopProduceWater();
+            }
+        }
+    }
+}
+
+/**
+ * 检查处理B3(原水箱)压力传感器
+ */
+void processB3Measure()
+{
+    if(haveB3(&gCcb))
+    {
+        if (gCcb.bit1FillingTank)
+        {
+            checkB3ToProcessB3Full();
+        }
+        else
+        {
+            checkB3ToProcessB3NeedFill();
+        }  
+        checkB3ToProcessB3Empty();
+    }
+}
+
+/**
+ * 分析执行板上报的压力数据，有压力数据上报时调用
+ * @param iPmId [压力传感器编号]
+ */
 void CanCcbPmMeasurePostProcess(int iPmId)
 {
     switch(gCcb.curWorkState.iMainWorkState4Pw)
@@ -4761,96 +5006,24 @@ void CanCcbPmMeasurePostProcess(int iPmId)
             {
             case DISP_WORK_SUB_RUN_QTW:
                 {
-                   if (iPmId == APP_EXE_PM2_NO)
-                   {
-                       if (haveB2(&gCcb))
-                       {
-                           if (CcbConvert2Pm2SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM2_NO].Value.ulV) < CcbGetSp6())
-                           {
-                              gCcb.bit1B2Empty = TRUE;
-    
-                              /* stop taking water */
-                              CcbStopQtw();
-                           }
-                           else
-                           {
-                              gCcb.bit1B2Empty = FALSE;
-                           } 
-                       }
-                   }
+                    if(APP_EXE_PM2_NO == iPmId)
+                    {
+                        checkB2ToProcessB2Empty();
+                    }
                 }
                 break;
             default:
                 break;
             }
             
-            if (iPmId == APP_EXE_PM2_NO)
+            if(APP_EXE_PM2_NO == iPmId)
             {
-                if (haveB2(&gCcb))
-                {
-                    float fValue = CcbConvert2Pm2SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM2_NO].Value.ulV);
-                    if (fValue >= B2_FULL)
-                    {
-                        /* check if EXE already stopped producing water */
-                        CanPrepare4Pm2Full();
-                        
-                        if (gCcb.bit1ProduceWater )
-                        {
-                           /* stop producing water */
-                           if (!SearchWork(work_stop_pw))
-                           {
-                               CcbInnerWorkStopProduceWater();
-                           }
-                        }
-                    }
-                }
-            }           
+                checkB2ToProcessB2Full();
+            }
 
-            if (iPmId == APP_EXE_PM3_NO)
+            if(APP_EXE_PM3_NO == iPmId)
             {
-                if (gCcb.bit1FillingTank)
-                {
-                    float fValue = CcbConvert2Pm3SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM3_NO].Value.ulV);
-                    //if (is_B3_FULL(fValue))
-                    if(fValue >= B3_FULL)
-                    {
-                        if (!SearchWork(work_stop_fill_water))
-                        {
-                            CcbInnerWorkStopFillWater();
-                        }                
-                    }    
-                }
-                else
-                {
-                    float fValue = CcbConvert2Pm3SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM3_NO].Value.ulV);
-                    if ( fValue < CcbGetSp8()
-                        && haveB3(&gCcb))
-                    {
-                    	gCcb.bit1NeedFillTank = 1;
-                        if (!SearchWork(work_start_fill_water))
-                        {
-                            CcbInnerWorkStartFillWater();
-                        }                
-                    }                
-                }  
-                //2019.9.29 add
-                if (haveB3(&gCcb))
-                {
-                    float fValue = CcbConvert2Pm3SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM3_NO].Value.ulV);
-                    if(fValue < CcbGetSp9())
-                    {
-                    	gCcb.bit1NeedFillTank = 1;
-                        if (gCcb.bit1ProduceWater)
-                        {
-                            /* stop producing water */
-                            if (!SearchWork(work_stop_pw))
-                            {
-                                CcbInnerWorkStopProduceWater();
-                            }
-                        }
-                    }
-
-                }
+                processB3Measure();
             }
         }
         break;
@@ -4864,143 +5037,19 @@ void CanCcbPmMeasurePostProcess(int iPmId)
     {
     case DISP_WORK_STATE_RUN:
         {
-            if (gCcb.bit1B1Check4RuningState)
+            switch(iPmId)
             {
-                if (iPmId == APP_EXE_PM1_NO)
-                {
-                    float fValue = CcbConvert2Pm1Data(gCcb.ExeBrd.aPMObjs[APP_EXE_PM1_NO].Value.ulV);
-                    float fThd = 2; /* for desktop machine(unit Bar) */
-    
-                    switch(gCcb.ulMachineType)
-                    {
-                    case MACHINE_L_Genie :
-                    case MACHINE_L_UP:
-                    case MACHINE_L_EDI_LOOP:
-                    case MACHINE_L_RO_LOOP:
-                        fThd = 5.0 ; /* for Large Machine (unit Bar) */
-                        break;
-                    default:
-                        break;
-                    }
-                    //2019.3.14
-                    if(MACHINE_ADAPT == gCcb.ulMachineType)
-                    {
-                        if(CcbGetTwFlag() || CcbGetTwPendingFlag())
-                        {
-                            if (fValue >= fThd)
-                            {
-                                gCcb.bit1B1UnderPressureDetected = 0;
-                            }
-                            else
-                            {
-                                if (!gCcb.bit1B1UnderPressureDetected)
-                                {
-                                    gCcb.bit1B1UnderPressureDetected = TRUE;
-                                    gCcb.ulB1UnderPressureTick = gulSecond;
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (fValue >= fThd)
-                        {
-                            gCcb.bit1B1UnderPressureDetected = 0;
-                        }
-                        else
-                        {
-                            if (!gCcb.bit1B1UnderPressureDetected)
-                            {
-                                gCcb.bit1B1UnderPressureDetected = TRUE;
-                                gCcb.ulB1UnderPressureTick = gulSecond;
-                            }
-                        }
-                    }
-
-                    //high work pressure
-                    if(fValue >= CcbGetSp33())
-                    {
-                        if(0 == AlarmHighWorkPress)
-                        {
-                            AlarmHighWorkPress = 1;
-                            CcbNotAlarmFire(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGH_WORK_PRESSURE,TRUE);
-                        }
-                    }
-                    else
-                    {
-                        if(1 == AlarmHighWorkPress)
-                        {
-                            AlarmHighWorkPress = 0;
-                            CcbNotAlarmFire(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGH_WORK_PRESSURE,FALSE);
-                        }
-                    }
-                    //end
-                }       
-            }
-            
-            if (iPmId == APP_EXE_PM2_NO)
-            {
-                float fValue = CcbConvert2Pm2SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM2_NO].Value.ulV);
-                if (fValue >= B2_FULL)
-                {
-                    /* check if EXE already stopped producing water */
-                    CanPrepare4Pm2Full();
-                    
-                    if ( gCcb.bit1ProduceWater )
-                    {
-                       /* stop produce water */
-                       if (!SearchWork(work_stop_pw))
-                       {
-                           CcbInnerWorkStopProduceWater();
-                       }
-                    }
-                }
-            }           
-    
-            if (iPmId == APP_EXE_PM3_NO)
-            {
-                if (gCcb.bit1FillingTank)
-                {
-                    float fValue = CcbConvert2Pm3SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM3_NO].Value.ulV);
-                    if(fValue >= B3_FULL)
-                    {
-                        if (!SearchWork(work_stop_fill_water))
-                        {
-                            CcbInnerWorkStopFillWater();
-                        }                
-                    }    
-                }
-                else
-                {
-                    float fValue = CcbConvert2Pm3SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM3_NO].Value.ulV);
-                    if ( fValue < CcbGetSp8()
-                        && haveB3(&gCcb))
-                    {
-                    	gCcb.bit1NeedFillTank = 1;
-                        if (!SearchWork(work_start_fill_water))
-                        {
-                            CcbInnerWorkStartFillWater();
-                        }                
-                    }                
-                }  
-                //2019.9.29 add
-                if (haveB3(&gCcb))
-                {
-                    float fValue = CcbConvert2Pm3SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM3_NO].Value.ulV);
-                    if(fValue < CcbGetSp9())
-                    {
-                    	gCcb.bit1NeedFillTank = 1;
-                        if (gCcb.bit1ProduceWater)
-                        {
-                            /* stop producing water */
-                            if (!SearchWork(work_stop_pw))
-                            {
-                                CcbInnerWorkStopProduceWater();
-                            }
-                        }
-                    }
-                }
-
+            case APP_EXE_PM1_NO:
+                checkB1DuringRunState();
+                break;
+            case APP_EXE_PM2_NO:
+                checkB2ToProcessB2Full();
+                break;
+            case APP_EXE_PM3_NO:
+                processB3Measure();
+                break;
+            default:
+                break;
             }
         }
         break;
@@ -5232,7 +5281,7 @@ void CanCcbEcoMeasurePostProcess(int iEcoId)
                         }  
                         else if (iEcoId == APP_EXE_I4_NO)
                         {
-                            if (gCcb.bit1TocOngoing  && Check_TOC_Alarm)
+                            if (gCcb.bit1TocOngoing  && gCcb.bit1TocAlarmNeedCheck)
                             {
                                 float fValue = gCcb.ExeBrd.aEcoObjs[APP_EXE_I4_NO].Value.eV.fWaterQ;
                                 if(fValue < CcbGetSp30())
@@ -6579,7 +6628,6 @@ void work_stop_key(void *para)
     int             iTmp;
 
     /* stop all */
-
     switch((int)pWorkItem->extra)
     {
     case APP_EXE_DIN_RF_KEY:
@@ -6600,16 +6648,15 @@ void work_stop_key(void *para)
             }
 
 
-            if (DISP_WORK_STATE_IDLE == DispGetWorkState()
-                || DISP_WORK_STATE_LPP == DispGetWorkState())
+            if (DISP_WORK_STATE_IDLE == DispGetWorkState())
             {
-                DispCmdEntry(DISP_CMD_RUN,NULL,0);
+                DispCmdEntry(DISP_CMD_RUN,NULL, 0);
             }
         }
         break;
     case APP_EXE_DIN_LEAK_KEY:
         {
-            CcbNotAlarmFire(0XFF,DISP_ALARM_B_LEAK,FALSE);
+            CcbNotAlarmFire(0XFF, DISP_ALARM_B_LEAK, FALSE);
         }
         break;
     }
@@ -6735,6 +6782,7 @@ void CanCcbDinProcess(void)
             {
                 // stop working
                 CcbInnerWorkStopKeyWork(iLoop);
+				
                 return ;
             }
         
@@ -10138,7 +10186,7 @@ void CcbWorMsgProc(SAT_MSG_HEAD *pucMsg)
                 case DISP_WORK_SUB_RUN_INIT:
                     CcbNotState(NOT_STATE_RUN);
                     break;
-               }
+                }
                 break;
            case DISP_WORK_STATE_LPP:
                 CcbNotState(NOT_STATE_LPP);
@@ -10294,7 +10342,14 @@ void work_init_run_fail(int iWorkId)
     /* close all switchs */
     if (CcbGetSwitchObjState(APP_EXE_SWITCHS_MASK))
     {
-        CcbSetSwitch(iWorkId,0,0);
+    	if(haveB3(&gCcb))
+    	{
+			CcbUpdateSwitch(iWorkId, 0, APP_EXE_INNER_SWITCHS, 0);
+    	}
+		else
+		{
+        	CcbUpdateSwitch(iWorkId, 0, APP_EXE_INNER_SWITCHS | (1 << APP_EXE_E10_NO), 0);
+		}
     }
     
     /*stop all report */
@@ -10351,6 +10406,16 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem, CCB *pCcb, RUN_COMM_CALL_BACK
     case MACHINE_L_Genie:
     case MACHINE_L_EDI_LOOP:
         {
+            //根据是否配置原水箱决定运行时是否开启E10(原水阀)
+            if (haveB3(pCcb))
+            {
+                pCcb->ulRunMask &= ~(1 << APP_EXE_E10_NO);
+            }
+            else
+            {
+                pCcb->ulRunMask |= (1 << APP_EXE_E10_NO);
+            }
+
             /* 2019.12.17增加原水箱液位检查 */
             if(haveB3(pCcb))
             {
@@ -10368,7 +10433,7 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem, CCB *pCcb, RUN_COMM_CALL_BACK
                 {
                     /* close all switchs */  
                     iTmp = 0; 
-                    iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
+                    iRet = CcbUpdateSwitch(pWorkItem->id, 0, pCcb->ulRunMask, iTmp);
                     if (iRet )
                     {
                         VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet);
@@ -10424,7 +10489,7 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem, CCB *pCcb, RUN_COMM_CALL_BACK
                         |(1 << APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
             }
             
-            iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
+            iRet = CcbUpdateSwitch(pWorkItem->id, 0, pCcb->ulRunMask, iTmp);
             if (iRet )
             {
                 VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet); 
@@ -10433,7 +10498,7 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem, CCB *pCcb, RUN_COMM_CALL_BACK
                 return ;
             }
 
-            iRet = CcbWorkDelayEntry(pWorkItem->id,10*1000,CcbDelayCallBack);
+            iRet = CcbWorkDelayEntry(pWorkItem->id, 10*1000, CcbDelayCallBack);
             if (iRet )
             {
                 VOS_LOG(VOS_LOG_WARNING,"CcbModbusWorkEntry Fail %d",iRet);  
@@ -10489,6 +10554,7 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem, CCB *pCcb, RUN_COMM_CALL_BACK
                     cbf(pWorkItem->id);        
                     return;
                 }
+
             }
             
             //检测低压开关
@@ -10622,6 +10688,25 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem, CCB *pCcb, RUN_COMM_CALL_BACK
                         {
                             iValidCount = 0;
                         }
+                        // NOTE: 2019.12.24增加清洗时原水箱液位检查
+                        if(haveB3(pCcb))
+                        {
+                            if (CcbConvert2Pm3SP(pCcb->ExeBrd.aPMObjs[APP_EXE_PM3_NO].Value.ulV) < CcbGetSp9())
+                            {
+                                /* close all switchs */  
+                                iTmp = 0; 
+                                iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
+                                if (iRet )
+                                {
+                                    VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet);
+                                    cbf(pWorkItem->id);        
+                                    return ;
+                                }
+                                cbs(pWorkItem->id); 
+                                pCcb->bit1NeedFillTank = 1; 
+                                return;
+                            } 
+                        }
                     }
                 
                     if (fRej < CcbGetSp2())
@@ -10725,6 +10810,16 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem, CCB *pCcb, RUN_COMM_CALL_BACK
     case MACHINE_L_UP:
     case MACHINE_L_RO_LOOP:
         {
+            //根据是否配置原水箱决定运行时是否开启E10(原水阀)
+            if (haveB3(pCcb))
+            {
+                pCcb->ulRunMask &= ~(1 << APP_EXE_E10_NO);
+            }
+            else
+            {
+                pCcb->ulRunMask |= (1 << APP_EXE_E10_NO);
+            }
+
             /* 2019.12.17增加原水箱液位检查 */
             if(haveB3(pCcb))
             {
@@ -10989,6 +11084,26 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem, CCB *pCcb, RUN_COMM_CALL_BACK
                         {
                             iValidCount = 0;
                         }
+                        // NOTE: 2019.12.24增加清洗时原水箱液位检查
+                        if(haveB3(pCcb))
+                        {
+                            if (CcbConvert2Pm3SP(pCcb->ExeBrd.aPMObjs[APP_EXE_PM3_NO].Value.ulV) < CcbGetSp9())
+                            {
+                                /* close all switchs */  
+                                iTmp = 0; 
+                                iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
+                                if (iRet )
+                                {
+                                    VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet);
+                                    cbf(pWorkItem->id);        
+                                    return ;
+                                }
+                                cbs(pWorkItem->id); 
+                                pCcb->bit1NeedFillTank = 1; 
+                                return;
+                            } 
+                        }
+
                     }
                 
                     if (fRej < CcbGetSp2())
@@ -11086,7 +11201,6 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem, CCB *pCcb, RUN_COMM_CALL_BACK
             }     
 
             /* 2018/01/05 add extra 10 seconds for flush according to ZHANG Chunhe */
-            /* 2018/01/05 add E3 according to ZHANG */
             if(haveB3(&gCcb))
             {
                 iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C3_NO);
@@ -11156,7 +11270,6 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem, CCB *pCcb, RUN_COMM_CALL_BACK
                 }    
         
                 CcbNotSWPressure();
-        
         
                 iRet = CcbWorkDelayEntry(pWorkItem->id,1000,CcbDelayCallBack);
                 if (iRet )
@@ -11664,6 +11777,7 @@ void work_init_run_wrapper(void *para)
 
     int iTmp;
     int iRet;
+    int iLoop;
 
     /* notify ui (late implemnt) */
     pCcb->bit1AlarmRej     = FALSE;
@@ -11705,7 +11819,17 @@ void work_init_run_wrapper(void *para)
     case MACHINE_L_UP:
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
-        /* for simplicity ,start all Bx report */
+        //根据是否配置原水箱决定运行时是否开启E10(原水阀)
+		if (haveB3(pCcb))
+		{
+			pCcb->ulRunMask &= ~(1 << APP_EXE_E10_NO);
+		}
+		else
+		{
+			pCcb->ulRunMask |= (1 << APP_EXE_E10_NO);
+		}
+		
+		/* for simplicity ,start all Bx report */
         iRet = CcbUpdateIAndBs(pWorkItem->id,0,pCcb->ulPMMask,pCcb->ulPMMask);    
         if (iRet )
         {
@@ -11754,8 +11878,8 @@ void work_init_run_wrapper(void *para)
             iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)
                     |(1 << APP_EXE_E10_NO)|(1 << APP_EXE_C3_NO);
         }
-        
-        iRet = CcbSetSwitch(pWorkItem->id,0,iTmp);
+
+		iRet = CcbUpdateSwitch(pWorkItem->id, 0, pCcb->ulRunMask, iTmp);
         if (iRet )
         {
             VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet); 
@@ -11793,24 +11917,50 @@ void work_init_run_wrapper(void *para)
         VOS_LOG(VOS_LOG_WARNING,"iPowerOnFlushTime %d",pCcb->MiscParam.iPowerOnFlushTime);    
         
         //新P Pack冲洗20min，否则按设置冲洗时间冲洗
-        if(ex_isPackNew)
+        int iInitFlushTime = pCcb->MiscParam.iPowerOnFlushTime*60*1000;
+        if(g_bNewPPack)
         {
-            ex_isPackNew = 0;
-            iRet = CcbWorkDelayEntry(pWorkItem->id,
-                                     20*60*1000,
-                                     CcbDelayCallBack);
+            g_bNewPPack = 0;
+            iInitFlushTime = 20*60*1000;
+        }
+
+        if(haveB3(pCcb))
+        {
+            for(iLoop = 0; iLoop < iInitFlushTime / 1000; iLoop++)
+            {
+                iRet = CcbWorkDelayEntry(pWorkItem->id, 1000, CcbDelayCallBack);
+                if(iRet)
+                {
+                    VOS_LOG(VOS_LOG_WARNING,"CcbWorkDelayEntry Fail %d",iRet);    
+                    work_init_run_fail(pWorkItem->id);  
+                    /* notify ui (late implemnt) */
+                    return ;
+                }
+                if (CcbConvert2Pm3SP(pCcb->ExeBrd.aPMObjs[APP_EXE_PM3_NO].Value.ulV) < CcbGetSp9())
+                {
+                    /* close all switchs */  
+                    iTmp = 0; 
+                    iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
+                    if (iRet )
+                    {
+                        VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet);
+                    }
+                    work_init_run_fail(pWorkItem->id);
+                    pCcb->bit1NeedFillTank = 1;
+                    return;
+                } 
+				processB3Measure();
+            }
         }
         else
         {
-            iRet = CcbWorkDelayEntry(pWorkItem->id,pCcb->MiscParam.iPowerOnFlushTime*60*1000,CcbDelayCallBack);
-        }
-
-        if (iRet )
-        {
-            VOS_LOG(VOS_LOG_WARNING,"CcbWorkDelayEntry Fail %d",iRet);    
-            work_init_run_fail(pWorkItem->id);  
-            /* notify ui (late implemnt) */
-            return ;
+            iRet = CcbWorkDelayEntry(pWorkItem->id, iInitFlushTime, CcbDelayCallBack);
+            if (iRet )
+            {
+                VOS_LOG(VOS_LOG_WARNING,"CcbWorkDelayEntry Fail %d",iRet);    
+                work_init_run_fail(pWorkItem->id);  
+                return ;
+            }
         }
         
         break;
@@ -11844,7 +11994,7 @@ void work_init_run_wrapper(void *para)
                     |(1 << APP_EXE_E10_NO)|(1 << APP_EXE_C3_NO);
         }
         
-        iRet = CcbSetSwitch(pWorkItem->id,0,iTmp);
+        iRet = CcbSetSwitch(pWorkItem->id, 0, iTmp);
         if (iRet )
         {
             VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet); 
@@ -11875,9 +12025,9 @@ void work_init_run_wrapper(void *para)
         CcbNotState(NOT_STATE_OTHER);
 
          //新P Pack冲洗20min，否则按设置冲洗时间冲洗
-        if(ex_isPackNew)
+        if(g_bNewPPack)
         {
-            ex_isPackNew = 0;
+            g_bNewPPack = 0;
             iRet = CcbWorkDelayEntry(pWorkItem->id,
                                      20*60*1000,
                                      CcbDelayCallBack);
@@ -11924,7 +12074,7 @@ void work_init_run_wrapper(void *para)
                     |(1 << APP_EXE_E10_NO)|(1 << APP_EXE_C3_NO);
         }
         
-        iRet = CcbSetSwitch(pWorkItem->id,0,iTmp);
+        iRet = CcbSetSwitch(pWorkItem->id, 0, iTmp);
         if (iRet )
         {
             VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet); 
@@ -11950,9 +12100,9 @@ void work_init_run_wrapper(void *para)
 
         CcbNotState(NOT_STATE_OTHER);
 
-        if(ex_isPackNew)
+        if(g_bNewPPack)
         {
-            ex_isPackNew = 0;
+            g_bNewPPack = 0;
             iRet = CcbWorkDelayEntry(pWorkItem->id,
                                      20*60*1000,
                                      CcbDelayCallBack);
@@ -12260,9 +12410,8 @@ void work_idle(void *para)
     VOS_LOG(VOS_LOG_WARNING,"work_idle");    
 
     pCcb->bit1InitRuned = FALSE;
-
+    
     /* 1. close all valves */
-
     iTmp = 0;
     CcbSetSwitch(pWorkItem->id,0,iTmp); // don care modbus exe result
     
@@ -12323,6 +12472,71 @@ void work_rowash_succ(int iType)
 }
 
 /**
+ * [用于RO清洗过程中检测原水箱是否为空，原水箱则暂停RO清洗]
+ * @param  id         [任务id]
+ * @param  uiDuration [持续时间]
+ * @param  uiMask     [负载掩码]
+ * @param  uiSwitchs  [负载]
+ * @return            [FALSE:出现异常; TRUE:运行正常]
+ */
+int checkB3DuringROWash(int id, unsigned int uiDuration,unsigned int uiMask, unsigned int uiSwitchs)
+{
+	int iRet;
+    int iLoop;
+
+    iRet = CcbUpdateSwitch(id, 0, uiMask, uiSwitchs);
+    if (iRet )
+    {
+        VOS_LOG(VOS_LOG_WARNING, "CcbSetSwitch Fail %d", iRet);          
+        return FALSE;
+    }
+
+    for(iLoop = 0; iLoop < uiDuration / 1000;)
+    {
+        iRet = CcbWorkDelayEntry(id, 1000, CcbDelayCallBack);
+        if (iRet )
+        {
+            VOS_LOG(VOS_LOG_WARNING,"CcbWorkDelayEntry Fail %d",iRet);         
+            return FALSE;
+        }
+
+        if (CcbConvert2Pm3SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM3_NO].Value.ulV) < CcbGetSp9())
+        {
+            iRet = CcbUpdateSwitch(id, 0, uiSwitchs, 0);
+            if (iRet )
+            {
+                VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet);
+                return FALSE;
+            }
+            gCcb.bit1ROWashPause = TRUE;
+            gCcb.bit1NeedFillTank = 1;
+        } 
+        else
+        {
+            if(gCcb.bit1ROWashPause)
+            {
+                if (CcbConvert2Pm3SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM3_NO].Value.ulV) > 50)
+                {
+                    iRet = CcbUpdateSwitch(id, 0, uiMask, uiSwitchs); // don care modbus exe result
+                    if (iRet)
+                    {
+                        VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet);          
+                        return FALSE;
+                    }
+                    gCcb.bit1ROWashPause = FALSE;
+                    iLoop++;
+                }
+            }
+            else
+            {
+                iLoop++;
+            }
+        }
+    }
+    return TRUE;
+}
+
+/**
  * RO清洗逻辑：
  * 第一步：进水阀、弃水阀、排放阀、原水泵、原水阀(根据配置，决定是否开启)工作13min
  * 第二步：进水阀、排放阀、RO增压泵、原水泵、原水阀(根据配置，决定是否开启)工作5min
@@ -12334,12 +12548,18 @@ void work_idle_rowash(void *para)
     CCB *pCcb = (CCB *)pWorkItem->para;
 
     int iTmp;
+    unsigned int uiMask = APP_EXE_INNER_SWITCHS;
+	if(haveB3(pCcb))
+	{
+		uiMask &= ~(1 << APP_EXE_E10_NO);
+	}
 
     int iRet;
 
     int iType = (int)pWorkItem->extra;
 
     pCcb->iWashType = iType;
+	pCcb->bit1ROWashPause = FALSE;
 
     /* notify ui (late implemnt) */
     VOS_LOG(VOS_LOG_WARNING,"%s",__FUNCTION__);    
@@ -12350,7 +12570,7 @@ void work_idle_rowash(void *para)
     case MACHINE_L_UP:
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
-        CanCcbTransState(DISP_WORK_STATE_IDLE,DISP_WORK_SUB_WASH);        
+        CanCcbTransState(DISP_WORK_STATE_IDLE, DISP_WORK_SUB_WASH);        
         /* enable S4 report */
         iTmp = 1 << APP_FM_FM4_NO;
         iRet = CcbSetFms(pWorkItem->id,0,iTmp); // don care modbus exe result
@@ -12363,67 +12583,69 @@ void work_idle_rowash(void *para)
             return ;
         }
         
-        /* enable E1,E2,E3,C3 ON  */
         if(haveB3(&gCcb))
         {
+            /* 第一步： E1,E2,E3,C3 ON  */
             iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C3_NO);
-        }
-        else
-        {
-            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)
-                    |(1 << APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
-        }
-        iRet = CcbSetSwitch(pWorkItem->id,0,iTmp); // don care modbus exe result
-        if (iRet )
-        {
-            VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet);    
-        
-            /* notify ui (late implemnt) */
-            work_rowash_fail(iType,pWorkItem->id);        
-            return ;
-        }
-		
-        iRet = CcbWorkDelayEntry(pWorkItem->id, gROWashDuration[ROClWash_FirstStep], CcbDelayCallBack);
-        if (iRet )
-        {
-            VOS_LOG(VOS_LOG_WARNING,"CcbWorkDelayEntry Fail %d",iRet);    
-        
-            /* notify ui (late implemnt) */
-            work_rowash_fail(iType,pWorkItem->id);        
-            return ;
-        }
-        
-        /* enable E1,E2,E3,C1,C3 ON */
-        if(haveB3(&gCcb))
-        {
-            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C3_NO)|(1<<APP_EXE_C1_NO);
-        }
-        else
-        {
-            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C1_NO)|(1 << APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
-        }
-        
-        iRet = CcbUpdateSwitch(pWorkItem->id,0,APP_EXE_INNER_SWITCHS,iTmp); // don care modbus exe result
-        if (iRet )
-        {
-            VOS_LOG(VOS_LOG_WARNING,"CcbUpdateSwitch Fail %d",iRet);    
-           /* notify ui (late implemnt) */
-            work_rowash_fail(iType,pWorkItem->id);        
-            return ;
-        }
+			if(!checkB3DuringROWash(pWorkItem->id, gROWashDuration[ROClWash_FirstStep], uiMask, iTmp))
+			{
+				work_rowash_fail(iType,pWorkItem->id);  
+				return;
+			}
 
-        iRet = CcbWorkDelayEntry(pWorkItem->id, gROWashDuration[ROClWash_SecondStep], CcbDelayCallBack);
-        if (iRet )
+            /* 第二步： E1,E2,E3,C1,C3 ON */
+            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C1_NO)|(1<<APP_EXE_C3_NO);
+			if(!checkB3DuringROWash(pWorkItem->id, gROWashDuration[ROClWash_SecondStep], uiMask, iTmp))
+			{
+				work_rowash_fail(iType,pWorkItem->id);  
+				return;
+			}
+
+        }
+        else
         {
-            VOS_LOG(VOS_LOG_WARNING,"CcbWorkDelayEntry Fail %d",iRet);    
-            /* notify ui (late implemnt) */
-            work_rowash_fail(iType,pWorkItem->id);        
-            return ;
+            // 第一步：进水阀、弃水阀、排放阀、原水泵、原水阀工作13min
+            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C3_NO)|(1 << APP_EXE_E10_NO);
+            iRet = CcbUpdateSwitch(pWorkItem->id, 0, uiMask, iTmp); // don care modbus exe result
+            if (iRet )
+            {
+                VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet);    
+                /* notify ui (late implemnt) */
+                work_rowash_fail(iType,pWorkItem->id);        
+                return ;
+            }
+            iRet = CcbWorkDelayEntry(pWorkItem->id, gROWashDuration[ROClWash_FirstStep], CcbDelayCallBack);
+            if (iRet )
+            {
+                VOS_LOG(VOS_LOG_WARNING,"CcbWorkDelayEntry Fail %d",iRet);    
+            
+                /* notify ui (late implemnt) */
+                work_rowash_fail(iType,pWorkItem->id);        
+                return ;
+            }
+			
+            // 第二步：进水阀、排放阀、RO增压泵、原水泵、原水阀工作5min
+            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C1_NO)|(1<<APP_EXE_C3_NO)|(1 << APP_EXE_E10_NO);
+            iRet = CcbUpdateSwitch(pWorkItem->id, 0, uiMask, iTmp); // don care modbus exe result
+            if (iRet )
+            {
+                VOS_LOG(VOS_LOG_WARNING,"CcbUpdateSwitch Fail %d",iRet);    
+               /* notify ui (late implemnt) */
+                work_rowash_fail(iType,pWorkItem->id);        
+                return ;
+            }
+
+            iRet = CcbWorkDelayEntry(pWorkItem->id, gROWashDuration[ROClWash_SecondStep], CcbDelayCallBack);
+            if (iRet )
+            {
+                VOS_LOG(VOS_LOG_WARNING,"CcbWorkDelayEntry Fail %d",iRet);    
+                /* notify ui (late implemnt) */
+                work_rowash_fail(iType,pWorkItem->id);        
+                return ;
+            }
         }
         
-        /* close all valves */
-        iTmp = 0;
-        iRet = CcbSetSwitch(pWorkItem->id,0,iTmp); // don care modbus exe result
+        iRet = CcbUpdateSwitch(pWorkItem->id, 0, iTmp, 0);
         if (iRet )
         {
             VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet);    
@@ -12448,17 +12670,10 @@ void work_idle_rowash(void *para)
     case MACHINE_EDI:
     case MACHINE_RO:
         CanCcbTransState(DISP_WORK_STATE_IDLE,DISP_WORK_SUB_WASH);        
-        /* enable E1,E2,E3 ON  */
-        if(haveB3(&gCcb))
-        {
-            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C3_NO);
-        }
-        else
-        {
-            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1 << APP_EXE_E10_NO)|(1 << APP_EXE_C3_NO);
-        }
-
-        iRet = CcbSetSwitch(pWorkItem->id,0,iTmp); // don care modbus exe result
+   
+		// 第一步：进水阀、弃水阀、排放阀、原水泵、原水阀工作13min
+        iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1 << APP_EXE_C3_NO)|(1 << APP_EXE_E10_NO);
+        iRet = CcbSetSwitch(pWorkItem->id, 0, iTmp); // don care modbus exe result
         if (iRet )
         {
             VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet);    
@@ -12466,7 +12681,6 @@ void work_idle_rowash(void *para)
             work_rowash_fail(iType,pWorkItem->id);        
             return ;
         }
-		
         iRet = CcbWorkDelayEntry(pWorkItem->id, gROWashDuration[ROClWash_FirstStep], CcbDelayCallBack);
         if (iRet )
         {
@@ -12476,21 +12690,12 @@ void work_idle_rowash(void *para)
             return ;
         }
         
-        /* enable E1,E3,C1 ON */
-        if(haveB3(&gCcb))
-        {
-            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C1_NO)|(1<<APP_EXE_C3_NO);
-        }
-        else
-        {
-            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C1_NO)|(1 << APP_EXE_E10_NO)|(1 << APP_EXE_C3_NO);
-        }
-        
-        iRet = CcbUpdateSwitch(pWorkItem->id,0,APP_EXE_INNER_SWITCHS,iTmp); // don care modbus exe result
+        // 第二步：进水阀、排放阀、RO增压泵、原水泵、原水阀工作5min
+        iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C1_NO)|(1 << APP_EXE_C3_NO)|(1 << APP_EXE_E10_NO);
+        iRet = CcbUpdateSwitch(pWorkItem->id, 0, uiMask, iTmp); // don care modbus exe result
         if (iRet )
         {
             VOS_LOG(VOS_LOG_WARNING,"CcbUpdateSwitch Fail %d",iRet);    
-        
            /* notify ui (late implemnt) */
            work_rowash_fail(iType,pWorkItem->id);        
            return ;
@@ -12507,7 +12712,7 @@ void work_idle_rowash(void *para)
         
         /* close all valves */
         iTmp = 0;
-        iRet = CcbSetSwitch(pWorkItem->id,0,iTmp); // don care modbus exe result
+        iRet = CcbSetSwitch(pWorkItem->id, 0, iTmp); // don care modbus exe result
         if (iRet )
         {
             VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet);    
@@ -12577,6 +12782,11 @@ void work_idle_phwash(void *para)
     CCB *pCcb = (CCB *)pWorkItem->para;
 
     int iTmp;
+    unsigned int uiMask = APP_EXE_INNER_SWITCHS;
+	if(haveB3(pCcb))
+	{
+		uiMask &= ~(1 << APP_EXE_E10_NO);
+	}
 
     int iRet;
 
@@ -12606,84 +12816,91 @@ void work_idle_phwash(void *para)
             return ;
         }
         
-        //第一步：进水阀、原水泵，持续35s 
         if(haveB3(&gCcb))
         {
+            //第一步：进水阀、排放阀、原水泵，持续35s 
             iTmp = (1 << APP_EXE_E1_NO)|(1 << APP_EXE_E3_NO)|(1<<APP_EXE_C3_NO);
+            if(!checkB3DuringROWash(pWorkItem->id, gROWashDuration[ROPHWash_FirstStep_L], uiMask, iTmp))
+            {
+                work_phwash_fail(iType, pWorkItem->id); 
+                return;
+            }
+            //第二步：排放阀，持续60min  
+            iTmp = (1<<APP_EXE_E3_NO);
+            if(!checkB3DuringROWash(pWorkItem->id, gROWashDuration[ROPHWash_SecondStep_L], uiMask, iTmp))
+            {
+                work_phwash_fail(iType, pWorkItem->id); 
+                return;
+            }
+            //第三步：进水阀、排放阀、RO增压泵、原水泵，持续40min 
+            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C1_NO)|(1<<APP_EXE_C3_NO);
+            if(!checkB3DuringROWash(pWorkItem->id, gROWashDuration[ROPHWash_ThirdStep_L], uiMask, iTmp))
+            {
+                work_phwash_fail(iType, pWorkItem->id); 
+                return;
+            }
         }
         else
         {
-            iTmp = (1 << APP_EXE_E1_NO)|(1 << APP_EXE_E3_NO)|(1 << APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
+            //第一步：第一步：进水阀、排放阀、原水泵，持续35s 
+            iTmp = (1 << APP_EXE_E1_NO)|(1 << APP_EXE_E3_NO)|(1<<APP_EXE_C3_NO)|(1 << APP_EXE_E10_NO);
+            iRet = CcbUpdateSwitch(pWorkItem->id,0, uiMask, iTmp);
+            if (iRet )
+            {
+                VOS_LOG(VOS_LOG_WARNING,"CcbModbusWorkEntry Fail %d",iRet);    
+                /* notify ui (late implemnt) */
+                work_phwash_fail(iType,pWorkItem->id);        
+                return ;
+            }
+            iRet = CcbWorkDelayEntry(pWorkItem->id, gROWashDuration[ROPHWash_FirstStep_L], CcbDelayCallBack);
+            if (iRet )
+            {
+                VOS_LOG(VOS_LOG_WARNING,"CcbWorkDelayEntry Fail %d",iRet);    
+                /* notify ui (late implemnt) */
+                work_phwash_fail(iType,pWorkItem->id);        
+                return ;
+            }
+
+            //第二步：排放阀，持续60min  
+            iTmp = (1<<APP_EXE_E3_NO);
+            iRet = CcbUpdateSwitch(pWorkItem->id,0, uiMask, iTmp); // don care modbus exe result
+            if (iRet )
+            {
+                VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet);    
+                /* notify ui (late implemnt) */
+                work_phwash_fail(iType,pWorkItem->id);        
+                return ;
+            }
+            iRet = CcbWorkDelayEntry(pWorkItem->id, gROWashDuration[ROPHWash_SecondStep_L], CcbDelayCallBack);
+            if (iRet )
+            {
+                VOS_LOG(VOS_LOG_WARNING,"CcbWorkDelayEntry Fail %d",iRet);    
+                /* notify ui (late implemnt) */
+                work_phwash_fail(iType,pWorkItem->id);        
+                return ;
+            }
+
+            //第三步：进水阀、排放阀、RO增压泵、原水泵，持续40min 
+            iTmp = (1 << APP_EXE_E1_NO)|(1 << APP_EXE_E3_NO)|(1<<APP_EXE_C1_NO)|(1 << APP_EXE_C3_NO)|(1<<APP_EXE_E10_NO);
+            iRet = CcbUpdateSwitch(pWorkItem->id, 0, uiMask, iTmp); // don care modbus exe result
+            if (iRet )
+            {
+                VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet);    
+               /* notify ui (late implemnt) */
+               work_phwash_fail(iType,pWorkItem->id);        
+               return ;
+            }
+            iRet = CcbWorkDelayEntry(pWorkItem->id, gROWashDuration[ROPHWash_ThirdStep_L], CcbDelayCallBack);
+            if (iRet )
+            {
+                VOS_LOG(VOS_LOG_WARNING,"CcbWorkDelayEntry Fail %d",iRet);    
+                /* notify ui (late implemnt) */
+                work_phwash_fail(iType,pWorkItem->id);        
+                return ;
+            }
         }
 
-        iRet = CcbSetSwitch(pWorkItem->id,0,iTmp); // don care modbus exe result
-        if (iRet )
-        {
-            VOS_LOG(VOS_LOG_WARNING,"CcbModbusWorkEntry Fail %d",iRet);    
-            /* notify ui (late implemnt) */
-            work_phwash_fail(iType,pWorkItem->id);        
-            return ;
-        }
-        
-        iRet = CcbWorkDelayEntry(pWorkItem->id,  gROWashDuration[ROPHWash_FirstStep_L], CcbDelayCallBack);
-        if (iRet )
-        {
-            VOS_LOG(VOS_LOG_WARNING,"CcbWorkDelayEntry Fail %d",iRet);    
-            /* notify ui (late implemnt) */
-            work_phwash_fail(iType,pWorkItem->id);        
-            return ;
-        }
-        
-        //第二步：排放阀，持续60min  
-        iTmp = (1<<APP_EXE_E3_NO);
-        iRet = CcbUpdateSwitch(pWorkItem->id,0, APP_EXE_INNER_SWITCHS, iTmp); // don care modbus exe result
-        if (iRet )
-        {
-            VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet);    
-            /* notify ui (late implemnt) */
-            work_phwash_fail(iType,pWorkItem->id);        
-            return ;
-        }
-        
-        iRet = CcbWorkDelayEntry(pWorkItem->id, gROWashDuration[ROPHWash_SecondStep_L], CcbDelayCallBack);
-        if (iRet )
-        {
-            VOS_LOG(VOS_LOG_WARNING,"CcbWorkDelayEntry Fail %d",iRet);    
-            /* notify ui (late implemnt) */
-            work_phwash_fail(iType,pWorkItem->id);        
-            return ;
-        }
-        
-        //第三步：进水阀、排放阀、RO增压泵、原水泵，持续40min 
-        if(haveB3(&gCcb))
-        {
-            iTmp = (1 << APP_EXE_E1_NO)|(1 << APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C3_NO);
-        }
-        else
-        {
-            iTmp = (1 << APP_EXE_E1_NO)|(1 << APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1 << APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
-        }
-        iRet = CcbUpdateSwitch(pWorkItem->id,0,APP_EXE_INNER_SWITCHS,iTmp); // don care modbus exe result
-        if (iRet )
-        {
-            VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet);    
-           /* notify ui (late implemnt) */
-           work_phwash_fail(iType,pWorkItem->id);        
-           return ;
-        }
-        
-        iRet = CcbWorkDelayEntry(pWorkItem->id, gROWashDuration[ROPHWash_ThirdStep_L], CcbDelayCallBack);
-        if (iRet )
-        {
-            VOS_LOG(VOS_LOG_WARNING,"CcbWorkDelayEntry Fail %d",iRet);    
-            /* notify ui (late implemnt) */
-            work_phwash_fail(iType,pWorkItem->id);        
-            return ;
-        }
-
-        /* close all valves */
-        iTmp = 0;
-        iRet = CcbSetSwitch(pWorkItem->id,0,iTmp); // don care modbus exe result
+        iRet = CcbUpdateSwitch(pWorkItem->id, 0, iTmp, 0); // don care modbus exe result
         if (iRet )
         {
             VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet);    
@@ -12707,19 +12924,11 @@ void work_idle_phwash(void *para)
     case MACHINE_UP:
     case MACHINE_EDI:
     case MACHINE_RO:
-        CanCcbTransState(DISP_WORK_STATE_IDLE,DISP_WORK_SUB_WASH);        
-        
-        // 第一步：进水阀、弃水阀、排放阀、原水泵，持续10s
-        if(haveB3(&gCcb))
-        {
-            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C3_NO);
-        }
-        else
-        {
-            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1 << APP_EXE_E10_NO)|(1 << APP_EXE_C3_NO);
-        }
+        CanCcbTransState(DISP_WORK_STATE_IDLE,DISP_WORK_SUB_WASH);   
 
-        iRet = CcbSetSwitch(pWorkItem->id,0,iTmp); // don care modbus exe result
+        // 第一步：进水阀、弃水阀、排放阀、原水泵，持续10s
+        iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1 << APP_EXE_C3_NO)|(1 << APP_EXE_E10_NO);
+        iRet = CcbSetSwitch(pWorkItem->id, 0, iTmp); // don care modbus exe result
         if (iRet )
         {
             VOS_LOG(VOS_LOG_WARNING,"CcbModbusWorkEntry Fail %d",iRet);    
@@ -12727,7 +12936,6 @@ void work_idle_phwash(void *para)
             work_phwash_fail(iType,pWorkItem->id);        
             return ;
         }
-        
         iRet = CcbWorkDelayEntry(pWorkItem->id, gROWashDuration[ROPHWash_FirstStep], CcbDelayCallBack);
         if (iRet )
         {
@@ -12739,16 +12947,14 @@ void work_idle_phwash(void *para)
         
         // 第二步：排放阀，RO增压泵，持续60min
         iTmp = (1<<APP_EXE_E3_NO)|(1<<APP_EXE_C1_NO);
-        
-        iRet = CcbUpdateSwitch(pWorkItem->id,0,APP_EXE_INNER_SWITCHS,iTmp); // don care modbus exe result
-        if (iRet )
+        iRet = CcbUpdateSwitch(pWorkItem->id, 0, uiMask, iTmp); // don care modbus exe result
+        if (iRet)
         {
             VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet);    
             /* notify ui (late implemnt) */
             work_phwash_fail(iType,pWorkItem->id);        
             return ;
         }
-        
         iRet = CcbWorkDelayEntry(pWorkItem->id, gROWashDuration[ROPHWash_SecondStep], CcbDelayCallBack);
         if (iRet )
         {
@@ -12757,17 +12963,10 @@ void work_idle_phwash(void *para)
             work_phwash_fail(iType,pWorkItem->id);        
             return ;
         }
-        
+  
         // 第三步：进水阀、弃水阀、排放阀、原水泵，持续10min
-        if(haveB3(&gCcb))
-        {
-            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C3_NO);
-        }
-        else
-        {
-            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1 << APP_EXE_E10_NO)|(1 << APP_EXE_C3_NO);
-        }
-        iRet = CcbUpdateSwitch(pWorkItem->id,0,APP_EXE_INNER_SWITCHS,iTmp); // don care modbus exe result
+        iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1 << APP_EXE_C3_NO)|(1 << APP_EXE_E10_NO);
+        iRet = CcbUpdateSwitch(pWorkItem->id, 0, uiMask, iTmp); // don care modbus exe result
         if (iRet )
         {
             VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet);    
@@ -12775,7 +12974,6 @@ void work_idle_phwash(void *para)
            work_phwash_fail(iType,pWorkItem->id);        
            return ;
         }
-        
         iRet = CcbWorkDelayEntry(pWorkItem->id, gROWashDuration[ROPHWash_ThirdStep], CcbDelayCallBack);
         if (iRet )
         {
@@ -12786,15 +12984,8 @@ void work_idle_phwash(void *para)
         }
         
         // 第四步：进水阀、排放阀、RO增压泵、原水泵，持续10min
-        if(haveB3(&gCcb))
-        {
-            iTmp = (1<<APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C1_NO)|(1<<APP_EXE_C3_NO);
-        }
-        else
-        {
-            iTmp = (1<<APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C1_NO)|(1<<APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
-        }
-        iRet = CcbUpdateSwitch(pWorkItem->id,0,APP_EXE_INNER_SWITCHS,iTmp); // don care modbus exe result
+        iTmp = (1<<APP_EXE_E1_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_C1_NO)|(1<<APP_EXE_C3_NO)|(1<<APP_EXE_E10_NO);
+        iRet = CcbUpdateSwitch(pWorkItem->id, 0, uiMask, iTmp); // don care modbus exe result
         if (iRet )
         {
             VOS_LOG(VOS_LOG_WARNING,"CcbUpdateSwitch Fail %d",iRet);    
@@ -12802,7 +12993,6 @@ void work_idle_phwash(void *para)
            work_rowash_fail(iType,pWorkItem->id);        
            return ;
         }
-
         iRet = CcbWorkDelayEntry(pWorkItem->id, gROWashDuration[ROPHWash_FourthStep], CcbDelayCallBack);
         if (iRet )
         {
@@ -12814,7 +13004,7 @@ void work_idle_phwash(void *para)
 
         /* close all valves */
         iTmp = 0;
-        iRet = CcbSetSwitch(pWorkItem->id,0,iTmp); // don care modbus exe result
+        iRet = CcbSetSwitch(pWorkItem->id, 0, iTmp); // don care modbus exe result
         if (iRet )
         {
             VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet);    
@@ -12827,10 +13017,8 @@ void work_idle_phwash(void *para)
     default:
         break;
     }
-
-   /* notify ui (late implement) */
-   work_phwash_succ(iType);
-      
+    /* notify ui (late implement) */
+    work_phwash_succ(iType);
 }
 
 void work_start_lpp(void *para)
@@ -12842,7 +13030,25 @@ void work_start_lpp(void *para)
 
     CCB *pCcb = (CCB *)pWorkItem->para;
 
-    /* 1. ui promote */
+    switch(pCcb->ulMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+        if (haveB3(pCcb))
+        {
+            pCcb->ulRunMask &= ~(1 << APP_EXE_E10_NO);
+        }
+        else
+        {
+            pCcb->ulRunMask |= (1 << APP_EXE_E10_NO);
+        }
+        break;
+    default:
+        break;
+    }
+
     iTmp = 0; 
     iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
     if (iRet )
@@ -12948,7 +13154,7 @@ DISPHANDLE DispCmdWashProc(unsigned char *pucData, int iLength)
             pWorkItem->para = &gCcb;
             pWorkItem->extra = (void *)pCmd->iType;
         
-            CcbAddWork(WORK_LIST_LP,pWorkItem);
+            CcbAddWork(WORK_LIST_LP, pWorkItem);
         
             return (DISPHANDLE)pWorkItem;
         }
@@ -12959,6 +13165,7 @@ DISPHANDLE DispCmdWashProc(unsigned char *pucData, int iLength)
             && DISP_WORK_SUB_WASH == gCcb.curWorkState.iSubWorkState)
         {
             CcbCancelAllWork();
+			CcbCleanup();
         }
 
         return DISP_SPECIAL_HANDLE;
@@ -13001,12 +13208,17 @@ DISPHANDLE DispCmdLeakResetProc(void)
     gCcb.ulKeyWorkStates   &= ~(1 << APP_EXE_DIN_LEAK_KEY) ;    
     gCcb.ExeBrd.ucDinState &= ~(1 << APP_EXE_DIN_LEAK_KEY) ;   
     gCcb.bit1LeakKey4Reset = FALSE;
-    
+
+    // WARNING: 2019.12.26修改需要测试
+    CanCcbTransState(DISP_WORK_STATE_IDLE, DISP_WORK_SUB_IDLE);
+
+#if 0 
     if (gCcb.ExeBrd.ucDinState
         & APP_EXE_DIN_FAIL_MASK)
     {
         CanCcbDinProcess();
     }
+		
     else
     {
         //CanCcbRestore();
@@ -13014,7 +13226,8 @@ DISPHANDLE DispCmdLeakResetProc(void)
         gCcb.curWorkState.iSubWorkState  = DISP_WORK_SUB_IDLE;
 
     }
-
+#endif
+    
     return DISP_SPECIAL_HANDLE;
 
 }
@@ -13062,7 +13275,7 @@ void work_start_tube_cir(void *para)
     VOS_LOG(VOS_LOG_DEBUG,"work_start_tube_cir");    
     
     /* set  valves   */
-    iTmp = (1 << APP_EXE_C4_NO)|(1 << APP_EXE_N2_NO);
+    iTmp = (1 << APP_EXE_C4_NO);
     iRet = CcbUpdateSwitch(pWorkItem->id,0,iTmp,iTmp);
     if (iRet )
     {
@@ -13096,7 +13309,7 @@ DISPHANDLE CcbInnerWorkStartTubeCir(void)
     pWorkItem->proc = work_start_tube_cir;
     pWorkItem->para = &gCcb;
 
-    CcbAddWork(WORK_LIST_LP,pWorkItem);
+    CcbAddWork(WORK_LIST_URGENT,pWorkItem);
 
     return (DISPHANDLE)pWorkItem;
 
@@ -13127,7 +13340,7 @@ void work_stop_tube_cir(void *para)
     int iRet;
 
     /* set  valves   */
-    iTmp = (1 << APP_EXE_C4_NO)|(1 << APP_EXE_N2_NO);
+    iTmp = (1 << APP_EXE_C4_NO);
     iRet = CcbUpdateSwitch(pWorkItem->id,0,iTmp,0);
     if (iRet )
     {
@@ -13149,7 +13362,7 @@ DISPHANDLE CcbInnerWorkStopTubeCir(void)
     pWorkItem->proc = work_stop_tube_cir;
     pWorkItem->para = &gCcb;
 
-    CcbAddWork(WORK_LIST_LP,pWorkItem);
+    CcbAddWork(WORK_LIST_URGENT,pWorkItem);
 
     return (DISPHANDLE)pWorkItem;
 
@@ -13160,6 +13373,12 @@ DISPHANDLE CcbInnerWorkStopTubeCir(void)
  */
 void CheckToStartAllocCir()
 {
+	if(getKeyState() & (1 << APP_EXE_DIN_LEAK_KEY))
+	{
+		VOS_LOG(VOS_LOG_DEBUG,"CheckToStartAllocCir Error: APP_EXE_DIN_LEAK_KEY"); 
+		return;
+	}
+	
     if(CcbConvert2Pm2SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM2_NO].Value.ulV) > (CcbGetSp6() + 5.0))
     {
         if (!SearchWork(work_start_tube_cir))
@@ -13175,7 +13394,8 @@ void CheckToStartAllocCir()
  */
 void CheckToStopAllocCir()
 {
-    if(CcbConvert2Pm2SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM2_NO].Value.ulV)  < CcbGetSp6())
+    if((CcbConvert2Pm2SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM2_NO].Value.ulV)  < CcbGetSp6())
+	   || (getKeyState() & (1 << APP_EXE_DIN_LEAK_KEY)))
     {
         if (!SearchWork(work_stop_tube_cir))
         {
@@ -13191,7 +13411,13 @@ void TubeCirWithinSetTime()
 {
 	if (!gCcb.bit1TubeCirOngoing)
 	{
-        CheckToStartAllocCir();
+		gCcb.ulTubeCirStartDelayTick++;
+		if(gCcb.ulTubeCirStartDelayTick >= 10)
+		{
+			CheckToStartAllocCir();
+			gCcb.ulTubeCirStartDelayTick = 0;
+		}
+        
 	}
 	else
 	{
@@ -13217,7 +13443,8 @@ void TubeCirWithoutSetTime()
     else
     {
         gCcb.ulTubeIdleCirTick++;
-        if (gCcb.ulTubeIdleCirTick >= (unsigned int)gCcb.MiscParam.iTubeCirDuration * 60) /* Minute to second */
+        if ((gCcb.ulTubeIdleCirTick >= (unsigned int)gCcb.MiscParam.iTubeCirDuration * 60)
+			|| (getKeyState() & (1 << APP_EXE_DIN_LEAK_KEY))) /* Minute to second */
         {
             if (!SearchWork(work_stop_tube_cir))
             {
@@ -13227,6 +13454,19 @@ void TubeCirWithoutSetTime()
 
         CheckToStopAllocCir();
     }
+}
+
+void checkForTubeCir()
+{
+    // NOTE: 纯水分配控制
+    if (gCcb.bit1NeedTubeCir)
+    {
+        TubeCirWithinSetTime();    
+    }  
+    else
+    {
+        TubeCirWithoutSetTime();
+    } 
 }
 
 DISPHANDLE DispCmdTubeCirProc(unsigned char *pucData, int iLength)
@@ -13946,7 +14186,6 @@ void MainDeinitInnerIpc(void)
 
 void CcbInitMachineType(void)
 {
-
     switch(gCcb.ulMachineType)
     {
     case MACHINE_L_Genie:
@@ -13954,9 +14193,9 @@ void CcbInitMachineType(void)
         gCcb.ulHyperTwMask  = (1<<APP_EXE_E4_NO)|(1<<APP_EXE_E5_NO)|(1<<APP_EXE_E6_NO)|(1<<APP_EXE_E9_NO)|(1<<APP_EXE_C2_NO)|(1<<APP_EXE_N2_NO);
         gCcb.ulNormalTwMask = (1<<APP_EXE_E4_NO)|(1<<APP_EXE_E5_NO)|(1<<APP_EXE_E6_NO)|(1<<APP_EXE_E9_NO)|(1<<APP_EXE_C2_NO);
         gCcb.ulCirMask      = (1<<APP_EXE_E4_NO)|(1<<APP_EXE_E5_NO)|(1<<APP_EXE_E6_NO)|(1<<APP_EXE_E9_NO)|(1<<APP_EXE_C2_NO)|(1<<APP_EXE_N2_NO);
-
-        gCcb.ulRunMask      = APP_EXE_INNER_SWITCHS & (~((1<<APP_EXE_E4_NO)|(1<<APP_EXE_E5_NO)|(1<<APP_EXE_E6_NO)|(1<<APP_EXE_E9_NO)|(1<<APP_EXE_C2_NO)|(1<<APP_EXE_N2_NO)));
-
+		gCcb.ulRunMask      = APP_EXE_INNER_SWITCHS & (~((1<<APP_EXE_E4_NO)|(1<<APP_EXE_E5_NO)|(1<<APP_EXE_E6_NO)|(1<<APP_EXE_E9_NO)|(1<<APP_EXE_C2_NO)|(1<<APP_EXE_N2_NO)|(1<<APP_EXE_C4_NO)));
+        gCcb.ulRunMask     &= ~(1<<APP_EXE_E10_NO);
+		
         gCcb.ulPMMask       = APP_EXE_PM_REPORT_MASK;
 
         break;
@@ -13966,8 +14205,9 @@ void CcbInitMachineType(void)
         gCcb.ulNormalTwMask = (1<<APP_EXE_E4_NO)|(1<<APP_EXE_E6_NO)|(1<<APP_EXE_C2_NO);
         gCcb.ulCirMask      = (1<<APP_EXE_E4_NO)|(1<<APP_EXE_E6_NO)|(1<<APP_EXE_C2_NO)|(1<<APP_EXE_N2_NO);
 
-        gCcb.ulRunMask      = APP_EXE_INNER_SWITCHS & (~((1<<APP_EXE_E4_NO)|(1<<APP_EXE_E6_NO)|(1<<APP_EXE_C2_NO)|(1<<APP_EXE_N2_NO)));
-
+		gCcb.ulRunMask      = APP_EXE_INNER_SWITCHS & (~((1<<APP_EXE_E4_NO)|(1<<APP_EXE_E6_NO)|(1<<APP_EXE_C2_NO)|(1<<APP_EXE_N2_NO)|(1<<APP_EXE_C4_NO)));
+		gCcb.ulRunMask     &= ~(1<<APP_EXE_E10_NO);
+		
         gCcb.ulPMMask       = APP_EXE_PM_REPORT_MASK;
 
         break;
@@ -14325,6 +14565,7 @@ void MainSecondTask4MainState()
             switch(gCcb.curWorkState.iSubWorkState)
             {
             case DISP_WORK_SUB_IDLE:
+			case DISP_WORK_SUB_WASH:
                 switch(gCcb.ulMachineType)
                 {
                 case MACHINE_L_Genie:
@@ -14333,25 +14574,7 @@ void MainSecondTask4MainState()
                 case MACHINE_L_UP:
                     if(haveB3(&gCcb) && (!!(gCcb.ulActiveMask & (1 << APP_PAKCET_ADDRESS_EXE))))
                     {
-                        float fValue = CcbConvert2Pm3SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM3_NO].Value.ulV);
-                        if ( fValue < CcbGetSp8())
-                        {
-                            if(!gCcb.bit1FillingTank)
-                            {
-                                gCcb.bit1NeedFillTank = 1;
-                                if (!SearchWork(work_start_fill_water))
-                                {
-                                    CcbInnerWorkStartFillWater();
-                                } 
-                            }
-                        }
-                        if(fValue >= B3_FULL)
-                        {
-                            if (!SearchWork(work_stop_fill_water))
-                            {
-                                CcbInnerWorkStopFillWater();
-                            }                
-                        } 
+						processB3Measure();
                     }
                     break;
                 default:
@@ -14655,12 +14878,46 @@ void MainSecondTask4MainState()
 
 }
 
+/**
+ * 检查B3液位是否可以重新初始化运行
+ */
+void checkB3ToReInitRun()
+{
+    if(haveB3(&gCcb))
+    {
+        switch(gCcb.curWorkState.iMainWorkState)
+        {
+        case DISP_WORK_STATE_IDLE:
+            {
+                switch(gCcb.curWorkState.iSubWorkState)
+                {
+                case DISP_WORK_SUB_IDLE:
+                    if(CcbConvert2Pm3SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM3_NO].Value.ulV) > 50.0)
+                    {
+                        if (!SearchWork(work_init_run))
+                        {
+                            CcbInnerWorkInitRun();
+                        }
+                    }
+                    break;
+                default:
+                    break;
+                }
+            }
+            break;
+        default:
+            break;
+        }
+    }
+}
+
 void MainSecondTask4Pw()
 {
     switch(gCcb.curWorkState.iMainWorkState4Pw)
     {
     case DISP_WORK_STATE_RUN:
-        
+        // WARNING: 2019.12.24 增加checkB3ToReInitRun(),以尝试在原水箱液位低不能启动后，自动恢复冲洗运行
+        checkB3ToReInitRun(); 
         switch(gCcb.curWorkState.iSubWorkState4Pw)
         {
         case DISP_WORK_SUB_IDLE:
@@ -14712,11 +14969,11 @@ void MainSecondTask4Pw()
                         {
                             if(gCcb.iTocStageTimer == 150)
                             {
-                                Check_TOC_Alarm = 1;
+                                gCcb.bit1TocAlarmNeedCheck = TRUE;
                             }
                             if (gCcb.iTocStageTimer >= 160)
                             {
-                                Check_TOC_Alarm = 0;
+                                gCcb.bit1TocAlarmNeedCheck = FALSE;
                                 if (!SearchWork(work_start_toc_cir))
                                 {
                                     CcbInnerWorkStartCirToc(APP_PACKET_EXE_TOC_STAGE_OXDIZATION);
@@ -14816,14 +15073,7 @@ void MainSecondTask4Pw()
     }
 
     // NOTE: 纯水分配控制
-    if (gCcb.bit1NeedTubeCir)
-    {
-        TubeCirWithinSetTime();    
-    }  
-    else
-    {
-        TubeCirWithoutSetTime();
-    } 
+	checkForTubeCir();
 }
 
 //ex
@@ -15199,7 +15449,7 @@ int Ex_FactoryTest(int select)
 }
 
 //2019.9.16 add
-unsigned int  pretreatmentCleaning()
+unsigned int  getKeyState()
 {
     return gCcb.ulKeyWorkStates;
 }

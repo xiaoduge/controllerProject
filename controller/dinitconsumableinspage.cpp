@@ -5,7 +5,7 @@
 #include <QMouseEvent>
 #include <QHeaderView>
 #include <QVBoxLayout>
-#include "dconsumableinstallwidget.h"
+#include "dcheckboxlistitemwidget.h"
 #include "dhintdialog.h"
 
 DInitConsumableInsPage::DInitConsumableInsPage(QObject *parent, CBaseWidget *widget, MainWindow *wndMain)
@@ -31,8 +31,7 @@ void DInitConsumableInsPage::buildTranslation()
     QString strSuggest = tr("Note:") + "\n"
             + tr("Install the AC Pack after all other components with RFID chip are installed.") + "\n"
             + tr("Scan the final filter and install it to the dispenser after finishing system setting-up.");
-    //扫描耗材
-    //安装纯化柱
+
     m_pTitleLb->setText(tr("Follow the steps below to install and scan the chip for the consumables."));
     m_pSuggestLb[Type1]->setText(tr("Step 1: ") + tr("Scan the consumables on the RFID tags position") + "\n" + tr("Note:") + tr("Scan the final filter and install it to the dispenser after finishing system setting-up."));
     m_pSuggestLb[Type0]->setText(tr("Step 2: ") + tr("Install cartridges"));
@@ -91,7 +90,7 @@ void DInitConsumableInsPage::initTypePackTable()
     {
         int row = i/2;
         int col = i%2;
-        DConsumableInstallWidget* listWidget = new DConsumableInstallWidget;
+        DCheckBoxListItemWidget* listWidget = new DCheckBoxListItemWidget;
         listWidget->setID(m_list[Type0].at(i));
         listWidget->setTag(m_map[Type0].value(m_list[Type0].at(i)).strName);
 
@@ -114,7 +113,8 @@ void DInitConsumableInsPage::initTypePackTable()
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_L_EDI_LOOP:
-        if(gAdditionalCfgParam.machineInfo.iMachineFlow == 500)
+    case MACHINE_L_RO_LOOP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow >= 500)
         {
             m_pSuggestLb[Type0]->hide();
             m_pTableWidget[Type0]->hide();
@@ -138,7 +138,7 @@ void DInitConsumableInsPage::initTypeOtherTable()
     {
         int row = i/2;
         int col = i%2;
-        DConsumableInstallWidget* listWidget = new DConsumableInstallWidget;
+        DCheckBoxListItemWidget* listWidget = new DCheckBoxListItemWidget;
         listWidget->setID(m_list[Type1].at(i));
         listWidget->setTag(m_map[Type1].value(m_list[Type1].at(i)).strName);
 
@@ -162,8 +162,8 @@ void DInitConsumableInsPage::updatePackInstall(int type)
     int row = point.x();
     int col = point.y();
     QWidget* widget = m_pTableWidget[Type0]->cellWidget(row, col);
-    DConsumableInstallWidget* listWidget = qobject_cast<DConsumableInstallWidget*>(widget);
-    listWidget->setInstallStatus(true);
+    DCheckBoxListItemWidget* listWidget = qobject_cast<DCheckBoxListItemWidget*>(widget);
+    listWidget->setCheckBoxState(true);
 }
 
 void DInitConsumableInsPage::updateOtherInstall(int type)
@@ -172,8 +172,8 @@ void DInitConsumableInsPage::updateOtherInstall(int type)
     int row = point.x();
     int col = point.y();
     QWidget* widget = m_pTableWidget[Type1]->cellWidget(row, col);
-    DConsumableInstallWidget* listWidget = qobject_cast<DConsumableInstallWidget*>(widget);
-    listWidget->setInstallStatus(true);
+    DCheckBoxListItemWidget* listWidget = qobject_cast<DCheckBoxListItemWidget*>(widget);
+    listWidget->setCheckBoxState(true);
 }
 
 void DInitConsumableInsPage::on_ExNextBtn_clicked()
@@ -181,9 +181,15 @@ void DInitConsumableInsPage::on_ExNextBtn_clicked()
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_L_EDI_LOOP:
-        if(gAdditionalCfgParam.machineInfo.iMachineFlow == 500)
+	case MACHINE_L_RO_LOOP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
         {
-            QDate curDate = QDate::currentDate();
+        	m_wndMain->naviInitPage(Ex_Init_InstallConsumable, 0);
+        	m_wndMain->prepareKeyStroke();
+        }
+        else
+        {
+			QDate curDate = QDate::currentDate();
             QString strDate = curDate.toString("yyyy-MM-dd");
             gAdditionalCfgParam.productInfo.strInstallDate = strDate;
             MainSaveInstallMsg(gGlobalParam.iMachineType);
@@ -193,11 +199,6 @@ void DInitConsumableInsPage::on_ExNextBtn_clicked()
             MainUpdateGlobalParam();
 
             m_wndMain->restart();
-        }
-        else
-        {
-            m_wndMain->naviInitPage(Ex_Init_InstallConsumable, 0);
-            m_wndMain->prepareKeyStroke();
         }
 		break;
     default:
@@ -359,7 +360,8 @@ void DInitConsumableInsPage::initPackConfig()
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_L_EDI_LOOP:
-        if(gAdditionalCfgParam.machineInfo.iMachineFlow != 500)
+    case MACHINE_L_RO_LOOP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
         {
             install_info.iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
             install_info.strName = tr("P Pack");
@@ -369,7 +371,6 @@ void DInitConsumableInsPage::initPackConfig()
         break;
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
-    case MACHINE_L_RO_LOOP:
         install_info.iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
         install_info.strName = tr("P Pack");
         m_map[Type0].insert(DISP_P_PACK, install_info);
@@ -407,7 +408,7 @@ void DInitConsumableInsPage::initPackConfig()
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_L_EDI_LOOP:
-        if(gAdditionalCfgParam.machineInfo.iMachineFlow != 500)
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
         {
             install_info.iRfid = APP_RFID_SUB_TYPE_HPACK_ATPACK;
             install_info.strName = tr("AT Pack");
@@ -478,7 +479,8 @@ void DInitConsumableInsPage::initOtherConfig()
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_L_EDI_LOOP:
-        if(gAdditionalCfgParam.machineInfo.iMachineFlow != 500)
+    case MACHINE_L_RO_LOOP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
         {
             install_info.iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
             install_info.strName = tr("Final Fliter A"); //0.2um
@@ -488,7 +490,6 @@ void DInitConsumableInsPage::initOtherConfig()
         break;
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
-    case MACHINE_L_RO_LOOP:
     case MACHINE_Genie:
     case MACHINE_UP:
     case MACHINE_EDI:
@@ -523,18 +524,8 @@ void DInitConsumableInsPage::initOtherConfig()
 
     switch(gGlobalParam.iMachineType)
     {
-    case MACHINE_L_EDI_LOOP:
-        if(gAdditionalCfgParam.machineInfo.iMachineFlow != 500)
-        {
-            install_info.iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
-            install_info.strName = tr("185 UV Lamp");
-            m_map[Type1].insert(DISP_N2_UV, install_info);
-            m_list[Type1].append(DISP_N2_UV);
-        }
-        break;
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
-    case MACHINE_L_RO_LOOP:
     case MACHINE_Genie:
     case MACHINE_UP:
     case MACHINE_PURIST:
@@ -590,7 +581,6 @@ void DInitConsumableInsPage::initOtherConfig()
     case MACHINE_L_UP:
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
-    {
         if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_TubeUV))
         {
             install_info.iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
@@ -599,7 +589,6 @@ void DInitConsumableInsPage::initOtherConfig()
             m_list[Type1].append(DISP_N4_UV);
         }
         break;
-    }
     default:
         break;
     }
@@ -610,7 +599,6 @@ void DInitConsumableInsPage::initOtherConfig()
     case MACHINE_L_UP:
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
-    {
         if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveTubeFilter))
         {
             install_info.iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
@@ -619,7 +607,6 @@ void DInitConsumableInsPage::initOtherConfig()
             m_list[Type1].append(DISP_TUBE_FILTER);
         }
         break;
-    }
     default:
         break;
     }
@@ -630,7 +617,6 @@ void DInitConsumableInsPage::initOtherConfig()
     case MACHINE_L_UP:
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
-    {
         if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_TubeDI))
         {
             install_info.iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
@@ -639,7 +625,6 @@ void DInitConsumableInsPage::initOtherConfig()
             m_list[Type1].append(DISP_TUBE_DI);
         }
         break;
-    }
     default:
         break;
     }

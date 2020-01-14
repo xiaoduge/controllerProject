@@ -115,10 +115,10 @@ extern EX_CCB  ex_gCcb;
 extern SENSOR_RANGE gSensorRange;
 
 extern unsigned int ex_gulSecond;
-extern unsigned short ex_isPackNew;
+extern unsigned short g_bNewPPack;
 
 int Ex_FactoryTest(int select);
-unsigned int pretreatmentCleaning(); //2019.9.16 add
+unsigned int getKeyState(); //2019.9.16 add
 
 #ifdef __cplusplus
 }

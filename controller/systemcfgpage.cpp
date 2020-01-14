@@ -31,15 +31,12 @@ SystemCfgPage::SystemCfgPage(QObject *parent,CBaseWidget *widget ,MainWindow *wn
     iIdx++;
     */
 
-    aCHKsIds[iIdx].iId = DISP_SM_ElecLeakProtector;
-    iIdx++;
+//    aCHKsIds[iIdx].iId = DISP_SM_ElecLeakProtector;
+//    iIdx++;
 
     aCHKsIds[iIdx].iId = DISP_SM_Printer;
     iIdx++;
-   /*
-    aCHKsIds[iIdx].iId = DISP_SM_RFID_Authorization;
-    iIdx++;
-  */
+
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_PURIST:
@@ -178,9 +175,6 @@ void SystemCfgPage::buildTranslation()
             break;
         case DISP_SM_Pre_Filter:
             m_aChks[iLoop]->setText(tr("Prefilter"));
-            break;
-        case DISP_SM_RFID_Authorization:
-            m_aChks[iLoop]->setText(tr("Disable RFID"));
             break;
         case DISP_SM_H_PACK:
             m_aChks[iLoop]->setText(tr("H PACK"));
@@ -911,18 +905,7 @@ void SystemCfgPage::connectData()
                 m_aChks[iLoop]->setChecked(false);
             }            
             break;
-        case DISP_SM_RFID_Authorization:
-            if (gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_RFID_Authorization))
-            {
-                m_aChks[iLoop]->setChecked(true);
-            }
-            else
-            {
-                m_aChks[iLoop]->setChecked(false);
-            }            
-            break;
         case DISP_SM_Pre_Filter:
-//            if (gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_Pre_Filter))
             if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
             {
                 m_aChks[iLoop]->setChecked(true);
@@ -1173,16 +1156,6 @@ void SystemCfgPage::save()
                 miscParam.ulMisFlags &= ~(1 << DISP_SM_HP_Water_Cir);
             }
             break;
-        case DISP_SM_RFID_Authorization:          
-            if ((Qt::Checked == m_aChks[iLoop]->checkState()))
-            {
-                miscParam.ulMisFlags |= 1 << DISP_SM_RFID_Authorization;
-            }
-            else
-            {
-                miscParam.ulMisFlags &= ~(1 << DISP_SM_RFID_Authorization);
-            }
-            break; 
         case DISP_SM_Pre_Filter:
             if ((Qt::Checked == m_aChks[iLoop]->checkState()))
             {

@@ -1,35 +1,45 @@
-#include "dconsumableinstallwidget.h"
+#include "dcheckboxlistitemwidget.h"
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QCheckBox>
 #include <QFile>
 
-DConsumableInstallWidget::DConsumableInstallWidget(QWidget *parent, Qt::WindowFlags f) : QWidget(parent, f)
+DCheckBoxListItemWidget::DCheckBoxListItemWidget(QWidget *parent, Qt::WindowFlags f) : QWidget(parent, f)
 {
     initUI();
 }
 
-void DConsumableInstallWidget::setTag(const QString &tags)
+void DCheckBoxListItemWidget::setTag(const QString &tags)
 {
     m_pTagLabel->setText(tags);
 }
 
-void DConsumableInstallWidget::setInstallStatus(bool status)
+void DCheckBoxListItemWidget::setCheckBoxState(bool status)
 {
     m_pInsCheckBox->setChecked(status);
 }
 
-void DConsumableInstallWidget::setID(int id)
+void DCheckBoxListItemWidget::setID(int id)
 {
     m_id = id;
 }
 
-int DConsumableInstallWidget::id()
+int DCheckBoxListItemWidget::id()
 {
     return m_id;
 }
 
-void DConsumableInstallWidget::initUI()
+int DCheckBoxListItemWidget::setCheckBoxEnabled(bool bEnabled)
+{
+    m_pInsCheckBox->setEnabled(bEnabled);
+}
+
+Qt::CheckState DCheckBoxListItemWidget::checkBoxState()
+{
+    return m_pInsCheckBox->checkState();
+}
+
+void DCheckBoxListItemWidget::initUI()
 {
     m_pTagLabel = new QLabel;
     m_pTagLabel->setFixedWidth(300);

@@ -6,9 +6,11 @@
 #include <QListWidget>
 #include "dhintdialog.h"
 #include "dlineedit.h"
+#include "exconfig.h"
 #include <QFile>
 
-NetworkPage::NetworkPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : CSubPage(parent,widget,wndMain)
+NetworkPage::NetworkPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) 
+                        : CSubPage(parent,widget,wndMain), m_bRefreshed(false)
 {
     m_iNetworkMask = gGlobalParam.MiscParam.iNetworkMask;
 
@@ -139,6 +141,14 @@ void NetworkPage::initUi()
         {
             m_pBackWidget[iLoop]->hide();
         }
+		if(gAdditionalCfgParam.machineInfo.iMachineFlow >= 500)
+		{
+		    if(DISPLAY_NETWORK_ZIGBEE == iLoop)
+        	{
+            	m_pBackWidget[iLoop]->hide();
+        	}
+			
+		}
     }
 
     //add for wifi config
@@ -225,7 +235,6 @@ void NetworkPage::initUi()
 
 void NetworkPage::save()
 {
-    
     if (m_iNetworkMask != gGlobalParam.MiscParam.iNetworkMask)
     {
        DISP_MISC_SETTING_STRU  MiscParam = gGlobalParam.MiscParam;  
@@ -339,6 +348,7 @@ void NetworkPage::on_refreshWifiMsg()
     {
         m_pWifiMsgListWidget->addItem(*it);
     }
+	m_bRefreshed = true;
 }
 
 void NetworkPage::on_getNetInfo()
@@ -395,13 +405,17 @@ void NetworkPage::on_getNetInfo()
     {
         m_pWifiMsgListWidget->addItem(tr("No internet connection"));
     }
+	m_bRefreshed = false;
 }
 
 void NetworkPage::on_wifiListWidget_itemClicked(QListWidgetItem *item)
 {
     //
     QString strName = item->text().remove("ESSID:").remove("\"");
-    m_wndMain->showWifiConfigDlg(strName);
+    if(m_bRefreshed)
+    {
+    	m_wndMain->showWifiConfigDlg(strName);
+    }
 }
 
 void NetworkPage::on_addCheckBox_stateChanged(int state)

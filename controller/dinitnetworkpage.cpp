@@ -6,6 +6,7 @@
 #include <QListWidget>
 #include "cbitmapbutton.h"
 #include "dlineedit.h"
+#include "exconfig.h"
 
 DInitNetworkpage::DInitNetworkpage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : CSubPage(parent,widget,wndMain)
 {
@@ -120,6 +121,13 @@ void DInitNetworkpage::initUi()
         {
             m_pBackWidget[iLoop]->hide();
         }
+		if(gAdditionalCfgParam.machineInfo.iMachineFlow >= 500)
+		{
+		    if(DISPLAY_NETWORK_ZIGBEE == iLoop)
+        	{
+            	m_pBackWidget[iLoop]->hide();
+        	}
+		}
     }
 
     m_pBtnSave = new CBitmapButton(m_widget,BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL,NETWORKPAGE_BTN_SAVE);

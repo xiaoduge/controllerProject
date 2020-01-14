@@ -71,7 +71,8 @@ SysTestPage::SysTestPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMai
     switch(gGlobalParam.iMachineType)/*纯水进水电磁阀ON/OFF*/
     {
     case MACHINE_L_EDI_LOOP:
-        if(gAdditionalCfgParam.machineInfo.iMachineFlow != 500)
+	case MACHINE_L_RO_LOOP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
         {
             aSwitchs[iIdx].type = SYSTEM_TEST_ITEM_TYPE_SWITCH;
             aSwitchs[iIdx].id   = APP_EXE_E4_NO;            
@@ -80,7 +81,6 @@ SysTestPage::SysTestPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMai
         break;
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
-    case MACHINE_L_RO_LOOP:
     case MACHINE_Genie:
     case MACHINE_UP:
     case MACHINE_EDI:
@@ -109,7 +109,8 @@ SysTestPage::SysTestPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMai
     switch(gGlobalParam.iMachineType)/*HP循环电磁阀 ON/OFF*/
     {
     case MACHINE_L_EDI_LOOP:
-        if(gAdditionalCfgParam.machineInfo.iMachineFlow != 500)
+	case MACHINE_L_RO_LOOP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
         {
             aSwitchs[iIdx].type = SYSTEM_TEST_ITEM_TYPE_SWITCH;
             aSwitchs[iIdx].id   = APP_EXE_E6_NO;            
@@ -118,7 +119,6 @@ SysTestPage::SysTestPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMai
         break;
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
-    case MACHINE_L_RO_LOOP:
     case MACHINE_Genie:
     case MACHINE_UP:
     case MACHINE_EDI:
@@ -132,7 +132,8 @@ SysTestPage::SysTestPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMai
     switch(gGlobalParam.iMachineType)/*TOC循环阀ON/OFF*/
     {
     case MACHINE_L_EDI_LOOP:
-        if(gAdditionalCfgParam.machineInfo.iMachineFlow != 500)
+	case MACHINE_L_RO_LOOP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
         {
             aSwitchs[iIdx].type = SYSTEM_TEST_ITEM_TYPE_SWITCH;
             aSwitchs[iIdx].id   = APP_EXE_E9_NO;            
@@ -141,7 +142,6 @@ SysTestPage::SysTestPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMai
         break;
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
-    case MACHINE_L_RO_LOOP:
     case MACHINE_Genie:
     case MACHINE_UP:
     //case MACHINE_PURIST:
@@ -248,21 +248,8 @@ SysTestPage::SysTestPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMai
     } 
     switch(gGlobalParam.iMachineType)/*185UV   ON/OFF   电流：000*/
     {
-    case MACHINE_L_EDI_LOOP:
-    	if(gAdditionalCfgParam.machineInfo.iMachineFlow != 500)
-    	{
-            aSwitchs[iIdx].type = SYSTEM_TEST_ITEM_TYPE_SWITCH_AND_VALUE;
-            aSwitchs[iIdx].id   = APP_EXE_N2_NO; 
-            if (-1 == m_aiIndex[DISP_NOT_RECT])
-            {
-                m_aiIndex[DISP_NOT_RECT] = iIdx - (APP_EXE_N2_NO - APP_EXE_N1_NO);
-            }
-            iIdx++;
-    	}
-        break;
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
-    case MACHINE_L_RO_LOOP:
     case MACHINE_Genie:
     case MACHINE_UP:
     case MACHINE_PURIST:
@@ -331,7 +318,8 @@ SysTestPage::SysTestPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMai
     switch(gGlobalParam.iMachineType)/*UP/HP泵 OFF/低/中/高 电压：000电流：000*/
     {
     case MACHINE_L_EDI_LOOP:
-        if(gAdditionalCfgParam.machineInfo.iMachineFlow != 500)
+	case MACHINE_L_RO_LOOP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
         {
             aSwitchs[iIdx].type = SYSTEM_TEST_ITEM_TYPE_RADIO_AND_VALUE;
             aSwitchs[iIdx].id   = APP_EXE_C2_NO;            
@@ -344,7 +332,6 @@ SysTestPage::SysTestPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMai
         break;
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
-    case MACHINE_L_RO_LOOP:
     case MACHINE_Genie:
     case MACHINE_UP:
     case MACHINE_EDI:
@@ -402,12 +389,9 @@ void SysTestPage::buildTranslation()
 	case MACHINE_L_UP:
 	case MACHINE_L_RO_LOOP:
     case MACHINE_L_EDI_LOOP:
-        if(gAdditionalCfgParam.machineInfo.iMachineFlow == 500)
-        {
             strList << tr("OFF");
             strList << tr("ON");
             break;
-        }
     default:
         strList << tr("OFF");
         strList << tr("Low");
@@ -856,7 +840,7 @@ void SysTestPage::on_item_cmb_changed(int value)
 	case MACHINE_L_UP:
 	case MACHINE_L_RO_LOOP:
     case MACHINE_L_EDI_LOOP:
-        if(gAdditionalCfgParam.machineInfo.iMachineFlow == 500)
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow >= 500)
         {
             switch(iSel)
             {

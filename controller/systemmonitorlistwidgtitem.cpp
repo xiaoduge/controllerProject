@@ -253,4 +253,30 @@ SystemMonitorListWidgtItem::SystemMonitorListWidgtItem(QWidget *parent,int iType
     }
 }
 
+void SystemMonitorListWidgtItem::setItemValueVisible(bool bVisible)
+{
+	switch(m_iId)
+	{
+	case SYSTEMPAGE_ITEM_NAME_N3T1_STATE:
+        if(m_lbValue2)
+        {
+            m_lbValue2->setVisible(bVisible);
+        }
+        break;
+    case SYSTEMPAGE_ITEM_NAME_C3C4_STATE:
+    case SYSTEMPAGE_ITEM_NAME_C1_STATE:
+    case SYSTEMPAGE_ITEM_NAME_C2_STATE:
+        if(m_lbValue1)
+        {
+            m_lbValue1->setVisible(bVisible);
+        }
+        if(m_lbValue2)
+        {
+            m_lbValue2->setVisible(bVisible);
+        }
+        break;
+    default:
+        break;
+	}
+}
 

@@ -24,14 +24,9 @@ MaintenanceCyclePage::MaintenanceCyclePage(QObject *parent,CBaseWidget *widget ,
         aIds[iIdx].vi.v2Max = 99999;
         iIdx++;
     }
-    //2018.10.22 ADD AC PACK
+
     switch(gGlobalParam.iMachineType)
     {
-    case MACHINE_L_Genie:
-    case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-        break;
     case MACHINE_Genie:
     case MACHINE_UP:
     case MACHINE_EDI:
@@ -44,12 +39,10 @@ MaintenanceCyclePage::MaintenanceCyclePage(QObject *parent,CBaseWidget *widget ,
         aIds[iIdx].vi.v2Max = 99999;
         iIdx++;
         break;
-    case MACHINE_PURIST:
-    case MACHINE_ADAPT:
+    default:
         break;
     }
 
-    //2018.10.12 add T-Pack
     if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
     {
         aIds[iIdx].iDspType = 1;   //2018.12.17
@@ -64,7 +57,8 @@ MaintenanceCyclePage::MaintenanceCyclePage(QObject *parent,CBaseWidget *widget ,
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_L_EDI_LOOP:
-        if(gAdditionalCfgParam.machineInfo.iMachineFlow != 500)
+    case MACHINE_L_RO_LOOP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
         {
             aIds[iIdx].iDspType = 2;
             aIds[iIdx].iId      = DISP_P_PACK;
@@ -77,7 +71,6 @@ MaintenanceCyclePage::MaintenanceCyclePage(QObject *parent,CBaseWidget *widget ,
         break;
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
-    case MACHINE_L_RO_LOOP:
     case MACHINE_Genie:
     case MACHINE_UP:
     case MACHINE_EDI:
@@ -111,17 +104,14 @@ MaintenanceCyclePage::MaintenanceCyclePage(QObject *parent,CBaseWidget *widget ,
         aIds[iIdx].vi.v2Max = 99999;
         iIdx++;
         break;
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-    case MACHINE_EDI:
-    case MACHINE_RO:
+    default:
         break;
     }
 
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_L_EDI_LOOP:
-        if(gAdditionalCfgParam.machineInfo.iMachineFlow != 500)
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
         {
             aIds[iIdx].iDspType = 2;
             aIds[iIdx].iId      = DISP_AT_PACK;
@@ -141,18 +131,10 @@ MaintenanceCyclePage::MaintenanceCyclePage(QObject *parent,CBaseWidget *widget ,
         aIds[iIdx].vi.v2Max = 99999;
         iIdx++;
         break;
-    case MACHINE_L_UP:
-    case MACHINE_L_RO_LOOP:
-    case MACHINE_Genie:
-    case MACHINE_UP:
-    case MACHINE_EDI:
-    case MACHINE_RO:
-    case MACHINE_PURIST:
-    case MACHINE_ADAPT:
+    default:
         break;
     }
     
-
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_L_UP:
@@ -166,13 +148,7 @@ MaintenanceCyclePage::MaintenanceCyclePage(QObject *parent,CBaseWidget *widget ,
         aIds[iIdx].vi.v2Max = 99999;
         iIdx++;
         break;
-    case MACHINE_L_Genie:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-    case MACHINE_Genie:
-    case MACHINE_EDI:
-    case MACHINE_RO:
-    case MACHINE_ADAPT:
+    default:
         break;
     }
 
@@ -192,10 +168,7 @@ MaintenanceCyclePage::MaintenanceCyclePage(QObject *parent,CBaseWidget *widget ,
         aIds[iIdx].vi.v2Max = 99999;
         iIdx++;
         break;
-    case MACHINE_UP:
-    case MACHINE_PURIST:
-    case MACHINE_ADAPT:
-    case MACHINE_RO:
+    default:
         break;
     }
 
@@ -215,8 +188,7 @@ MaintenanceCyclePage::MaintenanceCyclePage(QObject *parent,CBaseWidget *widget ,
         aIds[iIdx].vi.v2Max = 99999;
         iIdx++;
         break;
-    case MACHINE_EDI:
-    case MACHINE_RO:
+    default:
         break;
     }
 
@@ -238,8 +210,7 @@ MaintenanceCyclePage::MaintenanceCyclePage(QObject *parent,CBaseWidget *widget ,
         aIds[iIdx].vi.v2Max = 99999;
         iIdx++;
         break;
-    case MACHINE_PURIST:
-    case MACHINE_ADAPT:
+    default:
         break;
     }
 
@@ -249,53 +220,20 @@ MaintenanceCyclePage::MaintenanceCyclePage(QObject *parent,CBaseWidget *widget ,
     case MACHINE_L_UP:
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
-        aIds[iIdx].iDspType = 2;
-        aIds[iIdx].iId      = DISP_N4_UV;
-        aIds[iIdx].vi.v1Min = 0;
-        aIds[iIdx].vi.v1Max = 99999;
-        aIds[iIdx].vi.v2Min = 0;
-        aIds[iIdx].vi.v2Max = 99999;
-        iIdx++;
-        break;
-    case MACHINE_Genie:
-    case MACHINE_UP:
-    case MACHINE_EDI:
-    case MACHINE_RO:
-    case MACHINE_PURIST:
-    case MACHINE_ADAPT:
-        break;
-    }
-    
-/*2018/05/21 TOC UV*/
-#if 0
-    switch(gGlobalParam.iMachineType)
-    {
-    case MACHINE_L_Genie:
-    case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-    case MACHINE_Genie:
-    case MACHINE_UP:
-    case MACHINE_PURIST:
-    case MACHINE_ADAPT:
+        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_TubeUV))
         {
-            if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveTOC))
-            {
-                aIds[iIdx].iDspType = 2;
-                aIds[iIdx].iId      = DISP_N5_UV;
-                aIds[iIdx].vi.v1Min = 0;
-                aIds[iIdx].vi.v1Max = 720;
-                aIds[iIdx].vi.v2Min = 0;
-                aIds[iIdx].vi.v2Max = 8000;
-                iIdx++;
-            }
+            aIds[iIdx].iDspType = 2;
+            aIds[iIdx].iId      = DISP_N4_UV;
+            aIds[iIdx].vi.v1Min = 0;
+            aIds[iIdx].vi.v1Max = 99999;
+            aIds[iIdx].vi.v2Min = 0;
+            aIds[iIdx].vi.v2Max = 99999;
+            iIdx++;
         }
         break;
-    case MACHINE_EDI:
-    case MACHINE_RO:
+    default:
         break;
     }
-#endif
 
     switch(gGlobalParam.iMachineType)
     {
@@ -315,8 +253,7 @@ MaintenanceCyclePage::MaintenanceCyclePage(QObject *parent,CBaseWidget *widget ,
         aIds[iIdx].vi.v2Max = 99999;
         iIdx++;
         break;
-    case MACHINE_PURIST:
-    case MACHINE_ADAPT:
+    default:
         break;
     }
 
@@ -335,18 +272,15 @@ MaintenanceCyclePage::MaintenanceCyclePage(QObject *parent,CBaseWidget *widget ,
         aIds[iIdx].vi.v2Max = 99999;
         iIdx++;
         break;
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-    case MACHINE_EDI:
-    case MACHINE_RO:
-    case MACHINE_PURIST:
+    default:
         break;
     }
 
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_L_EDI_LOOP:
-        if(gAdditionalCfgParam.machineInfo.iMachineFlow != 500)
+    case MACHINE_L_RO_LOOP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
         {
             aIds[iIdx].iDspType = 1;
             aIds[iIdx].iId      = DISP_T_A_FILTER;
@@ -359,7 +293,6 @@ MaintenanceCyclePage::MaintenanceCyclePage(QObject *parent,CBaseWidget *widget ,
         break;
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
-    case MACHINE_L_RO_LOOP:
     case MACHINE_Genie:
     case MACHINE_UP:
     case MACHINE_EDI:
@@ -374,28 +307,7 @@ MaintenanceCyclePage::MaintenanceCyclePage(QObject *parent,CBaseWidget *widget ,
         aIds[iIdx].vi.v2Max = 0;
         iIdx++;
         break;
-    }
-
-    switch(gGlobalParam.iMachineType)
-    {
-    case MACHINE_L_Genie:
-    case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-        aIds[iIdx].iDspType = 1;
-        aIds[iIdx].iId      = DISP_TUBE_FILTER;
-        aIds[iIdx].vi.v1Min = 0;
-        aIds[iIdx].vi.v1Max = 99999;
-        aIds[iIdx].vi.v2Min = 0;
-        aIds[iIdx].vi.v2Max = 0;
-        iIdx++;
-        break;
-    case MACHINE_Genie:
-    case MACHINE_UP:
-    case MACHINE_EDI:
-    case MACHINE_RO:
-    case MACHINE_PURIST:
-    case MACHINE_ADAPT:
+    default:
         break;
     }
 
@@ -405,20 +317,39 @@ MaintenanceCyclePage::MaintenanceCyclePage(QObject *parent,CBaseWidget *widget ,
     case MACHINE_L_UP:
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
-        aIds[iIdx].iDspType = 1;
-        aIds[iIdx].iId      = DISP_TUBE_DI;
-        aIds[iIdx].vi.v1Min = 0;
-        aIds[iIdx].vi.v1Max = 99999;
-        aIds[iIdx].vi.v2Min = 0;
-        aIds[iIdx].vi.v2Max = 0;
-        iIdx++;
+        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveTubeFilter))
+        {
+            aIds[iIdx].iDspType = 1;
+            aIds[iIdx].iId      = DISP_TUBE_FILTER;
+            aIds[iIdx].vi.v1Min = 0;
+            aIds[iIdx].vi.v1Max = 99999;
+            aIds[iIdx].vi.v2Min = 0;
+            aIds[iIdx].vi.v2Max = 0;
+            iIdx++;
+        }
         break;
-    case MACHINE_Genie:
-    case MACHINE_UP:
-    case MACHINE_EDI:
-    case MACHINE_RO:
-    case MACHINE_PURIST:
-    case MACHINE_ADAPT:
+    default:
+        break;
+    }
+
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_TubeDI))
+        {
+            aIds[iIdx].iDspType = 1;
+            aIds[iIdx].iId      = DISP_TUBE_DI;
+            aIds[iIdx].vi.v1Min = 0;
+            aIds[iIdx].vi.v1Max = 99999;
+            aIds[iIdx].vi.v2Min = 0;
+            aIds[iIdx].vi.v2Max = 0;
+            iIdx++;
+        }
+        break;
+    default:
         break;
     }
 
@@ -441,7 +372,7 @@ MaintenanceCyclePage::MaintenanceCyclePage(QObject *parent,CBaseWidget *widget ,
         aIds[iIdx].vi.v2Max = 0;
         iIdx++;
         break;
-    case MACHINE_PURIST:
+    default:
         break;
     }
     

@@ -4,6 +4,7 @@
 #include <QPushButton>
 #include "LockupDlg.h"
 #include "mainwindow.h"
+#include "exdisplay.h"
 
 LockupDlg::LockupDlg(QWidget *parent) :
     QDialog(parent)
@@ -46,6 +47,11 @@ LockupDlg::~LockupDlg()
 
 void LockupDlg::on_pushButton_Reset()
 {
+	if(getKeyState() & (1 << APP_EXE_DIN_LEAK_KEY))
+	{
+		return;
+	}
+	
     DispCmdEntry(DISP_CMD_LEAK_RESET,NULL,0);
     close();
 

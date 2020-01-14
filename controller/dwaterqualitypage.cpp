@@ -17,7 +17,6 @@ double toResistivity(double value)
     return temp > 18.2 ? 18.2 : temp;
 }
 
-
 DWaterQualityPage::DWaterQualityPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : CSubPage(parent,widget,wndMain)
 {
     m_showFirst = true;
@@ -104,7 +103,6 @@ void DWaterQualityPage::switchLanguage()
     buildTitles();
     selectTitle(titleIndex());
 }
-
 
 void DWaterQualityPage::updAllInfo(void)
 {
@@ -614,7 +612,7 @@ void DWaterQualityPage::initConfigList()
         }
         m_cfglist.append(m_tags[Pure_Tank_Level]);
         
-        if(gAdditionalCfgParam.machineInfo.iMachineFlow != 500)
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
         {
             m_cfglist.append(m_tags[HP_Resis]);
             m_cfglist.append(m_tags[HP_Disp_Rate]);
@@ -638,8 +636,11 @@ void DWaterQualityPage::initConfigList()
             m_cfglist.append(m_tags[Source_Tank_Level]);
         }
         m_cfglist.append(m_tags[Pure_Tank_Level]);
-        m_cfglist.append(m_tags[HP_Resis]);
-        m_cfglist.append(m_tags[HP_Disp_Rate]);
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
+        {
+            m_cfglist.append(m_tags[HP_Resis]);
+            m_cfglist.append(m_tags[HP_Disp_Rate]);
+        }
         break;
     case MACHINE_Genie:
         m_cfglist.append(m_tags[Tap_Cond]);
@@ -1005,8 +1006,8 @@ void DWaterQualityPage::updFlowInfo(int iIndex,int iValue)
         case MACHINE_L_EDI_LOOP:
             if(gAdditionalCfgParam.machineInfo.iMachineFlow >= 500)
             {
-                updateValue(m_tags[EDI_Product_Rate], strFlowUnitH.arg(toTwoDecimal(fUnit*(60.0*0.8*iValue)/1000)));
-                m_historyInfo[EDI_Product_Rate].value1 = ((60.0*0.8*iValue)/1000);
+                updateValue(m_tags[EDI_Product_Rate], strFlowUnitH.arg(toTwoDecimal(fUnit*(60.0*iValue)/1000)));
+                m_historyInfo[EDI_Product_Rate].value1 = ((60.0*iValue)/1000);
             }
             break;
         default:
@@ -1068,16 +1069,22 @@ void DWaterQualityPage::updFlowInfo(int iIndex,int iValue)
             {
                 updateValue(m_tags[EDI_Product_Rate], strFlowUnitH.arg(toTwoDecimal(fUnit*(60.0*0.8*iValue)/1000)));
                 m_historyInfo[EDI_Product_Rate].value1 = ((60.0*0.8*iValue)/1000);
+                updateValue(m_tags[EDI_Reject_Rate], strFlowUnitH.arg(toTwoDecimal(fUnit*(60.0*0.2*iValue)/1000)));
+                m_historyInfo[EDI_Reject_Rate].value1 = ((60.0*0.2*iValue)/1000);
+            }
+            else
+            {
+                m_historyInfo[EDI_Reject_Rate].value1 = m_historyInfo[RO_Product_Rate].value1 - m_historyInfo[EDI_Product_Rate].value1;
+                updateValue(m_tags[EDI_Reject_Rate], strFlowUnitH.arg(toTwoDecimal(m_historyInfo[EDI_Reject_Rate].value1)));
             }
             break;
         default:
             updateValue(m_tags[EDI_Product_Rate], strFlowUnitH.arg(toTwoDecimal(fUnit*(60.0*0.8*iValue)/1000)));
             m_historyInfo[EDI_Product_Rate].value1 = ((60.0*0.8*iValue)/1000);
+            updateValue(m_tags[EDI_Reject_Rate], strFlowUnitH.arg(toTwoDecimal(fUnit*(60.0*0.2*iValue)/1000)));
+            m_historyInfo[EDI_Reject_Rate].value1 = ((60.0*0.2*iValue)/1000);
             break;
         }
-
-        updateValue(m_tags[EDI_Reject_Rate], strFlowUnitH.arg(toTwoDecimal(fUnit*(60.0*0.2*iValue)/1000)));
-        m_historyInfo[EDI_Reject_Rate].value1 = ((60.0*0.2*iValue)/1000);
         break;
      case APP_FM_FM4_NO:
         updateValue(m_tags[RO_Reject_Rate], strFlowUnitH.arg(toTwoDecimal(fUnit*(60.0*iValue)/1000)));

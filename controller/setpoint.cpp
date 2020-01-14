@@ -29,6 +29,8 @@ SetPoint::SetPoint(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : C
         aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP1;
         iIdx++;     
         break;
+    default:
+        break;
     } 
 
     switch(gGlobalParam.iMachineType)/*工作压力上限*/
@@ -46,6 +48,8 @@ SetPoint::SetPoint(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : C
         aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP33;
         iIdx++;
         break;
+    default:
+        break;
     }
 
     switch(gGlobalParam.iMachineType)/*自来水电导率上限 I1a*/
@@ -62,6 +66,8 @@ SetPoint::SetPoint(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : C
         aIds[iIdx].iDspType    = SET_POINT_FORMAT1;
         aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP13;
         iIdx++;
+        break;
+    default:
         break;
     }
 
@@ -81,6 +87,8 @@ SetPoint::SetPoint(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : C
         aIds[iIdx].iParamId[1] = MACHINE_PARAM_SP19;
         iIdx++;
         break;
+    default:
+        break;
     }
 
     switch(gGlobalParam.iMachineType)/* RO产水上限？μS/cm */
@@ -98,6 +106,8 @@ SetPoint::SetPoint(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : C
         aIds[iIdx].iDspType    = SET_POINT_FORMAT1;
         aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP3;
         iIdx++;
+        break;
+    default:
         break;
     }
 
@@ -118,6 +128,8 @@ SetPoint::SetPoint(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : C
         aIds[iIdx].iParamId[1] = MACHINE_PARAM_SP21;
         iIdx++;
         break;
+    default:
+        break;
     }
 
     switch(gGlobalParam.iMachineType)/* RO截留率 下限？% */
@@ -135,6 +147,8 @@ SetPoint::SetPoint(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : C
         aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP2;
         iIdx++;
         break;
+    default:
+        break;
     } 
 
     switch(gGlobalParam.iMachineType)/* EDI产水下限？MΩ.cm */
@@ -146,6 +160,8 @@ SetPoint::SetPoint(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : C
         aIds[iIdx].iDspType    = SET_POINT_FORMAT1;
         aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP4;
         iIdx++;
+        break;
+    default:
         break;
     } 
 
@@ -160,6 +176,8 @@ SetPoint::SetPoint(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : C
         aIds[iIdx].iParamId[1] = MACHINE_PARAM_SP23;
         iIdx++;
         break;
+    default:
+        break;
     }
 
     switch(gGlobalParam.iMachineType)/* UP取水下限？MΩ.cm */
@@ -173,6 +191,8 @@ SetPoint::SetPoint(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : C
         aIds[iIdx].iDspType    = SET_POINT_FORMAT1;
         aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP7;
         iIdx++;
+        break;
+    default:
         break;
     }
 
@@ -189,6 +209,8 @@ SetPoint::SetPoint(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : C
         aIds[iIdx].iParamId[1] = MACHINE_PARAM_SP25;
         iIdx++;
         break;
+    default:
+        break;
     }
 
     switch(gGlobalParam.iMachineType)/*HP产水水质下限 ? MΩ.cm */
@@ -197,7 +219,8 @@ SetPoint::SetPoint(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : C
     case MACHINE_ADAPT:
         break;
     case MACHINE_L_EDI_LOOP:
-        if(gAdditionalCfgParam.machineInfo.iMachineFlow  != 500)
+    case MACHINE_L_RO_LOOP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
         {
             aIds[iIdx].iDspType    = SET_POINT_FORMAT1;
             aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP32;
@@ -211,30 +234,25 @@ SetPoint::SetPoint(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : C
         break;
     }
 
-    switch(gGlobalParam.iMachineType)/*循环水质下限 ? MΩ.cm */
+    switch(gGlobalParam.iMachineType)// 循环水质下限 ? MΩ.cm, 用于T Pack耗材更换提醒  
     {
-    case MACHINE_PURIST:
-    case MACHINE_ADAPT:
-        break;
-    case MACHINE_L_EDI_LOOP:
-        if(gAdditionalCfgParam.machineInfo.iMachineFlow  != 500)
-        {
-            aIds[iIdx].iDspType    = SET_POINT_FORMAT1;
-            aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP31;
-            iIdx++;
-        }
-        break;
-    default:
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_EDI:
+    case MACHINE_RO:
         aIds[iIdx].iDspType    = SET_POINT_FORMAT1;
         aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP31;
         iIdx++;
         break;
+    default:
+        break;
     }
 
-    switch(gGlobalParam.iMachineType)/*水箱水质上限?MΩ.cm 下限?MΩ.cm*/
+    switch(gGlobalParam.iMachineType)//水箱水质上限?MΩ.cm 下限?MΩ.cm, 用于判断是否自动开启HP循环
     {
     case MACHINE_L_EDI_LOOP:
-        if(gAdditionalCfgParam.machineInfo.iMachineFlow != 500)
+    case MACHINE_L_RO_LOOP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
         {
             aIds[iIdx].iDspType    = SET_POINT_FORMAT2;
             aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP10;
@@ -244,7 +262,6 @@ SetPoint::SetPoint(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : C
         break;
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
-    case MACHINE_L_RO_LOOP:
     case MACHINE_Genie:
     case MACHINE_UP:
     case MACHINE_EDI:
@@ -254,14 +271,14 @@ SetPoint::SetPoint(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : C
         aIds[iIdx].iParamId[1] = MACHINE_PARAM_SP11;
         iIdx++;
         break;
+    default:
+        break;
     }
 
     switch(gGlobalParam.iMachineType)/* TOC传感器温度上限？℃ 下限？℃ */
     {
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
     case MACHINE_Genie:
     case MACHINE_UP:
     case MACHINE_PURIST:
@@ -271,14 +288,14 @@ SetPoint::SetPoint(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : C
         aIds[iIdx].iParamId[1] = MACHINE_PARAM_SP29;
         iIdx++;
         break;
+    default:
+        break;
     }
 
     switch(gGlobalParam.iMachineType)/* TOC进水水质下限？MΩ.cm */
     {
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
     case MACHINE_Genie:
     case MACHINE_UP:
     case MACHINE_PURIST:
@@ -287,9 +304,11 @@ SetPoint::SetPoint(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : C
         aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP30;
         iIdx++;
         break;
+    default:
+        break;
     }
 
-    switch(gGlobalParam.iMachineType)/* 管路水质下限？MΩ.cm */
+    switch(gGlobalParam.iMachineType)// 管路水质下限？MΩ.cm, 暂时未启用
     {
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
@@ -299,9 +318,11 @@ SetPoint::SetPoint(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : C
         aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP17;
         iIdx++;
         break;
+    default:
+        break;
     }
 
-    switch(gGlobalParam.iMachineType)/* 管路温度上限？℃  下限？℃ */
+    switch(gGlobalParam.iMachineType)// 管路温度上限？℃  下限？℃ , 暂时未启用
     {
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
@@ -311,6 +332,8 @@ SetPoint::SetPoint(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : C
         aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP26;
         aIds[iIdx].iParamId[1] = MACHINE_PARAM_SP27;
         iIdx++;
+        break;
+    default:
         break;
     }
 
@@ -330,6 +353,8 @@ SetPoint::SetPoint(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : C
         aIds[iIdx].iParamId[1] = MACHINE_PARAM_SP6;
         iIdx++;
         break;
+    default:
+        break;
     } 
 
     switch(gGlobalParam.iMachineType)/* 源水箱液位水箱空？%  恢复注水？% */
@@ -343,26 +368,9 @@ SetPoint::SetPoint(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : C
         aIds[iIdx].iParamId[1] = MACHINE_PARAM_SP9;
         iIdx++;
         break;
-    } 
-
-#if 0
-    //MACHINE_PARAM_SP12 ???
-    switch(gGlobalParam.iMachineType)/*纯水取水*/
-    {
-    case MACHINE_L_Genie:
-    case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-    case MACHINE_Genie:
-    case MACHINE_UP:
-    case MACHINE_EDI:
-    case MACHINE_RO:
-        aIds[iIdx].iDspType    = SET_POINT_FORMAT1;
-        aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP12;
-        iIdx++;
+    default:
         break;
     } 
-#endif
 
     switch(gGlobalParam.iMachineType)/* RO产水流速上限100.0L/min 下限20.0L/min */
     {
@@ -375,6 +383,8 @@ SetPoint::SetPoint(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : C
         aIds[iIdx].iParamId[1] = MACHINE_PARAM_SP15;
         iIdx++;
         break;
+    default:
+        break;
     } 
 
     switch(gGlobalParam.iMachineType)/* RO弃水流速 下限20.0L/min */
@@ -386,6 +396,8 @@ SetPoint::SetPoint(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : C
         aIds[iIdx].iDspType    = SET_POINT_FORMAT1;
         aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP16;
         iIdx++;
+        break;
+    default:
         break;
     } 
 

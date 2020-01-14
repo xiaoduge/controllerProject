@@ -312,94 +312,20 @@ class SetDevicePage : public CSubPage
 
 public:
     SetDevicePage(QObject *parent = 0,CBaseWidget *widget = 0 , MainWindow *wndMain = 0);
-
-    virtual void creatTitle();
-
-    virtual void switchLanguage();
-
-    virtual void buildTranslation();
-
-    virtual void initUi();
-
-    virtual void update();
+	~SetDevicePage();
+	
+    void creatTitle();
+    void switchLanguage();
+    void buildTranslation();
+    void initUi();
+    void update();
 
     void addDevice(const QString& text0,const QString& text1, const QString& text2);
-    
     void deviceVersion(const QString& addr,const QString& version);
-    
     void addHandler(int iType,const QString& text0,const QString& text1);
-    
     void addRfReader(const QString& text0,const QString& text1);
-
-    void zigbeeUpdResult(int iResult,int iPercent);
-    
     void cfgHandlerRsp();
 
-private:
-    void buildTitles();
-    void setBackColor();
-    void finishSave();
-private:
-    QListWidgetItem * searchDeviceByAddress(const QString& info);
-    QListWidgetItem * searchDeviceByElecId(const QString& info);
-    QListWidgetItem * searchDevice(const QString& info,int iIndex);
-    QString getDevice(int iDevIdx,int iInfoIdx);
-    
-    QListWidgetItem * searchHandler(const QString& info,int iIndex);
-    QString getHandler(int iDevIdx,int iInfoIdx);
-    QListWidgetItem * searchHandlerBySN(const QString& info);
-    QListWidgetItem * searchHandlerByAddress(const QString& info);
-
-    QListWidgetItem * searchRfReader(const QString& info,int iIndex);
-    QString getRfReader(int iDevIdx,int iInfoIdx);
-    QListWidgetItem * searchRfReaderBySN(const QString& info);
-    QListWidgetItem * searchRfReaderByAddress(const QString& info);
-
-	/* for device */
-    QPushButton *m_pBtnQueryId;
-    QPushButton *m_pBtnQueryVersion;
-    QPushButton *m_pBtnRmvDevice;
-    QListWidget *m_pListWgtDevice;
-    QLabel      *m_plbDeviceSN;
-    QLabel      *m_plbDeviceAdr;
-    QLabel      *m_plbDeviceType;
-    QLabel      *m_plbDeviceVers;
-
-    /* for handler */
-    QPushButton *m_pBtnQueryHandler;
-    QPushButton *m_pBtnCfgHandler;
-    QPushButton *m_pBtnResetHandler;
-//    QPushButton *m_pBtnRmvHandler;
-    QPushButton *m_pBtnSaveHandler;
-    QListWidget *m_pListWgtHandler;
-    QComboBox   *m_pcombTrxType;
-    QLabel      *m_plbHandlerSN;
-    QLabel      *m_plbHandlerAdr;
-    QLabel      *m_plbHandlerDef;
-    QLabel      *m_plbHandlerType;
-    QLabel      *m_plbHandlerOper;
-
-    /* for RfReader */
-    QPushButton *m_pBtnQueryRfReader;
-    QLabel      *m_plbRfReaderSN;
-    QLabel      *m_plbRfReaderAdr;
-#ifdef AUTO_CFG_RF_READER    
-    QPushButton *m_pBtnCfgRfReader;
-    QPushButton *m_pBtnResetRfReader;
-#endif
-    QPushButton *m_pBtnRmvRfReader;
-    QPushButton *m_pBtnSaveRfReader;
-    QListWidget *m_pListWgtRfReader;
-
-    /* for Maintenance */
-    QPushButton *m_pBtnZigbeeUpd;
-    QLabel      *m_plbZigbeeUpd;
-    
-
-	/* common */
-    QTabWidget	*m_pTblWidget;
-    QWidget     *m_widgetLayout; 
-    QString     m_strQss4Chk;
 public slots:
     void on_btn_clicked(int);
     void on_pushButton_QueryId();
@@ -423,9 +349,78 @@ public slots:
 #endif
     void on_pushButton_RmvRfReader();
     void on_pushButton_SaveRfReader();
-    void on_pushButton_ZigbeeUpd();
 
     void on_CmbIndexChange_trx_type(int index);
+
+private:
+    void initDeviceTabPage();
+    void initHandlerTabPage();
+    void initRFIDTabPage();
+
+    void translateDeviceTagPage();
+    void translateHandlerTagPage();
+    void translateRFIDTagPage();
+
+    void buildTitles();
+    void setBackColor();
+    void finishSave();
+
+    QListWidgetItem * searchDeviceByAddress(const QString& info);
+    QListWidgetItem * searchDeviceByElecId(const QString& info);
+    QListWidgetItem * searchDevice(const QString& info,int iIndex);
+    QString getDevice(int iDevIdx,int iInfoIdx);
+    
+    QListWidgetItem * searchHandler(const QString& info,int iIndex);
+    QString getHandler(int iDevIdx,int iInfoIdx);
+    QListWidgetItem * searchHandlerBySN(const QString& info);
+    QListWidgetItem * searchHandlerByAddress(const QString& info);
+
+    QListWidgetItem * searchRfReader(const QString& info,int iIndex);
+    QString getRfReader(int iDevIdx,int iInfoIdx);
+    QListWidgetItem * searchRfReaderBySN(const QString& info);
+    QListWidgetItem * searchRfReaderByAddress(const QString& info);
+
+private:
+	/* for device */
+    QPushButton *m_pBtnQueryId;
+    QPushButton *m_pBtnQueryVersion;
+    QPushButton *m_pBtnRmvDevice;
+    QListWidget *m_pListWgtDevice;
+    QLabel      *m_plbDeviceSN;
+    QLabel      *m_plbDeviceAdr;
+    QLabel      *m_plbDeviceType;
+    QLabel      *m_plbDeviceVers;
+
+    /* for handler */
+    QPushButton *m_pBtnQueryHandler;
+    QPushButton *m_pBtnCfgHandler;
+    QPushButton *m_pBtnResetHandler;
+    QPushButton *m_pBtnSaveHandler;
+    QListWidget *m_pListWgtHandler;
+    QComboBox   *m_pcombTrxType;
+    QLabel      *m_plbHandlerSN;
+    QLabel      *m_plbHandlerAdr;
+    QLabel      *m_plbHandlerDef;
+    QLabel      *m_plbHandlerType;
+    QLabel      *m_plbHandlerOper;
+
+    /* for RfReader */
+    QPushButton *m_pBtnQueryRfReader;
+    QLabel      *m_plbRfReaderSN;
+    QLabel      *m_plbRfReaderAdr;
+#ifdef AUTO_CFG_RF_READER    
+    QPushButton *m_pBtnCfgRfReader;
+    QPushButton *m_pBtnResetRfReader;
+#endif
+    QPushButton *m_pBtnRmvRfReader;
+    QPushButton *m_pBtnSaveRfReader;
+    QListWidget *m_pListWgtRfReader;
+
+	/* common */
+	QWidget *m_pTabPageWidget[3];
+    QTabWidget	*m_pTblWidget;
+    QWidget     *m_widgetLayout; 
+    QString     m_strQss4Chk;
 };
 
 #endif // SET_DEVICE_PAGE_H

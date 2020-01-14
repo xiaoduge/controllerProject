@@ -193,7 +193,7 @@ typedef enum
 {
     WORK_LIST_URGENT = 0,
     WORK_LIST_HP,         /* High Priority */
-    WORK_LIST_LP ,        /* Low  Priority */
+    WORK_LIST_LP,        /* Low  Priority */
     WORK_LIST_NUM,
 }WORK_LIST_ENUM;
 
@@ -252,6 +252,10 @@ typedef struct
    unsigned int     bit1AlarmRODV         : 1;   /* RODV alarm */
    unsigned int     bit1CirSpeedAdjust    : 1;   /* RODV alarm */
 
+   //2019.12.31增加
+   unsigned int     bit1ROWashPause       : 1;  //系统清洗时，原水箱空，则暂定清洗
+   unsigned int     bit1TocAlarmNeedCheck : 1;  //是否开启TOC报警检测
+   unsigned int     bit1AlarmWorkPressHigh: 1;  //工作压力高报警
 
    unsigned int     ulMachineType;         /* refer MACHINE_TYPE_ENUM */
    unsigned int     ulRegisterMask;
@@ -330,6 +334,7 @@ typedef struct
    
    unsigned int     ulTubeIdleCirTick;
    unsigned int     ulTubeIdleCirIntervalTick;
+   unsigned int     ulTubeCirStartDelayTick;
    unsigned int     ulProduceWaterBgnTime;
 
    unsigned int     ulCirTick;

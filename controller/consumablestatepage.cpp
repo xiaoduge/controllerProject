@@ -15,14 +15,9 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
         aIds[iIdx].iId   = DISP_PRE_PACK;
         iIdx++;
     }
-    //2018.10.22 ADD
+
     switch(gGlobalParam.iMachineType)
     {
-    case MACHINE_L_Genie:
-    case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-        break;
     case MACHINE_Genie:
     case MACHINE_UP:
     case MACHINE_EDI:
@@ -31,8 +26,7 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
         aIds[iIdx].iId   = DISP_AC_PACK;
         iIdx++;
         break;
-    case MACHINE_PURIST:
-    case MACHINE_ADAPT:
+    default:
         break;
     }
 
@@ -47,7 +41,8 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_L_EDI_LOOP:
-        if(gAdditionalCfgParam.machineInfo.iMachineFlow != 500)
+    case MACHINE_L_RO_LOOP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
         {
             aIds[iIdx].iType = 0;
             aIds[iIdx].iId   = DISP_P_PACK;
@@ -56,7 +51,6 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
         break;
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
-    case MACHINE_L_RO_LOOP:
     case MACHINE_Genie:
     case MACHINE_UP:
     case MACHINE_EDI:
@@ -66,7 +60,7 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
         aIds[iIdx].iId   = DISP_P_PACK;
         iIdx++;
         break;
-    case MACHINE_PURIST:
+    default:
         break;
     }
 
@@ -78,40 +72,27 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
         iIdx++;
         break;
     case MACHINE_L_EDI_LOOP:
-        if(gAdditionalCfgParam.machineInfo.iMachineFlow != 500)
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
         {
             aIds[iIdx].iType = 0;
             aIds[iIdx].iId   = DISP_AT_PACK;
             iIdx++;
         }
         break;
-    case MACHINE_L_UP:
-    case MACHINE_L_RO_LOOP:
-    case MACHINE_Genie:
-    case MACHINE_UP:
-    case MACHINE_EDI:
-    case MACHINE_RO:
-    case MACHINE_PURIST:
-    case MACHINE_ADAPT:
+    default:
         break;
     }
 
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_L_UP:
-    case MACHINE_L_RO_LOOP:
     case MACHINE_UP:
     case MACHINE_PURIST:
         aIds[iIdx].iType = 0;
         aIds[iIdx].iId   = DISP_H_PACK;
         iIdx++;
         break;
-    case MACHINE_L_Genie:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_Genie:
-    case MACHINE_EDI:
-    case MACHINE_RO:
-    case MACHINE_ADAPT:
+    default:
         break;
     }
 
@@ -127,10 +108,7 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
           aIds[iIdx].iId   = DISP_U_PACK;
           iIdx++;
         break;
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-    case MACHINE_EDI:
-    case MACHINE_RO:
+    default:
         break;
     }
 
@@ -143,13 +121,10 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
     case MACHINE_Genie:
     case MACHINE_EDI:
         aIds[iIdx].iType = 0;
-        aIds[iIdx].iId   = DISP_N1_UV;
+        aIds[iIdx].iId   = DISP_N1_UV; //254
         iIdx++;
         break;
-    case MACHINE_UP:
-    case MACHINE_PURIST:
-    case MACHINE_ADAPT:
-    case MACHINE_RO:
+    default:
         break;
     }
    
@@ -165,10 +140,7 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
         aIds[iIdx].iId   = DISP_N2_UV;
         iIdx++;
         break;
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-    case MACHINE_EDI:
-    case MACHINE_RO:
+    default:
         break;
     }
 
@@ -186,18 +158,16 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
         aIds[iIdx].iId   = DISP_N3_UV;
         iIdx++;
         break;
-    case MACHINE_PURIST:
-    case MACHINE_ADAPT:
+    default:
         break;
     }
-  //0628
+
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
-    {
         if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_TubeUV))
         {
             aIds[iIdx].iType = 0;
@@ -205,41 +175,9 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
             iIdx++;
         }
         break;
-    }
-    case MACHINE_UP:
-    case MACHINE_PURIST:
-    case MACHINE_ADAPT:
-    case MACHINE_Genie:
-    case MACHINE_RO:
-    case MACHINE_EDI:
+    default:
         break;
     }
-    
-/*2018/05/21 TOC UV*/
-#if 0
-    switch(gGlobalParam.iMachineType) /*TOC UV*/
-    {
-    case MACHINE_L_Genie:
-    case MACHINE_L_UP:
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-    case MACHINE_Genie:
-    case MACHINE_UP:
-    case MACHINE_EDI:
-    case MACHINE_RO:
-    case MACHINE_PURIST:
-    case MACHINE_ADAPT:
-        {
-            if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveTOC))
-            {
-                aIds[iIdx].iType = 0;
-                aIds[iIdx].iId   = DISP_N5_UV;
-                iIdx++;
-            }
-        }
-        break;
-    }
-#endif
     
     switch(gGlobalParam.iMachineType)
     {
@@ -255,8 +193,7 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
         aIds[iIdx].iId   = DISP_W_FILTER;
         iIdx++;
         break;
-    case MACHINE_PURIST:
-    case MACHINE_ADAPT:
+    default:
         break;
     }
 
@@ -271,18 +208,15 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
         aIds[iIdx].iId   = DISP_T_B_FILTER;
         iIdx++;
         break;
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-    case MACHINE_EDI:
-    case MACHINE_RO:
-    case MACHINE_PURIST:
+    default:
         break;
     }
 
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_L_EDI_LOOP:
-        if(gAdditionalCfgParam.machineInfo.iMachineFlow != 500)
+    case MACHINE_L_RO_LOOP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
         {
             aIds[iIdx].iType = 0;
             aIds[iIdx].iId   = DISP_T_A_FILTER;
@@ -291,7 +225,6 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
         break;
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
-    case MACHINE_L_RO_LOOP:
     case MACHINE_Genie:
     case MACHINE_UP:
     case MACHINE_EDI:
@@ -302,15 +235,16 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
         aIds[iIdx].iId   = DISP_T_A_FILTER;
         iIdx++;
         break;
+    default:
+        break;
     }
-    //0628
+
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
-    {
         if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveTubeFilter))
         {
             aIds[iIdx].iType = 0;
@@ -318,7 +252,6 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
             iIdx++;
         }
         break;
-    }
     default:
         break;
     }
@@ -329,7 +262,6 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
     case MACHINE_L_UP:
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
-    {
         if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_TubeDI))
         {
             aIds[iIdx].iType = 0;
@@ -337,7 +269,6 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
             iIdx++;
         }
         break;
-    }
     default:
         break;
     }
@@ -345,11 +276,8 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
     m_realCsNum = iIdx;
 
     creatTitle();
-
     initUi();
-    
     buildTranslation();
-
 }
 
 void ConsumableStatePage::creatTitle()

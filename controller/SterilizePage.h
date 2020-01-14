@@ -44,6 +44,7 @@ public:
     virtual void update();
 
     virtual void fade();
+	virtual void leaveSubPage();
 
     void updateRunInfo(int index,bool bRun);
 

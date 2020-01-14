@@ -28,7 +28,8 @@ DManagerSetPage::~DManagerSetPage()
 	switch(gGlobalParam.iMachineType)
     {
     case MACHINE_L_EDI_LOOP:
-        if(gAdditionalCfgParam.machineInfo.iMachineFlow == 500)
+	case MACHINE_L_RO_LOOP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow >= 500)
         {
         	if(m_pageWidget[MANAGER_PAGE_CALIBRATION])
         	{
@@ -64,11 +65,40 @@ void DManagerSetPage::buildTitles()
 
 void DManagerSetPage::buildTranslation()
 {
-    m_tabWidget->setTabText(0, tr("Time & Date"));
-    m_tabWidget->setTabText(1, tr("Calibration"));
-    m_tabWidget->setTabText(2, tr("Audio"));
-    m_tabWidget->setTabText(3, tr("LCD"));
-    m_tabWidget->setTabText(4, tr("Additional Settings"));
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_PURIST:
+    case MACHINE_ADAPT:
+        m_tabWidget->setTabText(0, tr("Time & Date"));
+        m_tabWidget->setTabText(1, tr("Calibration"));
+        m_tabWidget->setTabText(2, tr("Audio"));
+        m_tabWidget->setTabText(3, tr("LCD"));
+        break;
+    case MACHINE_L_EDI_LOOP:
+	case MACHINE_L_RO_LOOP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow >= 500)
+        {
+            m_tabWidget->setTabText(0, tr("Time & Date"));
+            m_tabWidget->setTabText(1, tr("Audio"));
+            m_tabWidget->setTabText(2, tr("LCD"));
+        }
+        else
+        {
+            m_tabWidget->setTabText(0, tr("Time & Date"));
+            m_tabWidget->setTabText(1, tr("Calibration"));
+            m_tabWidget->setTabText(2, tr("Audio"));
+            m_tabWidget->setTabText(3, tr("LCD"));
+            m_tabWidget->setTabText(4, tr("Additional Settings"));
+        }
+        break;
+    default:
+        m_tabWidget->setTabText(0, tr("Time & Date"));
+        m_tabWidget->setTabText(1, tr("Calibration"));
+        m_tabWidget->setTabText(2, tr("Audio"));
+        m_tabWidget->setTabText(3, tr("LCD"));
+        m_tabWidget->setTabText(4, tr("Additional Settings"));
+        break;
+    }
 
     //Time
     int iLoop;
@@ -118,6 +148,14 @@ void DManagerSetPage::buildTranslation()
     {
     case MACHINE_PURIST:
     case MACHINE_ADAPT:
+        break;
+    case MACHINE_L_EDI_LOOP:
+	case MACHINE_L_RO_LOOP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
+        {
+            m_pAdditionalLb[HPCIR_SETTING]->setText(tr("HP Recir."));
+            m_pAddBtnSave->setText(tr("Save"));
+        }
         break;
     default:
         m_pAdditionalLb[HPCIR_SETTING]->setText(tr("HP Recir."));
@@ -175,6 +213,13 @@ void DManagerSetPage::initUi()
     case MACHINE_PURIST:
     case MACHINE_ADAPT:
         break;
+    case MACHINE_L_EDI_LOOP:
+	case MACHINE_L_RO_LOOP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
+        {
+            initAdditionalSettingsPage();
+        }
+        break;
     default:
         initAdditionalSettingsPage();
         break;
@@ -183,10 +228,10 @@ void DManagerSetPage::initUi()
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_L_EDI_LOOP:
-        if(gAdditionalCfgParam.machineInfo.iMachineFlow == 500)
+	case MACHINE_L_RO_LOOP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow >= 500)
         {
             m_tabWidget->removeTab(1);
-			m_tabWidget->removeTab(4);
         }
         break;
     default:
@@ -239,9 +284,26 @@ void DManagerSetPage::update()
         m_pLcdBackWidget[2]->hide();
     }
 
-    if((gGlobalParam.iMachineType != MACHINE_ADAPT)
-        && (gGlobalParam.iMachineType != MACHINE_PURIST))
+    switch(gGlobalParam.iMachineType)
     {
+    case MACHINE_PURIST:
+    case MACHINE_ADAPT:
+        break;
+    case MACHINE_L_EDI_LOOP:
+	case MACHINE_L_RO_LOOP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
+        {
+            if (gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
+            {
+                m_pAdditionalCheck[HPCIR_SETTING]->setChecked(true);
+            }
+            else
+            {
+                m_pAdditionalCheck[HPCIR_SETTING]->setChecked(false);
+            }
+        }
+        break;
+    default:
         if (gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
         {
             m_pAdditionalCheck[HPCIR_SETTING]->setChecked(true);
@@ -250,6 +312,7 @@ void DManagerSetPage::update()
         {
             m_pAdditionalCheck[HPCIR_SETTING]->setChecked(false);
         }
+        break;
     }
 
     m_iSleepTime = gAdditionalCfgParam.additionalParam.iScreenSleepTime;
@@ -547,10 +610,20 @@ void DManagerSetPage::setValue(int value)
 
 void DManagerSetPage::on_AdditionalBtnSave_clicked()
 {
-    if((gGlobalParam.iMachineType == MACHINE_PURIST)
-       && (gGlobalParam.iMachineType == MACHINE_ADAPT))
+    switch(gGlobalParam.iMachineType)
     {
+    case MACHINE_PURIST:
+    case MACHINE_ADAPT:
         return;
+    case MACHINE_L_EDI_LOOP:
+	case MACHINE_L_RO_LOOP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow >= 500)
+        {
+            return;
+        }
+        break;
+    default:
+        break;
     }
 
     DISP_MISC_SETTING_STRU        miscParam = gGlobalParam.MiscParam;

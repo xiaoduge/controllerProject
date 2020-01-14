@@ -67,6 +67,7 @@ private:
 
     QProcess *m_pProcess;
 	QProcess *m_pGetInfoProcess;
+	bool m_bRefreshed;
 
 public slots:
     void on_btn_clicked(int);

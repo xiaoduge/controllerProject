@@ -46,7 +46,8 @@ SystemMonitorPage::SystemMonitorPage(QObject *parent,CBaseWidget *widget ,MainWi
         iIdx++;
         break;
     case MACHINE_L_EDI_LOOP:
-        if(gAdditionalCfgParam.machineInfo.iMachineFlow != 500)
+	case MACHINE_L_RO_LOOP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
         {
             aIds[iIdx].iType = SYSMONI_LIST_ITEM_DOUBLE_SWITCH;
             aIds[iIdx].iId   = SYSTEMPAGE_ITEM_NAME_E3E4_STATE;
@@ -82,7 +83,8 @@ SystemMonitorPage::SystemMonitorPage(QObject *parent,CBaseWidget *widget ,MainWi
         iIdx++;
         break;
     case MACHINE_L_EDI_LOOP:
-        if(gAdditionalCfgParam.machineInfo.iMachineFlow != 500)
+	case MACHINE_L_RO_LOOP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
         {
             aIds[iIdx].iType = SYSMONI_LIST_ITEM_SINGLE_SWITCH;
             aIds[iIdx].iId   = SYSTEMPAGE_ITEM_NAME_E5E6_STATE;
@@ -90,7 +92,6 @@ SystemMonitorPage::SystemMonitorPage(QObject *parent,CBaseWidget *widget ,MainWi
             iIdx++;
         }
         break;
-    case MACHINE_L_RO_LOOP:
     case MACHINE_EDI:
     case MACHINE_RO:
         aIds[iIdx].iType = SYSMONI_LIST_ITEM_SINGLE_SWITCH;
@@ -136,13 +137,13 @@ SystemMonitorPage::SystemMonitorPage(QObject *parent,CBaseWidget *widget ,MainWi
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_L_Genie:
+	case MACHINE_L_UP:
     case MACHINE_Genie:
         aIds[iIdx].iType = SYSMONI_LIST_ITEM_DOUBLE_SWITCH_VALUE;
         aIds[iIdx].iId   = SYSTEMPAGE_ITEM_NAME_N1N2_STATE;
         aIds[iIdx].num   = 0XFF;
         iIdx++;
         break;
-    case MACHINE_L_UP:
     case MACHINE_UP:
     case MACHINE_PURIST:
     case MACHINE_ADAPT:
@@ -212,7 +213,8 @@ SystemMonitorPage::SystemMonitorPage(QObject *parent,CBaseWidget *widget ,MainWi
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_L_EDI_LOOP:
-        if(gAdditionalCfgParam.machineInfo.iMachineFlow != 500)
+	case MACHINE_L_RO_LOOP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
         {
             aIds[iIdx].iType = SYSMONI_LIST_ITEM_SINGLE_SWITCH_DOUBLE_VALUE;
             aIds[iIdx].iId   = SYSTEMPAGE_ITEM_NAME_C2_STATE;
@@ -502,8 +504,7 @@ void SystemMonitorPage::createList()
 
         m_apSysMonitorListItem[iLoop] = new SystemMonitorListWidgtItem(NULL,aIds[iLoop].iType,aIds[iLoop].iId,aIds[iLoop].num);
 
-//        m_apSysMonitorListItem[iLoop]->setSwitchImage(gpGlobalPixmaps[GLOBAL_BMP_SWITCH_ON],gpGlobalPixmaps[GLOBAL_BMP_SWITCH_OFF]);
-         m_apSysMonitorListItem[iLoop]->setSwitchImage(gpGlobalPixmaps[GLOBAL_BMP_DEVICE_ON],gpGlobalPixmaps[GLOBAL_BMP_DEVICE_OFF]);
+        m_apSysMonitorListItem[iLoop]->setSwitchImage(gpGlobalPixmaps[GLOBAL_BMP_DEVICE_ON],gpGlobalPixmaps[GLOBAL_BMP_DEVICE_OFF]);
 
         m_pListWidget->insertItem(iLoop,m_apListWidgetIem[iLoop]);
 
