@@ -1425,7 +1425,7 @@
     </message>
     <message>
         <location filename="dfactorytestpage.cpp" line="60"/>
-        <location filename="dfactorytestpage.cpp" line="193"/>
+        <location filename="dfactorytestpage.cpp" line="196"/>
         <source>Flow &amp; Pressure</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1436,194 +1436,207 @@
     </message>
     <message>
         <location filename="dfactorytestpage.cpp" line="62"/>
-        <location filename="dfactorytestpage.cpp" line="297"/>
+        <location filename="dfactorytestpage.cpp" line="300"/>
         <source>Maintenance</source>
         <translation type="unfinished">Обслуживание</translation>
     </message>
     <message>
         <location filename="dfactorytestpage.cpp" line="64"/>
-        <source>Cat No.:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="dfactorytestpage.cpp" line="65"/>
-        <source>Lot No.:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="dfactorytestpage.cpp" line="66"/>
-        <source>Installation Date:</source>
+        <location filename="dfactorytestpage.cpp" line="315"/>
+        <location filename="dfactorytestpage.cpp" line="318"/>
+        <source>Update</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="dfactorytestpage.cpp" line="67"/>
-        <source>Volume of Use:</source>
+        <source>Cat No.:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="dfactorytestpage.cpp" line="68"/>
-        <source>Address:</source>
+        <source>Lot No.:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="69"/>
+        <source>Installation Date:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="dfactorytestpage.cpp" line="70"/>
-        <source>Write</source>
+        <source>Volume of Use:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="dfactorytestpage.cpp" line="71"/>
-        <source>Read</source>
+        <source>Address:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="72"/>
-        <location filename="dfactorytestpage.cpp" line="99"/>
-        <source>Clear</source>
+        <location filename="dfactorytestpage.cpp" line="73"/>
+        <source>Write</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="dfactorytestpage.cpp" line="74"/>
-        <source>Flow Test</source>
+        <source>Read</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="76"/>
-        <source>S1</source>
+        <location filename="dfactorytestpage.cpp" line="75"/>
+        <location filename="dfactorytestpage.cpp" line="102"/>
+        <source>Clear</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="dfactorytestpage.cpp" line="77"/>
-        <source>S2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="dfactorytestpage.cpp" line="78"/>
-        <source>S3</source>
+        <source>Flow Test</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="dfactorytestpage.cpp" line="79"/>
+        <source>S1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="80"/>
+        <source>S2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="81"/>
+        <source>S3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="82"/>
         <source>S4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="84"/>
-        <location filename="dfactorytestpage.cpp" line="97"/>
+        <location filename="dfactorytestpage.cpp" line="87"/>
+        <location filename="dfactorytestpage.cpp" line="100"/>
         <source>Start</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="87"/>
+        <location filename="dfactorytestpage.cpp" line="90"/>
         <source>Pressure Test</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="89"/>
+        <location filename="dfactorytestpage.cpp" line="92"/>
         <source>Work Pres.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="90"/>
+        <location filename="dfactorytestpage.cpp" line="93"/>
         <source>Pure Tank Level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="91"/>
+        <location filename="dfactorytestpage.cpp" line="94"/>
         <source>Source Tank Level</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="101"/>
-        <location filename="dfactorytestpage.cpp" line="291"/>
+        <location filename="dfactorytestpage.cpp" line="104"/>
+        <location filename="dfactorytestpage.cpp" line="294"/>
         <source>Zigbee Upd</source>
         <translation type="unfinished">Zigbee обновл.</translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="210"/>
+        <location filename="dfactorytestpage.cpp" line="213"/>
         <source>20</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="211"/>
+        <location filename="dfactorytestpage.cpp" line="214"/>
         <source>21</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="212"/>
+        <location filename="dfactorytestpage.cpp" line="215"/>
         <source>22</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="213"/>
+        <location filename="dfactorytestpage.cpp" line="216"/>
         <source>23</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="214"/>
+        <location filename="dfactorytestpage.cpp" line="217"/>
         <source>24</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="250"/>
+        <location filename="dfactorytestpage.cpp" line="253"/>
         <source>RFID TEST</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="273"/>
+        <location filename="dfactorytestpage.cpp" line="276"/>
         <source>Update Wifi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="314"/>
+        <location filename="dfactorytestpage.cpp" line="333"/>
+        <source>No online update function</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="357"/>
         <source>Fail: Flow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="314"/>
-        <location filename="dfactorytestpage.cpp" line="331"/>
+        <location filename="dfactorytestpage.cpp" line="357"/>
+        <location filename="dfactorytestpage.cpp" line="374"/>
         <source>Can not enter test Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="331"/>
+        <location filename="dfactorytestpage.cpp" line="374"/>
         <source>Fail: Pressure</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="353"/>
-        <location filename="dfactorytestpage.cpp" line="358"/>
-        <location filename="dfactorytestpage.cpp" line="364"/>
-        <location filename="dfactorytestpage.cpp" line="369"/>
+        <location filename="dfactorytestpage.cpp" line="333"/>
+        <location filename="dfactorytestpage.cpp" line="396"/>
+        <location filename="dfactorytestpage.cpp" line="401"/>
+        <location filename="dfactorytestpage.cpp" line="407"/>
+        <location filename="dfactorytestpage.cpp" line="412"/>
         <source>Warning</source>
         <translation type="unfinished">Внимание</translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="353"/>
+        <location filename="dfactorytestpage.cpp" line="396"/>
         <source>write cat error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="358"/>
+        <location filename="dfactorytestpage.cpp" line="401"/>
         <source>write lot error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="364"/>
+        <location filename="dfactorytestpage.cpp" line="407"/>
         <source>write install date error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="369"/>
+        <location filename="dfactorytestpage.cpp" line="412"/>
         <source>write vol data error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="372"/>
+        <location filename="dfactorytestpage.cpp" line="415"/>
         <source>Write finished</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="545"/>
+        <location filename="dfactorytestpage.cpp" line="592"/>
         <source>FAIL</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1995,86 +2008,86 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dinitconsumableinspage.cpp" line="337"/>
+        <location filename="dinitconsumableinspage.cpp" line="338"/>
         <source>U Pack</source>
         <translation type="unfinished">Картридж U Pack</translation>
     </message>
     <message>
-        <location filename="dinitconsumableinspage.cpp" line="351"/>
+        <location filename="dinitconsumableinspage.cpp" line="352"/>
         <source>H Pack</source>
         <translation type="unfinished">Картридж H Pack</translation>
     </message>
     <message>
-        <location filename="dinitconsumableinspage.cpp" line="366"/>
-        <location filename="dinitconsumableinspage.cpp" line="374"/>
-        <location filename="dinitconsumableinspage.cpp" line="384"/>
+        <location filename="dinitconsumableinspage.cpp" line="367"/>
+        <location filename="dinitconsumableinspage.cpp" line="375"/>
+        <location filename="dinitconsumableinspage.cpp" line="385"/>
         <source>P Pack</source>
         <translation type="unfinished">Картридж P Pack</translation>
     </message>
     <message>
-        <location filename="dinitconsumableinspage.cpp" line="399"/>
+        <location filename="dinitconsumableinspage.cpp" line="400"/>
         <source>AC Pack</source>
         <translation type="unfinished">Картридж AC Pack </translation>
     </message>
     <message>
-        <location filename="dinitconsumableinspage.cpp" line="413"/>
-        <location filename="dinitconsumableinspage.cpp" line="420"/>
+        <location filename="dinitconsumableinspage.cpp" line="414"/>
+        <location filename="dinitconsumableinspage.cpp" line="421"/>
         <source>AT Pack</source>
         <translation type="unfinished">Картридж AT Pack</translation>
     </message>
     <message>
-        <location filename="dinitconsumableinspage.cpp" line="447"/>
+        <location filename="dinitconsumableinspage.cpp" line="448"/>
         <source>RO Membrane</source>
         <translation type="unfinished">RO мембрана</translation>
     </message>
     <message>
-        <location filename="dinitconsumableinspage.cpp" line="465"/>
+        <location filename="dinitconsumableinspage.cpp" line="466"/>
         <source>Final Fliter B</source>
         <translation type="unfinished">Финишный фильтр В</translation>
     </message>
     <message>
-        <location filename="dinitconsumableinspage.cpp" line="469"/>
+        <location filename="dinitconsumableinspage.cpp" line="470"/>
         <source>Bio-filter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dinitconsumableinspage.cpp" line="485"/>
-        <location filename="dinitconsumableinspage.cpp" line="499"/>
+        <location filename="dinitconsumableinspage.cpp" line="486"/>
+        <location filename="dinitconsumableinspage.cpp" line="500"/>
         <source>Final Fliter A</source>
         <translation type="unfinished">Финишный фильтр A</translation>
     </message>
     <message>
-        <location filename="dinitconsumableinspage.cpp" line="516"/>
+        <location filename="dinitconsumableinspage.cpp" line="517"/>
         <source>254 UV Lamp</source>
         <translation type="unfinished">254 УФ лампа</translation>
     </message>
     <message>
-        <location filename="dinitconsumableinspage.cpp" line="533"/>
+        <location filename="dinitconsumableinspage.cpp" line="534"/>
         <source>185 UV Lamp</source>
         <translation type="unfinished">185 УФ лампа</translation>
     </message>
     <message>
-        <location filename="dinitconsumableinspage.cpp" line="550"/>
+        <location filename="dinitconsumableinspage.cpp" line="551"/>
         <source>Tank UV Lamp</source>
         <translation type="unfinished">Бак УФ лампа</translation>
     </message>
     <message>
-        <location filename="dinitconsumableinspage.cpp" line="569"/>
+        <location filename="dinitconsumableinspage.cpp" line="570"/>
         <source>Tank Vent Filter</source>
         <translation type="unfinished">Бак вент фильтр</translation>
     </message>
     <message>
-        <location filename="dinitconsumableinspage.cpp" line="586"/>
+        <location filename="dinitconsumableinspage.cpp" line="587"/>
         <source>Tube UV</source>
         <translation type="unfinished">Петля УФ </translation>
     </message>
     <message>
-        <location filename="dinitconsumableinspage.cpp" line="604"/>
+        <location filename="dinitconsumableinspage.cpp" line="605"/>
         <source>Loop Filter</source>
         <translation type="unfinished">Петля фильтр</translation>
     </message>
     <message>
-        <location filename="dinitconsumableinspage.cpp" line="622"/>
+        <location filename="dinitconsumableinspage.cpp" line="623"/>
         <source>Loop DI</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5134,129 +5147,129 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8546"/>
+        <location filename="mainwindow.cpp" line="8535"/>
         <source>PRE Pack Not Detected</source>
         <oldsource>No Pre-PACK detected!</oldsource>
         <translation type="unfinished">Картридж Pre Pack не установлен</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8549"/>
+        <location filename="mainwindow.cpp" line="8538"/>
         <source>AC Pack Not Detected</source>
         <oldsource>No AC-PACK detected!</oldsource>
         <translation type="unfinished">Картридж AC Pack не установлен</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8552"/>
+        <location filename="mainwindow.cpp" line="8541"/>
         <source>P Pack Not Detected</source>
         <oldsource>No P-PACK detected!</oldsource>
         <translation type="unfinished">Картридж P Pack не установлен</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8555"/>
+        <location filename="mainwindow.cpp" line="8544"/>
         <source>U Pack Not Detected</source>
         <oldsource>No U-PACK detected!</oldsource>
         <translation type="unfinished">Картридж U Pack не установлен</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8558"/>
+        <location filename="mainwindow.cpp" line="8547"/>
         <source>AT Pack Not Detected</source>
         <oldsource>No AT-PACK detected!</oldsource>
         <translation type="unfinished">Картридж AT Pack не установлен</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8561"/>
+        <location filename="mainwindow.cpp" line="8550"/>
         <source>H Pack Not Detected</source>
         <oldsource>No H-PACK detected!</oldsource>
         <translation type="unfinished">Картридж H Pack не установлен</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8579"/>
+        <location filename="mainwindow.cpp" line="8568"/>
         <source>Pre Pack Error! Do you want to continue?</source>
         <translation>Ошибка Pre-Pack! Вы хотите продолжить?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8583"/>
+        <location filename="mainwindow.cpp" line="8572"/>
         <source>AC Pack Error! Do you want to continue?</source>
         <translation>Ошибка AC-Pack! Вы хотите продолжить?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8587"/>
+        <location filename="mainwindow.cpp" line="8576"/>
         <source>P Pack Error! Do you want to continue?</source>
         <translation>Ошибка P-Pack! Вы хотите продолжить?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8591"/>
+        <location filename="mainwindow.cpp" line="8580"/>
         <source>U Pack Error! Do you want to continue?</source>
         <translation>Ошибка U-Pack! Вы хотите продолжить?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8595"/>
+        <location filename="mainwindow.cpp" line="8584"/>
         <source>AT Pack Error! Do you want to continue?</source>
         <translation>Ошибка AT-Pack! Вы хотите продолжить?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8599"/>
+        <location filename="mainwindow.cpp" line="8588"/>
         <source>H Pack Error! Do you want to continue?</source>
         <translation>Ошибка H-Pack! Вы хотите продолжить?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8635"/>
+        <location filename="mainwindow.cpp" line="8624"/>
         <source>System exception. Need to reload the system program. Restart the system now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8636"/>
+        <location filename="mainwindow.cpp" line="8625"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8637"/>
+        <location filename="mainwindow.cpp" line="8626"/>
         <source>No</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8804"/>
+        <location filename="mainwindow.cpp" line="8793"/>
         <source>Login failed!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="9118"/>
+        <location filename="mainwindow.cpp" line="9107"/>
         <source>Water</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="9119"/>
+        <location filename="mainwindow.cpp" line="9108"/>
         <source>Alarm</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="9120"/>
+        <location filename="mainwindow.cpp" line="9109"/>
         <source>User</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="9121"/>
+        <location filename="mainwindow.cpp" line="9110"/>
         <source>GetW</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="9122"/>
+        <location filename="mainwindow.cpp" line="9111"/>
         <source>PWater</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="9123"/>
+        <location filename="mainwindow.cpp" line="9112"/>
         <source>Log</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="10052"/>
-        <location filename="mainwindow.cpp" line="10058"/>
+        <location filename="mainwindow.cpp" line="10041"/>
+        <location filename="mainwindow.cpp" line="10047"/>
         <source>Warning</source>
         <translation type="unfinished">Внимание</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8524"/>
+        <location filename="mainwindow.cpp" line="8513"/>
         <source>Confirm ALL cartridges are installed. System will START by pressing Confirm!</source>
         <translation>Подтвердите, что все картриджи установлены. Система запуститься после нажатия кнопки &quot;Принять&quot;.</translation>
     </message>
@@ -5283,27 +5296,27 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8484"/>
+        <location filename="mainwindow.cpp" line="8473"/>
         <source>RO cleaning is in process. Please put system to Operate after the cleaning.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8491"/>
+        <location filename="mainwindow.cpp" line="8480"/>
         <source>Pretreatment backwash is in progress. System will start automatically afterwords.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8498"/>
+        <location filename="mainwindow.cpp" line="8487"/>
         <source>Water tank overflow or system leakage detected. Please fix the issue and re-start the starem.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8506"/>
+        <location filename="mainwindow.cpp" line="8495"/>
         <source>System communication is abnormal. Please restart the device or contact a service engineer.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="8607"/>
+        <location filename="mainwindow.cpp" line="8596"/>
         <source>Continue</source>
         <translation>Продолжить</translation>
     </message>
@@ -5312,12 +5325,12 @@
         <translation type="obsolete">Выйти</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="10052"/>
+        <location filename="mainwindow.cpp" line="10041"/>
         <source>write install date error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="10058"/>
+        <location filename="mainwindow.cpp" line="10047"/>
         <source>write vol data error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5570,8 +5583,8 @@
         <translation type="unfinished">Информация</translation>
     </message>
     <message>
-        <location filename="networkpage.cpp" line="387"/>
-        <location filename="networkpage.cpp" line="407"/>
+        <location filename="networkpage.cpp" line="386"/>
+        <location filename="networkpage.cpp" line="406"/>
         <source>No internet connection</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6580,105 +6593,125 @@
 <context>
     <name>SterilizePage</name>
     <message>
-        <location filename="SterilizePage.cpp" line="57"/>
+        <location filename="SterilizePage.cpp" line="58"/>
         <source>Cleaning &amp; Sanitization</source>
         <translation type="unfinished">Очистка и сан. обработка</translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="86"/>
+        <location filename="SterilizePage.cpp" line="87"/>
         <source>RO CL Cleaning</source>
         <translation>Cl промывка RO</translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="87"/>
+        <location filename="SterilizePage.cpp" line="88"/>
         <source>RO pH Cleaning</source>
         <translation>pH промывка RO</translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="91"/>
+        <location filename="SterilizePage.cpp" line="92"/>
         <source>Last Maintenance:</source>
         <translation>Последнее обслуживание</translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="107"/>
+        <location filename="SterilizePage.cpp" line="108"/>
         <source>Next Due Date:</source>
         <translation>Следующая дата работ</translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="118"/>
+        <location filename="SterilizePage.cpp" line="119"/>
         <source>Install Case First</source>
         <translation>Сначала установите картридж для промывки, затем нажмите &quot;Промывка&quot;</translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="120"/>
+        <location filename="SterilizePage.cpp" line="121"/>
         <source>Cleaning</source>
         <translation>Промывка</translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="121"/>
-        <location filename="SterilizePage.cpp" line="341"/>
-        <location filename="SterilizePage.cpp" line="350"/>
+        <location filename="SterilizePage.cpp" line="122"/>
+        <location filename="SterilizePage.cpp" line="375"/>
+        <location filename="SterilizePage.cpp" line="384"/>
         <source>Clean</source>
         <translation>Промывка</translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="314"/>
+        <location filename="SterilizePage.cpp" line="315"/>
         <source>Detergent Casette Removed!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="318"/>
+        <location filename="SterilizePage.cpp" line="319"/>
         <source>Detergent Casette Inserted!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="SterilizePage.cpp" line="341"/>
-        <location filename="SterilizePage.cpp" line="350"/>
+        <source>RO cleaning is in process. Please put system to Operate after the cleaning.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="SterilizePage.cpp" line="347"/>
+        <source>Pretreatment backwash is in progress. System will start automatically afterwords.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="SterilizePage.cpp" line="353"/>
+        <source>Water tank overflow or system leakage detected. Please fix the issue and re-start the starem.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="SterilizePage.cpp" line="359"/>
+        <source>System communication is abnormal. Please restart the device or contact a service engineer.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="SterilizePage.cpp" line="375"/>
+        <location filename="SterilizePage.cpp" line="384"/>
         <source>Please Insert Detergent Casette!</source>
         <translation>Пожалуйста, установите картридж для промывки!</translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="369"/>
-        <location filename="SterilizePage.cpp" line="372"/>
-        <location filename="SterilizePage.cpp" line="375"/>
-        <location filename="SterilizePage.cpp" line="378"/>
-        <location filename="SterilizePage.cpp" line="381"/>
-        <location filename="SterilizePage.cpp" line="384"/>
+        <location filename="SterilizePage.cpp" line="403"/>
+        <location filename="SterilizePage.cpp" line="406"/>
+        <location filename="SterilizePage.cpp" line="409"/>
+        <location filename="SterilizePage.cpp" line="412"/>
+        <location filename="SterilizePage.cpp" line="415"/>
+        <location filename="SterilizePage.cpp" line="418"/>
         <source>About</source>
         <translation>Подробнее</translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="369"/>
+        <location filename="SterilizePage.cpp" line="403"/>
         <source>No Pre-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="372"/>
+        <location filename="SterilizePage.cpp" line="406"/>
         <source>No AC-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="375"/>
+        <location filename="SterilizePage.cpp" line="409"/>
         <source>No Clean-PACK detected!</source>
         <translation>Картридж для промывки не установлен!</translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="378"/>
+        <location filename="SterilizePage.cpp" line="412"/>
         <source>No U-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="381"/>
+        <location filename="SterilizePage.cpp" line="415"/>
         <source>No AT-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="384"/>
+        <location filename="SterilizePage.cpp" line="418"/>
         <source>No H-PACK detected!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="SterilizePage.cpp" line="399"/>
+        <location filename="SterilizePage.cpp" line="433"/>
         <source>Residual chlorine and pH wash agents left may damage the system. Are you sure to abort?</source>
         <translation type="unfinished"></translation>
     </message>

@@ -33,7 +33,7 @@ enum MachineFlow
 };
 
 /**
- * @ iCompany       : rephile:0; VWR:0
+ * @ iCompany       : 0:rephile; 1:VWR
  * @ strCatalogNo   : 设备货号   
  * @ strSerialNo    : 设备序列号
  * @ strProductDate : 设备生产日期   
@@ -41,7 +41,7 @@ enum MachineFlow
  */
 struct ProductInfo
 {
-    int iCompany;
+    int iCompany;  
     QString strCatalogNo;
     QString strSerialNo;
     QString strProductDate;

@@ -4,6 +4,8 @@
 #include "subpage.h"
 #include "ctrlapplication.h"
 
+//#define NETUPDATE
+
 class MainWindow;
 class QPushButton;
 class QLabel;
@@ -45,6 +47,9 @@ public:
         FACTORY_PAGE_FLOW,
         FACTORY_PAGE_UPDWIFI,
         FACTORY_PAGE_UPDZIGBEE,
+#ifdef NETUPDATE
+        FACTORY_PAGE_NETUPDATE,
+#endif
         FACTORY_PAGE_NUM
     };
 
@@ -93,6 +98,10 @@ private:
     void initUpdateWifiPage();
     void initzigbeePage();
 
+#ifdef NETUPDATE
+    void initNetUpdate();
+#endif
+
 private slots:
     void on_flowBtn_clicked();
     void on_iLoopBtn_clicked();
@@ -105,6 +114,10 @@ private slots:
     void on_clearWifiMsgBtn_clicked();
 
     void on_updZigbeeBtn_clicked();
+    
+#ifdef NETUPDATE
+    void on_netUpdateBtn_clicked();
+#endif
 
 private:
     bool isFlow;
@@ -144,6 +157,10 @@ private:
     //update zigbee
     QPushButton *m_pBtnZigbeeUpd;
     QLabel      *m_plbZigbeeUpd;
+
+#ifdef NETUPDATE
+    QPushButton *m_pNetUpdateBtn;
+#endif
 };
 
 extern CtrlApplication *gApp;

@@ -90,13 +90,10 @@ SystemCfgPage::SystemCfgPage(QObject *parent,CBaseWidget *widget ,MainWindow *wn
     case MACHINE_L_UP:
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
-    case MACHINE_Genie:
-    case MACHINE_UP:
-    case MACHINE_EDI:
-    case MACHINE_RO:
-    case MACHINE_ADAPT:
         aCHKsIds[iIdx].iId = DISP_SM_SW_PUMP;
         iIdx++;
+        break;
+    default:
         break;
     }
 

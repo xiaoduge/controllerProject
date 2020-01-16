@@ -8463,17 +8463,6 @@ void MainWindow::run(bool bRun)
     int iRet;
     
     MainPage *pMainPage = (MainPage *)m_pSubPages[PAGE_MAIN];
-
-	DispenseDataPrint data;
-	data.fRes = 18.2;
-	data.fTemp = 25.6;
-	data.fVol = 2.3;
-	data.iToc = 20;
-	data.strType = "UP";
-	printWorker(data);
-
-	ProductDataPrint pdata;
-	printWorker(pdata);
     
     if (bRun)
     {

@@ -60,6 +60,9 @@ void DFactoryTestPage::buildTranslation()
     m_tabWidget->setTabText(1, tr("Flow & Pressure"));
     m_tabWidget->setTabText(2, tr("Wifi Test"));
     m_tabWidget->setTabText(3, tr("Maintenance"));
+#ifdef NETUPDATE
+    m_tabWidget->setTabText(4, tr("Update"));
+#endif
 
     m_pConfigLabel[CONFIG_CAT]->setText(tr("Cat No.:"));
     m_pConfigLabel[CONFIG_LOT]->setText(tr("Lot No.:"));
@@ -299,6 +302,46 @@ void DFactoryTestPage::initzigbeePage()
     connect(m_pBtnZigbeeUpd, SIGNAL(clicked()), this, SLOT(on_updZigbeeBtn_clicked()));
 }
 
+#ifdef NETUPDATE
+void DFactoryTestPage::initNetUpdate()
+{
+    m_pageWidget[FACTORY_PAGE_NETUPDATE] = new QWidget(m_widget);
+    m_pageWidget[FACTORY_PAGE_NETUPDATE]->setGeometry(0, 55, 800, 545);
+    QString qss = ".QWidget{ background-color:rgb(250, 250, 250);}";
+    m_pageWidget[FACTORY_PAGE_NETUPDATE]->setStyleSheet(qss);
+
+    m_pNetUpdateBtn = new QPushButton(m_pageWidget[FACTORY_PAGE_NETUPDATE]);
+    m_pNetUpdateBtn->setGeometry(100, 250, 120, 30);
+    m_pNetUpdateBtn->setText(tr("Update"));
+
+    QIcon icon1(":/pic/unselected.png");
+    m_tabWidget->addTab(m_pageWidget[FACTORY_PAGE_NETUPDATE], icon1, tr("Update"));
+
+    connect(m_pNetUpdateBtn, SIGNAL(clicked()), this, SLOT(on_netUpdateBtn_clicked()));
+}
+
+void  DFactoryTestPage::on_netUpdateBtn_clicked()
+{
+    if(QFile::exists("/media/mmcblk0p1/UpdateControllerClient"))
+    {
+        QFile::remove("/opt/shzn/UpdateControllerClient");
+        QFile::copy("/media/mmcblk0p1/UpdateControllerClient", "/opt/shzn/UpdateControllerClient");
+    }
+
+    if(!QFile::exists("/opt/shzn/UpdateControllerClient"))
+    {
+        QMessageBox::warning(NULL, tr("Warning"), tr("No online update function"), QMessageBox::Ok);
+        return;
+    }
+
+    QStringList  list;
+    list<<"-qws";
+    QProcess::startDetached("/opt/shzn/UpdateControllerClient", list);
+    // NOTE: 此行代码用于退去当前进程，切勿删除
+    *((int *)(0)) = 0;
+}
+#endif
+
 void DFactoryTestPage::on_flowBtn_clicked()
 {
     if(isFlow)
@@ -430,6 +473,10 @@ void DFactoryTestPage::initUi()
     initFlowTestPage();
     initUpdateWifiPage();
     initzigbeePage();
+
+#ifdef NETUPDATE
+    initNetUpdate();
+#endif
 
     mainLayout->addWidget(m_tabWidget, 0, 0);
     m_mainWidget->setLayout(mainLayout);

@@ -280,9 +280,6 @@ void DInitSyscfgpage::initCfgMap()
 {
     int ikey = 0;
     m_cfgMap.insert(ikey, DISP_SM_Printer);
-
-    ++ikey;
-    m_cfgMap.insert(ikey, DISP_SM_SW_PUMP);
     
     switch(gGlobalParam.iMachineType)
     {
@@ -303,6 +300,8 @@ void DInitSyscfgpage::initCfgMap()
     case MACHINE_L_UP:
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
+        ++ikey;
+        m_cfgMap.insert(ikey, DISP_SM_SW_PUMP);
         ++ikey;
         m_cfgMap.insert(ikey, DISP_SM_TubeUV);
         ++ikey;
