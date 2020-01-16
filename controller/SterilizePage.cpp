@@ -7,6 +7,7 @@
 #include "drunwarningdialog.h"
 #include <QProgressBar>
 #include <QMessageBox>
+#include "dwarningdlg.h"
 
 #define ControlNum 6
 
@@ -333,10 +334,43 @@ void SterilizePage::on_btn_clicked(int index)
             DISPHANDLE hdl = DISP_INVALID_HANDLE;
             if (BITMAPBUTTON_STATE_SEL == state)
             {
+                //开启RO清洗前判断当前状态是否可以进行RO清洗
+                bool bError = false;
+                if (DispGetROWashFlag())
+                {           
+                    DWarningDlg dlg(tr("RO cleaning is in process. Please put system to Operate after the cleaning."));
+                    dlg.exec();
+                    bError = true;
+                }
+                if(getKeyState() & (1 << APP_EXE_DIN_RF_KEY))
+                {
+                    DWarningDlg dlg(tr("Pretreatment backwash is in progress. System will start automatically afterwords."));
+                    dlg.exec();
+                    bError = true;
+                }
+                if(getKeyState() & (1 << APP_EXE_DIN_LEAK_KEY))
+                {
+                    DWarningDlg dlg(tr("Water tank overflow or system leakage detected. Please fix the issue and re-start the starem."));
+                    dlg.exec();
+                    bError = true;
+                }
+                if (!m_wndMain->getActiveExeBrds())
+                {
+                    DWarningDlg dlg(tr("System communication is abnormal. Please restart the device or contact a service engineer."));
+                    dlg.exec();
+                    bError = true;
+                }
+                if(bError)
+                {
+                    m_aSterilize[index].btnClean->setState(BITMAPBUTTON_STATE_UNSEL);
+                    return ;
+                }
+                
                 switch(gGlobalParam.iMachineType)
                 {
                 case MACHINE_L_EDI_LOOP:
-                    if(gAdditionalCfgParam.machineInfo.iMachineFlow != 500)
+				case MACHINE_L_RO_LOOP:
+                    if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
                     {
                         QMessageBox::StandardButton rb = QMessageBox::question(NULL, tr("Clean"), tr("Please Insert Detergent Casette!"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No); 
                         if(rb != QMessageBox::Yes) 
