@@ -794,7 +794,6 @@ void MainRetriveCMParam(int iMachineType,DISP_CONSUME_MATERIAL_STRU  &Param)
         Param.aulCms[iLoop] = ulValue;
     }    
 
-
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_PRE_PACKLIFEDAY])
     {
         Param.aulCms[DISP_PRE_PACKLIFEDAY] = 90; 
@@ -828,46 +827,71 @@ void MainRetriveCMParam(int iMachineType,DISP_CONSUME_MATERIAL_STRU  &Param)
     }
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_P_PACKLIFEL])
     {
-        Param.aulCms[DISP_P_PACKLIFEL] = 30000; //
+        switch(iMachineType)
+        {
+        case MACHINE_L_Genie:
+        case MACHINE_L_EDI_LOOP:
+        case MACHINE_L_RO_LOOP:
+        case MACHINE_L_UP:
+            Param.aulCms[DISP_P_PACKLIFEL] = 0; 
+            break;
+        default:
+            Param.aulCms[DISP_P_PACKLIFEL] = 30000; 
+            break;
+        }
     }
 
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_U_PACKLIFEDAY])
     {
         Param.aulCms[DISP_U_PACKLIFEDAY] = 360; 
     }
-    
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_U_PACKLIFEL])
     {
-        if(iMachineType == MACHINE_ADAPT)
+        switch(iMachineType)
         {
-            Param.aulCms[DISP_U_PACKLIFEL] = 1000; //
-        }
-        else
-        {
-            Param.aulCms[DISP_U_PACKLIFEL] = 3000; //
+        case MACHINE_L_Genie:
+        case MACHINE_L_EDI_LOOP:
+        case MACHINE_L_RO_LOOP:
+        case MACHINE_L_UP:
+            Param.aulCms[DISP_U_PACKLIFEL] = 6000; 
+            break;
+        case MACHINE_ADAPT:
+            Param.aulCms[DISP_U_PACKLIFEL] = 1500; 
+            break;
+        default:
+            Param.aulCms[DISP_U_PACKLIFEL] = 3000; 
+            break;
         }
     }
 
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_AT_PACKLIFEDAY])
     {
-        Param.aulCms[DISP_AT_PACKLIFEDAY] = 360; 
+        Param.aulCms[DISP_AT_PACKLIFEDAY] = 180; 
     }
-    
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_AT_PACKLIFEL])
     {
-        Param.aulCms[DISP_AT_PACKLIFEL] = 6000; // 
+        Param.aulCms[DISP_AT_PACKLIFEL] = 0; // 
     }
 
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_H_PACKLIFEDAY])
     {
         Param.aulCms[DISP_H_PACKLIFEDAY] = 360; 
     }
-    
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_H_PACKLIFEL])
     {
-        Param.aulCms[DISP_H_PACKLIFEL] = 3000; //
+        switch(iMachineType)
+        {
+        case MACHINE_L_Genie:
+        case MACHINE_L_EDI_LOOP:
+        case MACHINE_L_RO_LOOP:
+        case MACHINE_L_UP:
+            Param.aulCms[DISP_H_PACKLIFEL] = 6000; 
+            break;
+        default:
+            Param.aulCms[DISP_H_PACKLIFEL] = 3000; 
+            break;
+        }
     }
-
 
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_N1_UVLIFEDAY])
     {
@@ -875,7 +899,7 @@ void MainRetriveCMParam(int iMachineType,DISP_CONSUME_MATERIAL_STRU  &Param)
     }
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_N1_UVLIFEHOUR])
     {
-        Param.aulCms[DISP_N1_UVLIFEHOUR] = 1500; //
+        Param.aulCms[DISP_N1_UVLIFEHOUR] = 2500; //
     }
 
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_N2_UVLIFEDAY])
@@ -884,7 +908,7 @@ void MainRetriveCMParam(int iMachineType,DISP_CONSUME_MATERIAL_STRU  &Param)
     }
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_N2_UVLIFEHOUR])
     {
-        Param.aulCms[DISP_N2_UVLIFEHOUR] = 500; //
+        Param.aulCms[DISP_N2_UVLIFEHOUR] = 2500; //
     }
 
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_N3_UVLIFEDAY])
@@ -893,7 +917,7 @@ void MainRetriveCMParam(int iMachineType,DISP_CONSUME_MATERIAL_STRU  &Param)
     }
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_N3_UVLIFEHOUR])
     {
-        Param.aulCms[DISP_N3_UVLIFEHOUR] = 1500; //
+        Param.aulCms[DISP_N3_UVLIFEHOUR] = 2500; //
     }
 
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_N4_UVLIFEDAY])
@@ -927,7 +951,7 @@ void MainRetriveCMParam(int iMachineType,DISP_CONSUME_MATERIAL_STRU  &Param)
 
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_T_B_FILTERLIFE])
     {
-        Param.aulCms[DISP_T_B_FILTERLIFE] = 360; //
+        Param.aulCms[DISP_T_B_FILTERLIFE] = 0; //
     }
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_T_A_FILTERLIFE])
     {
@@ -939,11 +963,11 @@ void MainRetriveCMParam(int iMachineType,DISP_CONSUME_MATERIAL_STRU  &Param)
     }
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_TUBE_DI_LIFE])
     {
-        Param.aulCms[DISP_TUBE_DI_LIFE] = 180; // 
+        Param.aulCms[DISP_TUBE_DI_LIFE] = 360; // 
     }
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_ROC12LIFEDAY])
     {
-        Param.aulCms[DISP_ROC12LIFEDAY] = 360; //
+        Param.aulCms[DISP_ROC12LIFEDAY] = 0; //
     }
     
     if (config)
