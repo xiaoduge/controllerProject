@@ -8000,6 +8000,7 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                     //ex
                     ex_gCcb.Ex_Delay_Tick.ulDecPressure = ex_gulSecond;
                     ex_gCcb.EX_Check_State.bit1CheckDecPressure = 1;
+					ex_gCcb.Ex_Delay_Tick.iHandleType = pItem->iType;
                     //end
 
                     DispSetSubWorkState4Pw(DISP_WORK_SUB_IDLE_DEPRESSURE);

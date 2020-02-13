@@ -93,6 +93,7 @@ typedef struct
 typedef struct
 {
     unsigned int ulDecPressure; //DecPressure;
+    int iHandleType;
 }EX_DELAY_TICK;
 
 typedef struct

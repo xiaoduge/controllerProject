@@ -15085,8 +15085,7 @@ void Ex_DispDecPressure()
     {
         if((ex_gulSecond - ex_gCcb.Ex_Delay_Tick.ulDecPressure) > 30)
         {
-            int     iType = APP_DEV_HS_SUB_NUM;
-            CcbNotDecPressure(iType, 0);
+            CcbNotDecPressure(ex_gCcb.Ex_Delay_Tick.iHandleType, 0);
         }
     }
 }
