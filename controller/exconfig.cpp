@@ -1,4 +1,7 @@
 #include "exconfig.h"
 
 // 程序版本号
-const QString gAppVersion = QString("0.2.1 Built on %1 %2").arg(__DATE__).arg(__TIME__);
+#define VERSION "0.2.1" " Built on " __DATE__ " " __TIME__
+#pragma message(VERSION)
+
+const QString gAppVersion = VERSION;
