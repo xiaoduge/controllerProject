@@ -2917,7 +2917,8 @@ void CheckConsumptiveMaterialState(void)
         }
     } 
 
-    if (ulCurTime > gGlobalParam.CleanParam.aCleans[DISP_CLEAN_RO].period)
+    if ((ulCurTime > gGlobalParam.CleanParam.aCleans[DISP_CLEAN_RO].period)
+		&& (iMask & (1 << DISP_ROC12)))
     {
         if(!(gGlobalParam.iMachineType == MACHINE_PURIST))
         {
