@@ -119,6 +119,9 @@ typedef enum
     WORK_MSG_TYPE_SKH,  /* Start Key Handle */
     WORK_MSG_TYPE_EKH,  /* End Key Handle */
 
+    WORK_MSG_TYPE_SLH,  /* Start Leak Handle */
+    WORK_MSG_TYPE_ELH,  /* End Leak Handle */
+
     WORK_MSG_TYPE_EPW,  /* End  */
 
     WORK_MSG_TYPE_ESR,  /* End of Speed Regulation */
@@ -4920,7 +4923,7 @@ void checkB2ToProcessB2Full()
 void checkB3ToProcessB3Full()
 {
     float fValue = CcbConvert2Pm3SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM3_NO].Value.ulV);
-    if((fValue >= B3_FULL) || (getKeyState() & (1 << APP_EXE_DIN_LEAK_KEY)))
+    if((fValue >= B3_FULL) || (getKeyState() & (1 << APP_EXE_DIN_LEAK_KEY)) || getLeakState())
     {
         if (!SearchWork(work_stop_fill_water))
         {
@@ -4937,7 +4940,7 @@ void checkB3ToProcessB3NeedFill()
 {
     float fValue = CcbConvert2Pm3SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM3_NO].Value.ulV);
 
-	if(getKeyState() & (1 << APP_EXE_DIN_LEAK_KEY))
+	if((getKeyState() & (1 << APP_EXE_DIN_LEAK_KEY)) ||  getLeakState())
 	{
 		return;
 	}
@@ -5910,7 +5913,6 @@ void CcbNotDecPressure(int iType,int iAction)
     
 }
 
-
 void CcbNotSWPressure(void)
 {
 
@@ -6530,7 +6532,192 @@ void CcbCancelKeyWork(void *param)
 {
     WORK_ITEM_STRU *pWorkItem = (WORK_ITEM_STRU *)param;
     pWorkItem = pWorkItem;
+}
+
+//NOTE: 2020.2.17 增加漏水单独处理程序, 需要测试
+/**
+ * @Author: dcj
+ * @Date: 2020-02-17 12:20:07
+ * @LastEditTime: 2020-02-17 12:20:07
+ * @Description: 处理漏水保护信号出错时，设置当前状态未发生漏水且发送失败通知
+ * @Param : 
+ * @Return: 
+ */
+void work_start_Leak_fail(int iKeyId)
+{
+    int aiCont[1] = {-1};
+    gCcb.ucLeakWorkStates = 0; 
+    MainSndWorkMsg(WORK_MSG_TYPE_SLH, (unsigned char *)aiCont, sizeof(aiCont));
+}
+
+/**
+ * @Author: dcj
+ * @Date: 2020-02-17 12:21:45
+ * @LastEditTime: 2020-02-17 12:21:45
+ * @Description: 处理漏水保护信号成功时，发送成功通知
+ * @Param : 
+ * @Return: 
+ */
+void work_start_Leak_succ(void)
+{
+    int aiCont[1] = {0};
+    MainSndWorkMsg(WORK_MSG_TYPE_SLH, (unsigned char *)aiCont, sizeof(aiCont));
+}
+
+/**
+ * @Author: dcj
+ * @Date: 2020-02-17 12:24:51
+ * @LastEditTime: 2020-02-17 12:24:51
+ * @Description: 漏水保护处理任务：发生漏水时，关闭所有负载并触发漏水保护报警
+ * @Param : 
+ * @Return: 
+ */
+void work_start_Leak(void *para)
+{
+    WORK_ITEM_STRU *pWorkItem = (WORK_ITEM_STRU *)para;
+    int iTmp = 0;
+
+    /* stop all */
+    int iRet = CcbSetSwitch(pWorkItem->id, 0, iTmp); // don care modbus exe result
+    if (iRet )
+    {
+        VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet);
+        /* notify ui (late implemnt) */
+        work_start_Leak_fail((int)pWorkItem->extra);
+        return ;
+    }
+
+    gCcb.bit1LeakKey4Reset = TRUE;
+    CcbNotAlarmFire(0XFF, DISP_ALARM_B_LEAK, TRUE);
+
+    CanCcbTransState(DISP_WORK_STATE_KP, DISP_WORK_SUB_IDLE);
+    work_start_Leak_succ();
+}
+
+/**
+ * @Author: dcj
+ * @Date: 2020-02-17 12:26:43
+ * @LastEditTime: 2020-02-17 12:26:43
+ * @Description: 
+ * @Param : 
+ * @Return: 
+ */
+void work_stop_Leak_succ(void)
+{
+    int aiCont[1] = {0};
+    MainSndWorkMsg(WORK_MSG_TYPE_ELH, (unsigned char *)aiCont, sizeof(aiCont));
+}
+
+/**
+ * @Author: dcj
+ * @Date: 2020-02-17 12:27:00
+ * @LastEditTime: 2020-02-17 12:27:00
+ * @Description: 漏水保护恢复处理任务：漏水保护恢复后，消除漏水报警，并设置当前未发生漏水
+ * @Param : 
+ * @Return: 
+ */
+void work_stop_Leak(void *para)
+{
+    CcbNotAlarmFire(0XFF, DISP_ALARM_B_LEAK, FALSE);
+    gCcb.ucLeakWorkStates = 0; //设置当前未发生漏水保护
+    work_stop_Leak_succ();
+}
+
+/**
+ * @Author: dcj
+ * @Date: 2020-02-17 12:29:15
+ * @LastEditTime: Do not edit
+ * @Description: 发生漏水保护时设备停止取水、停止运行，并启动漏水保护处理任务
+ * @Param : 
+ * @Return: 
+ */
+DISPHANDLE CcbInnerWorkStartLeakWok()
+{
+    int iLoop;
+    //如果漏水保护停止机器运行
+    if(gCcb.ExeBrd.ucLeakState)
+    {
+        if (DISP_WORK_STATE_IDLE != DispGetWorkState())
+        {
+            DispCmdEntry(DISP_CMD_HALT, NULL, 0);
+        }
+
+        for (iLoop = 0; iLoop < MAX_HANDLER_NUM; iLoop++)
+        {
+            if (gCcb.aHandler[iLoop].bit1Qtw)
+            {
+                gCcb.aHandler[iLoop].bit1Qtw = 0;
+            }
+        }
+    } 
+
+    WORK_ITEM_STRU *pWorkItem = CcbAllocWorkItem();
+
+    if (!pWorkItem)
+    {
+        return DISP_INVALID_HANDLE;
+    }
+
+    pWorkItem->proc = work_start_Leak;
+    pWorkItem->cancel = CcbCancelKeyWork;
+
+    CcbAddWork(WORK_LIST_URGENT, pWorkItem);
+
+    return (DISPHANDLE)pWorkItem;
+}
+
+/**
+ * @Author: dcj
+ * @Date: 2020-02-17 12:10:45
+ * @LastEditTime: 2020-02-17 12:10:45
+ * @Description: 漏水信号消失时启动对应的处理任务
+ * @Param : 
+ * @Return: 
+ */
+DISPHANDLE CcbInnerWorkStopLeakWork()
+{
+    WORK_ITEM_STRU *pWorkItem = CcbAllocWorkItem();
+
+    if (!pWorkItem)
+    {
+        return DISP_INVALID_HANDLE;
+    }
+
+    pWorkItem->proc = work_stop_Leak;
+    pWorkItem->cancel = NULL;
+    CcbAddWork(WORK_LIST_LP, pWorkItem);
+
+    return (DISPHANDLE)pWorkItem;
+}
+
+/**
+ * @Author: dcj
+ * @Date: 2020-02-17 12:09:08
+ * @LastEditTime: 2020-02-17 
+ * @Description: 用于处理从Can总线获取的漏水保护信号
+ * @Param : 
+ * @Return: 
+ */
+void CanCcbLeakProcess(void)
+{
+    VOS_LOG(VOS_LOG_WARNING, "%s %d", __FUNCTION__, gCcb.ExeBrd.ucLeakState);    
     
+    if(gCcb.ExeBrd.ucLeakState)
+    {
+        if(!gCcb.ucLeakWorkStates)
+        {
+            CcbInnerWorkStartLeakWok();
+            gCcb.ucLeakWorkStates = gCcb.ExeBrd.ucLeakState;
+            return;
+        }
+    }
+    else
+    {
+        if(gCcb.ucLeakWorkStates)
+        {
+            CcbInnerWorkStopLeakWork();
+        }
+    }
 }
 
 void work_start_key_fail(int iKeyId)
@@ -6599,7 +6786,7 @@ void work_start_key(void *para)
             }
 
             pCcb->bit1LeakKey4Reset = TRUE;
-            CcbNotAlarmFire(0XFF,DISP_ALARM_B_LEAK,TRUE);
+            CcbNotAlarmFire(0XFF, DISP_ALARM_B_TANKOVERFLOW, TRUE);
 
             CanCcbTransState(DISP_WORK_STATE_KP,DISP_WORK_SUB_IDLE);
         }
@@ -6656,7 +6843,7 @@ void work_stop_key(void *para)
         break;
     case APP_EXE_DIN_LEAK_KEY:
         {
-            CcbNotAlarmFire(0XFF, DISP_ALARM_B_LEAK, FALSE);
+            CcbNotAlarmFire(0XFF, DISP_ALARM_B_TANKOVERFLOW, FALSE);
         }
         break;
     }
@@ -7075,14 +7262,18 @@ int CanCcbAfDataClientRpt4ExeBoard(MAIN_CANITF_MSG_STRU *pCanItfMsg)
     case APP_PACKET_DIN_STATUS:
         {
             APP_PACKET_RPT_DIN_STRU *pDin = (APP_PACKET_RPT_DIN_STRU *)pmg->aucData;
-            
             gCcb.ExeBrd.ucDinState = (~pDin->ucState) & APP_EXE_DIN_MASK;
-
             CanCcbAfDataClientRpt4ExeDinAck(pCanItfMsg);
-
-            // do something here
             CanCcbDinProcess();
         }        
+        break;
+	case APP_PACKET_RPT_LEAK:
+        {
+            APP_PACKET_RPT_DIN_STRU *pDin = (APP_PACKET_RPT_DIN_STRU *)pmg->aucData;
+            gCcb.ExeBrd.ucLeakState = pDin->ucState;
+            CanCcbAfDataClientRpt4ExeDinAck(pCanItfMsg);
+            CanCcbLeakProcess();
+        }
         break;
     case APP_PACKET_MT_STATUS:
         break;
@@ -10119,7 +10310,6 @@ void CcbWorMsgProc(SAT_MSG_HEAD *pucMsg)
             gCcb.bit1N3Active = 0;
         }
         break;
-
     case WORK_MSG_TYPE_SKH:
         {
             int aResult[1];
@@ -10138,6 +10328,32 @@ void CcbWorMsgProc(SAT_MSG_HEAD *pucMsg)
             if (gCcb.ExeBrd.ucDinState & APP_EXE_DIN_FAIL_MASK)
             {
                 CanCcbDinProcess();
+            }
+            else
+            {
+                /* restore to previous working state */
+                CanCcbRestore();
+            }
+        }
+        break;
+    case WORK_MSG_TYPE_SLH:
+        {
+            int aResult[1];
+    
+            memcpy(aResult,pWorkMsg->aucData,sizeof(aResult));
+            CcbNotAscInfo(pWorkMsg->iSubMsg*2 + !!aResult[0]);
+
+            if (aResult[0])
+            {
+                CanCcbLeakProcess();
+            }
+        }
+        break;
+    case WORK_MSG_TYPE_ELH:
+        {
+            if (gCcb.ExeBrd.ucLeakState)
+            {
+               CanCcbLeakProcess();
             }
             else
             {
@@ -13205,6 +13421,9 @@ DISPHANDLE DispCmdLeakResetProc(void)
 
     // CcbPopState();
 
+    gCcb.ucLeakWorkStates = 0; //2020.2.17 add for leak
+    gCcb.ExeBrd.ucLeakState = 0;
+	
     gCcb.ulKeyWorkStates   &= ~(1 << APP_EXE_DIN_LEAK_KEY) ;    
     gCcb.ExeBrd.ucDinState &= ~(1 << APP_EXE_DIN_LEAK_KEY) ;   
     gCcb.bit1LeakKey4Reset = FALSE;
@@ -13373,7 +13592,7 @@ DISPHANDLE CcbInnerWorkStopTubeCir(void)
  */
 void CheckToStartAllocCir()
 {
-	if(getKeyState() & (1 << APP_EXE_DIN_LEAK_KEY))
+	if((getKeyState() & (1 << APP_EXE_DIN_LEAK_KEY)) ||  getLeakState())
 	{
 		VOS_LOG(VOS_LOG_DEBUG,"CheckToStartAllocCir Error: APP_EXE_DIN_LEAK_KEY"); 
 		return;
@@ -13395,7 +13614,8 @@ void CheckToStartAllocCir()
 void CheckToStopAllocCir()
 {
     if((CcbConvert2Pm2SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM2_NO].Value.ulV)  < CcbGetSp6())
-	   || (getKeyState() & (1 << APP_EXE_DIN_LEAK_KEY)))
+	   || (getKeyState() & (1 << APP_EXE_DIN_LEAK_KEY))
+	   ||  getLeakState())
     {
         if (!SearchWork(work_stop_tube_cir))
         {
@@ -13444,7 +13664,7 @@ void TubeCirWithoutSetTime()
     {
         gCcb.ulTubeIdleCirTick++;
         if ((gCcb.ulTubeIdleCirTick >= (unsigned int)gCcb.MiscParam.iTubeCirDuration * 60)
-			|| (getKeyState() & (1 << APP_EXE_DIN_LEAK_KEY))) /* Minute to second */
+			|| (getKeyState() & (1 << APP_EXE_DIN_LEAK_KEY)) ||  getLeakState()) /* Minute to second */
         {
             if (!SearchWork(work_stop_tube_cir))
             {
@@ -15452,6 +15672,12 @@ unsigned int  getKeyState()
 {
     return gCcb.ulKeyWorkStates;
 }
+
+unsigned char  getLeakState()
+{
+    return gCcb.ucLeakWorkStates;
+}
+
 
 #ifdef __cplusplus
 }

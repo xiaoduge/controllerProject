@@ -111,7 +111,7 @@
 #define APP_EXE_DIN_NUM       (3)
 
 #define APP_EXE_DIN_MASK      ((1<<APP_EXE_DIN_NUM)-1)
-#define APP_EXE_DIN_LEAK_KEY  (APP_EXE_DIN2_NO)
+#define APP_EXE_DIN_LEAK_KEY  (APP_EXE_DIN2_NO)  //2020.2.17 仅用于水箱溢流保护不再用于漏水保护
 #define APP_EXE_DIN_IWP_KEY   (APP_EXE_DIN3_NO)  /* Incoming water pressure */
 #define APP_EXE_DIN_RF_KEY    (APP_EXE_DIN1_NO)  /* Reverse Flush key */
 #define APP_EXE_DIN_FAIL_MASK (APP_EXE_DIN_MASK & (~(1 << APP_EXE_DIN_IWP_KEY)))
@@ -342,8 +342,8 @@ typedef enum
     APP_PACKET_RPT_RPUMP  ,      
     APP_PACKET_RPT_RECT   ,      
     APP_PACKET_RPT_EDI    ,       
-    APP_PACKET_RPT_TOC,
-        
+    APP_PACKET_RPT_TOC    ,
+    APP_PACKET_RPT_LEAK   ,
 }APP_PACKET_RPT_EXE_BOARD_TYPE;
 
 typedef enum

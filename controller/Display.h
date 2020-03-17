@@ -312,7 +312,7 @@ typedef enum
     DISP_ALARM_EdiProduct ,          //   edi qushui
     DISP_ALARM_UPProduct,            //   up qushui
     DISP_ALARM_TOC,                  //   TOC
-    DISP_ALARM_B_OVERLOAD,
+    DISP_ALARM_B_TANKOVERFLOW,
     DISP_ALARM_B_LEAK,
     DISP_ALARM_N1,                
     DISP_ALARM_N2,
@@ -338,7 +338,7 @@ typedef enum
 #define ALARM_EDI  (1 << DISP_ALARM_EdiProduct)
 #define ALARM_UP   (1 << DISP_ALARM_UPProduct)
 #define ALARM_TOC  (1 << DISP_ALARM_TOC)
-#define ALARM_BO   (1 << DISP_ALARM_B_OVERLOAD)
+#define ALARM_BO   (1 << DISP_ALARM_B_TANKOVERFLOW)
 #define ALARM_BL   (1 << DISP_ALARM_B_LEAK)
 #define ALARM_N1   (1 << DISP_ALARM_N1)
 #define ALARM_N2   (1 << DISP_ALARM_N2)

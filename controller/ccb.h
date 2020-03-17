@@ -71,6 +71,7 @@ typedef struct
     DISP_OBJ_STRU aEcoObjs[APP_EXE_ECO_NUM];
 
     unsigned char ucDinState;
+    unsigned char ucLeakState; //2020.2.17 增加用于新漏水保护信号
 
     unsigned short ausHoldRegister[APP_EXE_MAX_HOLD_REGISTERS];
 
@@ -351,6 +352,7 @@ typedef struct
    unsigned int     ulFiredAlarmFlags;
 
    unsigned int     ulKeyWorkStates;
+   unsigned char    ucLeakWorkStates; //2020.2.17 漏水保护状态
 
    WORK_SETUP_REPORT_STRU WorkRptSetParam4Exe;
    WORK_SETUP_REPORT_STRU WorkRptSetParam4Fm;
