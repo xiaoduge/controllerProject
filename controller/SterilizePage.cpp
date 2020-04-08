@@ -354,6 +354,12 @@ void SterilizePage::on_btn_clicked(int index)
                     dlg.exec();
                     bError = true;
                 }
+				if( getLeakState())
+				{
+				    DWarningDlg dlg(tr("system leakage detected. Please fix the issue and re-start the starem."));
+		            dlg.exec();
+		            bError = true;
+				}
                 if (!m_wndMain->getActiveExeBrds())
                 {
                     DWarningDlg dlg(tr("System communication is abnormal. Please restart the device or contact a service engineer."));

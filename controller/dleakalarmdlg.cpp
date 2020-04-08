@@ -63,7 +63,7 @@ void DLeakAlarmDlg::initUI()
 
 void DLeakAlarmDlg::on_pushButton_Reset()
 {
-    if(getKeyState() & (1 << APP_EXE_DIN_LEAK_KEY))
+    if(getKeyState() & (1 << APP_EXE_DIN_LEAK_KEY) ||  getLeakState())
     {
         return;
     }

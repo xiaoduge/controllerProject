@@ -7860,6 +7860,7 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                     switch(pInfo->ucId)
                     {
                     case DISP_ALARM_B_LEAK:
+                    case DISP_ALARM_B_TANKOVERFLOW:
                         alarmCommProc(!!pInfo->ucFlag, DISP_ALARM_PART1, DISP_ALARM_PART1_LEAK_OR_TANKOVERFLOW);
                         /* show lockup dialog */
                         if (!m_bLockupDlg && pInfo->ucFlag)
@@ -7869,7 +7870,7 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                             m_bLockupDlg = true;
                             dlg.exec() ;
                         }
-                        break;                      
+                        break;
                     default :
                         break;
                     }       
@@ -8515,6 +8516,12 @@ void MainWindow::run(bool bRun)
             bError = true;
         }
 
+		if( getLeakState())
+		{
+		    DWarningDlg dlg(tr("system leakage detected. Please fix the issue and re-start the starem."));
+            dlg.exec();
+            bError = true;
+		}
 
         if (!getActiveExeBrds())
         {

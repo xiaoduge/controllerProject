@@ -120,6 +120,7 @@ extern unsigned short g_bNewPPack;
 
 int Ex_FactoryTest(int select);
 unsigned int getKeyState(); //2019.9.16 add
+unsigned char getLeakState(); //2020.2.17 add
 
 #ifdef __cplusplus
 }
