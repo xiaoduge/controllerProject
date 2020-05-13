@@ -577,6 +577,8 @@ private:
     QProcess m_mqttProcess;
     bool mqttProcessRun;
     int mqttNum;
+
+	int excepCounter; //系统状态异常次数
     //
 #endif
 private:

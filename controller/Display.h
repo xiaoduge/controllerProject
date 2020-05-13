@@ -225,7 +225,7 @@ typedef struct
 #define MM_DEFALUT_SP27 5//           
 #define MM_DEFALUT_SP28 45//        TOC传感器温度 上限45℃ 下限5℃  
 #define MM_DEFALUT_SP29 5//           
-#define MM_DEFALUT_SP30 15.0//        TOC进水水质下限15.0MΩ.cm   
+#define MM_DEFALUT_SP30 10.0//        TOC进水水质下限15.0MΩ.cm   
 #define MM_DEFALUT_SP31 1.0//        HP循环(水箱循环)水质下限15.0MΩ.cm   
 #define MM_DEFALUT_SP32 0.0//        HP产水水质下限15.0MΩ.cm   
 #define MM_DEFALUT_SP33 12.0//       bar 
