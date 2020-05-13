@@ -297,7 +297,7 @@ void DCheckConsumaleInstall::retriveCMInfoWithRFID(int type)
 */
 bool DCheckConsumaleInstall::comparedWithSql()
 {
-    if(!checkDatabaseConnect())
+    if(!checkDatabaseConnect() || m_lotNo.isEmpty() || m_catNo.isEmpty())
     {
         return false;
     }

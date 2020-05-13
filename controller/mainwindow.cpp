@@ -1106,10 +1106,20 @@ void MainRetriveCalibrateParam(int iMachineType)
     QList<QVariant> defaultList;
     defaultList << QVariant(1.0) << QVariant(1.0) << QVariant(1.0);
 
+    //UP水质默认保险系数1.05
+    QList<QVariant> upList;
+    upList << QVariant(1.05) << QVariant(1.0) << QVariant(1.0);
+
     for(int i = 0; i < DISP_PC_COFF_NUM; i++)
     {
         QString strKey = QString("%1").arg(i);
-        QList<QVariant> list = config->value(strKey, defaultList).toList();
+		QList<QVariant> list = config->value(strKey, defaultList).toList();;
+
+        if(i == DISP_PC_COFF_UP_WATER_CONDUCT)
+        {
+            list = config->value(strKey, upList).toList();
+        }
+        
         gCaliParam.pc[i].fk = list[0].toFloat();
         gCaliParam.pc[i].fc = list[1].toFloat();
     }
@@ -4046,7 +4056,7 @@ MainWindow::MainWindow(QMainWindow *parent) :
 
     m_bC1Regulator = false;
     g_bNewPPack = 0;
-
+	excepCounter = 0;
     //Set the factory default time for RFID tags
     m_consuambleInitDate = QString("2014-05-22");
 	initMachineName();
@@ -8650,21 +8660,26 @@ void MainWindow::run(bool bRun)
 
             gAdditionalCfgParam.lastRunState = 1;
             MainSaveLastRunState(gGlobalParam.iMachineType);
-
+			excepCounter = 0;
             return;
         }
-
-        DRunWarningDialog exceptDlg(tr("System exception. Need to reload the system program. Restart the system now?"));
-        exceptDlg.setButtonText(0, tr("Yes"));
-        exceptDlg.setButtonText(0, tr("No"));
-        if(QDialog::Accepted == exceptDlg.exec())
-        {
-            this->restart();
-        }
+		
+		++excepCounter;
+		if(excepCounter > 3)
+		{
+	        DRunWarningDialog exceptDlg(tr("System exception. Need to reload the system program. Restart the system now?"));
+	        exceptDlg.setButtonText(0, tr("Yes"));
+	        exceptDlg.setButtonText(1, tr("No"));
+	        if(QDialog::Accepted == exceptDlg.exec())
+	        {
+	            this->restart();
+	        }
+    	}
 
         if (typeid(*m_pCurPage) == typeid(MainPage))
         {
             pMainPage->updateRunInfo(false);
+			excepCounter = 0;
         }
         
         return ;
@@ -9185,10 +9200,23 @@ int MainWindow::getActiveRfidBrds()
     {
         if ((m_iRfidActiveMask & MacRfidMap.ulMask4Normlwork) & (1 << iLoop))
         {
-           if (MacRfidMap.aiDeviceType4Normal[iLoop] != m_aRfidInfo[iLoop].getPackType())
-           {
-               return -(MacRfidMap.aiDeviceType4Normal[iLoop] | 0XFF00);
-           }
+            if (MacRfidMap.aiDeviceType4Normal[iLoop] != m_aRfidInfo[iLoop].getPackType())
+            {
+                //如果读取到RFID错误，则重新读取，再次测试
+                int iRet = gpMainWnd->readRfid(iLoop);
+                if (iRet)
+                {
+                    qDebug() << "readRfid failed";
+                }
+
+                if ((m_iRfidActiveMask & MacRfidMap.ulMask4Normlwork) & (1 << iLoop))
+                {
+                    if (MacRfidMap.aiDeviceType4Normal[iLoop] != m_aRfidInfo[iLoop].getPackType())
+                    {
+                        return -(MacRfidMap.aiDeviceType4Normal[iLoop] | 0XFF00);
+                    }
+                }
+            }
         }
         else if (MacRfidMap.ulMask4Normlwork &  (1 << iLoop))
         {
