@@ -8674,12 +8674,15 @@ void MainWindow::run(bool bRun)
 	        {
 	            this->restart();
 	        }
+			else
+			{
+				excepCounter = 0;
+			}
     	}
 
         if (typeid(*m_pCurPage) == typeid(MainPage))
         {
             pMainPage->updateRunInfo(false);
-			excepCounter = 0;
         }
         
         return ;

@@ -775,7 +775,7 @@ void AlarmDisplayPage::csUpdate()
                 
                 m_pCslistItem[iIdx]->updateState(1);
                 m_pCslistItem[iIdx]->setId(iIdx);
-                m_pCslistItem[iIdx]->setName(tr("U PACK"));
+                m_pCslistItem[iIdx]->setName(tr("H PACK"));
                 iIdx++;
             }
             break;              
