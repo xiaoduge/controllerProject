@@ -204,6 +204,7 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
     case MACHINE_Genie:
     case MACHINE_UP:
     case MACHINE_ADAPT:
+	case MACHINE_PURIST:
         aIds[iIdx].iType = 0;
         aIds[iIdx].iId   = DISP_T_B_FILTER;
         iIdx++;

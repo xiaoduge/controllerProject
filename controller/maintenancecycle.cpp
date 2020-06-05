@@ -264,6 +264,7 @@ MaintenanceCyclePage::MaintenanceCyclePage(QObject *parent,CBaseWidget *widget ,
     case MACHINE_Genie:
     case MACHINE_UP:
     case MACHINE_ADAPT:
+	case MACHINE_PURIST:
         aIds[iIdx].iDspType = 1;
         aIds[iIdx].iId      = DISP_T_B_FILTER;
         aIds[iIdx].vi.v1Min = 0;
