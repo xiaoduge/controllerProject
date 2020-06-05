@@ -460,6 +460,7 @@ void DInitConsumableInsPage::initOtherConfig()
     case MACHINE_Genie:
     case MACHINE_UP:
     case MACHINE_ADAPT:
+	case MACHINE_PURIST:
         install_info.iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
         if(0 == gAdditionalCfgParam.productInfo.iCompany)
         {

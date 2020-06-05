@@ -648,11 +648,14 @@ void ConsumableInsPage::initNormalItem()
     case MACHINE_Genie:
     case MACHINE_UP:
     case MACHINE_ADAPT:
+	case MACHINE_PURIST:
         aIds[iIdx].iType = 0;
         aIds[iIdx].iId   = DISP_T_B_FILTER;
         aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
         iIdx++;
         break;
+	default:
+		break;
     }
     
     switch(gGlobalParam.iMachineType)
@@ -902,6 +905,7 @@ void ConsumableInsPage::initManualItem()
     case MACHINE_Genie:
     case MACHINE_UP:
     case MACHINE_ADAPT:
+	case MACHINE_PURIST:
         aIds[iIdx].iType = 0;
         aIds[iIdx].iId   = DISP_T_B_FILTER;
         aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
