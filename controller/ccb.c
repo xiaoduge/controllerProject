@@ -3257,7 +3257,7 @@ void work_start_qtw(void *para)
                 }
                 else
                 {
-                    iTmp  = (1 << APP_EXE_E1_NO)|(1 << APP_EXE_E10_NO)|(1 << APP_EXE_C3_NO);
+                    iTmp  = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E9_NO)|(1 << APP_EXE_E10_NO)|(1 << APP_EXE_C3_NO);
                 }
 
                 iTmp |= (1<<APP_EXE_C1_NO);
@@ -3272,7 +3272,7 @@ void work_start_qtw(void *para)
                 }
                 else
                 {
-                    iTmp  = (1 << APP_EXE_E1_NO)|(1 << APP_EXE_E10_NO)|(1 << APP_EXE_C3_NO);
+                    iTmp  = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E9_NO)|(1 << APP_EXE_E10_NO)|(1 << APP_EXE_C3_NO);
                 }
 
                 iTmp |= (1<<APP_EXE_C1_NO);
