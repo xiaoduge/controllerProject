@@ -8858,15 +8858,23 @@ int CanCcbAfDataHOQtwReqMsg(MAIN_CANITF_MSG_STRU *pCanItfMsg)
                }
                else
                {
-                   CanCcbSaveQtwMsg(APP_TRX_CAN,pCanItfMsg);
+                    CanCcbSaveQtwMsg(APP_TRX_CAN,pCanItfMsg);
 
-                   /* remove cir work if any */
-                   CcbRmvWork(work_start_cir);
+                    /* remove cir work if any */
+                    if (DISP_WORK_STATE_RUN == gCcb.curWorkState.iMainWorkState4Pw
+                        && DISP_WORK_SUB_RUN_CIR == gCcb.curWorkState.iSubWorkState4Pw)
+                    {
+                        if (!SearchWork(work_stop_cir))
+                        {
+                        	CcbInnerWorkStopCir();
+                        } 
+                    }
+                    CcbRmvWork(work_start_cir);
                     
-                   /* construct work */
-                   CcbInnerWorkStartQtw(ucIndex);
+                    /* construct work */
+                    CcbInnerWorkStartQtw(ucIndex);
 
-                   return 0;
+                    return 0;
                }
             }
         }
@@ -9466,26 +9474,34 @@ int CanCcbZigbeeHOQtwReqMsg(ZBITF_MAIN_MSG_STRU *pZigbeeItfMsg)
             }
             else
             {
-               /* setup work */
-               if (CcbGetTwFlag())
-               {
+                /* setup work */
+                if (CcbGetTwFlag())
+                {
                     if (!gCcb.aHandler[ucIndex].bit1Qtw)
                     {
                         ucResult = APP_PACKET_HO_ERROR_CODE_UNSUPPORT; // current only support one tw
                     }
-               }
-               else
-               {
-                   CanCcbSaveQtwMsg(APP_TRX_ZIGBEE,pZigbeeItfMsg);
+                }
+                else
+                {
+                    CanCcbSaveQtwMsg(APP_TRX_ZIGBEE,pZigbeeItfMsg);
 
-                   /* remove cir work if any */
-                   CcbRmvWork(work_start_cir);
-                    
-                   /* construct work */
-                   CcbInnerWorkStartQtw(ucIndex);
+                    /* remove cir work if any */
+                    if (DISP_WORK_STATE_RUN == gCcb.curWorkState.iMainWorkState4Pw
+                        && DISP_WORK_SUB_RUN_CIR == gCcb.curWorkState.iSubWorkState4Pw)
+                    {
+                        if (!SearchWork(work_stop_cir))
+                        {
+                        	CcbInnerWorkStopCir();
+                        } 
+                    }
+                    CcbRmvWork(work_start_cir);
 
-                   return 0;
-               }
+                    /* construct work */
+                    CcbInnerWorkStartQtw(ucIndex);
+
+                    return 0;
+                }
             }
         }
         break;
@@ -13968,6 +13984,14 @@ DISPHANDLE DispCmdTw(unsigned char *pucData, int iLength)
             }
             
             /* remove cir work if any */
+            if (DISP_WORK_STATE_RUN == gCcb.curWorkState.iMainWorkState4Pw
+                && DISP_WORK_SUB_RUN_CIR == gCcb.curWorkState.iSubWorkState4Pw)
+            {
+                if (!SearchWork(work_stop_cir))
+                {
+                	CcbInnerWorkStopCir();
+                } 
+            }
             CcbRmvWork(work_start_cir);
              
             /* construct work */
