@@ -11360,11 +11360,11 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem, CCB *pCcb, RUN_COMM_CALL_BACK
                 /* 开始产水：E1,C1,C3 ON I1b,I2,B1,B2,S2,S3,S4 */
                 if(haveB3(&gCcb))
                 {
-                    iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_C1_NO)|(1<<APP_EXE_C3_NO);
+                    iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_C1_NO)|(1<<APP_EXE_C3_NO)|(1 << APP_EXE_N1_NO);
                 }
                 else
                 {
-                    iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_C1_NO)|(1 << APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
+                    iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_C1_NO)|(1 << APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO)|(1 << APP_EXE_N1_NO);
                 }
 
                 iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
