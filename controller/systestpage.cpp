@@ -840,7 +840,7 @@ void SysTestPage::on_item_cmb_changed(int value)
 	case MACHINE_L_UP:
 	case MACHINE_L_RO_LOOP:
     case MACHINE_L_EDI_LOOP:
-        if(gAdditionalCfgParam.machineInfo.iMachineFlow >= 500)
+        //if(gAdditionalCfgParam.machineInfo.iMachineFlow >= 500)
         {
             switch(iSel)
             {
