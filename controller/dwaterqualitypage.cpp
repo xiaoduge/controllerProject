@@ -219,6 +219,17 @@ void DWaterQualityPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info)
             case MACHINE_UP:
             case MACHINE_ADAPT:
                 break;
+			case MACHINE_EDI:
+				if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
+				{
+		            updateValue(m_tags[HP_Resis],
+                    			strWaterUnit.arg(toOneDecimal(fQ)),
+                    			strTempUnit.arg(toOneDecimal(fT)));
+
+	                m_historyInfo[HP_Resis].value1 = info->fQuality;
+	                m_historyInfo[HP_Resis].value2 = info->fTemperature;
+				}
+				break;
             default:
             {
                 updateValue(m_tags[HP_Resis],
@@ -277,14 +288,13 @@ void DWaterQualityPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info)
         m_historyInfo[EDI_Product].value1 = info->fQuality;
         m_historyInfo[EDI_Product].value2 = info->fTemperature;
 
-        if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
-        {
-            switch(gGlobalParam.iMachineType)
-            {
-            case MACHINE_RO:
-            case MACHINE_UP:
-            {
-                if (DispGetEdiQtwFlag() || DispGetTankCirFlag())
+		switch (gGlobalParam.iMachineType)	
+		{
+		case MACHINE_RO:
+		case MACHINE_UP:
+			if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
+			{
+				if (DispGetEdiQtwFlag() || DispGetTankCirFlag())
                 {
                     updateValue(m_tags[HP_Resis],
                             strWaterUnit.arg(fQ, 0, 'f', 1),
@@ -292,12 +302,22 @@ void DWaterQualityPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info)
                     m_historyInfo[HP_Resis].value1 = info->fQuality;
                     m_historyInfo[HP_Resis].value2 = info->fTemperature;
                 }
-                break;
-            }
-            default:
-                break;
-            }
-        }
+			}
+			break;
+		case MACHINE_EDI:
+			if(!(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir)))
+			{
+				updateValue(m_tags[HP_Resis],
+                            strWaterUnit.arg(fQ, 0, 'f', 1),
+                            strTempUnit.arg(fT, 0, 'f', 1));
+                m_historyInfo[HP_Resis].value1 = info->fQuality;
+                m_historyInfo[HP_Resis].value2 = info->fTemperature;
+			}
+			break;
+		default:
+			break;
+		}
+
     }
         break;
     case APP_EXE_I2_NO: // RO Out
