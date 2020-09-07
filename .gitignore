@@ -9,3 +9,8 @@ copyController
 
 #
 *.sh~
+
+*.qm
+*.ts
+*.pro.user
+*.pro.user.*
