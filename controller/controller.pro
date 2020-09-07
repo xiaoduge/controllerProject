@@ -133,7 +133,8 @@ SOURCES += main.cpp\
     dleakalarmdlg.cpp \
     dwarningdlg.cpp \
     dcheckboxlistitemwidget.cpp \
-    dinittankcfgwidget.cpp
+    dinittankcfgwidget.cpp \
+    dsettimedialog.cpp
 HEADERS  += mainwindow.h \
     ctrlapplication.h \
     log.h \
@@ -236,7 +237,8 @@ HEADERS  += mainwindow.h \
     dleakalarmdlg.h \
     dwarningdlg.h \
     dcheckboxlistitemwidget.h \
-    dinittankcfgwidget.h
+    dinittankcfgwidget.h \
+    dsettimedialog.h
 
 FORMS    += mainwindow.ui \
     syszuxpinyin.ui \

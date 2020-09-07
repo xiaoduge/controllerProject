@@ -491,6 +491,7 @@ private:
 	void initAlarmCfg();
 	void initConsumablesCfg();
 	void initRFIDCfg();
+    void checkDateTime();
     void initUI();
 
     

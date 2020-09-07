@@ -6,5 +6,6 @@
         <file>combox.qss</file>
         <file>Table.qss</file>
         <file>tabWidget.qss</file>
+        <file>settimedlg.qss</file>
     </qresource>
 </RCC>
