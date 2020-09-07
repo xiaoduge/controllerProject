@@ -12,5 +12,6 @@ copyController
 
 *.qm
 *.ts
+
 *.pro.user
 *.pro.user.*

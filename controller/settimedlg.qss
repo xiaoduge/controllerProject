@@ -1,0 +1,79 @@
+QLabel
+{
+    color:white;
+    font-size:18px;
+    font-family: "Arial";
+}
+
+QPushButton{
+    border: 2px solid white;
+    height: 32px;
+    min-width:120px;
+    background-color: #0067B3;
+    color: white;
+    font-weight:bold;
+    margin-top: 20px;
+    margin-left: 8px;
+    padding: 3px;
+    font-family: "Arial";
+}
+
+QPushButton:hover{
+    background-color: #5052BF;
+}
+
+QPushButton:pressed{
+    background-color: #7471DD;
+}
+
+QComboBox {
+    height: 35px;
+    border: 2px solid #66A4D1;
+    border-radius: 3px;
+    padding: 1px 18px 1px 3px;
+    color: white;
+    font: normal normal 18px "Arial";
+    background: #003E6B;
+}
+
+QComboBox QAbstractItemView {
+    border: 0px;
+    color: white;
+    background-color: #002541;
+    selection-background-color: gray;
+}
+
+QComboBox QAbstractItemView::item {
+    height: 35px;
+}
+
+QComboBox QAbstractScrollArea QScrollBar:vertical {
+    width: 25px;
+}
+
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: center right;
+    width: 18px;
+    height:18px;
+    padding:5px;
+    background-color: #003E6B;
+}
+
+QComboBox::down-arrow {
+    image: url(":/pic/downArrow.png");
+    width: 18px;
+    height:18px;
+    border:none;
+}
+
+QComboBox::down-arrow:hover{
+    border-image: url(":/pic/downArrow.png");
+    width: 18px;
+    height:18px;
+}
+
+QComboBox::down-arrow:on {
+    top: 0px;
+    left: 0px;
+}

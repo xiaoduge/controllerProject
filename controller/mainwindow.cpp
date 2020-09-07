@@ -66,6 +66,7 @@
 #include "printer.h"
 #include "dleakalarmdlg.h" 
 #include "dwarningdlg.h"
+#include "dsettimedialog.h"
 
 //#include "dscreensleepthread.h"
 //
@@ -2108,6 +2109,7 @@ void MainSaveCalibrateParam(int iMachineType, QMap<int, DISP_PARAM_CALI_ITEM_STR
     case MACHINE_L_RO_LOOP:
         switch(gAdditionalCfgParam.machineInfo.iMachineFlow)
         {
+        case MachineFlow_60:
         case MachineFlow_125:
         case MachineFlow_150:
         case MachineFlow_250:
@@ -3948,6 +3950,16 @@ void MainWindow::initRFIDCfg()
     }
 }
 
+void MainWindow::checkDateTime()
+{
+    QDate date = QDate::currentDate();
+    if(date < QDate(2016, 1, 1))
+    {
+        DSetTimeDialog *dlg = new DSetTimeDialog(this);
+        dlg->show();
+    }
+}
+
 void MainWindow::initUI()
 {
     int /*row,*/index;
@@ -4470,6 +4482,7 @@ void MainWindow::mainDisplay()
     {
         QTimer::singleShot(1000, this, SLOT(retriveLastRunState()));
     }
+    checkDateTime();
 }
 
 void MainWindow::updEcoInfo(int index)
