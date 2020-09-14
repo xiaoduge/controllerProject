@@ -8680,7 +8680,7 @@ void MainWindow::run(bool bRun)
 		++excepCounter;
 		if(excepCounter > 3)
 		{
-	        DRunWarningDialog exceptDlg(tr("System exception. Need to reload the system program. Restart the system now?"));
+	        DRunWarningDialog exceptDlg(tr("System exception. Need to reload the system program. Restart the system now?") + QString("Code : %1").arg(DispGetWorkState()));
 	        exceptDlg.setButtonText(0, tr("Yes"));
 	        exceptDlg.setButtonText(1, tr("No"));
 	        if(QDialog::Accepted == exceptDlg.exec())

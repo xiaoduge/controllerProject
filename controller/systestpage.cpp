@@ -903,7 +903,28 @@ void  SysTestPage::updateInfo(int major,int minor,float fValue)
         m_pSysTestlistItem[m_aiIndex[major] + minor]->setP1(QString::number(fValue,'f',1));
         break;
     case DISP_NOT_RECT:
-        m_pSysTestlistItem[m_aiIndex[major] + minor]->setP1(QString::number(fValue,'f',1));
+		switch(gGlobalParam.iMachineType) /* 185UV */
+		{
+		case MACHINE_L_Genie:
+		case MACHINE_L_UP:
+		case MACHINE_Genie:
+		case MACHINE_UP:
+		case MACHINE_PURIST:
+		case MACHINE_ADAPT:
+			m_pSysTestlistItem[m_aiIndex[major] + minor]->setP1(QString::number(fValue,'f',1));
+			break;
+		default:
+			if(2 == minor)
+			{
+				m_pSysTestlistItem[m_aiIndex[major] + minor - 1]->setP1(QString::number(fValue,'f',1));
+			}
+			else
+			{
+				m_pSysTestlistItem[m_aiIndex[major] + minor]->setP1(QString::number(fValue,'f',1));
+			}
+			break;
+		}
+        //m_pSysTestlistItem[m_aiIndex[major] + minor]->setP1(QString::number(fValue,'f',1));
         break;
     case DISP_NOT_RPUMP:
         if (minor & (1 << 8))
