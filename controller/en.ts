@@ -2999,25 +2999,25 @@
     <message>
         <location filename="dsettimedialog.cpp" line="51"/>
         <source>Set Time and Date</source>
-        <translation>设置时间和日期</translation>
+        <translation>Set Time and Date</translation>
     </message>
     <message>
         <location filename="dsettimedialog.cpp" line="52"/>
         <location filename="dsettimedialog.cpp" line="159"/>
         <source>Date</source>
-        <translation>日期</translation>
+        <translation>Date</translation>
     </message>
     <message>
         <location filename="dsettimedialog.cpp" line="53"/>
         <location filename="dsettimedialog.cpp" line="160"/>
         <source>Time</source>
-        <translation>时间</translation>
+        <translation>Time</translation>
     </message>
     <message>
         <location filename="dsettimedialog.cpp" line="54"/>
         <location filename="dsettimedialog.cpp" line="162"/>
         <source>Save</source>
-        <translation>保存</translation>
+        <translation>Save</translation>
     </message>
 </context>
 <context>

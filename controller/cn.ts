@@ -3305,25 +3305,25 @@
     <message>
         <location filename="dsettimedialog.cpp" line="51"/>
         <source>Set Time and Date</source>
-        <translation type="unfinished"></translation>
+        <translation>设置时间和日期</translation>
     </message>
     <message>
         <location filename="dsettimedialog.cpp" line="52"/>
         <location filename="dsettimedialog.cpp" line="159"/>
         <source>Date</source>
-        <translation type="unfinished"></translation>
+        <translation>日期</translation>
     </message>
     <message>
         <location filename="dsettimedialog.cpp" line="53"/>
         <location filename="dsettimedialog.cpp" line="160"/>
         <source>Time</source>
-        <translation type="unfinished">时间</translation>
+        <translation>时间</translation>
     </message>
     <message>
         <location filename="dsettimedialog.cpp" line="54"/>
         <location filename="dsettimedialog.cpp" line="162"/>
         <source>Save</source>
-        <translation type="unfinished">保存</translation>
+        <translation>保存</translation>
     </message>
 </context>
 <context>
