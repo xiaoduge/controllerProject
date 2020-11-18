@@ -11192,7 +11192,7 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem, CCB *pCcb, RUN_COMM_CALL_BACK
                     return;
                 }
             }
-        
+#if 0       //大机器使用低压开关判断压力，不使用SP1
             if (CcbConvert2Pm1Data(pCcb->ExeBrd.aPMObjs[APP_EXE_PM1_NO].Value.ulV) < CcbGetSp1())
             {
                 /* 1. ui promote */
@@ -11215,6 +11215,33 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem, CCB *pCcb, RUN_COMM_CALL_BACK
             
                     CcbNotAlarmFire(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE,TRUE);
                 }
+            
+                CanCcbTransState(DISP_WORK_STATE_LPP,DISP_WORK_SUB_IDLE);        
+                
+                return;
+            }
+#endif
+            if (!(gCcb.ExeBrd.ucDinState & (1 << APP_EXE_DIN_IWP_KEY)))            
+            {
+                /* 1. ui promote */
+                iTmp = 0; 
+                iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
+                if (iRet )
+                {
+                    VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet);
+                    cbf(pWorkItem->id);        
+                    return;
+                }
+        
+                /* fire alarm */
+                if (!gCcb.bit1AlarmTapInPress)
+                {
+                    gCcb.bit1AlarmTapInPress   = TRUE;
+                    gCcb.ulFiredAlarmFlags |= ALARM_TLP;
+                    CcbNotAlarmFire(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE,TRUE);
+                }
+
+                VOS_LOG(VOS_LOG_WARNING," DISP_WORK_STATE_LPP %d",iRet);  
             
                 CanCcbTransState(DISP_WORK_STATE_LPP,DISP_WORK_SUB_IDLE);        
                 

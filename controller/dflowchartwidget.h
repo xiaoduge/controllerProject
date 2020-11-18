@@ -1,14 +1,23 @@
+/**********************************************************
+ * @Author       dcj
+ * @Date         2020-10-28 14:48:28
+ * @Description  流程图控件，需要显示流程图，只需要在相应的界面加载此控件即可
+ * @Version      V0.0.1
+ **********************************************************/
 #ifndef DFLOWCHARTWIDGET_H
 #define DFLOWCHARTWIDGET_H
 
 #include <QWidget>
+#include <QPixmap>
 #include "Display.h"
+
+extern DISP_GLOBAL_PARAM_STRU gGlobalParam;
 
 class DFlowChartWidget : public QWidget
 {
     Q_OBJECT
-public:
-    enum BACKGROUND_IMAGE
+
+    enum MACHINETYPE
     {
         GENIE_G,
         GENIE_G_HPCIR,
@@ -24,58 +33,71 @@ public:
         GENIE_PURIST_TOC,
         GENIE_A,
         GENIE_A_TOC,
-        BACK_IMAGE_NUM
+        MACHINETYPE_NUM
     };
-    enum DEVICE_IMAGE
+
+    enum DEVICE
     {
-        VALVE_ON,
-        VALVE_E3_H1,
-        VALVE_E3_H2,
-        VALVE_E3_H3,
-        VALVE_E3_H4,
-        VALVE_E3_H5,
-        VALVE_E3_V1,
-        VALVE_E3_V2,
-        PUMP_ON1,
-        PUMP_ON2,
-        UV_ON_V,
-        UV_OFF_V,
-        UV_ON_H,
+        EDI_OFF,
         EDI_ON,
-        DEVICE_IMAGE_NUM
+        FLOWMETER_OFF,
+        FLOWMETER_ON,
+        I_OFF,
+        I_ON,
+        P_OFF,
+        P_ON,
+        PACK_OFF,
+        PACK_ON,
+        PACK_YELLOW,
+        PRE_OFF,
+        PRE_ON,
+        PREPACK_OFF,
+        PREPACK_ON,
+        PREPACK_YELLOW,
+        PUMP_OFF,
+        PUMP_ON,
+        ROPACK_OFF,
+        ROPACK_ON,
+        TANK,
+        TANKUV_OFF,
+        TANKUV_ON,
+        TANKUV_YELLOW,
+        UV_OFF,
+        UV_ON,
+        UV_YELLOW,
+        VALVE_OFF,
+        VALVE_ON,
+        VALVE2_OFF,
+        VALVE2_C_ON,
+        VALVE2_L_ON,
+        VALVE2_R_ON,
+        DISPER,
+        DISPER_ON,
+        DISPER_YELLOW,
+        LIMIT_OFF,
+        LIMIT_ON,
+        DEVICE_NUM
+
     };
-    enum DEVICE_STATE
+
+    enum UNIT_DISPLAY
     {
-        E1_STATE,
-        E2_STATE,
-        E3_STATE,
-        E4_STATE,
-        E5_STATE,
-        E6_STATE,
-        E7_STATE,
-        E8_STATE,
-        E9_STATE,
-        E10_STATE,
-        C1_STATE,
-        C2_STATE,
-        C3_STATE,
-        C4_STATE,
-        N1_STATE,
-        N2_STATE,
-        N3_STATE,
-        EDI_STATE,
-        DEVICE_STATE_NUM
+        RES_COND_UNIT,
+        TEMP_UNIT,
+        PRESSURE_UNIT,
+        UNIT_NUM
     };
 
     enum WATER_QUALITY
     {
-        I1_VALUE,
+        I1_VALUE = 0,
         I2_VALUE,
         I3_VALUE,
         I4_VALUE,
         I5_VALUE,
         I_NUM
     };
+
     enum FLOW_RATE
     {
         S1_VALUE,
@@ -105,13 +127,54 @@ public:
         EDI_DETECTION,
         DETECTION_NUM
     };
-    enum UNIT_DISPLAY
+
+    enum DEVICE_STATE
     {
-        RES_COND_UNIT,
-        TEMP_UNIT,
-        PRESSURE_UNIT,
-        UNIT_NUM
+        E1_STATE,
+        E2_STATE,
+        E3_STATE,
+        E4_STATE,
+        E5_STATE,
+        E6_STATE,
+        E7_STATE,
+        E8_STATE,
+        E9_STATE,
+        E10_STATE,
+        C1_STATE,
+        C2_STATE,
+        C3_STATE,
+        C4_STATE,
+        N1_STATE,
+        N2_STATE,
+        N3_STATE,
+        EDI_STATE,
+        DEVICE_STATE_NUM
     };
+public:
+    explicit DFlowChartWidget(QWidget *parent = 0);
+
+    void updateSwitchInfo();
+    void updateRpumpInfo(int iChl);
+    void updateGpumpInfo(int iChl);
+    void updateRectInfo(int iChl);
+    void updateEdiInfo(int iChl);
+
+    void updTank(int iIndex,float fVolume);
+    void updEcoInfo(int iIndex, ECO_INFO_STRU *info);
+    void updPressure(int iIndex,float fvalue);
+	void updSwPressure(float fvalue);
+    void updFlowInfo(int iIndex,int iValue);
+    void updSourceTank(int iIndex,float fVolume);
+    void updTOC(float fToc);
+
+    void setTitleText(const QString& text);
+    void setInfo1(const QString& text);
+    void setInfo2(const QString& text);
+    void setInfo3(const QString& text);
+    void updateUnits();
+
+    //测试器件状态
+    void testDevice(int id, bool state);
 
 public:
     struct WaterInfo
@@ -125,104 +188,56 @@ public:
         int iValueV;
     };
 
-public:
-    explicit DFlowChartWidget(QWidget *parent = 0);
-
-    void updateSwitchInfo();
-    void updateRpumpInfo(int iChl);
-    void updateGpumpInfo(int iChl);
-    void updateRectInfo(int iChl);
-    void updateEdiInfo(int iChl);
-
-    void updTank(int iIndex,float fVolume);
-    void updEcoInfo(int iIndex, ECO_INFO_STRU *info);
-    void updPressure(int iIndex,float fvalue);
-    void updFlowInfo(int iIndex,int Value);
-    void updSourceTank(float fvalue);
-    void updTOC(float fToc);
-
-    void setTitleText(const QString& text);
-    void setInfo1(const QString& text);
-    void setInfo2(const QString& text);
-    void setInfo3(const QString& text);
-
-    void updateUnits();
-
 protected:
     void paintEvent(QPaintEvent *event);
     void timerEvent(QTimerEvent *);
-    
+
 private:
+    void paintWorkStatus(QPainter &painter);
+    void paintTapFeed(QPainter &painter); //自来水进水部分
+    void paintFeed(QPainter &painter);    //进水部分
+    void paintWash(QPainter &painter);    //清洗阀部分
+    void paintReject(QPainter &painter);  //弃水电磁阀部分
+    void paintProduct(QPainter &painter);  //产水部分
+    void paintPureTank(QPainter &painter); //纯水箱部分
+    void paintDispense(QPainter &painter); //取水部分
+
+    void paintSourceTankLevel(QPainter &painter); //原水箱液位
+    void paintPureTankLevel(QPainter &painter);   //纯水箱液位
+
+    void paintValue(QPainter &painter);
+
     void initUI();
     void initDefaultValue();
     void loadPixmap();
+    QPixmap scaledToWidth(const QPixmap& pixmap, int width);
+    QPixmap scaledToHeight(const QPixmap& pixmap, int height);
 
-
-    void paintGenie_G(QPainter &painter);
-    void paintGenie_G_HPCIR(QPainter &painter);
-    void paintGenie_G_Tags(QPainter &painter);
-    void painterGenie_G_Value(QPainter &painter);
-    void paintGenie_G_TankLevel(QPainter &painter);
-
-
-    void paintGenie_E(QPainter &painter);
-    void paintGenie_E_HPCIR(QPainter &painter);
-    void paintGenie_E_Tags(QPainter &painter);
-    void painterGenie_E_Value(QPainter &painter,  bool isHPCir = false);
-    void paintGenie_E_TankLevel(QPainter &painter);
-
-    void paintGenie_U(QPainter &painter);
-    void paintGenie_U_TOC(QPainter &painter);
-    void paintGenie_U_HPCIR(QPainter &painter);
-    void paintGenie_U_TOC_HPCIR(QPainter &painter);
-    void paintGenie_U_Tags(QPainter &painter, bool isHaveTOC = false);
-    void painterGenie_U_Value(QPainter &painter, bool isHPCir = false, bool isHaveTOC = false);
-    void paintGenie_U_TankLevel(QPainter &painter);
-
-    void paintGenie_R(QPainter &painter);
-    void paintGenie_R_HPCIR(QPainter &painter);
-    void paintGenie_R_Tags(QPainter &painter);
-    void painterGenie_R_Value(QPainter &painter,  bool isHPCir = false);
-    void paintGenie_R_TankLevel(QPainter &painter);
-
-    void paintGenie_PURIST(QPainter &painter);
-    void paintGenie_PURIST_TOC(QPainter &painter);
-    void paintGenie_PURIST_Tags(QPainter &painter, bool isHaveTOC = false);
-    void painterGenie_PURIST_Value(QPainter &painter, bool isHaveTOC = false);
-
-    void paintGenie_A(QPainter &painter);
-    void paintGenie_A_TOC(QPainter &painter);
-    void paintGenie_A_Tags(QPainter &painter, bool isHaveTOC = false);
-    void painterGenie_A_Value(QPainter &painter, bool isHaveTOC = false);
-
-    void paintWorkStatus(QPainter &painter);
-
-signals:
-
-public slots:
+    void setStatePen(QPainter &painter, bool bWork);
 
 private:
-    QPixmap m_backgroundPix[BACK_IMAGE_NUM];
-    QPixmap m_devicePix[DEVICE_IMAGE_NUM];
-
-    bool m_deviceState[DEVICE_STATE_NUM];
-    int m_updateTimerID;
-    bool m_isUpdate;
-    int m_updPump;
-    
-    QString m_strWorkStatus[4];
-
-    int   m_iTankLevel;
-    float m_fTankLevel;
+    QPixmap m_devicesPix[DEVICE_NUM];
 
     WaterInfo    m_waterInfo[I_NUM];
     Detection_Para m_detectionPara[DETECTION_NUM];
     float m_flowRate[S_NUM];
+    float m_fFeedPressure;
     float m_fWorkPressure;
     float m_fResidue;
     float m_fToc;
 
+    int   m_iTankLevel;
+    float m_fTankLevel;
+
+    int   m_iSourceTankLevel;
+    float m_fSourceTankLevel;
+
     QString m_strUnit[UNIT_NUM];
+
+    bool m_deviceState[DEVICE_STATE_NUM];
+    int m_updateTimerID;
+
+    QString m_strWorkStatus[4];
 };
 
-#endif // EX_FLOWCHARTWIDGET_H
+#endif // DFLOWCHARTWIDGET_H

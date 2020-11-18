@@ -417,10 +417,13 @@ void DInitConsumableInsPage::initPackConfig()
         }
         break;
     case MACHINE_L_Genie:
-        install_info.iRfid = APP_RFID_SUB_TYPE_HPACK_ATPACK;
-        install_info.strName = tr("AT Pack");
-        m_map[Type0].insert(DISP_AT_PACK, install_info);
-        m_list[Type0].append(DISP_AT_PACK);
+		if(gAdditionalCfgParam.machineInfo.iMachineFlow != 250)
+		{
+		    install_info.iRfid = APP_RFID_SUB_TYPE_HPACK_ATPACK;
+	        install_info.strName = tr("AT Pack");
+	        m_map[Type0].insert(DISP_AT_PACK, install_info);
+	        m_list[Type0].append(DISP_AT_PACK);
+		}
         break;
     default:
         break;

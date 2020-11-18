@@ -80,12 +80,10 @@ void DFlowChartPage::initUi()
     m_pFlowChartWidget->setGeometry(10, 60, 780, 500);
 
     m_pTextTicker = new DTextTicker(m_widget);
-    m_pTextTicker->move(0, 565);
+    m_pTextTicker->move(10, 565);
 
     m_pTitleBar = new titleBar(m_widget);
-
     m_pTitleBar->setGeometry(0,0,800,55);
-
     connect(m_pTitleBar, SIGNAL(clicked(int)), this, SLOT(on_navi_clicked(int)));
 }
 
@@ -98,7 +96,7 @@ void DFlowChartPage::update()
 
     DISP_CMD_SWITCH_STATE_REPORT_STRU *cmd = (DISP_CMD_SWITCH_STATE_REPORT_STRU *)buf;
     cmd->iRptFlag = 1;
-    DispCmdEntry(DISP_CMD_SWITCH_REPORT,buf,sizeof(DISP_CMD_SWITCH_STATE_REPORT_STRU));
+    DispCmdEntry(DISP_CMD_SWITCH_REPORT, buf, sizeof(DISP_CMD_SWITCH_STATE_REPORT_STRU));
 }
 
 void DFlowChartPage::fade()
@@ -106,7 +104,7 @@ void DFlowChartPage::fade()
     unsigned char buf[16];
     DISP_CMD_SWITCH_STATE_REPORT_STRU *cmd = (DISP_CMD_SWITCH_STATE_REPORT_STRU *)buf;
     cmd->iRptFlag = 0;
-    DispCmdEntry(DISP_CMD_SWITCH_REPORT,buf,sizeof(DISP_CMD_SWITCH_STATE_REPORT_STRU));
+    DispCmdEntry(DISP_CMD_SWITCH_REPORT, buf, sizeof(DISP_CMD_SWITCH_STATE_REPORT_STRU));
 }
 
 void DFlowChartPage::updateSwitchInfo()
@@ -140,14 +138,11 @@ void DFlowChartPage::updateWorkState()
     QString strInfo2 = "HP:  ";
     QString strInfo3;
 
-    //ex
-     if((m_iTankLevel >= B2_FULL)
-         && (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveB2)))
-     {
-         strInfo3 = tr("Tank Full");
-     }
-
-    //end
+    if((m_iTankLevel >= B2_FULL)
+        && (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveB2)))
+    {
+        strInfo3 = tr("Tank Full");
+    }
 
     switch(DispGetWorkState())
     {
@@ -168,12 +163,10 @@ void DFlowChartPage::updateWorkState()
          {
              strInfo2 += tr("Rinsing");
          }
-         if (DispGetPwFlag()
-             && (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveB2)))
+         if (DispGetPwFlag() && (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveB2)))
          {
              strInfo3 = tr("Filling");
          }
-
          break;
     case DISP_WORK_STATE_LPP:
          strInfo3 = tr("LPP");
@@ -231,7 +224,7 @@ void DFlowChartPage::updateWorkState()
     }
     if (MACHINE_FUNCTION_EDI == (MACHINE_FUNCTION_EDI & gaMachineType[gGlobalParam.iMachineType].iFunctions))
     {
-       m_pFlowChartWidget->setInfo2(strInfo2);
+        m_pFlowChartWidget->setInfo2(strInfo2);
     }
     m_pFlowChartWidget->setInfo3(strInfo3);
 }
@@ -253,15 +246,19 @@ void DFlowChartPage::updPressure(int iIndex,float fvalue)
     m_pFlowChartWidget->updPressure(iIndex, fvalue);
 }
 
+void DFlowChartPage::updSwPressure(float fvalue)
+{
+	m_pFlowChartWidget->updSwPressure(fvalue);
+}
+
 void DFlowChartPage::updFlowInfo(int iIndex,int Value)
 {
     m_pFlowChartWidget->updFlowInfo(iIndex, Value);
 }
 
-//did not use
-void DFlowChartPage::updSourceTank(float fvalue)
+void DFlowChartPage::updSourceTank(int iIndex, float fVolume)
 {
-    m_pFlowChartWidget->updSourceTank(fvalue);
+    m_pFlowChartWidget->updSourceTank(iIndex, fVolume);
 }
 
 void DFlowChartPage::updTOC(float fToc)
@@ -289,14 +286,12 @@ void DFlowChartPage::mouseReleaseEvent(QMouseEvent *e)
 
         m_wndMain->naviPage(0,m_curX - m_lstX > 0 ? 1 : 0);
     }
-
     m_lstFlag = 0;
 }
 
 void DFlowChartPage::mouseMoveEvent(QMouseEvent *e)
 {
-    if (0 == e->x()
-        && 0 == e->y())
+    if (0 == e->x() && 0 == e->y())
     {
        return;
     }

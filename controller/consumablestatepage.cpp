@@ -67,9 +67,12 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_L_Genie:
-        aIds[iIdx].iType = 0;
-        aIds[iIdx].iId   = DISP_AT_PACK;
-        iIdx++;
+		if(gAdditionalCfgParam.machineInfo.iMachineFlow != 250)
+		{
+	        aIds[iIdx].iType = 0;
+	        aIds[iIdx].iId   = DISP_AT_PACK;
+	        iIdx++;
+    	}
         break;
     case MACHINE_L_EDI_LOOP:
         if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)

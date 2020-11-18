@@ -215,7 +215,6 @@ QString gGlobalPixelmapName[GLOBAL_BMP_NUM] =
     ":/pic/Monitor_Device_OFF.png",
 };
 
-
 DISP_GLOBAL_PARAM_STRU gGlobalParam;
 
 Ex_DISP_PARAM_CALI_STRU gCaliParam;
@@ -500,7 +499,6 @@ void MainRetriveSensorRange(int iMachineType)
     }
 }
 
-
 void MainRetriveProductMsg(int iMachineType) //ex_dcj
 {
     QString strCfgName = gaMachineType[iMachineType].strName;
@@ -560,7 +558,6 @@ void MainRetriveExConfigParam(int iMachineType)
     }
 }
 
-//2019.1.21 add
 void MainRetriveExConsumableMsg(int iMachineType, DISP_CONSUME_MATERIAL_SN_STRU &cParam, DISP_MACHINERY_SN_STRU  &mParam)
 {
     Q_UNUSED(iMachineType);
@@ -656,13 +653,8 @@ void MainRetriveMachineParam(int iMachineType,DISP_MACHINE_PARAM_STRU  &Param)
     for(iLoop = 0; iLoop < MACHINE_PARAM_SP_NUM ; iLoop++)
     {
         QString strV = "/SP/";
-
         strV += QString::number(iLoop);
-
-        //QString Result = config->value(strV).toString();
-
         Param.SP[iLoop] = config->value(strV,defautlValue[iLoop]).toFloat();
-
     }
 
     if (config)
@@ -730,7 +722,6 @@ void MainRetriveAlarmSetting(int iMachineType,DISP_ALARM_SETTING_STRU  &Param)
     }
 }
 
-
 void MainRetriveSubModuleSetting(int iMachineType,DISP_SUB_MODULE_SETTING_STRU  &Param)
 {
     /* retrive parameter from configuration */
@@ -746,7 +737,6 @@ void MainRetriveSubModuleSetting(int iMachineType,DISP_SUB_MODULE_SETTING_STRU  
         QString strV = "/SM/" + gastrSmCfgName[0];
 
         int iValue ;
-        //float fValue;
 
         iValue = config->value(strV,gaMachineType[iMachineType].iDefaultModule).toInt();
 
@@ -2713,12 +2703,10 @@ void CheckConsumptiveMaterialState(void)
 
     }
 
-    //2018.10.12 T_Pack
     if ((ulCurTime > gCMUsage.info.aulCms[DISP_T_PACKLIFEDAY])
             && (iMask & (1 << DISP_T_PACK)))
     {
         ulTemp = (ulCurTime - gCMUsage.info.aulCms[DISP_T_PACKLIFEDAY])/DISP_DAYININSECOND;
-
 
         if (ulTemp >= gGlobalParam.CMParam.aulCms[DISP_T_PACKLIFEDAY])
         {
@@ -2731,9 +2719,7 @@ void CheckConsumptiveMaterialState(void)
         }
 
     }
-    //
 
-    // check pack
     if ((ulCurTime > gCMUsage.info.aulCms[DISP_P_PACKLIFEDAY])
             && (iMask & (1 << DISP_P_PACK)))
     {
@@ -2770,7 +2756,6 @@ void CheckConsumptiveMaterialState(void)
 
     }    
 
-    // check pack
     if ((ulCurTime > gCMUsage.info.aulCms[DISP_H_PACKLIFEDAY])
             && (iMask & (1 << DISP_H_PACK)))
     {
@@ -2805,7 +2790,8 @@ void CheckConsumptiveMaterialState(void)
             gCMUsage.ulUsageState |= (1 << DISP_N1_UVLIFEHOUR);
         }
 
-    }        
+    }  
+          
     if ((ulCurTime > gCMUsage.info.aulCms[DISP_N2_UVLIFEDAY])
             && (iMask & (1 << DISP_N2_UV)))
     {
@@ -3376,12 +3362,22 @@ void MainWindow::initAlarmCfg()
         {
         case MACHINE_L_Genie:
             m_aMas[iLoop].aulMask[DISP_ALARM_PART0]  = DISP_ALARM_DEFAULT_PART0 ;
-            m_aMas[iLoop].aulMask[DISP_ALARM_PART0] &= ~((1 << DISP_ALARM_PART0_HPACK_OOP)
+			if(gAdditionalCfgParam.machineInfo.iMachineFlow != 250)
+			{
+				m_aMas[iLoop].aulMask[DISP_ALARM_PART0] &= ~((1 << DISP_ALARM_PART0_HPACK_OOP)
                                                         |(1 << DISP_ALARM_PART0_ACPACK_OOP));
-
+			}
+			else
+            {
+            	m_aMas[iLoop].aulMask[DISP_ALARM_PART0] &= ~((1 << DISP_ALARM_PART0_HPACK_OOP)
+                                                        |(1 << DISP_ALARM_PART0_ACPACK_OOP)
+                                                        |(1 << DISP_ALARM_PART0_ATPACK_OOP));
+            }
+			
             m_aMas[iLoop].aulMask[DISP_ALARM_PART1]  = DISP_ALARM_DEFAULT_PART1 ;
             m_aMas[iLoop].aulMask[DISP_ALARM_PART1] &= ~(1 << DISP_ALARM_PART1_LOWER_CIR_WATER_CONDUCTIVITY);
-            break;
+
+			break;
         case MACHINE_L_UP:
             m_aMas[iLoop].aulMask[DISP_ALARM_PART0]  = DISP_ALARM_DEFAULT_PART0 ;
             m_aMas[iLoop].aulMask[DISP_ALARM_PART0] &= ~((1 << DISP_ALARM_PART0_ATPACK_OOP)
@@ -3611,6 +3607,10 @@ void MainWindow::initConsumablesCfg()
             m_cMas[iLoop].aulMask[0]  = DISP_NOTIFY_DEFAULT ;
             m_cMas[iLoop].aulMask[0] &= (~((1 << DISP_H_PACK)
                                           |(1 << DISP_AC_PACK)));
+			if(gAdditionalCfgParam.machineInfo.iMachineFlow == 250)
+            {
+                 m_cMas[iLoop].aulMask[0] &= ~(1 << DISP_AT_PACK);
+            }
             break;
         case MACHINE_L_UP:
             m_cMas[iLoop].aulMask[0]  = DISP_NOTIFY_DEFAULT;
@@ -3770,9 +3770,12 @@ void MainWindow::initRFIDCfg()
     case MACHINE_L_Genie:
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ROPACK_OTHERS);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ROPACK_OTHERS] = DISP_P_PACK;
-        
-        MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_HPACK_ATPACK);
-        MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_HPACK_ATPACK] = DISP_AT_PACK;
+
+		if(gAdditionalCfgParam.machineInfo.iMachineFlow != 250)
+		{
+		    MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_HPACK_ATPACK);
+        	MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_HPACK_ATPACK] = DISP_AT_PACK;
+		}
 
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_UPACK_HPACK);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_UPACK_HPACK] = DISP_U_PACK;
@@ -3780,9 +3783,12 @@ void MainWindow::initRFIDCfg()
         /*rfid for cleaning stage */
         MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_ROPACK_OTHERS);
         MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_ROPACK_OTHERS] = DISP_P_PACK | (1 << 16);
-        
-        MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_HPACK_ATPACK);
-        MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_HPACK_ATPACK] = DISP_AT_PACK;
+
+		if(gAdditionalCfgParam.machineInfo.iMachineFlow != 250)
+		{
+		    MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_HPACK_ATPACK);
+        	MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_HPACK_ATPACK] = DISP_AT_PACK;
+		}
 
         MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_UPACK_HPACK);
         MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_UPACK_HPACK] = DISP_U_PACK;
@@ -4599,6 +4605,15 @@ void MainWindow::updSourceTank()
     /* calc */
     float liter = (m_fPressure[APP_EXE_PM3_NO]/100)*gGlobalParam.PmParam.afCap[APP_EXE_PM3_NO];
     int   level = (int)((liter*100) / gGlobalParam.PmParam.afCap[APP_EXE_PM3_NO]);
+
+#ifdef FLOWCHART
+	if (NULL != m_pSubPages[PAGE_FLOWCHART])
+	{
+		DFlowChartPage *page = (DFlowChartPage *)m_pSubPages[PAGE_FLOWCHART];
+		page->updSourceTank(level, liter);
+	}
+#endif
+
 
 #ifdef D_HTTPWORK
     m_uploadNetData.m_tankInfo[1].iPercent = level;
@@ -7265,6 +7280,14 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                 DWaterQualityPage *subpage = (DWaterQualityPage *)page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
                 subpage->updSwPressure(m_fPressure[APP_EXE_PM1_NO]);
             }
+#ifdef FLOWCHART
+			if (NULL != m_pSubPages[PAGE_FLOWCHART])
+            {
+                DFlowChartPage *page = (DFlowChartPage *)m_pSubPages[PAGE_FLOWCHART];
+                page->updSwPressure(m_fPressure[APP_EXE_PM1_NO]);
+            }
+#endif
+
 #ifdef D_HTTPWORK
             m_uploadNetData.m_otherInfo.fFeedPressure = m_fPressure[APP_EXE_PM1_NO];
 #endif
@@ -8740,18 +8763,37 @@ void MainWindow::home()
 void MainWindow::naviPage(int iCurPage,int iDir)
 {
 #ifdef FLOWCHART
-    if (iCurPage < (PAGE_NUM - 1) && !iDir )
-    {
-        m_pSubPages[iCurPage]->show(false);
-        m_pSubPages[iCurPage + 1]->show(true);
-        m_curPageIdx += 1;
-    }
-    else if (iCurPage > 0 && iDir )
-    {
-        m_pSubPages[iCurPage]->show(false);
-        m_pSubPages[iCurPage - 1]->show(true);
-        m_curPageIdx -= 1;
-    }
+	if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
+	{
+	    if (iCurPage < (PAGE_NUM - 1) && !iDir )
+	    {
+	        m_pSubPages[iCurPage]->show(false);
+	        m_pSubPages[iCurPage + 1]->show(true);
+	        m_curPageIdx += 1;
+	    }
+	    else if (iCurPage > 0 && iDir )
+	    {
+	        m_pSubPages[iCurPage]->show(false);
+	        m_pSubPages[iCurPage - 1]->show(true);
+	        m_curPageIdx -= 1;
+	    }
+	}
+	else
+	{
+	    if (iCurPage < (PAGE_NUM - 1) && !iDir )
+	    {
+	        m_pSubPages[iCurPage]->show(false);
+	        m_pSubPages[iCurPage + 1]->show(true);
+	        m_curPageIdx += 1;
+	    }
+	    else if (iCurPage > 1 && iDir )
+	    {
+	        m_pSubPages[iCurPage]->show(false);
+	        m_pSubPages[iCurPage - 1]->show(true);
+	        m_curPageIdx -= 1;
+	    }
+	}
+
 #else
     if (iCurPage < (PAGE_NUM - 1) && !iDir )
     {
@@ -9877,20 +9919,35 @@ void MainWindow::updateCMInfoWithRFID(int operate)
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_L_Genie:
+		if(gAdditionalCfgParam.machineInfo.iMachineFlow != 250)
+		{
+		    packType = DISP_AT_PACK;
+	        iRfId = APP_RFID_SUB_TYPE_HPACK_ATPACK;
+	        if(0 == operate)
+	        {
+	            readCMInfoFromRFID(iRfId, packType);
+	        }
+	        else
+	        {
+	            writeCMInfoToRFID(iRfId, packType);
+	        }
+		}
+		break;
     case MACHINE_L_EDI_LOOP:
-    {
-        packType = DISP_AT_PACK;
-        iRfId = APP_RFID_SUB_TYPE_HPACK_ATPACK;
-        if(0 == operate)
-        {
-            readCMInfoFromRFID(iRfId, packType);
-        }
-        else
-        {
-            writeCMInfoToRFID(iRfId, packType);
-        }
-        break;
-    }
+		if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
+	    {
+	        packType = DISP_AT_PACK;
+	        iRfId = APP_RFID_SUB_TYPE_HPACK_ATPACK;
+	        if(0 == operate)
+	        {
+	            readCMInfoFromRFID(iRfId, packType);
+	        }
+	        else
+	        {
+	            writeCMInfoToRFID(iRfId, packType);
+	        }
+	    }
+		break;
     default:
         break;
     }

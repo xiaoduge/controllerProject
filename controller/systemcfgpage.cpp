@@ -25,28 +25,26 @@ static  QRect   sQrectAry[2] = {
 SystemCfgPage::SystemCfgPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : CSubPage(parent,widget,wndMain)
 {
     int iIdx = 0;
+    
+    // aCHKsIds[iIdx].iId = DISP_SM_HaveSWValve;
+    // iIdx++;
 
-    /*
-    aCHKsIds[iIdx].iId = DISP_SM_HaveSWValve;
-    iIdx++;
-    */
-
-//    aCHKsIds[iIdx].iId = DISP_SM_ElecLeakProtector;
-//    iIdx++;
+    // aCHKsIds[iIdx].iId = DISP_SM_ElecLeakProtector;
+    // iIdx++;
 
     aCHKsIds[iIdx].iId = DISP_SM_Printer;
     iIdx++;
 
-    switch(gGlobalParam.iMachineType)
-    {
-    case MACHINE_PURIST:
-    case MACHINE_ADAPT:
-        break;
-    default:
-//        aCHKsIds[iIdx].iId = DISP_SM_HP_Water_Cir;
-//        iIdx++;
-        break;
-    }
+    // switch(gGlobalParam.iMachineType)
+    // {
+    // case MACHINE_PURIST:
+    // case MACHINE_ADAPT:
+    //     break;
+    // default:
+    //     aCHKsIds[iIdx].iId = DISP_SM_HP_Water_Cir;
+    //     iIdx++;
+    //     break;
+    // }
 
     switch(gGlobalParam.iMachineType)
     {
