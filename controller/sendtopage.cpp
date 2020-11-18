@@ -1,6 +1,7 @@
 #include "sendtopage.h"
 #include "mainwindow.h"
 #include "cbitmapbutton.h"
+#include "dhintdialog.h"
 #include <QTextStream>
 #include <QListWidgetItem>
 #include <QDir>
@@ -199,10 +200,10 @@ void SendToPage::copyAlarmFile()
     }
 
     QTextStream out(&file);
-    out << QString("ID") << ","
-        << QString("Type") << ","
-        << QString("Status") << ","
-        << QString("Time") << "\n";
+    out << tr("ID") << ","
+        << tr("type") << ","
+        << tr("Status") << ","
+        << tr("Time") << "\n";
 
     QSqlQuery query;
     query.exec("select * from Alarm");
@@ -247,13 +248,13 @@ void SendToPage::copyGetWater()
     }
 
     QTextStream out(&file);
-    out << QString("ID") << ","
-        << QString("WName") << ","
-        << QString("Quantity") << ","
-        << QString("Quantity") << ","
-        << QString("TOC") << ","
-        << QString("Tmp") << ","
-        << QString("Time") << "\n";
+    out << tr("ID") << ","
+        << tr("WName") << ","
+        << tr("Quantity") << ","
+        << tr("Quality") << ","
+        << tr("TOC") << ","
+        << tr("Tmp") << ","
+        << tr("Time") << "\n";
 
     QSqlQuery query;
     query.exec("select * from GetW");
@@ -300,16 +301,16 @@ void SendToPage::copyProduceWater()
     }
 
     QTextStream out(&file);
-    out << QString("ID") << ","
-        << QString("Duration") << ","
-        << QString("Ecoroin") << ","
-        << QString("Tmproin") << ","
-        << QString("Ecorores") << ","
-        << QString("eEcoropw") << ","
-        << QString("Tmpropw") << ","
-        << QString("Ecoedi") << ","
-        << QString("Tmpedi") << ","
-        << QString("Time") << "\n";
+    out << tr("ID") << ","
+        << tr("Duration") << ","
+        << tr("Ecoroin") << ","
+        << tr("Tmproin") << ","
+        << tr("Ecorores") << ","
+        << tr("eEcoropw") << ","
+        << tr("Tmpropw") << ","
+        << tr("Ecoedi") << ","
+        << tr("Tmpedi") << ","
+        << tr("Time") << "\n";
 
     QSqlQuery query;
     query.exec("select * from PWater");
@@ -359,11 +360,11 @@ void SendToPage::copyLog()
     }
 
     QTextStream out(&file);
-    out << QString("ID") << ","
-        << QString("Name") << ","
-        << QString("Action") << ","
-        << QString("Info") << ","
-        << QString("Time") << "\n";
+    out << tr("ID") << ","
+        << tr("Name") << ","
+        << tr("Action") << ","
+        << tr("Info") << ","
+        << tr("Time") << "\n";
 
     QSqlQuery query;
     query.exec("select * from Log");
@@ -426,7 +427,7 @@ void SendToPage::copyHistoryToUsb()
         copyGetWater();
         copyProduceWater();
         copyLog();
-
+        DHintDialog::getInstance(tr("Successfully"));
     }
 }
 

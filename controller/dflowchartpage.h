@@ -17,34 +17,24 @@ class DFlowChartPage : public CPage
 public:
     DFlowChartPage(QObject *parent = 0,CBaseWidget *widget = 0 , MainWindow *wndMain = 0);
     virtual void creatTitle();
-
     virtual void switchLanguage();
-
     virtual void buildTranslation();
-
     virtual void initUi();
-
     virtual void update();
-
     virtual void fade();
 
     void updateSwitchInfo();
-
     void updateRpumpInfo(int iChl);
-
     void updateGpumpInfo(int iChl);
-
     void updateRectInfo(int iChl);
-
     void updateEdiInfo(int iChl);
-
     void updateWorkState();
-
     void updTank(int iIndex,float fVolume);
     void updEcoInfo(int iIndex, ECO_INFO_STRU *info);
     void updPressure(int iIndex,float fvalue);
+	void updSwPressure(float fvalue);
     void updFlowInfo(int iIndex,int Value);
-    void updSourceTank(float fvalue);
+    void updSourceTank(int iIndex,float fVolume);
     void updTOC(float fToc);
 
     void buildTitles();
@@ -67,6 +57,5 @@ private:
     int   m_iTankLevel;
     float m_fTankLevel;
 };
-
 
 #endif // EX_FLOWCHARTPAGE_H

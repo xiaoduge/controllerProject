@@ -1,7 +1,5 @@
 <RCC>
-    <qresource prefix="/images">
-        <file alias="ic_music_thumb.png">ic_music_thumb.png</file>
-    </qresource>
+    <qresource prefix="/images"/>
     <qresource prefix="/pic">
         <file alias="navigator_bg.png">pics/image/navigator_bg.png</file>
         <file alias="navi_btn_down.png">pics/image/navi_btn_down.png</file>
@@ -193,5 +191,45 @@
         <file alias="Water Quality.png">pics/buttonIcon/Water Quality.png</file>
         <file alias="alarm alert.png">pics/buttonIcon/alarm alert.png</file>
         <file alias="Manual Installation.png">pics/buttonIcon/Manual Installation.png</file>
+    </qresource>
+    <qresource prefix="/flowchartdevices">
+        <file alias="DISPER.png">pics/devices/DISPER.png</file>
+        <file alias="DISPER_ON.png">pics/devices/DISPER_ON.png</file>
+        <file alias="EDI_OFF.png">pics/devices/EDI_OFF.png</file>
+        <file alias="EDI_ON.png">pics/devices/EDI_ON.png</file>
+        <file alias="FLOWMETER_OFF.png">pics/devices/FLOWMETER_OFF.png</file>
+        <file alias="FLOWMETER_ON.png">pics/devices/FLOWMETER_ON.png</file>
+        <file alias="I_OFF.png">pics/devices/I_OFF.png</file>
+        <file alias="I_ON.png">pics/devices/I_ON.png</file>
+        <file alias="LIMIT_OFF.png">pics/devices/LIMIT_OFF.png</file>
+        <file alias="LIMIT_ON.png">pics/devices/LIMIT_ON.png</file>
+        <file alias="PACK_OFF.png">pics/devices/PACK_OFF.png</file>
+        <file alias="PACK_ON.png">pics/devices/PACK_ON.png</file>
+        <file alias="P_OFF.png">pics/devices/P_OFF.png</file>
+        <file alias="P_ON.png">pics/devices/P_ON.png</file>
+        <file alias="PRE_OFF.png">pics/devices/PRE_OFF.png</file>
+        <file alias="PRE_ON.png">pics/devices/PRE_ON.png</file>
+        <file alias="PUMP_OFF.png">pics/devices/PUMP_OFF.png</file>
+        <file alias="PUMP_ON.png">pics/devices/PUMP_ON.png</file>
+        <file alias="ROPACK_OFF.png">pics/devices/ROPACK_OFF.png</file>
+        <file alias="ROPACK_ON.png">pics/devices/ROPACK_ON.png</file>
+        <file alias="TANK.png">pics/devices/TANK.png</file>
+        <file alias="TANKUV_OFF.png">pics/devices/TANKUV_OFF.png</file>
+        <file alias="TANKUV_ON.png">pics/devices/TANKUV_ON.png</file>
+        <file alias="UV_OFF.png">pics/devices/UV_OFF.png</file>
+        <file alias="UV_ON.png">pics/devices/UV_ON.png</file>
+        <file alias="VALVE2_C_ON.png">pics/devices/VALVE2_C_ON.png</file>
+        <file alias="VALVE2_L_ON.png">pics/devices/VALVE2_L_ON.png</file>
+        <file alias="VALVE2_OFF.png">pics/devices/VALVE2_OFF.png</file>
+        <file alias="VALVE2_R_ON.png">pics/devices/VALVE2_R_ON.png</file>
+        <file alias="VALVE_OFF.png">pics/devices/VALVE_OFF.png</file>
+        <file alias="VALVE_ON.png">pics/devices/VALVE_ON.png</file>
+        <file alias="DISPER_YELLOW.png">pics/devices/DISPER_YELLOW.png</file>
+        <file alias="PACK_YELLOW.png">pics/devices/PACK_YELLOW.png</file>
+        <file alias="PREPACK_OFF.png">pics/devices/PREPACK_OFF.png</file>
+        <file alias="PREPACK_ON.png">pics/devices/PREPACK_ON.png</file>
+        <file alias="PREPACK_YELLOW.png">pics/devices/PREPACK_YELLOW.png</file>
+        <file alias="TANKUV_YELLOW.png">pics/devices/TANKUV_YELLOW.png</file>
+        <file alias="UV_YELLOW.png">pics/devices/UV_YELLOW.png</file>
     </qresource>
 </RCC>

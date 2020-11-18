@@ -2,10 +2,9 @@
 #include <QTimer>
 #include <QPainter>
 
-
 DTextTicker::DTextTicker(QWidget *parent, Qt::WindowFlags f):QLabel(parent, f)
 {
-    this->setMinimumSize(800, 35);
+    this->setMinimumSize(780, 35);
 
     m_posX = width();
     m_strList.clear();
@@ -52,7 +51,6 @@ void DTextTicker::paintEvent(QPaintEvent *event)
     painter.drawText(m_posX, 16, m_showText);
 
     QLabel::paintEvent(event);
-
 }
 
 void DTextTicker::ticker()

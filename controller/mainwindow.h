@@ -19,7 +19,7 @@
 #include "DNetworkConfig.h"
 #include <QProcess>
 
-//#define FLOWCHART
+#define FLOWCHART
 #define D_HTTPWORK
 
 //#define TOUCHTEST

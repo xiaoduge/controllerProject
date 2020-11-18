@@ -250,14 +250,12 @@ RESOURCES += \
     app.qrc \
     image.qrc \
     language.qrc \
-    other.qrc \
-    json.qrc
+    other.qrc
 
 OTHER_FILES += \
     pics/image/arrow_down_active.png \
     pics/image/battery0.png \
     slider.qss \
-    musicslider.qss \
     cn.ts \
     de.ts \
     en.ts \

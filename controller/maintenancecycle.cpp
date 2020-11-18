@@ -123,13 +123,16 @@ MaintenanceCyclePage::MaintenanceCyclePage(QObject *parent,CBaseWidget *widget ,
         }
         break;
     case MACHINE_L_Genie:   
-        aIds[iIdx].iDspType = 2;
-        aIds[iIdx].iId      = DISP_AT_PACK;
-        aIds[iIdx].vi.v1Min = 0;
-        aIds[iIdx].vi.v1Max = 99999;
-        aIds[iIdx].vi.v2Min = 0;
-        aIds[iIdx].vi.v2Max = 99999;
-        iIdx++;
+		if(gAdditionalCfgParam.machineInfo.iMachineFlow != 250)
+		{
+			aIds[iIdx].iDspType = 2;
+	        aIds[iIdx].iId      = DISP_AT_PACK;
+	        aIds[iIdx].vi.v1Min = 0;
+	        aIds[iIdx].vi.v1Max = 99999;
+	        aIds[iIdx].vi.v2Min = 0;
+	        aIds[iIdx].vi.v2Max = 99999;
+	        iIdx++;
+		}
         break;
     default:
         break;

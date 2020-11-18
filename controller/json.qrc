@@ -1,5 +1,0 @@
-<RCC>
-    <qresource prefix="/json">
-        <file>heartJson.json</file>
-    </qresource>
-</RCC>
