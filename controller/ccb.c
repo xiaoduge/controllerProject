@@ -12680,6 +12680,12 @@ void work_idle(void *para)
     /* 3. disable all reports from exe */
     CcbSetFms(pWorkItem->id,0,iTmp); // don care modbus exe result
 
+    //切换到待机状态时如果设备正在制水，则记录一次产水历史数据
+    if(DispGetPwFlag())
+    {
+        CcbProduceWater(gCcb.ulProduceWaterBgnTime);
+
+    }
     /* notify hand set (late implement) */     
     work_idle_succ();
     /* notify ui (late implemnt) */
