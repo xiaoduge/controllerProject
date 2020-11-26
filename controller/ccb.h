@@ -79,6 +79,9 @@ typedef struct
 
     int                  iTrxMap; /* bit0 for CAN, bit1 for zigbee  */
     unsigned short       usShortAddr;
+
+	APP_PH_DO_VALUE_STRU doInfo;
+	APP_PH_DO_VALUE_STRU phInfo;
     
 }EXE_BOARD_STRU;
 

@@ -187,6 +187,9 @@ void SystemCfgPage::buildTranslation()
     m_lbPWTankUVName->setText(tr("Exposure Time"));
     m_lbPWTankUVUnit->setText(tr("min/H"));
 
+    m_chkDO->setText(tr("DO"));
+    m_chkPH->setText(tr("pH"));
+
     m_lbPOweronFlushName->setText(tr("Flush Time"));
     m_lbPOweronFlushUnit->setText(tr("min"));
 
@@ -391,6 +394,26 @@ void SystemCfgPage::createControl()
         break;
     }
     mainLayout->addWidget(tmpWidget);
+
+    /* line 4-2*/
+    tmpWidget = new QWidget;
+
+    tmpWidget->setFixedSize(tmpWidgetWidth ,BACKWIDGET_HEIGHT);
+
+    rectTmp = sQrectAry[0];
+    rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 60);
+    m_chkDO = new QCheckBox(tmpWidget);
+    m_chkDO->setGeometry(rectTmp);
+    m_chkDO->setStyleSheet(strQss4Chk);
+
+    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
+    rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 60);
+    m_chkPH = new QCheckBox(tmpWidget);
+    m_chkPH->setGeometry(rectTmp);
+	m_chkPH->setStyleSheet(strQss4Chk);
+
+    mainLayout->addWidget(tmpWidget);
+
     /* line 5*/
     tmpWidget = new QWidget;
     
@@ -960,6 +983,24 @@ void SystemCfgPage::connectData()
     {
         m_chkPWTankUV->setChecked(false);
     }
+	
+	if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_DO))
+    {
+        m_chkDO->setChecked(true);
+    }
+    else
+    {
+        m_chkDO->setChecked(false);
+    }
+
+	if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_PH))
+    {
+        m_chkPH->setChecked(true);
+    }
+    else
+    {
+        m_chkPH->setChecked(false);
+    }
 
     m_lePWTankUVValue->setText(QString::number(gGlobalParam.MiscParam.iTankUvOnTime));
     m_leLoginLingerValue->setText(QString::number(gGlobalParam.MiscParam.iAutoLogoutTime));
@@ -1224,6 +1265,24 @@ void SystemCfgPage::save()
         {
             smParam.ulFlags &= ~(1 << DISP_SM_TankUV);
         }
+    }
+	
+    if (Qt::Checked == m_chkDO->checkState())
+    {
+        smParam.ulFlags |= 1 << DISP_SM_DO;
+    }
+    else
+    {
+        smParam.ulFlags &= ~(1 << DISP_SM_DO);
+    }
+
+	if (Qt::Checked == m_chkPH->checkState())
+    {
+        smParam.ulFlags |= 1 << DISP_SM_PH;
+    }
+    else
+    {
+        smParam.ulFlags &= ~(1 << DISP_SM_PH);
     }
 
     miscParam.iTankUvOnTime     = m_lePWTankUVValue->text().toInt();

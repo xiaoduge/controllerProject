@@ -56,6 +56,9 @@ private:
     QLabel    *m_lbPWTankUVName;
     DLineEdit *m_lePWTankUVValue;
     QLabel    *m_lbPWTankUVUnit;
+
+	QCheckBox *m_chkDO;
+	QCheckBox *m_chkPH;
     
     QLabel    *m_lbPOweronFlushName;
     DLineEdit *m_lePOweronFlushValue;

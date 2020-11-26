@@ -42,6 +42,9 @@ public:
         TOC_Value,
         UP_Disp_Rate,
 
+		DO_Value,
+		PH_Value,
+
         MSG_NUM
     };
 
@@ -61,6 +64,12 @@ public:
         UNIT_PPB,
         UNIT_PERCENTAGE,//percentage
         UNIT_VOLUME,    //volume
+        
+        UNIT_DO_MG,  //DO mg/L
+        UNIT_DO_DO,  //DO饱和度 %
+        UNIT_PH_PH,  //pH 
+        UNIT_PH_MV,  //pH.mV
+        
         UNIT_MSG_NUM
     };
 
@@ -91,6 +100,9 @@ public:
 
     void updTOC(float fToc); //2018.11.13
 
+    void updDO(unsigned short iValue1, unsigned short iValue2);
+    void updPH(unsigned short iValue1, unsigned short iValue2);
+
 private:
     void initAllValue();
     void initTagsArray();
@@ -102,6 +114,9 @@ private:
     void updHistoryFlowInfo();
     void updHistoryTank();
     void updHistoryTOC();
+
+    void updHistoryDO();
+    void updHistoryPH();
 
     void setBackColor();
     void buildTitles();

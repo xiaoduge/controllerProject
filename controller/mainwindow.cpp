@@ -8231,6 +8231,40 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
             DispSndHoPpbAndTankLevel(APP_PROTOL_CANID_BROADCAST,APP_PACKET_HO_QL_TYPE_PPB,0,fToc);
         }        
         break;
+
+	case DISP_NOT_DO:
+		{
+			NOT_PH_DO_ITEM_STRU *pItem = (NOT_PH_DO_ITEM_STRU *)pNotify->aucData;
+			qDebug() << QString("DO Info: %1 ; %2; %3 ;").arg(pItem->iValue1)
+		                                             	.arg(pItem->iValue2)
+		                                             	.arg(pItem->iValue3);
+			if (NULL != m_pSubPages[PAGE_MENU])
+            {
+                MenuPage *page = (MenuPage *)m_pSubPages[PAGE_MENU];
+
+                //WaterQualityPage *subpage = (WaterQualityPage *)page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
+                DWaterQualityPage *subpage = (DWaterQualityPage *)page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
+                subpage->updDO(pItem->iValue2, pItem->iValue3);
+            }
+		}
+		break;
+	case DISP_NOT_PH:
+		{
+			NOT_PH_DO_ITEM_STRU *pItem = (NOT_PH_DO_ITEM_STRU *)pNotify->aucData;
+			qDebug() << QString("pH Info: %1 ; %2; %3 ;").arg(pItem->iValue1)
+		                                             	.arg(pItem->iValue2)
+		                                             	.arg(pItem->iValue3);
+			if (NULL != m_pSubPages[PAGE_MENU])
+            {
+                MenuPage *page = (MenuPage *)m_pSubPages[PAGE_MENU];
+
+                //WaterQualityPage *subpage = (WaterQualityPage *)page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
+                DWaterQualityPage *subpage = (DWaterQualityPage *)page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
+                subpage->updPH(pItem->iValue2, pItem->iValue3);
+            }
+		}
+		break;		
+
     case DISP_NOT_UPD:
         {
             NOT_UPD_ITEM_STRU *pItem = (NOT_UPD_ITEM_STRU *)pNotify->aucData;

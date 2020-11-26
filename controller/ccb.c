@@ -6467,6 +6467,55 @@ void CcbTocNotify(void)
    
 }
 
+void CcbDONotify(void)
+{
+    int iLength;
+
+    NOT_INFO_STRU *pNotify = (NOT_INFO_STRU *)gaucNotifyBuffer;
+
+    NOT_PH_DO_ITEM_STRU *pItem = (NOT_PH_DO_ITEM_STRU *)pNotify->aucData;
+
+    VOS_LOG(VOS_LOG_DEBUG,"Enter %s",__FUNCTION__);                       
+
+    pNotify->Hdr.ucCode = DISP_NOT_DO;
+
+    iLength = sizeof(NOT_HEADER_STRU);
+
+	pItem->iValue1 = gCcb.ExeBrd.doInfo.iValue1;
+	pItem->iValue2 = gCcb.ExeBrd.doInfo.iValue2;
+	pItem->iValue3 = gCcb.ExeBrd.doInfo.iValue3;
+
+    iLength += sizeof(NOT_PH_DO_ITEM_STRU);
+
+    DispIndicationEntry(gaucNotifyBuffer,iLength);
+   
+}
+
+void CcbPHNotify(void)
+{
+    int iLength;
+
+    NOT_INFO_STRU *pNotify = (NOT_INFO_STRU *)gaucNotifyBuffer;
+
+    NOT_PH_DO_ITEM_STRU *pItem = (NOT_PH_DO_ITEM_STRU *)pNotify->aucData;
+
+    VOS_LOG(VOS_LOG_DEBUG,"Enter %s",__FUNCTION__);                       
+
+    pNotify->Hdr.ucCode = DISP_NOT_PH;
+
+    iLength = sizeof(NOT_HEADER_STRU);
+
+	pItem->iValue1 = gCcb.ExeBrd.doInfo.iValue1;
+	pItem->iValue2 = gCcb.ExeBrd.doInfo.iValue2;
+	pItem->iValue3 = gCcb.ExeBrd.doInfo.iValue3;
+
+    iLength += sizeof(NOT_PH_DO_ITEM_STRU);
+
+    DispIndicationEntry(gaucNotifyBuffer,iLength);
+
+   
+}
+
 void DispUpdNotify(int iType,int iResult,int iPercent)
 {
     int iLength;
@@ -7286,6 +7335,22 @@ int CanCcbAfDataClientRpt4ExeBoard(MAIN_CANITF_MSG_STRU *pCanItfMsg)
             CcbTocNotify();
         }        
         break;
+	
+    case APP_PACKET_RPT_DO:
+    	{
+			APP_PH_DO_VALUE_STRU *pDO = (APP_PH_DO_VALUE_STRU *)pmg->aucData;
+			gCcb.ExeBrd.doInfo = *pDO;
+			CcbDONotify();
+    	}
+		break;
+    case APP_PACKET_RPT_PH:
+    	{
+			APP_PH_DO_VALUE_STRU *pPH = (APP_PH_DO_VALUE_STRU *)pmg->aucData;
+			gCcb.ExeBrd.doInfo = *pPH;
+			CcbPHNotify();
+    	}
+		break;
+
     }
     return 0;
 }

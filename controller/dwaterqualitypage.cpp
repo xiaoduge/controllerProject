@@ -79,6 +79,9 @@ void DWaterQualityPage::buildTranslation()
     strMsg[TOC_Value] = tr("TOC");
     strMsg[UP_Disp_Rate] = tr("UP Disp. rate");
 
+    strMsg[DO_Value] = tr("DO");
+    strMsg[PH_Value] = tr("pH");
+
     strUnitMsg[UNIT_OMG] = "%1 " + tr("omg");
     strUnitMsg[UNIT_USCM] = "%1 " + tr("us/cm");
     strUnitMsg[UNIT_CELSIUS] = "%1 " + tr("Celsius");
@@ -93,6 +96,11 @@ void DWaterQualityPage::buildTranslation()
     strUnitMsg[UNIT_PPB] = "%1 " + tr("ppb");
     strUnitMsg[UNIT_PERCENTAGE] = "%1 " + tr("%");
     strUnitMsg[UNIT_VOLUME] = "%1 " + tr("L");
+
+    strUnitMsg[UNIT_DO_MG] = "%1" + tr("mg/L");
+    strUnitMsg[UNIT_DO_DO] = "%1" + tr("%");
+    strUnitMsg[UNIT_PH_PH] = "%1" + tr("pH");
+    strUnitMsg[UNIT_PH_MV] = "%1" + tr("mV");
 
     initTagsArray();
 }
@@ -111,6 +119,9 @@ void DWaterQualityPage::updAllInfo(void)
     updHistoryFlowInfo();
     updHistoryTank();
     updHistoryTOC();
+
+    updHistoryDO();
+    updHistoryPH();
 }
 
 void DWaterQualityPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info)
@@ -511,6 +522,30 @@ void DWaterQualityPage::updTOC(float fToc)
     m_historyInfo[TOC_Value].value1 = fToc;
 }
 
+void DWaterQualityPage::updDO(unsigned short iValue1, unsigned short iValue2)
+{
+    float fValue1 = iValue1 * 0.01;
+    float fValue2 = iValue2 * 0.1;
+    updateValue(m_tags[DO_Value], 
+                strUnitMsg[UNIT_DO_MG].arg(fValue1, 0, 'f', 2),
+                strUnitMsg[UNIT_DO_DO].arg(fValue2, 0, 'f', 1));
+
+    m_historyInfo[DO_Value].value1 = fValue1;
+    m_historyInfo[DO_Value].value2 = fValue2;
+}
+
+void DWaterQualityPage::updPH(unsigned short iValue1, unsigned short iValue2)
+{
+    float fValue1 = iValue1 * 0.01;
+    float fValue2 = iValue2 * 0.1;
+    updateValue(m_tags[PH_Value], 
+                strUnitMsg[UNIT_PH_PH].arg(fValue1, 0, 'f', 2),
+                strUnitMsg[UNIT_PH_MV].arg(fValue2, 0, 'f', 1));
+
+    m_historyInfo[PH_Value].value1 = fValue1;
+    m_historyInfo[PH_Value].value2 = fValue2;
+}
+
 void DWaterQualityPage::initAllValue()
 {
     for(int i = 0; i < MSG_NUM; ++i)
@@ -545,6 +580,9 @@ void DWaterQualityPage::initTagsArray()
     m_tags[UP_Resis] = DTags(strMsg[UP_Resis], 2);
     m_tags[TOC_Value] = DTags(strMsg[TOC_Value], 1);
     m_tags[UP_Disp_Rate] = DTags(strMsg[UP_Disp_Rate], 1);
+
+    m_tags[DO_Value] = DTags(strMsg[DO_Value], 2);
+    m_tags[PH_Value] = DTags(strMsg[PH_Value], 2);
 
     initConfigList();
 }
@@ -755,6 +793,16 @@ void DWaterQualityPage::initConfigList()
     default:
         break;
     }
+
+	if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_DO))
+    {
+        m_cfglist.append(m_tags[DO_Value]);
+    }
+	if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_PH))
+    {
+        m_cfglist.append(m_tags[PH_Value]);
+    }
+	
     m_pQualityWidget->setConfigList(m_cfglist);
 }
 
@@ -1000,6 +1048,20 @@ void DWaterQualityPage::updHistoryTOC()
         updateValue(m_tags[TOC_Value],
                     strUnitMsg[UNIT_PPB].arg(m_historyInfo[TOC_Value].value1, 0, 'f', 0));
     }
+}
+
+void DWaterQualityPage::updHistoryDO()
+{
+    updateValue(m_tags[DO_Value], 
+                strUnitMsg[UNIT_DO_MG].arg(m_historyInfo[DO_Value].value1, 0, 'f', 2),
+                strUnitMsg[UNIT_DO_DO].arg(m_historyInfo[DO_Value].value2, 0, 'f', 1));
+}
+
+void DWaterQualityPage::updHistoryPH()
+{
+    updateValue(m_tags[PH_Value], 
+                strUnitMsg[UNIT_PH_PH].arg(m_historyInfo[PH_Value].value1, 0, 'f', 2),
+                strUnitMsg[UNIT_PH_MV].arg(m_historyInfo[PH_Value].value2, 0, 'f', 1));
 }
 
 void DWaterQualityPage::updFlowInfo(int iIndex,int iValue)

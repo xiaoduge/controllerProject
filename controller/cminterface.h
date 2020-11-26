@@ -186,7 +186,6 @@
 
 #define APP_EXE_HB_NUM                      (3)
 
-
 typedef enum
 {
     APP_TRX_CAN = 0, 
@@ -344,6 +343,9 @@ typedef enum
     APP_PACKET_RPT_EDI    ,       
     APP_PACKET_RPT_TOC    ,
     APP_PACKET_RPT_LEAK   ,
+    
+    APP_PACKET_RPT_DO     ,    //  DO
+    APP_PACKET_RPT_PH     ,    //  PH
 }APP_PACKET_RPT_EXE_BOARD_TYPE;
 
 typedef enum
@@ -635,6 +637,14 @@ typedef struct
     float          fB; 
     float          fP; 
 }APP_PACKET_RPT_TOC_STRU; 
+
+typedef struct
+{
+    unsigned short iValue1;
+	unsigned short iValue2;
+	unsigned short iValue3;
+}APP_PH_DO_VALUE_STRU;
+
 
 typedef struct
 {
