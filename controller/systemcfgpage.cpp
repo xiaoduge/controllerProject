@@ -398,6 +398,8 @@ void SystemCfgPage::createControl()
     /* line 4-2*/
     tmpWidget = new QWidget;
 
+	tmpWidget->setAutoFillBackground(true);
+    tmpWidget->setPalette(pal);
     tmpWidget->setFixedSize(tmpWidgetWidth ,BACKWIDGET_HEIGHT);
 
     rectTmp = sQrectAry[0];
@@ -413,6 +415,8 @@ void SystemCfgPage::createControl()
 	m_chkPH->setStyleSheet(strQss4Chk);
 
     mainLayout->addWidget(tmpWidget);
+	//TODO: 先隐藏
+	tmpWidget->hide(); 
 
     /* line 5*/
     tmpWidget = new QWidget;

@@ -793,7 +793,8 @@ void DWaterQualityPage::initConfigList()
     default:
         break;
     }
-
+	//TODO: 先隐藏
+#if 0
 	if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_DO))
     {
         m_cfglist.append(m_tags[DO_Value]);
@@ -802,7 +803,8 @@ void DWaterQualityPage::initConfigList()
     {
         m_cfglist.append(m_tags[PH_Value]);
     }
-	
+#endif
+
     m_pQualityWidget->setConfigList(m_cfglist);
 }
 

@@ -255,7 +255,7 @@ void AllocationSetPage::update()
         m_pBtnEnable->setState(BITMAPBUTTON_STATE_UNSEL);
     }
     
-    for (iLoop = 0; iLoop <= ALLOCPAGE_BTN_SATURDAY; iLoop++)
+    for (iLoop = 0; iLoop <= ALLOCPAGE_BTN_SUNDAY; iLoop++)
     {
         if (gGlobalParam.MiscParam.ulAllocMask & (1 << iLoop))
         {
@@ -313,7 +313,7 @@ void AllocationSetPage::save()
         iMask |= 1 << DISPLAY_ALLOC_FLAG_SWITCHON;
     }
 
-    for (iLoop = 0; iLoop <= ALLOCPAGE_BTN_SATURDAY; iLoop++)
+    for (iLoop = 0; iLoop <= ALLOCPAGE_BTN_SUNDAY; iLoop++)
     {
         if (BITMAPBUTTON_STATE_SEL == m_pBtns[iLoop]->getState())
         {
