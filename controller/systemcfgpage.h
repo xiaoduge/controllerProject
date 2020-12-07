@@ -57,9 +57,11 @@ private:
     DLineEdit *m_lePWTankUVValue;
     QLabel    *m_lbPWTankUVUnit;
 
-	QCheckBox *m_chkDO;
-	QCheckBox *m_chkPH;
-    
+#ifdef CFG_DO_PH
+    QCheckBox *m_chkDO;
+    QCheckBox *m_chkPH;
+#endif
+
     QLabel    *m_lbPOweronFlushName;
     DLineEdit *m_lePOweronFlushValue;
     QLabel    *m_lbPOweronFlushUnit;

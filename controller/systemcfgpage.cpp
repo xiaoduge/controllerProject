@@ -187,8 +187,10 @@ void SystemCfgPage::buildTranslation()
     m_lbPWTankUVName->setText(tr("Exposure Time"));
     m_lbPWTankUVUnit->setText(tr("min/H"));
 
+#ifdef CFG_DO_PH
     m_chkDO->setText(tr("DO"));
     m_chkPH->setText(tr("pH"));
+#endif
 
     m_lbPOweronFlushName->setText(tr("Flush Time"));
     m_lbPOweronFlushUnit->setText(tr("min"));
@@ -395,6 +397,7 @@ void SystemCfgPage::createControl()
     }
     mainLayout->addWidget(tmpWidget);
 
+#ifdef CFG_DO_PH
     /* line 4-2*/
     tmpWidget = new QWidget;
 
@@ -415,8 +418,7 @@ void SystemCfgPage::createControl()
 	m_chkPH->setStyleSheet(strQss4Chk);
 
     mainLayout->addWidget(tmpWidget);
-	//TODO: 先隐藏
-	tmpWidget->hide(); 
+#endif
 
     /* line 5*/
     tmpWidget = new QWidget;
@@ -987,7 +989,8 @@ void SystemCfgPage::connectData()
     {
         m_chkPWTankUV->setChecked(false);
     }
-	
+
+#ifdef CFG_DO_PH
 	if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_DO))
     {
         m_chkDO->setChecked(true);
@@ -1005,6 +1008,7 @@ void SystemCfgPage::connectData()
     {
         m_chkPH->setChecked(false);
     }
+#endif
 
     m_lePWTankUVValue->setText(QString::number(gGlobalParam.MiscParam.iTankUvOnTime));
     m_leLoginLingerValue->setText(QString::number(gGlobalParam.MiscParam.iAutoLogoutTime));
@@ -1270,7 +1274,8 @@ void SystemCfgPage::save()
             smParam.ulFlags &= ~(1 << DISP_SM_TankUV);
         }
     }
-	
+
+#ifdef CFG_DO_PH
     if (Qt::Checked == m_chkDO->checkState())
     {
         smParam.ulFlags |= 1 << DISP_SM_DO;
@@ -1288,6 +1293,7 @@ void SystemCfgPage::save()
     {
         smParam.ulFlags &= ~(1 << DISP_SM_PH);
     }
+#endif
 
     miscParam.iTankUvOnTime     = m_lePWTankUVValue->text().toInt();
     miscParam.iAutoLogoutTime   = m_leLoginLingerValue->text().toInt();

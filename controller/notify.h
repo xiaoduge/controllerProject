@@ -57,8 +57,10 @@ typedef enum
 
    DISP_NOT_REALTIME_QTW_VOLUME, //2019.7.9 dcj add
 
+#ifdef CFG_DO_PH
    DISP_NOT_DO, //do
    DISP_NOT_PH, //ph
+#endif
 
    DISP_NOT_NUM,
 
@@ -145,12 +147,14 @@ typedef struct
     float          fP;
 }NOT_TOC_ITEM_STRU;
 
+#ifdef CFG_DO_PH
 typedef struct
 {
     unsigned short iValue1;
 	unsigned short iValue2;
 	unsigned short iValue3;
 }NOT_PH_DO_ITEM_STRU;
+#endif
 
 typedef struct
 {

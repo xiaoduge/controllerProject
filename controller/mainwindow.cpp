@@ -8232,6 +8232,7 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
         }        
         break;
 
+#ifdef CFG_DO_PH
 	case DISP_NOT_DO:
 		{
 			NOT_PH_DO_ITEM_STRU *pItem = (NOT_PH_DO_ITEM_STRU *)pNotify->aucData;
@@ -8264,6 +8265,7 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
             }
 		}
 		break;		
+#endif
 
     case DISP_NOT_UPD:
         {

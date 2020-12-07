@@ -464,10 +464,12 @@ typedef enum
     DISP_SM_Pre_Filter,
     DISP_SM_HP_Electrode,
     DISP_SM_SW_PUMP,
-
+    
+#ifdef CFG_DO_PH
 	DISP_SM_DO,
 	DISP_SM_PH,
-    
+#endif
+
     DISP_SM_NUM,
 }DISP_SUB_MODULE_ENUM;
 

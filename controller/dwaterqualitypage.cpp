@@ -79,8 +79,10 @@ void DWaterQualityPage::buildTranslation()
     strMsg[TOC_Value] = tr("TOC");
     strMsg[UP_Disp_Rate] = tr("UP Disp. rate");
 
+#ifdef CFG_DO_PH
     strMsg[DO_Value] = tr("DO");
     strMsg[PH_Value] = tr("pH");
+#endif
 
     strUnitMsg[UNIT_OMG] = "%1 " + tr("omg");
     strUnitMsg[UNIT_USCM] = "%1 " + tr("us/cm");
@@ -97,10 +99,12 @@ void DWaterQualityPage::buildTranslation()
     strUnitMsg[UNIT_PERCENTAGE] = "%1 " + tr("%");
     strUnitMsg[UNIT_VOLUME] = "%1 " + tr("L");
 
+#ifdef CFG_DO_PH
     strUnitMsg[UNIT_DO_MG] = "%1" + tr("mg/L");
     strUnitMsg[UNIT_DO_DO] = "%1" + tr("%");
     strUnitMsg[UNIT_PH_PH] = "%1" + tr("pH");
     strUnitMsg[UNIT_PH_MV] = "%1" + tr("mV");
+#endif
 
     initTagsArray();
 }
@@ -120,8 +124,11 @@ void DWaterQualityPage::updAllInfo(void)
     updHistoryTank();
     updHistoryTOC();
 
+#ifdef CFG_DO_PH
     updHistoryDO();
     updHistoryPH();
+#endif
+
 }
 
 void DWaterQualityPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info)
@@ -522,6 +529,7 @@ void DWaterQualityPage::updTOC(float fToc)
     m_historyInfo[TOC_Value].value1 = fToc;
 }
 
+#ifdef CFG_DO_PH
 void DWaterQualityPage::updDO(unsigned short iValue1, unsigned short iValue2)
 {
     float fValue1 = iValue1 * 0.01;
@@ -545,6 +553,7 @@ void DWaterQualityPage::updPH(unsigned short iValue1, unsigned short iValue2)
     m_historyInfo[PH_Value].value1 = fValue1;
     m_historyInfo[PH_Value].value2 = fValue2;
 }
+#endif
 
 void DWaterQualityPage::initAllValue()
 {
@@ -581,8 +590,10 @@ void DWaterQualityPage::initTagsArray()
     m_tags[TOC_Value] = DTags(strMsg[TOC_Value], 1);
     m_tags[UP_Disp_Rate] = DTags(strMsg[UP_Disp_Rate], 1);
 
+#ifdef CFG_DO_PH
     m_tags[DO_Value] = DTags(strMsg[DO_Value], 2);
     m_tags[PH_Value] = DTags(strMsg[PH_Value], 2);
+#endif
 
     initConfigList();
 }
@@ -793,8 +804,8 @@ void DWaterQualityPage::initConfigList()
     default:
         break;
     }
-	//TODO: 先隐藏
-#if 0
+
+#ifdef CFG_DO_PH
 	if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_DO))
     {
         m_cfglist.append(m_tags[DO_Value]);
@@ -1052,6 +1063,7 @@ void DWaterQualityPage::updHistoryTOC()
     }
 }
 
+#ifdef CFG_DO_PH
 void DWaterQualityPage::updHistoryDO()
 {
     updateValue(m_tags[DO_Value], 
@@ -1065,6 +1077,7 @@ void DWaterQualityPage::updHistoryPH()
                 strUnitMsg[UNIT_PH_PH].arg(m_historyInfo[PH_Value].value1, 0, 'f', 2),
                 strUnitMsg[UNIT_PH_MV].arg(m_historyInfo[PH_Value].value2, 0, 'f', 1));
 }
+#endif
 
 void DWaterQualityPage::updFlowInfo(int iIndex,int iValue)
 {

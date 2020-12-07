@@ -6467,6 +6467,7 @@ void CcbTocNotify(void)
    
 }
 
+#ifdef CFG_DO_PH
 void CcbDONotify(void)
 {
     int iLength;
@@ -6512,9 +6513,8 @@ void CcbPHNotify(void)
     iLength += sizeof(NOT_PH_DO_ITEM_STRU);
 
     DispIndicationEntry(gaucNotifyBuffer,iLength);
-
-   
 }
+#endif
 
 void DispUpdNotify(int iType,int iResult,int iPercent)
 {
@@ -7335,7 +7335,8 @@ int CanCcbAfDataClientRpt4ExeBoard(MAIN_CANITF_MSG_STRU *pCanItfMsg)
             CcbTocNotify();
         }        
         break;
-	
+
+#ifdef CFG_DO_PH
     case APP_PACKET_RPT_DO:
     	{
 			APP_PH_DO_VALUE_STRU *pDO = (APP_PH_DO_VALUE_STRU *)pmg->aucData;
@@ -7350,7 +7351,7 @@ int CanCcbAfDataClientRpt4ExeBoard(MAIN_CANITF_MSG_STRU *pCanItfMsg)
 			CcbPHNotify();
     	}
 		break;
-
+#endif
     }
     return 0;
 }

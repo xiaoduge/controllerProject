@@ -343,9 +343,11 @@ typedef enum
     APP_PACKET_RPT_EDI    ,       
     APP_PACKET_RPT_TOC    ,
     APP_PACKET_RPT_LEAK   ,
-    
+
+#ifdef CFG_DO_PH
     APP_PACKET_RPT_DO     ,    //  DO
     APP_PACKET_RPT_PH     ,    //  PH
+#endif
 }APP_PACKET_RPT_EXE_BOARD_TYPE;
 
 typedef enum
@@ -638,13 +640,14 @@ typedef struct
     float          fP; 
 }APP_PACKET_RPT_TOC_STRU; 
 
+#ifdef CFG_DO_PH
 typedef struct
 {
     unsigned short iValue1;
 	unsigned short iValue2;
 	unsigned short iValue3;
 }APP_PH_DO_VALUE_STRU;
-
+#endif
 
 typedef struct
 {
