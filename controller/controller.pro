@@ -134,7 +134,8 @@ SOURCES += main.cpp\
     dwarningdlg.cpp \
     dcheckboxlistitemwidget.cpp \
     dinittankcfgwidget.cpp \
-    dsettimedialog.cpp
+    dsettimedialog.cpp \
+    drephilinkprotocoldlg.cpp
 HEADERS  += mainwindow.h \
     ctrlapplication.h \
     log.h \
@@ -238,7 +239,8 @@ HEADERS  += mainwindow.h \
     dwarningdlg.h \
     dcheckboxlistitemwidget.h \
     dinittankcfgwidget.h \
-    dsettimedialog.h
+    dsettimedialog.h \
+    drephilinkprotocoldlg.h
 
 FORMS    += mainwindow.ui \
     syszuxpinyin.ui \
@@ -250,7 +252,8 @@ RESOURCES += \
     app.qrc \
     image.qrc \
     language.qrc \
-    other.qrc
+    other.qrc \
+    html.qrc
 
 OTHER_FILES += \
     pics/image/arrow_down_active.png \

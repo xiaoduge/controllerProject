@@ -2,6 +2,7 @@
 #define SYSTEMCFGPAGE_H
 
 #include "subpage.h"
+#include "Display.h"
 
 class MainWindow;
 class QComboBox;
@@ -56,6 +57,10 @@ private:
     QLabel    *m_lbPWTankUVName;
     DLineEdit *m_lePWTankUVValue;
     QLabel    *m_lbPWTankUVUnit;
+
+#ifdef STEPPERMOTOR
+    QCheckBox *m_chkStepperMotor;
+#endif
 
 #ifdef CFG_DO_PH
     QCheckBox *m_chkDO;

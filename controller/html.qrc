@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/html/rephilink">
+        <file alias="rephilink_cn.html">html/rephilink/rephilink_cn.html</file>
+        <file alias="rephilink_en.html">html/rephilink/rephilink_en.html</file>
+    </qresource>
+</RCC>

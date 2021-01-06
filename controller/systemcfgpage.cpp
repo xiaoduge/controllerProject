@@ -186,6 +186,10 @@ void SystemCfgPage::buildTranslation()
     m_chkPWTankUV->setText(tr("Tank UV"));
     m_lbPWTankUVName->setText(tr("Exposure Time"));
     m_lbPWTankUVUnit->setText(tr("min/H"));
+	
+#ifdef STEPPERMOTOR
+	m_chkStepperMotor->setText(tr("Motor Valve"));
+#endif
 
 #ifdef CFG_DO_PH
     m_chkDO->setText(tr("DO"));
@@ -396,6 +400,24 @@ void SystemCfgPage::createControl()
         break;
     }
     mainLayout->addWidget(tmpWidget);
+
+#ifdef STEPPERMOTOR
+	/* line 4-2*/
+    tmpWidget = new QWidget;
+
+	tmpWidget->setAutoFillBackground(true);
+    tmpWidget->setPalette(pal);
+    tmpWidget->setFixedSize(tmpWidgetWidth ,BACKWIDGET_HEIGHT);
+
+    rectTmp = sQrectAry[0];
+    rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 60);
+    m_chkStepperMotor = new QCheckBox(tmpWidget);
+    m_chkStepperMotor->setGeometry(rectTmp);
+    m_chkStepperMotor->setStyleSheet(strQss4Chk);
+
+    mainLayout->addWidget(tmpWidget);
+#endif
+
 
 #ifdef CFG_DO_PH
     /* line 4-2*/
@@ -989,6 +1011,16 @@ void SystemCfgPage::connectData()
     {
         m_chkPWTankUV->setChecked(false);
     }
+#ifdef STEPPERMOTOR
+	if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_STEPPERMOTOR))
+	{
+		m_chkStepperMotor->setChecked(true);
+	}
+	else
+	{
+		m_chkStepperMotor->setChecked(false);
+	}
+#endif
 
 #ifdef CFG_DO_PH
 	if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_DO))
@@ -1274,6 +1306,18 @@ void SystemCfgPage::save()
             smParam.ulFlags &= ~(1 << DISP_SM_TankUV);
         }
     }
+
+#ifdef STEPPERMOTOR
+	if(Qt::Checked == m_chkStepperMotor->checkState())
+	{
+		smParam.ulFlags |= 1 << DISP_SM_STEPPERMOTOR;
+	}
+	else
+	{
+		smParam.ulFlags &= ~(1 << DISP_SM_STEPPERMOTOR);
+	}
+#endif
+
 
 #ifdef CFG_DO_PH
     if (Qt::Checked == m_chkDO->checkState())

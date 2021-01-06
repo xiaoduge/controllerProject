@@ -3,6 +3,13 @@
 
 #pragma   pack(1)
 
+//开启步进电磁阀
+//#define STEPPERMOTOR
+
+#ifdef STEPPERMOTOR
+#pragma message("Turn on stepper motor function")
+#endif
+
 #define APP_PROTOL_CANID_RSVD           (0x0)
 #define APP_PROTOL_CANID_ALLOC_BEGIN    (0X1)
 #define APP_PROTOL_CANID_ALLOC_END      (511)
@@ -32,6 +39,13 @@
 #define APP_RF_READER_BEGIN_ADDRESS     (0x14)
 #define APP_RF_READER_MAX_NUMBER        (0x08)
 #define APP_RF_READER_END_ADDRESS       (APP_RF_READER_BEGIN_ADDRESS + APP_RF_READER_MAX_NUMBER)
+
+#ifdef STEPPERMOTOR
+//for stepper motor
+#define APP_SMCA_BEGIN_ADDRESS                  (0x1E)
+#define APP_SMCA_MAX_NUMBER                     (0x08)
+#define APP_SMCA_END_ADDRESS                    (APP_SMCA_BEGIN_ADDRESS + APP_SMCA_MAX_NUMBER)
+#endif
 
 #define APP_SN_LENGTH                   (10)
 #define APP_CAT_LENGTH                  (9)
@@ -178,6 +192,26 @@
 #define APP_TOC_OXIDIZATION_SECOND         (2)
 #define APP_TOC_FLUSH2_SAMPLES             (4)
 
+#ifdef STEPPERMOTOR
+// 2020/03/11 ADD for stepper motor control
+#define APP_SMCA_HOLD_REGS_NAME_RPT         (0)
+#define APP_SMCA_HOLD_REGS_MOTOR_SPD_START  (APP_SMCA_HOLD_REGS_NAME_RPT + 1)
+#define APP_SMCA_HOLD_REGS_MOTOR_LOC_START  (APP_SMCA_HOLD_REGS_MOTOR_SPD_START + 2)
+#define APP_SMCA_HOLD_REGS_MOTOR_ACC_START  (APP_SMCA_HOLD_REGS_MOTOR_LOC_START + 2)
+#define APP_SMCA_HOLD_REGS_MOTOR_CTRL_START (APP_SMCA_HOLD_REGS_MOTOR_ACC_START + 1)
+#define APP_SMCA_HOLD_REGS_MOTOR_MODE_START (APP_SMCA_HOLD_REGS_MOTOR_CTRL_START + 1)
+#define APP_SMCA_HOLD_REGS_MOTOR_QRUN_START (APP_SMCA_HOLD_REGS_MOTOR_MODE_START + 1)
+#define APP_SMCA_HOLD_REG_NUM               (APP_SMCA_HOLD_REGS_MOTOR_QRUN_START + 1)
+
+#define APP_SMCA_INPUT_REGS_MOTOR_SPD_START     (0)
+#define APP_SMCA_INPUT_REGS_MOTOR_LOC_START     (APP_SMCA_INPUT_REGS_MOTOR_SPD_START + 2)
+#define APP_SMCA_INPUT_REGS_MOTOR_STATUS_START  (APP_SMCA_INPUT_REGS_MOTOR_LOC_START + 2)
+#define APP_SMCA_INPUT_REGS_MOTOR_DI_START      (APP_SMCA_INPUT_REGS_MOTOR_STATUS_START + 1)
+#define APP_SMCA_INPUT_REGS_MOTOR_ALARM_START   (APP_SMCA_INPUT_REGS_MOTOR_DI_START + 1)
+#define APP_SMCA_INPUT_REGS_MOTOR_MODE_START    (APP_SMCA_INPUT_REGS_MOTOR_ALARM_START + 1)
+#define APP_SMCA_INPUT_REGS_NUM                 (APP_SMCA_INPUT_REGS_MOTOR_MODE_START + 1)
+#endif
+
 #define APP_ZIGBEE_SUB_PROTOL_LENGTH       (1)
 
 #define APP_QTW_UNIT                         (100) // ml
@@ -185,6 +219,11 @@
 #define APP_EXE_INPUT_REG_FM_NUM           APP_FM_FLOW_METER_NUM
 
 #define APP_EXE_HB_NUM                      (3)
+
+#ifdef STEPPERMOTOR
+#define QTWSTEPPER 0    //取水步进电磁阀地址
+#endif
+#define STEPPER_REFERENCD_POINT (220)  //Stepper motor valve Reference point
 
 typedef enum
 {
@@ -259,15 +298,18 @@ typedef enum
 
 typedef enum
 {
-   APP_DEV_TYPE_HOST = 0,
-   APP_DEV_TYPE_MAIN_CTRL ,
-   APP_DEV_TYPE_EXE_BOARD,
-   APP_DEV_TYPE_FLOW_METER,
-   APP_DEV_TYPE_HAND_SET,
-   APP_DEV_TYPE_RF_READER,
-   /*2018/03/04 add */
-   APP_DEV_TYPE_EXE_COMBINED = 0x10,
-   APP_DEV_TYPE_BROADCAST    = 0xff, 
+    APP_DEV_TYPE_HOST = 0,
+    APP_DEV_TYPE_MAIN_CTRL ,
+    APP_DEV_TYPE_EXE_BOARD,
+    APP_DEV_TYPE_FLOW_METER,
+    APP_DEV_TYPE_HAND_SET,
+    APP_DEV_TYPE_RF_READER,
+#ifdef STEPPERMOTOR
+    APP_DEV_TYPE_SMCA, // fixed to 0x6
+#endif
+    /*2018/03/04 add */
+    APP_DEV_TYPE_EXE_COMBINED = 0x10,
+    APP_DEV_TYPE_BROADCAST    = 0xff, 
 }APP_DEV_TYPE_ENUM;
 
 
@@ -420,6 +462,17 @@ typedef enum
     APP_PACKET_RPT_RF_STATE = 0,    //  rfid state reprot
         
 }APP_PACKET_RPT_RF_READER_TYPE;
+
+#ifdef STEPPERMOTOR
+// 2020/03/11 ADD for stepper motor control
+typedef enum
+{
+    APP_PACKET_RPT_SMCA_MOTOR_STATE = 0,    //  Motor state change
+    APP_PACKET_RPT_SMCA_DIN_STATUS     , 
+    APP_PACKET_RPT_SMCA_NUM   ,
+    
+}APP_PACKET_RPT_SMCA_TYPE;
+#endif
 
 typedef enum
 {
@@ -739,6 +792,15 @@ typedef struct
 	uint8_t ucLen;
     uint8_t aucData[1];
 }APP_PACKET_RF_SEARCH_RSP_STRU;
+
+#ifdef STEPPERMOTOR
+// 2020/03/11 ADD for stepper motor control
+typedef struct
+{
+     uint16_t  usCobID;
+     uint8_t   aucData[8];
+}APP_PACKET_RPT_MOT_STRU; 
+#endif
 
 typedef enum
 {

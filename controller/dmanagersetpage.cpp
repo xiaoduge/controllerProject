@@ -1,5 +1,6 @@
 #include "dmanagersetpage.h"
 #include "mainwindow.h"
+#include "drephilinkprotocoldlg.h"
 #include <fcntl.h>
 #include <sys/ioctl.h>
 #include <linux/rtc.h>
@@ -15,6 +16,9 @@
 #include <QButtonGroup>
 #include <QCalendarWidget>
 #include <QSlider>
+#include <QIntValidator>
+#include <QDoubleValidator>
+#include <QSpinBox>
 
 DManagerSetPage::DManagerSetPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : CSubPage(parent,widget,wndMain)
 {
@@ -31,16 +35,11 @@ DManagerSetPage::~DManagerSetPage()
 	case MACHINE_L_RO_LOOP:
         if(gAdditionalCfgParam.machineInfo.iMachineFlow >= 500)
         {
-        	if(m_pageWidget[MANAGER_PAGE_CALIBRATION])
-        	{
-        		m_pageWidget[MANAGER_PAGE_CALIBRATION]->deleteLater();
-				m_pageWidget[MANAGER_PAGE_CALIBRATION] = NULL;
-        	}
-			if(m_pageWidget[MANAGER_PAGE_ADDSETTINGS])
-			{
-				m_pageWidget[MANAGER_PAGE_ADDSETTINGS]->deleteLater();
-				m_pageWidget[MANAGER_PAGE_ADDSETTINGS] = NULL;
-			}
+            if(m_pageWidget[MANAGER_PAGE_CALIBRATION])
+            {
+                m_pageWidget[MANAGER_PAGE_CALIBRATION]->deleteLater();
+                m_pageWidget[MANAGER_PAGE_CALIBRATION] = NULL;
+            }
         }
         break;
     default:
@@ -60,7 +59,6 @@ void DManagerSetPage::buildTitles()
     QStringList stringList;
     stringList << tr("Manager Config");
     setTitles(stringList);
-
 }
 
 void DManagerSetPage::buildTranslation()
@@ -75,12 +73,13 @@ void DManagerSetPage::buildTranslation()
         m_tabWidget->setTabText(3, tr("LCD"));
         break;
     case MACHINE_L_EDI_LOOP:
-	case MACHINE_L_RO_LOOP:
+    case MACHINE_L_RO_LOOP:
         if(gAdditionalCfgParam.machineInfo.iMachineFlow >= 500)
         {
             m_tabWidget->setTabText(0, tr("Time & Date"));
             m_tabWidget->setTabText(1, tr("Audio"));
             m_tabWidget->setTabText(2, tr("LCD"));
+            m_tabWidget->setTabText(3, tr("Additional Settings"));
         }
         else
         {
@@ -102,30 +101,26 @@ void DManagerSetPage::buildTranslation()
 
     //Time
     int iLoop;
-
     m_astrDateName[0] = tr("Select Date");
     m_astrDateName[1] = tr("Select Time");
-
     for( iLoop = 0 ; iLoop < DATE_NUM ; iLoop++)
     {
         lbName[iLoop]->setText(m_astrDateName[iLoop]);
-
     }
-
     lbTitName->setText(tr("Date & Time"));
-
     m_pBtns[TIMEPAGE_BTN_CANCEL]->setText(tr("Cancel"));
     m_pBtns[TIMEPAGE_BTN_OK]->setText(tr("OK"));
 
     //Dispense Rate
     m_pCaliS1Label->setText(tr("Disp. Rate"));
     m_pCaliBtn->setText(tr("Save"));
+#ifdef STEPPERMOTOR
+    m_pStepperLabel->setText(tr("Motor Valve"));
+#endif
 
     //Audio
     m_strSounds[0] = tr("Touch-tone");
-//    m_strSounds[1] = tr("Audio Alerts");
     m_strSounds[1] = tr("Audio Alarms");
-
     for(iLoop = 0 ; iLoop < DISPLAY_SOUND_NUM ; iLoop++)
     {
         m_lblNames[iLoop]->setText(m_strSounds[iLoop]);
@@ -136,33 +131,16 @@ void DManagerSetPage::buildTranslation()
     m_DispNames[0] = tr("Brightness");
     m_DispNames[1] = tr("Energy-saving");
     m_sleepLabel -> setText(tr("SleepTime"));
-
     for( iLoop = 0 ; iLoop < 2 ; iLoop++)
     {
         laName[iLoop]->setText(m_DispNames[iLoop]);
     }
     m_pLcdBtnSave->setText(tr("Save"));
 
-
-    switch(gGlobalParam.iMachineType)
-    {
-    case MACHINE_PURIST:
-    case MACHINE_ADAPT:
-        break;
-    case MACHINE_L_EDI_LOOP:
-	case MACHINE_L_RO_LOOP:
-        if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
-        {
-            m_pAdditionalLb[HPCIR_SETTING]->setText(tr("HP Recir."));
-            m_pAddBtnSave->setText(tr("Save"));
-        }
-        break;
-    default:
-        m_pAdditionalLb[HPCIR_SETTING]->setText(tr("HP Recir."));
-        m_pAddBtnSave->setText(tr("Save"));
-        break;
-    }
-
+    //Additional Settings
+    m_pAdditionalLb[REPHILINK_SETTING]->setText(tr("RephiLink"));
+    m_pAdditionalLb[HPCIR_SETTING]->setText(tr("HP Recir."));
+    m_pAddBtnSave->setText(tr("Save"));
 }
 
 void DManagerSetPage::switchLanguage()
@@ -172,26 +150,17 @@ void DManagerSetPage::switchLanguage()
     selectTitle(titleIndex());
 }
 
-
 void DManagerSetPage::setBackColor()
 {
     QSize size(width(),height());
-
     QImage image_bg = QImage(size, QImage::Format_ARGB32);
-
     QPainter p(&image_bg);
-
     p.fillRect(image_bg.rect(), QColor(228, 231, 240));
-
     QPalette pal(m_widget->palette());
-
     pal.setBrush(m_widget->backgroundRole(),QBrush(image_bg));
-
     m_widget->setAutoFillBackground(true);
     m_widget->setPalette(pal);
 }
-
-
 
 void DManagerSetPage::initUi()
 {
@@ -205,25 +174,10 @@ void DManagerSetPage::initUi()
     //add page
     initTimePage();
     initCalibrationPage();
+
     initAudioPage();
     initLcdPage();
-
-    switch(gGlobalParam.iMachineType)
-    {
-    case MACHINE_PURIST:
-    case MACHINE_ADAPT:
-        break;
-    case MACHINE_L_EDI_LOOP:
-	case MACHINE_L_RO_LOOP:
-        if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
-        {
-            initAdditionalSettingsPage();
-        }
-        break;
-    default:
-        initAdditionalSettingsPage();
-        break;
-    }
+    initAdditionalSettingsPage();
 
     switch(gGlobalParam.iMachineType)
     {
@@ -248,9 +202,7 @@ void DManagerSetPage::initUi()
 
     m_tabWidget->setStyleSheet(tabWidgetqss);
     m_tabWidget->setFocusPolicy(Qt::NoFocus);
-
 }
-
 
 void DManagerSetPage::update()
 {
@@ -261,7 +213,7 @@ void DManagerSetPage::update()
     m_pBtns[TIMEPAGE_BTN_DATE_SET]->setText(sysDateTime.toString("yyyy-MM-dd"));
     m_pBtns[TIMEPAGE_BTN_TIME_SET]->setText(sysDateTime.toString("hh:mm:ss"));
 
-    //rate
+    //cali
     if(gGlobalParam.Caliparam.pc[m_caliId].fk > 100)
     {
         m_pCaliS1LineEdit->setText(QString::number(gCaliParam.pc[m_caliId].fk));
@@ -270,54 +222,22 @@ void DManagerSetPage::update()
     {
         m_pCaliS1LineEdit->setText(QString::number(gCaliParam.pc[m_caliId].fk,'f',3));
     }
-
-    //
-    m_iEnergySave = gGlobalParam.MiscParam.iEnerySave;
-    if(m_iEnergySave)
+#ifdef STEPPERMOTOR
+    if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_STEPPERMOTOR))
     {
-        m_pCheckEnergySave->setCheckState(Qt::Checked);
-        m_pLcdBackWidget[2]->show();
+        m_pStepperSlider->setValue(gCaliParam.stepperCali.iStart - STEPPER_REFERENCD_POINT);
+        m_pStepperValueLB->setText(QString::number(m_pStepperSlider->value()));
     }
     else
     {
-        m_pCheckEnergySave->setCheckState(Qt::Unchecked);
-        m_pLcdBackWidget[2]->hide();
+        if(m_pStepperWidget->isVisible())
+        {
+            m_pStepperWidget->hide();
+        }
     }
+#endif
 
-    switch(gGlobalParam.iMachineType)
-    {
-    case MACHINE_PURIST:
-    case MACHINE_ADAPT:
-        break;
-    case MACHINE_L_EDI_LOOP:
-	case MACHINE_L_RO_LOOP:
-        if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
-        {
-            if (gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
-            {
-                m_pAdditionalCheck[HPCIR_SETTING]->setChecked(true);
-            }
-            else
-            {
-                m_pAdditionalCheck[HPCIR_SETTING]->setChecked(false);
-            }
-        }
-        break;
-    default:
-        if (gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
-        {
-            m_pAdditionalCheck[HPCIR_SETTING]->setChecked(true);
-        }
-        else
-        {
-            m_pAdditionalCheck[HPCIR_SETTING]->setChecked(false);
-        }
-        break;
-    }
-
-    m_iSleepTime = gAdditionalCfgParam.additionalParam.iScreenSleepTime;
-    m_comboBox->setCurrentIndex(m_iSleepTime - 1);
-
+    //Audio
     for(int iLoop = 0; iLoop < DISPLAY_SOUND_NUM; ++iLoop)
     {
         if (m_iSoundMask & (1 << iLoop))
@@ -330,6 +250,49 @@ void DManagerSetPage::update()
         }
     }
 
+    //LCD
+    m_iEnergySave = gGlobalParam.MiscParam.iEnerySave;
+    if(m_iEnergySave)
+    {
+        m_pCheckEnergySave->setCheckState(Qt::Checked);
+        m_pLcdBackWidget[2]->show();
+    }
+    else
+    {
+        m_pCheckEnergySave->setCheckState(Qt::Unchecked);
+        m_pLcdBackWidget[2]->hide();
+    }
+    m_iSleepTime = gAdditionalCfgParam.additionalParam.iScreenSleepTime;
+    m_comboBox->setCurrentIndex(m_iSleepTime - 1);
+
+    //Additional Settings
+    if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_REPHILINK))
+    {
+        m_pAdditionalCheck[REPHILINK_SETTING]->setChecked(true);
+    }
+    else
+    {
+        m_pAdditionalCheck[REPHILINK_SETTING]->setChecked(false);
+    }
+
+    if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
+    {
+        if (gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
+        {
+            m_pAdditionalCheck[HPCIR_SETTING]->setChecked(true);
+        }
+        else
+        {
+            m_pAdditionalCheck[HPCIR_SETTING]->setChecked(false);
+        }
+    }
+    else
+    {
+        if(m_pAdditionalWidget[HPCIR_SETTING]->isVisible())
+        {
+            m_pAdditionalWidget[HPCIR_SETTING]->hide();
+        }
+    }
 }
 
 void DManagerSetPage::show(bool bShow)
@@ -445,11 +408,8 @@ void DManagerSetPage::on_timeOkBtn_clicked()
     }
 
     changeTime();
-
     m_wndMain->MainWriteLoginOperationInfo2Db(SETPAGE_SYSTEM_TIME);
-
     m_wndMain->prepareKeyStroke();
-
 }
 
 void DManagerSetPage::on_timeCancelBtn_clicked()
@@ -492,6 +452,12 @@ void DManagerSetPage::on_caliSaveBtn_clicked()
     cMap.insert(m_caliId, values);
 
     MainSaveCalibrateParam(gGlobalParam.iMachineType, cMap);
+
+#ifdef STEPPERMOTOR
+    // save stepper cali parameter
+    gCaliParam.stepperCali.iStart = m_pStepperSlider->value() + STEPPER_REFERENCD_POINT;
+    MainSaveStepperCaliParam(gGlobalParam.iMachineType);
+#endif
 
     MainUpdateGlobalParam();
 
@@ -610,31 +576,29 @@ void DManagerSetPage::setValue(int value)
 
 void DManagerSetPage::on_AdditionalBtnSave_clicked()
 {
-    switch(gGlobalParam.iMachineType)
-    {
-    case MACHINE_PURIST:
-    case MACHINE_ADAPT:
-        return;
-    case MACHINE_L_EDI_LOOP:
-	case MACHINE_L_RO_LOOP:
-        if(gAdditionalCfgParam.machineInfo.iMachineFlow >= 500)
-        {
-            return;
-        }
-        break;
-    default:
-        break;
-    }
-
     DISP_MISC_SETTING_STRU        miscParam = gGlobalParam.MiscParam;
-    if(Qt::Checked == m_pAdditionalCheck[HPCIR_SETTING]->checkState())
+
+    if(Qt::Checked == m_pAdditionalCheck[REPHILINK_SETTING]->checkState())
     {
-        miscParam.ulMisFlags |= 1 << DISP_SM_HP_Water_Cir;
+        miscParam.ulMisFlags |= 1 << DISP_SM_REPHILINK;
     }
     else
     {
-        miscParam.ulMisFlags &= ~(1 << DISP_SM_HP_Water_Cir);
+        miscParam.ulMisFlags &= ~(1 << DISP_SM_REPHILINK);
     }
+
+    if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
+    {
+        if(Qt::Checked == m_pAdditionalCheck[HPCIR_SETTING]->checkState())
+        {
+            miscParam.ulMisFlags |= 1 << DISP_SM_HP_Water_Cir;
+        }
+        else
+        {
+            miscParam.ulMisFlags &= ~(1 << DISP_SM_HP_Water_Cir);
+        }
+    }
+
     MainSaveMiscParam(gGlobalParam.iMachineType,miscParam);
     MainUpdateGlobalParam();
 
@@ -646,6 +610,45 @@ void DManagerSetPage::on_AdditionalBtnSave_clicked()
 void DManagerSetPage::on_HPCircheckBox_changeState(int state)
 {
 }
+
+void DManagerSetPage::on_RephiLinkcheckBox_changeState(int state)
+{
+    if(Qt::Checked == state)
+    {
+        DRephiLinkProtocolDlg dlg;
+        if(QDialog::Accepted != dlg.exec())
+        {
+            m_pAdditionalCheck[REPHILINK_SETTING]->setCheckState(Qt::Unchecked);
+        }
+        else
+        {
+            qDebug() << "dcj: Select RephiLink";
+        }
+    }
+}
+
+void DManagerSetPage::on_RephiLinkcheckBox_clicked()
+{
+    if(Qt::Checked == m_pAdditionalCheck[REPHILINK_SETTING]->checkState())
+    {
+        DRephiLinkProtocolDlg dlg;
+        if(QDialog::Accepted != dlg.exec())
+        {
+            m_pAdditionalCheck[REPHILINK_SETTING]->setCheckState(Qt::Unchecked);
+        }
+        else
+        {
+            qDebug() << "dcj: Select RephiLink";
+        }
+    }
+}
+
+#ifdef STEPPERMOTOR
+void DManagerSetPage::onStepperSlider_valueChanged(int value)
+{
+    m_pStepperValueLB->setText(QString::number(value));
+}
+#endif
 
 void DManagerSetPage::initTimePage()
 {
@@ -769,9 +772,7 @@ void DManagerSetPage::initTimePage()
             {
                 TimeSCbox->addItem(QString::number(tmp,10));
             }
-
         }
-
     }
     QIcon icon1(":/pic/unselected.png");
     m_tabWidget->addTab(m_pageWidget[MANAGER_PAGE_TIME], icon1, tr("Time & Date"));
@@ -782,6 +783,11 @@ void DManagerSetPage::initCalibrationPage()
     m_caliId = DISP_PC_COFF_S1;
     setBackColor();
     m_pageWidget[MANAGER_PAGE_CALIBRATION] = new QWidget;
+
+    QFile qss(":/app/slider.qss");
+    qss.open(QFile::ReadOnly);
+    QString qsss = QLatin1String (qss.readAll());
+    qss.close();
 
     QPixmap back(":/pic/SubPageBack.png");
     QSize size(back.width(), back.height());
@@ -806,6 +812,41 @@ void DManagerSetPage::initCalibrationPage()
 
     m_pCaliS1LineEdit = new DLineEdit(m_pCaliS1Widget);
     m_pCaliS1LineEdit->setGeometry(290, 8, 120, 40);
+
+    QDoubleValidator *doubleValidator = new QDoubleValidator(0.0, 99.9, 3, m_pCaliS1Widget);
+    doubleValidator->setNotation(QDoubleValidator::StandardNotation);
+    m_pCaliS1LineEdit->setValidator(doubleValidator);
+
+#ifdef STEPPERMOTOR
+    m_pStepperWidget = new QWidget(m_pageWidget[MANAGER_PAGE_CALIBRATION]);
+
+    QPalette pal2(m_pStepperWidget->palette());
+    pal2.setColor(QPalette::Background, Qt::white);
+    m_pStepperWidget->setAutoFillBackground(true);
+    m_pStepperWidget->setPalette(pal2);
+    m_pStepperWidget->setGeometry(QRect(120, 250, 530, 60));
+
+    m_pStepperLabel = new QLabel(m_pStepperWidget);
+    m_pStepperLabel->setGeometry(10, 10, 220, 40);
+    m_pStepperLabel->setStyleSheet(" font-size:18px;color:#16181e;font-family:Arial;QFont::Bold");
+    m_pStepperLabel->setAlignment(Qt::AlignVCenter|Qt::AlignLeft);
+
+    m_pStepperSlider = new QSlider(m_pStepperWidget);
+    m_pStepperSlider->setOrientation(Qt::Horizontal);
+    m_pStepperSlider->setStyleSheet(qsss);
+    m_pStepperSlider->setGeometry(QRect(140 , 10 ,350, 40));
+    m_pStepperSlider->setRange(-100, 100);
+    m_pStepperSlider->setSingleStep(5);
+    m_pStepperSlider->setTickPosition(QSlider::TicksAbove); 
+
+    m_pStepperValueLB = new QLabel(m_pStepperWidget);
+    m_pStepperValueLB ->setGeometry(495, 12, 60, 40);
+    m_pStepperValueLB->setStyleSheet("font-size:14px;color:#0095F4;font-family:Arial;QFont::Bold");
+    m_pStepperValueLB->setAlignment(Qt::AlignVCenter|Qt::AlignLeft);
+
+    connect(m_pStepperSlider, SIGNAL(valueChanged(int)), this, SLOT(onStepperSlider_valueChanged(int)));
+
+#endif
 
     m_pCaliBtn = new QPushButton(m_pageWidget[MANAGER_PAGE_CALIBRATION]);
     m_pCaliBtn->move(580, 420);
@@ -1010,7 +1051,6 @@ void DManagerSetPage::initAdditionalSettingsPage()
         m_pAdditionalLb[iLoop] = new QLabel(m_pAdditionalWidget[iLoop]);
         m_pAdditionalLb[iLoop]->setPixmap(NULL);
         m_pAdditionalLb[iLoop]->setGeometry(QRect(25, 25 , 260 , 20));
-        m_pAdditionalLb[iLoop]->setText("HP Recir.");
         m_pAdditionalLb[iLoop]->setStyleSheet(" font-size:18px;color:#16181e;font-family:Arial;QFont::Bold");
         m_pAdditionalLb[iLoop]->show();
         m_pAdditionalLb[iLoop]->setAlignment(Qt::AlignLeft);
@@ -1021,21 +1061,11 @@ void DManagerSetPage::initAdditionalSettingsPage()
 
         QString strQss4Chk = m_wndMain->getQss4Chk();
         m_pAdditionalCheck[iLoop]->setStyleSheet(strQss4Chk);
-
-        m_pAdditionalCheck[iLoop]->show();
-
-        if (gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
-        {
-            m_pAdditionalCheck[iLoop]->setChecked(true);
-        }
-        else
-        {
-            m_pAdditionalCheck[iLoop]->setChecked(false);
-        }
-
-        connect(m_pAdditionalCheck[iLoop], SIGNAL(stateChanged(int)), this, SLOT(on_HPCircheckBox_changeState(int)));
-
     }
+
+    connect(m_pAdditionalCheck[HPCIR_SETTING], SIGNAL(stateChanged(int)), this, SLOT(on_HPCircheckBox_changeState(int)));
+    // connect(m_pAdditionalCheck[REPHILINK_SETTING], SIGNAL(stateChanged(int)), this, SLOT(on_RephiLinkcheckBox_changeState(int)));
+    connect(m_pAdditionalCheck[REPHILINK_SETTING], SIGNAL(clicked()), this, SLOT(on_RephiLinkcheckBox_clicked()));
 
     m_pAddBtnSave = new QPushButton(m_pageWidget[MANAGER_PAGE_ADDSETTINGS]);
     m_pAddBtnSave->move(580, 420);

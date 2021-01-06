@@ -44,8 +44,13 @@ typedef struct
 
 typedef struct
 {
-    Ex_DISP_PARAM_CALI_ITEM_STRU pc[DISP_PC_COFF_NUM];
+    short iStart;
+}Ex_DISP_PARAM_STEPPER_STRU;
 
+typedef struct
+{
+    Ex_DISP_PARAM_CALI_ITEM_STRU pc[DISP_PC_COFF_NUM];
+	Ex_DISP_PARAM_STEPPER_STRU stepperCali;
 }Ex_DISP_PARAM_CALI_STRU;
 
 enum EX_RECT_N

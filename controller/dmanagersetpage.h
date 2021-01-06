@@ -17,6 +17,7 @@ class QHBoxLayout;
 class DLineEdit;
 class QSlider;
 class QButtonGroup;
+class QSpinBox;
 
 class DManagerSetPage : public CSubPage
 {
@@ -51,6 +52,7 @@ public:
 
     enum ADDITIONAL_SETTINGS_NUM
     {
+        REPHILINK_SETTING,  //Rephilink
         HPCIR_SETTING,
         ADDITIONAL_NUM
     };
@@ -77,7 +79,7 @@ protected slots:
 
     //Dispense Rate
     void on_caliSaveBtn_clicked();
-
+	
     //Audio
     void on_checkBox_changeState(int state);
     void on_audioBtnSavebtn_clicked();
@@ -91,10 +93,17 @@ protected slots:
     //Additional Settings
     void on_AdditionalBtnSave_clicked();
     void on_HPCircheckBox_changeState(int state);
+    void on_RephiLinkcheckBox_changeState(int state);
+    void on_RephiLinkcheckBox_clicked();
+
+#ifdef STEPPERMOTOR
+    void onStepperSlider_valueChanged(int value);
+#endif
 
 private:
     void initTimePage();
     void initCalibrationPage();
+
     void initAudioPage();
 
     void initLcdPage();
@@ -128,8 +137,14 @@ private:
     QWidget* m_pCaliS1Widget;
     QLabel* m_pCaliS1Label;
     DLineEdit* m_pCaliS1LineEdit;
-    QPushButton* m_pCaliBtn;
 	int m_caliId;
+    QPushButton* m_pCaliBtn;
+#ifdef STEPPERMOTOR
+    QWidget* m_pStepperWidget;
+    QLabel *m_pStepperLabel;
+    QSlider   *m_pStepperSlider;
+    QLabel    *m_pStepperValueLB;
+#endif
 
     //Audio
     QLabel        *m_lblNames[DISPLAY_SOUND_NUM];
@@ -154,10 +169,10 @@ private:
     int            m_iSleepTime;
 
     //Additional Settings
+    QWidget       *m_pAdditionalWidget[ADDITIONAL_NUM];
     QPushButton   *m_pAddBtnSave;
     QLabel        *m_pAdditionalLb[ADDITIONAL_NUM];
     QCheckBox     *m_pAdditionalCheck[ADDITIONAL_NUM];
-    QWidget       *m_pAdditionalWidget[ADDITIONAL_NUM];
 };
 
 #endif // EX_MANAGERSETPAGE_H
