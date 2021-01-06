@@ -1114,6 +1114,26 @@ void MainRetriveCalibrateParam(int iMachineType)
         gCaliParam.pc[i].fk = list[0].toFloat();
         gCaliParam.pc[i].fc = list[1].toFloat();
     }
+	
+    if (config)
+    {
+        delete config;
+        config = NULL;
+    }
+}
+
+void MainRetriveStepperCaliParam(int iMachineType)
+{
+    /* retrive parameter from configuration */
+    QString strCfgName = gaMachineType[iMachineType].strName;
+
+    strCfgName += "_CaliParam.ini";
+
+    QSettings *config = new QSettings(strCfgName, QSettings::IniFormat);
+
+    //Reverse : sub / 0
+    QString strV = "/Stepper/iStart";
+    gCaliParam.stepperCali.iStart = config->value(strV, STEPPER_REFERENCD_POINT).toInt();
 
     if (config)
     {
@@ -1121,6 +1141,7 @@ void MainRetriveCalibrateParam(int iMachineType)
         config = NULL;
     }
 }
+
 
 void MainRetriveMiscParam(int iMachineType,DISP_MISC_SETTING_STRU  &Param)
 {
@@ -2147,6 +2168,27 @@ void MainSaveCalibrateParam(int iMachineType, QMap<int, DISP_PARAM_CALI_ITEM_STR
     sync();
 }
 
+void MainSaveStepperCaliParam(int iMachineType)
+{
+    /* retrive parameter from configuration */
+    QString strCfgName = gaMachineType[iMachineType].strName;
+
+    strCfgName += "_CaliParam.ini";
+
+    QSettings *config = new QSettings(strCfgName, QSettings::IniFormat);
+
+	QString strV = "/Stepper/iStart";
+	config->setValue(strV, gCaliParam.stepperCali.iStart);
+
+    if (config)
+    {
+        delete config;
+        config = NULL;
+    }
+	sync();
+}
+
+
 void MainSaveMiscParam(int iMachineType,DISP_MISC_SETTING_STRU  &Param)
 {
     /* retrive parameter from configuration */
@@ -2573,7 +2615,8 @@ void MainRetriveGlobalParam(void)
 //    MainRetriveCMSn(gGlobalParam.iMachineType,gGlobalParam.cmSn);
 //    MainRetriveMacSn(gGlobalParam.iMachineType,gGlobalParam.macSn);
     MainRetriveCalibrateParam(gGlobalParam.iMachineType); 
-
+	MainRetriveStepperCaliParam(gGlobalParam.iMachineType);
+	
     /* Init */
     switch(gGlobalParam.iMachineType)
     {
@@ -2929,7 +2972,7 @@ void CheckConsumptiveMaterialState(void)
         gCMUsage.ulUsageState &= ~(1 << DISP_ROC12LIFEDAY);
     }
 #ifdef D_HTTPWORK
-    if((gGlobalParam.MiscParam.iNetworkMask & (1 << DISPLAY_NETWORK_WIFI))
+	if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_REPHILINK)
         && gAdditionalCfgParam.initMachine)
     {
         gpMainWnd->checkConsumableAlarm();
@@ -5765,7 +5808,7 @@ void MainWindow::alarmCommProc(bool bAlarm,int iAlarmPart,int iAlarmId)
             updateFlowChartAlarm(gastrAlarmName[(iAlarmPart * DISP_ALARM_PART0_NUM) + iAlarmId], true);
 
 #ifdef D_HTTPWORK
-            if((gGlobalParam.MiscParam.iNetworkMask & (1 << DISPLAY_NETWORK_WIFI))
+			if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_REPHILINK)
                 && gAdditionalCfgParam.initMachine)
             {
                 DNetworkAlaramInfo alarmInfo = {0, iAlarmPart * DISP_ALARM_PART0_NUM + iAlarmId, 1, QDateTime::currentDateTime()};
@@ -5803,7 +5846,7 @@ void MainWindow::alarmCommProc(bool bAlarm,int iAlarmPart,int iAlarmId)
             updateFlowChartAlarm(gastrAlarmName[(iAlarmPart * DISP_ALARM_PART0_NUM) + iAlarmId], false);
 
 #ifdef D_HTTPWORK
-            if((gGlobalParam.MiscParam.iNetworkMask & (1 << DISPLAY_NETWORK_WIFI))
+            if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_REPHILINK)
                 && gAdditionalCfgParam.initMachine)
             {
                 DNetworkAlaramInfo alarmInfo = {0, iAlarmPart * DISP_ALARM_PART0_NUM + iAlarmId, 0, QDateTime::currentDateTime()};
@@ -6537,13 +6580,7 @@ void MainWindow::on_timerNetworkEvent()
         return;
     }
 
-//    if(gGlobalParam.MiscParam.iNetworkMask & (1 << DISPLAY_NETWORK_WIFI))
-//    {
-//        DDispenseData dispenseData(QString("UP"), 1.0, 18.2, 25.0, 3, strDateTime);
-//        emit sendDispenseData(dispenseData);
-//    }
-
-    if(gGlobalParam.MiscParam.iNetworkMask & (1 << DISPLAY_NETWORK_WIFI))
+    if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_REPHILINK))
     {
         //test
         emit sendHttpHeartData(m_uploadNetData);
@@ -7630,7 +7667,7 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
 						dispPrintData.strType = "HP";
 						printWorker(dispPrintData);
 #ifdef D_HTTPWORK
-                        if(gGlobalParam.MiscParam.iNetworkMask & (1 << DISPLAY_NETWORK_WIFI))
+                        if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_REPHILINK))
                         {
                             DDispenseData dispenseData(QString("HP"), fQuantity, m_EcowCurr[num].iQuality, tmpI4, 0, strTime);
                             emit sendDispenseData(dispenseData);
@@ -7671,7 +7708,7 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
 						printWorker(dispPrintData);
 
 #ifdef D_HTTPWORK
-                        if(gGlobalParam.MiscParam.iNetworkMask & (1 << DISPLAY_NETWORK_WIFI))
+                        if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_REPHILINK))
                         {
                             DDispenseData dispenseData("UP", fQuantity, m_EcowCurr[APP_EXE_I5_NO].iQuality, tmpI5, m_curToc, strTime);
                             emit sendDispenseData(dispenseData);
@@ -8231,6 +8268,42 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
             DispSndHoPpbAndTankLevel(APP_PROTOL_CANID_BROADCAST,APP_PACKET_HO_QL_TYPE_PPB,0,fToc);
         }        
         break;
+
+#ifdef CFG_DO_PH
+	case DISP_NOT_DO:
+		{
+			NOT_PH_DO_ITEM_STRU *pItem = (NOT_PH_DO_ITEM_STRU *)pNotify->aucData;
+			qDebug() << QString("DO Info: %1 ; %2; %3 ;").arg(pItem->iValue1)
+		                                             	.arg(pItem->iValue2)
+		                                             	.arg(pItem->iValue3);
+			if (NULL != m_pSubPages[PAGE_MENU])
+            {
+                MenuPage *page = (MenuPage *)m_pSubPages[PAGE_MENU];
+
+                //WaterQualityPage *subpage = (WaterQualityPage *)page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
+                DWaterQualityPage *subpage = (DWaterQualityPage *)page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
+                subpage->updDO(pItem->iValue2, pItem->iValue3);
+            }
+		}
+		break;
+	case DISP_NOT_PH:
+		{
+			NOT_PH_DO_ITEM_STRU *pItem = (NOT_PH_DO_ITEM_STRU *)pNotify->aucData;
+			qDebug() << QString("pH Info: %1 ; %2; %3 ;").arg(pItem->iValue1)
+		                                             	.arg(pItem->iValue2)
+		                                             	.arg(pItem->iValue3);
+			if (NULL != m_pSubPages[PAGE_MENU])
+            {
+                MenuPage *page = (MenuPage *)m_pSubPages[PAGE_MENU];
+
+                //WaterQualityPage *subpage = (WaterQualityPage *)page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
+                DWaterQualityPage *subpage = (DWaterQualityPage *)page->getSubPage(MENU_BTN_WATER_QUALITY_PARAMETER);
+                subpage->updPH(pItem->iValue2, pItem->iValue3);
+            }
+		}
+		break;		
+#endif
+
     case DISP_NOT_UPD:
         {
             NOT_UPD_ITEM_STRU *pItem = (NOT_UPD_ITEM_STRU *)pNotify->aucData;
@@ -8376,6 +8449,17 @@ void MainWindow::on_AutoLogin(void)
     bEnter = false;
 }
 
+#ifdef STEPPERMOTOR
+//获取当前用户设置的取水速度
+int GetSpeedValue(int iIdx)
+{
+	if (gpMainWnd)
+	{
+		return gpMainWnd->getRPumpValue(iIdx);
+	}
+	return 10;
+}
+#endif
 
 void MainWindow::emitDispIndication(unsigned char *pucData,int iLength)
 {
@@ -8540,6 +8624,10 @@ void MainWindow::run(bool bRun)
     if (bRun)
     {
         bool bError = false;
+        
+#ifdef STEPPERMOTOR
+		SetStepperMotorPosition(2048); //初始化步进电机位置 
+#endif
 
     	if (DispGetROWashFlag())
 		{			
@@ -8592,6 +8680,9 @@ void MainWindow::run(bool bRun)
                 DRunWarningDialog runDlg(tr("Confirm ALL cartridges are installed. System will START by pressing Confirm!"));
                 if(QDialog::Accepted != runDlg.exec())
                 {
+                    gAdditionalCfgParam.lastRunState = 0;
+                    MainSaveLastRunState(gGlobalParam.iMachineType);
+					
                     pMainPage->updateRunInfo(false);
                     return;
                 }

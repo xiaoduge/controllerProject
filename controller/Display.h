@@ -464,7 +464,18 @@ typedef enum
     DISP_SM_Pre_Filter,
     DISP_SM_HP_Electrode,
     DISP_SM_SW_PUMP,
-    
+
+    DISP_SM_REPHILINK,  //RephiLink
+
+#ifdef STEPPERMOTOR
+    DISP_SM_STEPPERMOTOR, //Stepper Motor
+#endif
+
+#ifdef CFG_DO_PH
+	DISP_SM_DO,
+	DISP_SM_PH,
+#endif
+
     DISP_SM_NUM,
 }DISP_SUB_MODULE_ENUM;
 
@@ -1151,6 +1162,8 @@ int CcbGetTwFlag(void);
 int CcbGetTwPendingFlag(void);
 int DispGetROWashFlag(void);
 int DispGetRoWashPauseFlag(void);
+int DispGetCirFlag(void);
+
 
 int DispGetUpQtwFlag(void);
 int DispGetTubeCirFlag(void);
@@ -1180,6 +1193,22 @@ int CcbGetRfidCont(int iIndex,int offset,int len,unsigned char *pucData);
 int CcbSetRPump(int id,int iChl,unsigned int ulValue);
 int DispSetRPump(int iChl,unsigned int ulValue);
 void DispC1Regulator(int iC1Regulator);
+
+#ifdef STEPPERMOTOR 
+// 2020/03/11 ADD for stepper motor control
+int CcbStepperMotorQuickStart(int iMotorIdx,short sPosition);
+int CcbStepperMotorQuickStop(int iMotorIdx);
+
+int GetSpeedValue(int iIdx);
+float GetSpeedVoltage(int iSpeed);
+int SetStepperMotorSpeed(int iSpeed);
+int SetStepperMotorPosition(int iSteps);
+
+#endif
+
+void DispStopCir();
+
+
 
 #ifdef __cplusplus
 }

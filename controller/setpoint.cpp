@@ -370,8 +370,9 @@ SetPoint::SetPoint(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : C
         break;
     default:
         break;
-    } 
-
+    }
+	
+#if 0
     switch(gGlobalParam.iMachineType)/* RO产水流速上限100.0L/min 下限20.0L/min */
     {
     case MACHINE_L_Genie:
@@ -386,6 +387,21 @@ SetPoint::SetPoint(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : C
     default:
         break;
     } 
+#else
+	switch(gGlobalParam.iMachineType) // 下限20.0L/h */
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+        aIds[iIdx].iDspType    = SET_POINT_FORMAT1;
+        aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP15;
+        iIdx++;
+        break;
+    default:
+        break;
+    } 
+#endif
 
     switch(gGlobalParam.iMachineType)/* RO弃水流速 下限20.0L/min */
     {
@@ -522,14 +538,14 @@ void SetPoint::buildTranslation()
             pSetPlistItem[iLoop]->setP1Name(tr("Upper Limit"));
             pSetPlistItem[iLoop]->setP1Unit(tr("us/cm"));
             break;
-        case MACHINE_PARAM_SP14:
+        //case MACHINE_PARAM_SP14:
         case MACHINE_PARAM_SP15:
             /* RO产水流速 上限100.0L/min下限20.0L/min */
             pSetPlistItem[iLoop]->setName(tr("RO Product Rate"));
-            pSetPlistItem[iLoop]->setP2Name(tr("Max."));
             pSetPlistItem[iLoop]->setP1Name(tr("Min."));
             pSetPlistItem[iLoop]->setP1Unit(tr("L/h"));
-            pSetPlistItem[iLoop]->setP2Unit(tr("L/h"));
+			//pSetPlistItem[iLoop]->setP2Name(tr("Max."));
+            //pSetPlistItem[iLoop]->setP2Unit(tr("L/h"));
             break;
         case MACHINE_PARAM_SP16:
             /*     RO弃水流速 下限20.0L/min    */
@@ -838,13 +854,13 @@ void SetPoint::save()
             fTemp = pSetPlistItem[iLoop]->getP1().toFloat();
             MMParam.SP[MACHINE_PARAM_SP13] = fTemp;
             break;
-        case MACHINE_PARAM_SP14:
+        //case MACHINE_PARAM_SP14:
         case MACHINE_PARAM_SP15:
             /* RO产水流速 上限100.0L/min下限20.0L/min */
             fTemp = pSetPlistItem[iLoop]->getP1().toFloat();
             MMParam.SP[MACHINE_PARAM_SP15] = fTemp;
-            fTemp = pSetPlistItem[iLoop]->getP2().toFloat();
-            MMParam.SP[MACHINE_PARAM_SP14] = fTemp;
+            //fTemp = pSetPlistItem[iLoop]->getP2().toFloat();
+            //MMParam.SP[MACHINE_PARAM_SP14] = fTemp;
             break;
         case MACHINE_PARAM_SP16:
             /*     RO弃水流速 下限20.0L/min    */
@@ -1029,11 +1045,11 @@ void SetPoint::update()
             /* 自来水电导率 上限20000μS/cm */
             pSetPlistItem[iLoop]->setP1(QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP13],'f',1));
             break;
-        case MACHINE_PARAM_SP14:
+       // case MACHINE_PARAM_SP14:
         case MACHINE_PARAM_SP15:
             /* RO产水流速 上限100.0L/min下限20.0L/min */
             pSetPlistItem[iLoop]->setP1(QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP15],'f',1));
-            pSetPlistItem[iLoop]->setP2(QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP14],'f',1));
+        //    pSetPlistItem[iLoop]->setP2(QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP14],'f',1));
             
             break;
         case MACHINE_PARAM_SP16:

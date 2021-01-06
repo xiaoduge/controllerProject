@@ -186,6 +186,15 @@ void SystemCfgPage::buildTranslation()
     m_chkPWTankUV->setText(tr("Tank UV"));
     m_lbPWTankUVName->setText(tr("Exposure Time"));
     m_lbPWTankUVUnit->setText(tr("min/H"));
+	
+#ifdef STEPPERMOTOR
+	m_chkStepperMotor->setText(tr("Motor Valve"));
+#endif
+
+#ifdef CFG_DO_PH
+    m_chkDO->setText(tr("DO"));
+    m_chkPH->setText(tr("pH"));
+#endif
 
     m_lbPOweronFlushName->setText(tr("Flush Time"));
     m_lbPOweronFlushUnit->setText(tr("min"));
@@ -391,6 +400,48 @@ void SystemCfgPage::createControl()
         break;
     }
     mainLayout->addWidget(tmpWidget);
+
+#ifdef STEPPERMOTOR
+	/* line 4-2*/
+    tmpWidget = new QWidget;
+
+	tmpWidget->setAutoFillBackground(true);
+    tmpWidget->setPalette(pal);
+    tmpWidget->setFixedSize(tmpWidgetWidth ,BACKWIDGET_HEIGHT);
+
+    rectTmp = sQrectAry[0];
+    rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 60);
+    m_chkStepperMotor = new QCheckBox(tmpWidget);
+    m_chkStepperMotor->setGeometry(rectTmp);
+    m_chkStepperMotor->setStyleSheet(strQss4Chk);
+
+    mainLayout->addWidget(tmpWidget);
+#endif
+
+
+#ifdef CFG_DO_PH
+    /* line 4-2*/
+    tmpWidget = new QWidget;
+
+	tmpWidget->setAutoFillBackground(true);
+    tmpWidget->setPalette(pal);
+    tmpWidget->setFixedSize(tmpWidgetWidth ,BACKWIDGET_HEIGHT);
+
+    rectTmp = sQrectAry[0];
+    rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 60);
+    m_chkDO = new QCheckBox(tmpWidget);
+    m_chkDO->setGeometry(rectTmp);
+    m_chkDO->setStyleSheet(strQss4Chk);
+
+    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
+    rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 60);
+    m_chkPH = new QCheckBox(tmpWidget);
+    m_chkPH->setGeometry(rectTmp);
+	m_chkPH->setStyleSheet(strQss4Chk);
+
+    mainLayout->addWidget(tmpWidget);
+#endif
+
     /* line 5*/
     tmpWidget = new QWidget;
     
@@ -960,6 +1011,36 @@ void SystemCfgPage::connectData()
     {
         m_chkPWTankUV->setChecked(false);
     }
+#ifdef STEPPERMOTOR
+	if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_STEPPERMOTOR))
+	{
+		m_chkStepperMotor->setChecked(true);
+	}
+	else
+	{
+		m_chkStepperMotor->setChecked(false);
+	}
+#endif
+
+#ifdef CFG_DO_PH
+	if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_DO))
+    {
+        m_chkDO->setChecked(true);
+    }
+    else
+    {
+        m_chkDO->setChecked(false);
+    }
+
+	if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_PH))
+    {
+        m_chkPH->setChecked(true);
+    }
+    else
+    {
+        m_chkPH->setChecked(false);
+    }
+#endif
 
     m_lePWTankUVValue->setText(QString::number(gGlobalParam.MiscParam.iTankUvOnTime));
     m_leLoginLingerValue->setText(QString::number(gGlobalParam.MiscParam.iAutoLogoutTime));
@@ -1225,6 +1306,38 @@ void SystemCfgPage::save()
             smParam.ulFlags &= ~(1 << DISP_SM_TankUV);
         }
     }
+
+#ifdef STEPPERMOTOR
+	if(Qt::Checked == m_chkStepperMotor->checkState())
+	{
+		smParam.ulFlags |= 1 << DISP_SM_STEPPERMOTOR;
+	}
+	else
+	{
+		smParam.ulFlags &= ~(1 << DISP_SM_STEPPERMOTOR);
+	}
+#endif
+
+
+#ifdef CFG_DO_PH
+    if (Qt::Checked == m_chkDO->checkState())
+    {
+        smParam.ulFlags |= 1 << DISP_SM_DO;
+    }
+    else
+    {
+        smParam.ulFlags &= ~(1 << DISP_SM_DO);
+    }
+
+	if (Qt::Checked == m_chkPH->checkState())
+    {
+        smParam.ulFlags |= 1 << DISP_SM_PH;
+    }
+    else
+    {
+        smParam.ulFlags &= ~(1 << DISP_SM_PH);
+    }
+#endif
 
     miscParam.iTankUvOnTime     = m_lePWTankUVValue->text().toInt();
     miscParam.iAutoLogoutTime   = m_leLoginLingerValue->text().toInt();

@@ -254,7 +254,10 @@ public:
     explicit MainWindow(QMainWindow *parent = 0);
     ~MainWindow();
     void clearIdleSecond();
-
+    
+#ifdef STEPPERMOTOR
+    friend int GetSpeedValue(int iIdx);
+#endif
     friend void DispIndicationEntry(unsigned char *pucData,int iLength);
     friend void DispIapIndEntry(IAP_NOTIFY_STRU *pIapNotify);
 

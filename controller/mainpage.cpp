@@ -13,10 +13,8 @@
 #define SINGLE_MACHINE_DIALER_XOFF (0)
 #define SINGLE_MACHINE_DIALER_YOFF (123)
 
-
 #define TIMER_DURATION (100)
 #define TIMER_DELAY_COUNTS (1000/TIMER_DURATION)
-
 
 enum TEXT_ALIGN_ENUM
 {
@@ -25,7 +23,6 @@ enum TEXT_ALIGN_ENUM
    TEXT_ALIGN_RIGHT,
    TEXT_ALIGN_NUM
 };
-
 
 static CONFIG_BTN sBtns[BTN_NUMBER] = 
 {
@@ -48,7 +45,6 @@ static CONFIG_BTN sBtns[BTN_NUMBER] =
 
     //{235,264,":/pics/image/btn_power_back.png","btn_power_front.png",BITMAPBUTTON_STYLE_PUSH,},
 };
-
 
 static CONFIG_LABEL sLabels[LABEL_NUMBER] = {
     /* UP */
@@ -82,7 +78,6 @@ static CONFIG_LABEL sLabels[LABEL_NUMBER] = {
     {380,205,60,16,GLOBAL_FONT_14,QColor(255,255,255),NULL,"O",0,0}, // omg
     {360,50,146,16,GLOBAL_FONT_14,QColor(255,255,255),NULL,0,0,TEXT_ALIGN_LEFT},
 
-
     {186,435,60,25,GLOBAL_FONT_30,QColor(156,156,168),NULL," ",BTN_NAVI_UP_TW,0},
     {248,445,10,15,GLOBAL_FONT_14,QColor(156,156,168),NULL,"L",BTN_NAVI_UP_TW,0},
 
@@ -94,7 +89,6 @@ static CONFIG_LABEL sLabels[LABEL_NUMBER] = {
 
     {167,395,108,74,GLOBAL_FONT_14,QColor(0,0,0),NULL,0,0,0},
     {525,395,108,74,GLOBAL_FONT_14,QColor(0,0,0),NULL,0,0,0},
-    
 };
 
 MainPage::MainPage(QObject *parent,CBaseWidget *widget,MainWindow *wndMain) : CPage(parent,widget,wndMain)
@@ -105,7 +99,6 @@ MainPage::MainPage(QObject *parent,CBaseWidget *widget,MainWindow *wndMain) : CP
 
     m_bSingleMachine = false;
 
-
     for (iLoop = 0; iLoop < LABEL_NUMBER; iLoop++)
     {
         m_aiLblMap[iLoop] = iLoop;
@@ -115,7 +108,6 @@ MainPage::MainPage(QObject *parent,CBaseWidget *widget,MainWindow *wndMain) : CP
     {
         m_aiBtnMap[iLoop] = iLoop;
     }
-
 
     /* single machine */
     switch(gGlobalParam.iMachineType)
@@ -142,7 +134,6 @@ MainPage::MainPage(QObject *parent,CBaseWidget *widget,MainWindow *wndMain) : CP
         m_aiBtnMap[BTN_NAVI_UP_TW]            = BTN_NAVI_EDI_TW;
         break;
     case MACHINE_PURIST:
-        
         m_bSingleMachine = true;
 
         m_aiLblMap[LABEL_NAVI_EDI_WQ_VALUE]   = LABEL_NAVI_UP_WQ_VALUE;
@@ -184,13 +175,11 @@ MainPage::MainPage(QObject *parent,CBaseWidget *widget,MainWindow *wndMain) : CP
 
     m_timeTimer = new QTimer(this);
     connect(m_timeTimer, SIGNAL(timeout()), this, SLOT(on_timerEvent()));
-    //ex
+
     int iValue = m_wndMain->getRPumpValue(0);
     DrawSpeed(0, iValue);
     iValue = m_wndMain->getRPumpValue(1);
     DrawSpeed(1, iValue);
-    //end
-
 }
 
 void MainPage::initUi()
@@ -534,42 +523,19 @@ void MainPage::initUi()
     {
     case MACHINE_L_Genie:   
     case MACHINE_L_UP: 
-    {
         m_pLabels[LABEL_NAVI_WT_WQ_VALUE]->hide();
         m_pLabels[LABEL_NAVI_WT_WQ_UNIT]->hide();
         break;
-    }
-/*
-    case MACHINE_Genie:
-    case MACHINE_EDI:
-    case MACHINE_UP:
-    case MACHINE_RO:
-    {
-        if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
-        {
-            m_pLabels[LABEL_NAVI_WT_WQ_VALUE]->show();
-            m_pLabels[LABEL_NAVI_WT_WQ_UNIT]->show();
-        }
-        else
-        {
-            m_pLabels[LABEL_NAVI_WT_WQ_VALUE]->hide();
-            m_pLabels[LABEL_NAVI_WT_WQ_UNIT]->hide();
-        }
-        break;
-    }
-*/
     case MACHINE_PURIST:
         m_pLabels[LABEL_NAVI_WT_WQ_VALUE]->show();
         m_pLabels[LABEL_NAVI_WT_WQ_UNIT]->show();
         break;
     default:     
-    {
         m_pLabels[LABEL_NAVI_EDI_LOOP_VALUE]->hide();
         m_pLabels[LABEL_NAVI_EDI_LOOP_UNIT]->hide();
-        m_pLabels[LABEL_NAVI_WT_WQ_VALUE]->hide(); //
-        m_pLabels[LABEL_NAVI_WT_WQ_UNIT]->hide();  //
+        m_pLabels[LABEL_NAVI_WT_WQ_VALUE]->hide(); 
+        m_pLabels[LABEL_NAVI_WT_WQ_UNIT]->hide();  
         break;
-    }
     }
 
     switch(gGlobalParam.iMachineType)
@@ -580,20 +546,16 @@ void MainPage::initUi()
         m_pLabels[LABEL_NAVI_UP_TOC_UNIT]->hide();
         break;
     case MACHINE_PURIST: 
+        //m_pLabels[LABEL_NAVI_WT_WQ_VALUE]->hide();
+        //m_pLabels[LABEL_NAVI_WT_WQ_UNIT]->hide();
+        if (!(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveB2)))
         {
-            //m_pLabels[LABEL_NAVI_WT_WQ_VALUE]->hide();
-            //m_pLabels[LABEL_NAVI_WT_WQ_UNIT]->hide();
-
-            if (!(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveB2)))
-            {
-                m_pLabels[LABEL_NAVI_WT_VOL_VALUE]->hide();
-                m_pLabels[LABEL_NAVI_WT_VOL_UNIT]->hide();
-            }
-            
-            m_pBtns[BTN_CIRCULATION_UP]->show();
-            m_pBtns[BTN_CIRCULATION_GENERAL]->hide();
-            break;
-        }  
+            m_pLabels[LABEL_NAVI_WT_VOL_VALUE]->hide();
+            m_pLabels[LABEL_NAVI_WT_VOL_UNIT]->hide();
+        }
+        m_pBtns[BTN_CIRCULATION_UP]->show();
+        m_pBtns[BTN_CIRCULATION_GENERAL]->hide();
+        break;
     case MACHINE_ADAPT: 
         m_pLabels[LABEL_NAVI_WT_VOL_VALUE]->hide();
         m_pLabels[LABEL_NAVI_WT_VOL_UNIT]->hide();
@@ -633,68 +595,62 @@ void MainPage::creatTitle()
     selectTitle(0);
 }
 
-
 void MainPage::update()
 {
-   updAlarmState( m_wndMain->getAlarmState());
+    updAlarmState( m_wndMain->getAlarmState());
 
-   updMainpageState();
+    updMainpageState();
 
-   updOtherState();
+    updOtherState();
 
-   updIsInfo(APP_EXE_I2_NO,&m_aHistoryEco[APP_EXE_I2_NO]);
-   updIsInfo(APP_EXE_I3_NO,&m_aHistoryEco[APP_EXE_I3_NO]);
-   updIsInfo(APP_EXE_I4_NO,&m_aHistoryEco[APP_EXE_I4_NO]);
-   updIsInfo(APP_EXE_I5_NO,&m_aHistoryEco[APP_EXE_I5_NO]);
+    updIsInfo(APP_EXE_I2_NO,&m_aHistoryEco[APP_EXE_I2_NO]);
+    updIsInfo(APP_EXE_I3_NO,&m_aHistoryEco[APP_EXE_I3_NO]);
+    updIsInfo(APP_EXE_I4_NO,&m_aHistoryEco[APP_EXE_I4_NO]);
+    updIsInfo(APP_EXE_I5_NO,&m_aHistoryEco[APP_EXE_I5_NO]);
    
-   switch(gGlobalParam.iMachineType)
-   {
-   case MACHINE_Genie:
-   case MACHINE_UP:
-   case MACHINE_PURIST:
-   case MACHINE_ADAPT:
-       updToc(m_fToc); //2018.11.12
-       break;
-   default:
-       break;
-   }
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_PURIST:
+    case MACHINE_ADAPT:
+        updToc(m_fToc); //2018.11.12
+        break;
+    default:
+        break;
+    }
 #ifdef SUB_ACCOUNT
-   if (gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_SUB_ACCOUNT))
-   {
-       if(gUserLoginState.loginState())
-       {
-           m_pLogoutBtn->show();
-       }
-       else
-       {
-           m_pLogoutBtn->hide();
-       }
-   }
+    if (gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_SUB_ACCOUNT))
+    {
+        if(gUserLoginState.loginState())
+        {
+            m_pLogoutBtn->show();
+        }
+        else
+        {
+            m_pLogoutBtn->hide();
+        }
+    }
 
-   else
-   {
-       m_pLogoutBtn->hide();
-   }
+    else
+    {
+        m_pLogoutBtn->hide();
+    }
 
 #else
-   {
-       m_pLogoutBtn->hide();
-   }
+    {
+        m_pLogoutBtn->hide();
+    }
 
 #endif
-   //end
 }
 
 void MainPage::buildTitles()
 {
     QStringList stringList;
-    
     // strictly according to RF_STATE_ENUM
     stringList << tr("Menu");
-
-    
     setTitles(stringList);
-
 }
 
 void MainPage::InitNames(void)
@@ -912,7 +868,6 @@ void MainPage::mouseMoveEvent(QMouseEvent *e)
     }
     m_curX = e->x();
     m_curY = e->y();
-
 }
 
 void MainPage::mousePressEvent(QMouseEvent *e)
@@ -1004,7 +959,18 @@ void MainPage::on_btn_clicked(int index)
                 
                 DrawSpeed(0,iValue);
                 /* set speed */
+#ifdef STEPPERMOTOR
+                if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_STEPPERMOTOR))
+                {
+                    SpeedRegulation(APP_DEV_HS_SUB_HYPER, iValue);
+                }
+                else
+                {
+                    SetSpeed(APP_DEV_HS_SUB_HYPER,iValue);
+                }
+#else
                 SetSpeed(APP_DEV_HS_SUB_HYPER,iValue);
+#endif
             }
         }
         break;
@@ -1018,7 +984,18 @@ void MainPage::on_btn_clicked(int index)
                 m_wndMain->changeRPumpValue(0,iValue);
                 
                 DrawSpeed(0,iValue);
+#ifdef STEPPERMOTOR
+				if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_STEPPERMOTOR))
+				{
+					SpeedRegulation(APP_DEV_HS_SUB_HYPER, iValue);
+				}
+				else
+				{
+					SetSpeed(APP_DEV_HS_SUB_HYPER,iValue);
+				}
+#else
                 SetSpeed(APP_DEV_HS_SUB_HYPER,iValue);
+#endif
             }
         }        
         break;
@@ -1054,7 +1031,18 @@ void MainPage::on_btn_clicked(int index)
                 m_wndMain->changeRPumpValue(1,iValue);
 
                 DrawSpeed(1,iValue);
+#ifdef STEPPERMOTOR
+				if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_STEPPERMOTOR))
+				{
+					SpeedRegulation(APP_DEV_HS_SUB_REGULAR, iValue);
+				}
+				else
+				{
+					SetSpeed(APP_DEV_HS_SUB_REGULAR,iValue);
+				}
+#else
                 SetSpeed(APP_DEV_HS_SUB_REGULAR,iValue);
+#endif
             }
         }        
         break;
@@ -1067,7 +1055,18 @@ void MainPage::on_btn_clicked(int index)
                 iValue--;
                 m_wndMain->changeRPumpValue(1,iValue);
                 DrawSpeed(1,iValue);
+#ifdef STEPPERMOTOR
+				if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_STEPPERMOTOR))
+				{
+					SpeedRegulation(APP_DEV_HS_SUB_REGULAR, iValue);
+				}
+				else
+				{
+					SetSpeed(APP_DEV_HS_SUB_REGULAR,iValue);
+				}
+#else
                 SetSpeed(APP_DEV_HS_SUB_REGULAR,iValue);
+#endif
             }
         }        
         
@@ -1235,7 +1234,6 @@ void MainPage::on_btn_clicking(int index)
     startTimer(true);
 }
 
-
 void MainPage::DrawSpeed(int type,int index)
 {
     if (index >= PUMP_SPEED_NUM
@@ -1244,20 +1242,17 @@ void MainPage::DrawSpeed(int type,int index)
         return;
     }
     
+    switch(type)
     {
-        switch(type)
-        {
-        case 0:
-            m_pLabels[LABEL_UP_SPEED]->setPixmap(*m_pBmpPumpSpeeds[index]);
-            break;
-        case 1:
-            m_pLabels[m_aiLblMap[LABEL_EDI_SPEED]]->setPixmap(*m_pBmpPumpSpeeds[index]);
-            break;
-        default:
-            break;
-        }
+    case 0:
+        m_pLabels[LABEL_UP_SPEED]->setPixmap(*m_pBmpPumpSpeeds[index]);
+        break;
+    case 1:
+        m_pLabels[m_aiLblMap[LABEL_EDI_SPEED]]->setPixmap(*m_pBmpPumpSpeeds[index]);
+        break;
+    default:
+        break;
     }
-
 }
 
 void MainPage::DrawTank(int index)
@@ -1274,17 +1269,44 @@ void MainPage::DrawTank(int index)
     m_pLabels[m_aiLblMap[LABEL_TANK_VALUE]]->setPixmap(*m_pBmpTankWaterLevels[index]);
 }
 
+#ifdef STEPPERMOTOR
+void MainPage::SpeedRegulation(int iType, int iValue)
+{
+    SetSpeed_Stepper(iType, iValue);
+    SetStepperValve(iValue);
+}
+
+void  MainPage::SetSpeed_Stepper(int iType,int iValue)
+{
+    int iActive;
+    int iTmp;
+    int iRet = 0;
+
+    DispGetRPumpSwitchState(APP_EXE_C2_NO - APP_EXE_C1_NO,&iActive);
+
+    iTmp = DispConvertVoltage2RPumpSpeed(GetSpeedVoltage(iValue));
+    
+    if (iActive) iTmp = 0XFF00 | iTmp;
+
+    iRet = DispSetRPump(APP_EXE_C2_NO - APP_EXE_C1_NO,iTmp);
+    
+    if (0 == iRet)
+    {
+        /* broadcast to handlers */
+        DispSndHoSpeed(iType, iValue);
+    }
+}
+#endif
+
 void  MainPage::SetSpeed(int iType,int index)
 {
     int iActive;
     int iTmp;
     int iRet;
-    float fv; // 2019.1.7
+    float fv; 
 
-    
     DispGetRPumpSwitchState(APP_EXE_C2_NO - APP_EXE_C1_NO,&iActive);
 
-    //2019.1.7
     if(10 <= index)
     {
         fv = 24.0;
@@ -1302,9 +1324,6 @@ void  MainPage::SetSpeed(int iType,int index)
         fv = index + 6.0;
     }
     iTmp = DispConvertVoltage2RPumpSpeed(fv);
-    //end
-    
-    //iTmp = DispConvertVoltage2RPumpSpeed(((24.0 - 5.0)*index)/PUMP_SPEED_NUM + 5);
     
     if (iActive) iTmp = 0XFF00 | iTmp;
     
@@ -1316,9 +1335,32 @@ void  MainPage::SetSpeed(int iType,int index)
     }
 }
 
+#ifdef STEPPERMOTOR
+/**
+ * @Author: dcj
+ * @Date: 2020-03-19 11:11:36
+ * @LastEditTime: 2020-03-19 11:11:36
+ * @Description: 调节步进电磁阀步数
+ * @Param : iValue:用户调速值, iMotorIdx:步进电机模块地址,默认为0(0对应CAN通讯地址30)
+ * @Return: 
+ */
+void MainPage::SetStepperValve(int iValue)
+{
+    if (0 != SetStepperMotorSpeed(iValue))
+    {
+        QMessageBox::about(NULL, tr("Main"), tr("Start Motor Failed!"));
+    }
+}
+#endif
+
 void  MainPage::updSpeed(int itype,int iLevel)
 {
     DrawSpeed(itype,iLevel);
+
+#ifdef STEPPERMOTOR
+    SetStepperMotorSpeed(iLevel);//调节步进电磁阀
+#endif
+
     m_wndMain->changeRPumpValue(itype,iLevel);
 }
 
@@ -1326,7 +1368,6 @@ void  MainPage::updDecPressureState(int itype,int iAction)
 {
     m_abDecFlag[itype] = iAction;
 }
-
 
 void  MainPage::updTankState(int iLevel)
 {
@@ -1355,7 +1396,6 @@ void  MainPage::updToc(float fToc)
 
     }
 }
-
 
 void MainPage::updQtwInfo(int iType,float fValue)
 {
@@ -1408,7 +1448,6 @@ void MainPage::on_navi_clicked(int index)
         {
             bool stateRun = m_pNaviBar->getState();
 
-            //ex_dcj
             if(!stateRun)
             {
                 if(DispGetEdiQtwFlag() || DispGetUpQtwFlag())
@@ -1422,7 +1461,6 @@ void MainPage::on_navi_clicked(int index)
                     return;
                 }
             }
-            //end
 
             m_wndMain->run(stateRun);
             

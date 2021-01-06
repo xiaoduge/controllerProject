@@ -127,7 +127,16 @@ private:
     void buildTitles();
     void DrawTank(int index);
     void DrawSpeed(int index , int type);
+
+#ifdef STEPPERMOTOR
+    void SpeedRegulation(int iType, int iValue);
+    void SetSpeed_Stepper(int iType,int iValue);
+    void SetStepperValve(int iValue); // 2020.03.19 add for stepper motor control
+#endif
+
     void SetSpeed(int iType,int index);
+
+
     void updQtwInfo(int iType,float fValue);
     void startTimer(bool bStart);
     void changeWaterQuantity(int iType,bool bAdd,float fValue);

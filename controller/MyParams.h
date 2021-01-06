@@ -106,6 +106,7 @@ void MainSaveExConfigParam(int iMachineType);
 void MainSaveExConsumableMsg(int iMachineType,CATNO cn,LOTNO ln,int iIndex, int category);
 void MainSaveCalibrateParam(int iMachineType, QMap<int, DISP_PARAM_CALI_ITEM_STRU> &map);
 void MainSaveSensorRange(int iMachineType);
+void MainSaveStepperCaliParam(int iMachineType);
 
 //end
 

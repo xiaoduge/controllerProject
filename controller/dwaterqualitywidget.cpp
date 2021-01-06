@@ -71,7 +71,9 @@ void DWaterQualityWidget::initLabel(const QList<DTags>& configList)
     {
         return;
     }
-
+	m_pTableWidget->clear();
+	m_coorMap.clear();
+	
     int count = configList.size();
     int rows = count%2 == 0 ? count/2 : count/2+1;
     m_pTableWidget->setRowCount(rows);

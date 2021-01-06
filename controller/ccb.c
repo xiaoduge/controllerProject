@@ -75,6 +75,8 @@ unsigned char gaucIapBuffer[1024];
 #define haveHPCir(pCcb)((pCcb)->MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
 #define haveZigbee(pCcb)((pCcb)->MiscParam.iNetworkMask & (1 << DISPLAY_NETWORK_ZIGBEE))
 
+#define haveStepper(pCcb)((pCcb)->SubModSetting.ulFlags & (1 << DISP_SM_STEPPERMOTOR))
+
 static const float s_fTankHOffset = 0.08; //水箱高度偏差
 
 int is_B2_FULL(ulValue)
@@ -262,6 +264,17 @@ void CcbDefaultModbusCallBack(int code,void *param)
             }
         }
     }
+}
+
+int DispGetCirFlag(void)
+{
+	if (DISP_WORK_STATE_RUN == gCcb.curWorkState.iMainWorkState4Pw
+        && DISP_WORK_SUB_RUN_CIR == gCcb.curWorkState.iSubWorkState4Pw)
+    {
+       return 1;
+    }
+
+    return 0;
 }
 
 int DispGetUpCirFlag(void)
@@ -2281,6 +2294,260 @@ int CcbGetFmValue(int id,unsigned int ulAddress, int iFMs)
 
 }
 
+#ifdef STEPPERMOTOR
+// 2020/03/11 ADD for stepper motor control
+int CcbSetStepperMotorHoldRegs(int id,int iMotorIdx,unsigned short usAddress, unsigned short *ausValue, unsigned short iRegs)
+{
+    unsigned int ulIdentifier;
+
+    unsigned char aucModbusBuf[16];
+
+    int iRet = -1;
+
+    int iIdx = 0;
+
+    int iLoop;
+
+    int iDevAddress = (iMotorIdx + APP_SMCA_BEGIN_ADDRESS);
+
+    MODBUS_PACKET_COMM_STRU *pModBus = (MODBUS_PACKET_COMM_STRU *)aucModbusBuf;
+
+    iIdx = 0;
+    /* 0. Node Address (2018/03/04 add for zigbee) */
+    pModBus->ucFuncode       = MODBUS_FUNC_CODE_Preset_Multiple_Registers;
+    
+    /* 1.Reg Address */
+    pModBus->aucData[iIdx++] = (usAddress >> 8) & 0XFF; 
+    pModBus->aucData[iIdx++] = (usAddress >> 0) & 0XFF;
+
+    /* 1.Reg NUM */
+    pModBus->aucData[iIdx++] = (iRegs >> 8) & 0XFF; 
+    pModBus->aucData[iIdx++] = (iRegs >> 0) & 0XFF;
+
+    /* byte counts */
+    pModBus->aucData[iIdx++] = sizeof(unsigned short) * 2;
+    
+    /* 2.Value   */
+    for (iLoop = 0; iLoop < iRegs; iRegs++)
+    {
+        pModBus->aucData[iIdx++] = (ausValue[iLoop] >> 8) & 0XFF;
+        pModBus->aucData[iIdx++] = (ausValue[iLoop] >> 0) & 0XFF;
+    }
+    
+    CAN_BUILD_ADDRESS_IDENTIFIER(ulIdentifier,APP_PAKCET_ADDRESS_MC,iDevAddress);
+    
+    iRet = CcbModbusWorkEntryWrapper(id,0,ulIdentifier,aucModbusBuf,iIdx + MODBUS_PACKET_COMM_HDR_LEN,2000,CcbDefaultModbusCallBack); // don care modbus exe result
+    
+    if (iRet )
+    {
+        VOS_LOG(VOS_LOG_WARNING,"CcbModbusWorkEntry Fail %d",iRet);    
+        /* notify ui (late implemnt) */
+        return iRet;
+    }
+
+    /* update exe */
+    for (iIdx = 0; iIdx < iRegs; iIdx++)
+    {
+       gCcb.aStepMotor[iMotorIdx].ausHoldRegister[usAddress + iIdx] = ausValue[iIdx];
+    }
+    return iRet;
+}
+
+// 2020/03/11 ADD for stepper motor control
+int CcbSetStepperMotorSingleReg(int id,int iMotorIdx,unsigned short usAddress, unsigned short usValue)
+{
+    int iRet        = -1;
+    int iIdx        = 0;
+    int iDevAddress = (iMotorIdx + APP_SMCA_BEGIN_ADDRESS);
+    unsigned int  ulIdentifier;
+    unsigned char aucModbusBuf[16];
+
+    MODBUS_PACKET_COMM_STRU *pModBus = (MODBUS_PACKET_COMM_STRU *)aucModbusBuf;
+
+    iIdx = 0;
+    
+    pModBus->ucFuncode = MODBUS_FUNC_CODE_Preset_Single_Register;
+    
+    /* 1.Start Address */
+    pModBus->aucData[iIdx++] = (usAddress >> 8) & 0XFF; 
+    pModBus->aucData[iIdx++] = (usAddress >> 0) & 0XFF;
+    
+    /* 2. I&B ID */
+    pModBus->aucData[iIdx++] = (usValue >> 8) & 0XFF;
+    pModBus->aucData[iIdx++] = (usValue >> 0) & 0XFF;
+    
+    CAN_BUILD_ADDRESS_IDENTIFIER(ulIdentifier,APP_PAKCET_ADDRESS_MC,iDevAddress);
+
+    
+    iRet = CcbModbusWorkEntryWrapper(id,0,ulIdentifier,aucModbusBuf,iIdx + MODBUS_PACKET_COMM_HDR_LEN,2000,CcbDefaultModbusCallBack); // don care modbus exe result
+    if (iRet )
+    {
+        VOS_LOG(VOS_LOG_WARNING,"CcbModbusWorkEntry Fail %d",iRet);    
+        /* notify ui (late implemnt) */
+        return iRet;
+    }
+
+    gCcb.aStepMotor[iMotorIdx].ausHoldRegister[usAddress] = usValue;
+
+    return iRet;
+}
+
+
+// 2020/03/11 ADD for stepper motor control
+int CcbGetStepperMotorValue(int id,int iMotorIdx,unsigned short usAddress, unsigned short usRegs)
+{
+    int          iIdx = 0;
+    int          iTmp;
+    int          iRet;
+    unsigned int ulIdentifier;
+    unsigned char aucModbusBuf[32];
+    
+    int iDevAddress = (iMotorIdx + APP_SMCA_BEGIN_ADDRESS);
+
+    MODBUS_PACKET_COMM_STRU *pModBus = (MODBUS_PACKET_COMM_STRU *)aucModbusBuf;
+
+    /* get Bx from exe */
+    iIdx = 0;
+    
+    pModBus->ucFuncode = MODBUS_FUNC_CODE_Read_Input_Registers;
+   
+    /* 1.Start Address */
+    pModBus->aucData[iIdx++] = (usAddress >> 8) & 0XFF; 
+    pModBus->aucData[iIdx++] = (usAddress >> 0) & 0XFF;
+    
+    /* 2. Regs  */
+    pModBus->aucData[iIdx++] = (usRegs >> 8) & 0XFF;
+    pModBus->aucData[iIdx++] = (usRegs >> 0) & 0XFF;
+    
+    CAN_BUILD_ADDRESS_IDENTIFIER(ulIdentifier,APP_PAKCET_ADDRESS_MC,iDevAddress);
+
+    iRet = CcbModbusWorkEntryWrapper(id,0,ulIdentifier,aucModbusBuf,iIdx + MODBUS_PACKET_COMM_HDR_LEN,2000,CcbDefaultModbusCallBack); // don care modbus exe result
+    if (iRet )
+    {
+        VOS_LOG(VOS_LOG_WARNING,"CcbModbusWorkEntry Fail %d",iRet);    
+        /* notify ui (late implemnt) */
+        return iRet;
+    }
+
+    iTmp = 1 + 1; 
+    for (iIdx = 0; iIdx < usRegs; iIdx++)
+    {
+        gCcb.aStepMotor[iMotorIdx].ausInputRegister[usAddress + iIdx] = CcbGetModbus2BytesData(iTmp);
+        iTmp += 2;
+    }
+
+    return 0;
+
+}
+
+/**
+ * @Author: dcj
+ * @Date: 2020-03-23 
+ * @LastEditTime: 2020-03-23
+ * @Description: 根据要求的取水速度，计算循环泵需要的电压值
+ * @Param : 需要的取水速度，参考PUMP_SPEED_ENUM
+ * @Return: 电压值，单位V
+ */
+float GetSpeedVoltage(int iSpeed)
+{
+    float fv = 8.0;
+
+    switch (iSpeed)
+    {
+    case PUMP_SPEED_10:
+        fv = 24.0;
+        break;
+    default:
+        fv += iSpeed * 1.0;
+        break;
+    }
+    return fv;
+}
+
+/**
+ * @Author: dcj
+ * @Date: 2020-12-15 
+ * @LastEditTime: 2020-12-15 
+ * @Description: 调节取水步进电磁阀步数
+ * @Param :步进电磁阀的位置
+ * @Return: 非0表示有错误
+ */
+int SetStepperMotorPosition(int iSteps)
+{
+	return CcbStepperMotorQuickStart(QTWSTEPPER, iSteps);
+}
+
+/**
+ * @Author: dcj
+ * @Date: 2020-03-23 
+ * @LastEditTime: 2020-03-23
+ * @Description: 根据要求的取水速度，调节取水步进电磁阀步数
+ * @Param : 需要的取水速度，PUMP_SPEED_10表示满速，参考PUMP_SPEED_ENUM
+ * @Return: 非0表示有错误
+ */
+int SetStepperMotorSpeed(int iSpeed)
+{
+    static int oldSpeed = PUMP_SPEED_NUM;
+    int direction = 0; // direction : 1 加;  0 减
+
+    if(oldSpeed < iSpeed)
+    {
+        direction = 1;
+    }
+    oldSpeed = iSpeed;
+
+    short sPosition = 1800;
+    short sStart = gCaliParam.stepperCali.iStart;
+
+    if(1 == direction)
+    {
+        sStart += 50;
+    }
+
+    if(iSpeed < PUMP_SPEED_10)
+    {
+        sPosition = sStart + iSpeed * 15;
+    }
+
+    //QTWSTEPPER,步进电磁阀的CAN通讯地址
+    return SetStepperMotorPosition(sPosition);
+}
+
+
+/**
+ * @Author: 珍能
+ * @Date: 2020-03-11 
+ * @LastEditTime: 2020-03-11 
+ * @Description: 步进模块步进控制
+ * @Param : iMotorIdx步进模块地址0对应30，依次类推, sPosition步数
+ * @Return: 非0表示有错误
+ */
+int CcbStepperMotorQuickStart(int iMotorIdx,short sPosition)
+{
+    int iRet;
+    iRet = CcbSetStepperMotorSingleReg(WORK_LIST_NUM,iMotorIdx,APP_SMCA_HOLD_REGS_MOTOR_QRUN_START,(unsigned short)sPosition);
+
+    return iRet;
+}
+
+/**
+ * @Author: 珍能
+ * @Date: 2020-03-11 
+ * @LastEditTime: 2020-03-11 
+ * @Description: 步进电机停止工作，并不关闭阀门，只是单纯停掉电机
+ * @Param : iMotorIdx步进模块地址0对应30，依次类推
+ * @Return: 非0表示有错误
+ */
+int CcbStepperMotorQuickStop(int iMotorIdx)
+{
+    int iRet;
+    
+    iRet = CcbSetStepperMotorSingleReg(WORK_LIST_NUM,iMotorIdx,APP_SMCA_HOLD_REGS_MOTOR_CTRL_START,6);
+
+    return iRet;
+}
+#endif
+
 int CcbGetDinState(int id)
 {
     int          iIdx = 0;
@@ -3324,7 +3591,15 @@ void work_start_qtw(void *para)
                 return;
             }
         }
-    
+
+#ifdef STEPPERMOTOR
+		if(haveStepper(pCcb))
+		{
+			//先调节步进电机，延时1s再进行下一步
+	        SetStepperMotorSpeed(GetSpeedValue(pCcb->aHandler[iIndex].iDevType));
+	        CcbWorkDelayEntry(pWorkItem->id, 500, CcbDelayCallBack);
+		}
+#endif
         /* set  switchs */
         if (APP_DEV_HS_SUB_HYPER == pCcb->aHandler[iIndex].iDevType)
         {
@@ -3348,7 +3623,21 @@ void work_start_qtw(void *para)
         if ((ulQtwSwMask & (1 << APP_EXE_C2_NO))
            && pCcb->bit1CirSpeedAdjust)
         {
+#ifdef STEPPERMOTOR
+			if(haveStepper(pCcb))
+			{
+				//调节泵压和步进电磁阀
+	        	int iSpeed = GetSpeedValue(pCcb->aHandler[iIndex].iDevType);
+	            CcbC2Regulator(pWorkItem->id, GetSpeedVoltage(iSpeed), TRUE);
+				// SetStepperMotorSpeed(iSpeed);
+			}
+			else
+			{
+				CcbC2Regulator(pWorkItem->id,24,TRUE);
+			}
+#else
             CcbC2Regulator(pWorkItem->id,24,TRUE);
+#endif
         }
 
         iTmp = (1 << APP_EXE_I4_NO)|(1 << APP_EXE_I5_NO);
@@ -3444,7 +3733,14 @@ void work_stop_qtw(void *para)
     }
 
     CcbFiniHandlerQtwMeas(iIndex);
-    
+
+#ifdef STEPPERMOTOR
+	if(haveStepper(pCcb))
+	{
+    	SetStepperMotorSpeed(PUMP_SPEED_10);
+	}
+#endif
+
     /* late implemnt */
     /* E10 ON        */
     /* set  valves   */
@@ -3613,6 +3909,13 @@ void work_start_cir(void *para)
     pCcb->bit1AlarmTOC = FALSE;
 
     CanCcbTransState4Pw(DISP_WORK_STATE_RUN,DISP_WORK_SUB_RUN_CIRING);
+
+#ifdef STEPPERMOTOR
+    if(haveStepper(pCcb))
+    {
+        SetStepperMotorSpeed(PUMP_SPEED_10);
+    }
+#endif
 
     if (haveB2(pCcb))
     {
@@ -3971,13 +4274,42 @@ void work_start_speed_regulation(void *para)
     int iTmp;
     int iActive;
 
-    int iRet;
+    int iRet = 0;
 
     int iSpeed = pCcb->aHandler[iIndex].iSpeed;
 
+#ifdef STEPPERMOTOR
+	float fv; 
+	DispGetRPumpSwitchState(APP_EXE_C2_NO - APP_EXE_C1_NO,&iActive);
+	if(haveStepper(pCcb))
+	{
+    	iTmp = DispConvertVoltage2RPumpSpeed(GetSpeedVoltage(iSpeed));
+	}
+	else
+	{
+	    if(10 <= iSpeed)
+	    {
+	        fv = 24.0;
+	    }
+	    else if(iSpeed == 9)
+	    {
+	        fv = 18.0;
+	    }
+	    else if(iSpeed == 8)
+	    {
+	        fv = 15.0;
+	    }
+	    else
+	    {
+	        fv = iSpeed + 6.0;
+	    }
+	    iTmp = DispConvertVoltage2RPumpSpeed(fv);
+	}
+
+#else
+
     float fv; //2019.1.7
 
-    
     DispGetRPumpSwitchState(APP_EXE_C2_NO - APP_EXE_C1_NO,&iActive);
 
     //2019.1.7
@@ -4001,9 +4333,9 @@ void work_start_speed_regulation(void *para)
     //end
 
    // iTmp = DispConvertVoltage2RPumpSpeed(((24.0 - 5.0)*iSpeed)/PUMP_SPEED_NUM + 5);
-    
-    if (iActive) iTmp = 0XFF00 | iTmp;
+#endif
 
+    if (iActive) iTmp = 0XFF00 | iTmp;
     iRet = CcbSetRPump(pWorkItem->id ,APP_EXE_C2_NO - APP_EXE_C1_NO,iTmp);
 
     work_speed_regulation_end(iIndex,iRet);
@@ -4447,6 +4779,13 @@ int CanCcbAfDataOnLineNotiIndMsg(MAIN_CANITF_MSG_STRU *pCanItfMsg)
 
         iFlags = 1 << iSrcAdr;
         break;
+
+#ifdef STEPPERMOTOR
+    // 2020/03/11 ADD for stepper motor control
+    case APP_DEV_TYPE_SMCA:
+        break;
+#endif
+
     default:
         printf("unknow dev type %x\r\n",pmg->hdr.ucDevType);
         return -1;
@@ -6467,6 +6806,55 @@ void CcbTocNotify(void)
    
 }
 
+#ifdef CFG_DO_PH
+void CcbDONotify(void)
+{
+    int iLength;
+
+    NOT_INFO_STRU *pNotify = (NOT_INFO_STRU *)gaucNotifyBuffer;
+
+    NOT_PH_DO_ITEM_STRU *pItem = (NOT_PH_DO_ITEM_STRU *)pNotify->aucData;
+
+    VOS_LOG(VOS_LOG_DEBUG,"Enter %s",__FUNCTION__);                       
+
+    pNotify->Hdr.ucCode = DISP_NOT_DO;
+
+    iLength = sizeof(NOT_HEADER_STRU);
+
+	pItem->iValue1 = gCcb.ExeBrd.doInfo.iValue1;
+	pItem->iValue2 = gCcb.ExeBrd.doInfo.iValue2;
+	pItem->iValue3 = gCcb.ExeBrd.doInfo.iValue3;
+
+    iLength += sizeof(NOT_PH_DO_ITEM_STRU);
+
+    DispIndicationEntry(gaucNotifyBuffer,iLength);
+   
+}
+
+void CcbPHNotify(void)
+{
+    int iLength;
+
+    NOT_INFO_STRU *pNotify = (NOT_INFO_STRU *)gaucNotifyBuffer;
+
+    NOT_PH_DO_ITEM_STRU *pItem = (NOT_PH_DO_ITEM_STRU *)pNotify->aucData;
+
+    VOS_LOG(VOS_LOG_DEBUG,"Enter %s",__FUNCTION__);                       
+
+    pNotify->Hdr.ucCode = DISP_NOT_PH;
+
+    iLength = sizeof(NOT_HEADER_STRU);
+
+	pItem->iValue1 = gCcb.ExeBrd.doInfo.iValue1;
+	pItem->iValue2 = gCcb.ExeBrd.doInfo.iValue2;
+	pItem->iValue3 = gCcb.ExeBrd.doInfo.iValue3;
+
+    iLength += sizeof(NOT_PH_DO_ITEM_STRU);
+
+    DispIndicationEntry(gaucNotifyBuffer,iLength);
+}
+#endif
+
 void DispUpdNotify(int iType,int iResult,int iPercent)
 {
     int iLength;
@@ -7286,6 +7674,23 @@ int CanCcbAfDataClientRpt4ExeBoard(MAIN_CANITF_MSG_STRU *pCanItfMsg)
             CcbTocNotify();
         }        
         break;
+
+#ifdef CFG_DO_PH
+    case APP_PACKET_RPT_DO:
+    	{
+			APP_PH_DO_VALUE_STRU *pDO = (APP_PH_DO_VALUE_STRU *)pmg->aucData;
+			gCcb.ExeBrd.doInfo = *pDO;
+			CcbDONotify();
+    	}
+		break;
+    case APP_PACKET_RPT_PH:
+    	{
+			APP_PH_DO_VALUE_STRU *pPH = (APP_PH_DO_VALUE_STRU *)pmg->aucData;
+			gCcb.ExeBrd.doInfo = *pPH;
+			CcbPHNotify();
+    	}
+		break;
+#endif
     }
     return 0;
 }
@@ -7883,6 +8288,50 @@ int CanCcbAfDataClientRpt4FlowMeter(MAIN_CANITF_MSG_STRU *pCanItfMsg)
     return 0;
 }
 
+#ifdef STEPPERMOTOR
+// 2020/03/11 ADD for stepper motor control
+int CanCcbAfDataClientRpt4Smc(MAIN_CANITF_MSG_STRU *pCanItfMsg)
+{
+    APP_PACKET_CLIENT_RPT_IND_STRU *pmg = (APP_PACKET_CLIENT_RPT_IND_STRU *)&pCanItfMsg->aucData[1 + RPC_POS_DAT0];
+    int     iSrcAdr  = CAN_SRC_ADDRESS(pCanItfMsg->ulCanId);
+    unsigned char ucResult;
+
+    uint8_t ucIndex  = (iSrcAdr - APP_SMCA_BEGIN_ADDRESS);
+
+    if (ucIndex >=  APP_SMCA_MAX_NUMBER)
+    {
+        ucResult = APP_PACKET_RF_NO_DEVICE;
+        goto end;
+    }
+        
+    switch(pmg->ucRptType)
+    {
+    case APP_PACKET_RPT_SMCA_MOTOR_STATE:
+        {
+            APP_PACKET_RPT_MOT_STRU *pMotorState = (APP_PACKET_RPT_MOT_STRU *)pmg->aucData;
+
+            STEPPER_MOTOR_STRU *pStepMotor = &gCcb.aStepMotor[ucIndex];
+
+            switch(pMotorState->usCobID & 0x780)
+            {
+            case 0x180:
+                break;
+            case 0x280:
+                pStepMotor->iPositon = pMotorState->aucData[0] | (pMotorState->aucData[1] << 8) | (pMotorState->aucData[2] << 16)| (pMotorState->aucData[3] << 24);
+                break;
+            }
+        }
+        break;
+    default:
+        break;
+    }
+
+    return 0;
+
+end : 
+    return ucResult;
+}
+#endif
 
 int CanCcbAfDataClientRptMsg(MAIN_CANITF_MSG_STRU *pCanItfMsg)
 {
@@ -7908,7 +8357,19 @@ int CanCcbAfDataClientRptMsg(MAIN_CANITF_MSG_STRU *pCanItfMsg)
         {
             return -1;
         }
-        break;        
+        break;
+
+#ifdef STEPPERMOTOR
+    // 2020/03/11 ADD for stepper motor control
+    case APP_DEV_TYPE_SMCA:
+        if (iSrcAdr < APP_SMCA_BEGIN_ADDRESS
+            || iSrcAdr > APP_SMCA_END_ADDRESS )
+        {
+            return -1;
+        }        
+        break;
+#endif     
+
     default:
         printf("unknow dev type %x\r\n",pmg->hdr.ucDevType);
         return -1;
@@ -7922,6 +8383,13 @@ int CanCcbAfDataClientRptMsg(MAIN_CANITF_MSG_STRU *pCanItfMsg)
         return CanCcbAfDataClientRpt4FlowMeter(pCanItfMsg);
     case APP_DEV_TYPE_RF_READER:
         return CanCcbAfDataClientRpt4RFReader(pCanItfMsg);
+
+#ifdef STEPPERMOTOR
+    // 2020/03/11 ADD for stepper motor control
+    case APP_DEV_TYPE_SMCA:
+        return CanCcbAfDataClientRpt4Smc(pCanItfMsg);
+#endif
+
     default:
         break;
     }
@@ -8476,7 +8944,7 @@ int CanCcbAfDataHOSpeedReqMsg(MAIN_CANITF_MSG_STRU *pCanItfMsg)
     DispGetRPumpSwitchState(APP_EXE_C2_NO - APP_EXE_C1_NO,&iActive);
 
     iSpeed = DispConvertRPumpSpeed2Scale(gCcb.ExeBrd.ausHoldRegister[APP_EXE_HOLD_REG_RPUMP_OFFSET + APP_EXE_C2_NO - APP_EXE_C1_NO]);
-
+	
     switch(pSpeedReq->ucAction)
     {
     case APP_PACKET_HO_ACTION_START:
@@ -14290,7 +14758,6 @@ int DispConvertRPumpSpeed2Scale(int speed)
             return iIndex;
         }
      }
-
      return iIndex;
 }
 
@@ -14560,130 +15027,105 @@ void CcbInitMachineType(void)
 
 void MainInitMsg(void)
 {
-   int iLoop;
-   float fv; //2019.1.7
-   memset(&gCcb,0,sizeof(gCcb));
+    int iLoop;
+    float fv; //2019.1.7
+    memset(&gCcb,0,sizeof(gCcb));
 
-   for (iLoop = 0; iLoop < WORK_LIST_NUM; iLoop++)
-   {
-       INIT_LIST_HEAD(&gCcb.WorkList[iLoop]);
-   }
+    for (iLoop = 0; iLoop < WORK_LIST_NUM; iLoop++)
+    {
+        INIT_LIST_HEAD(&gCcb.WorkList[iLoop]);
+    }
    
-   for (iLoop = 0; iLoop < APP_EXE_VALVE_NUM; iLoop++)
-   {
-       gCcb.ExeBrd.aValveObjs[iLoop].emDispObjType = APP_OBJ_VALVE;
-       gCcb.ExeBrd.aValveObjs[iLoop].iDispObjId    = iLoop;
-       gCcb.ExeBrd.aValveObjs[iLoop].iVChoice      = APP_OBJ_VALUE_U32;
-   }
+    for (iLoop = 0; iLoop < APP_EXE_VALVE_NUM; iLoop++)
+    {
+        gCcb.ExeBrd.aValveObjs[iLoop].emDispObjType = APP_OBJ_VALVE;
+        gCcb.ExeBrd.aValveObjs[iLoop].iDispObjId    = iLoop;
+        gCcb.ExeBrd.aValveObjs[iLoop].iVChoice      = APP_OBJ_VALUE_U32;
+    }
 
-   for (iLoop = 0; iLoop < APP_EXE_PRESSURE_METER; iLoop++)
-   {
-       gCcb.ExeBrd.aPMObjs[iLoop].emDispObjType = APP_OBJ_B;
-       gCcb.ExeBrd.aPMObjs[iLoop].iDispObjId    = iLoop;
-       gCcb.ExeBrd.aPMObjs[iLoop].iVChoice      = APP_OBJ_VALUE_U32;    /* ua */
-   }
+    for (iLoop = 0; iLoop < APP_EXE_PRESSURE_METER; iLoop++)
+    {
+        gCcb.ExeBrd.aPMObjs[iLoop].emDispObjType = APP_OBJ_B;
+        gCcb.ExeBrd.aPMObjs[iLoop].iDispObjId    = iLoop;
+        gCcb.ExeBrd.aPMObjs[iLoop].iVChoice      = APP_OBJ_VALUE_U32;    /* ua */
+    }
 
-   for (iLoop = 0; iLoop < APP_EXE_G_PUMP_NUM; iLoop++)
-   {
-       gCcb.ExeBrd.aGPumpObjs[iLoop].emDispObjType = APP_OBJ_N_PUMP;
-       gCcb.ExeBrd.aGPumpObjs[iLoop].iDispObjId    = iLoop;
-       gCcb.ExeBrd.aGPumpObjs[iLoop].iVChoice      = APP_OBJ_VALUE_U32; /* ua */
-   }
+    for (iLoop = 0; iLoop < APP_EXE_G_PUMP_NUM; iLoop++)
+    {
+        gCcb.ExeBrd.aGPumpObjs[iLoop].emDispObjType = APP_OBJ_N_PUMP;
+        gCcb.ExeBrd.aGPumpObjs[iLoop].iDispObjId    = iLoop;
+        gCcb.ExeBrd.aGPumpObjs[iLoop].iVChoice      = APP_OBJ_VALUE_U32; /* ua */
+    }
 
-   for (iLoop = 0; iLoop < APP_EXE_R_PUMP_NUM; iLoop++)
-   {
-       gCcb.ExeBrd.aRPumpObjs[iLoop].emDispObjType = APP_OBJ_R_PUMP;
-       gCcb.ExeBrd.aRPumpObjs[iLoop].iDispObjId    = iLoop;
-       gCcb.ExeBrd.aRPumpObjs[iLoop].iVChoice      = APP_OBJ_VALUE_U32; 
-   }
+    for (iLoop = 0; iLoop < APP_EXE_R_PUMP_NUM; iLoop++)
+    {
+        gCcb.ExeBrd.aRPumpObjs[iLoop].emDispObjType = APP_OBJ_R_PUMP;
+        gCcb.ExeBrd.aRPumpObjs[iLoop].iDispObjId    = iLoop;
+        gCcb.ExeBrd.aRPumpObjs[iLoop].iVChoice      = APP_OBJ_VALUE_U32; 
+    }
 
-   for (iLoop = 0; iLoop < APP_EXE_RECT_NUM; iLoop++)
-   {
-       gCcb.ExeBrd.aRectObjs[iLoop].emDispObjType = APP_OBJ_RECT;
-       gCcb.ExeBrd.aRectObjs[iLoop].iDispObjId    = iLoop;
-       gCcb.ExeBrd.aRectObjs[iLoop].iVChoice      = APP_OBJ_VALUE_U32;
-   }
+    for (iLoop = 0; iLoop < APP_EXE_RECT_NUM; iLoop++)
+    {
+        gCcb.ExeBrd.aRectObjs[iLoop].emDispObjType = APP_OBJ_RECT;
+        gCcb.ExeBrd.aRectObjs[iLoop].iDispObjId    = iLoop;
+        gCcb.ExeBrd.aRectObjs[iLoop].iVChoice      = APP_OBJ_VALUE_U32;
+    }
 
-   for (iLoop = 0; iLoop < APP_EXE_EDI_NUM; iLoop++)
-   {
-       gCcb.ExeBrd.aEDIObjs[iLoop].emDispObjType = APP_OBJ_EDI;
-       gCcb.ExeBrd.aEDIObjs[iLoop].iDispObjId    = iLoop;
-       gCcb.ExeBrd.aEDIObjs[iLoop].iVChoice      = APP_OBJ_VALUE_U32;
-   }
+    for (iLoop = 0; iLoop < APP_EXE_EDI_NUM; iLoop++)
+    {
+        gCcb.ExeBrd.aEDIObjs[iLoop].emDispObjType = APP_OBJ_EDI;
+        gCcb.ExeBrd.aEDIObjs[iLoop].iDispObjId    = iLoop;
+        gCcb.ExeBrd.aEDIObjs[iLoop].iVChoice      = APP_OBJ_VALUE_U32;
+    }
 
-   for (iLoop = 0; iLoop < APP_EXE_ECO_NUM; iLoop++)
-   {
-       gCcb.ExeBrd.aEcoObjs[iLoop].emDispObjType = APP_OBJ_I;
-       gCcb.ExeBrd.aEcoObjs[iLoop].iDispObjId    = iLoop;
-       gCcb.ExeBrd.aEcoObjs[iLoop].iVChoice      = APP_OBJ_VALUE_CUST;
-   }
+    for (iLoop = 0; iLoop < APP_EXE_ECO_NUM; iLoop++)
+    {
+        gCcb.ExeBrd.aEcoObjs[iLoop].emDispObjType = APP_OBJ_I;
+        gCcb.ExeBrd.aEcoObjs[iLoop].iDispObjId    = iLoop;
+        gCcb.ExeBrd.aEcoObjs[iLoop].iVChoice      = APP_OBJ_VALUE_CUST;
+    }
 
-   for (iLoop = 0; iLoop < APP_FM_FLOW_METER_NUM; iLoop++)
-   {
-       gCcb.FlowMeter.aFmObjs[iLoop].emDispObjType = APP_OBJ_S;
-       gCcb.FlowMeter.aFmObjs[iLoop].iDispObjId    = iLoop;
-       gCcb.FlowMeter.aFmObjs[iLoop].iVChoice      = APP_OBJ_VALUE_U32;
+    for (iLoop = 0; iLoop < APP_FM_FLOW_METER_NUM; iLoop++)
+    {
+        gCcb.FlowMeter.aFmObjs[iLoop].emDispObjType = APP_OBJ_S;
+        gCcb.FlowMeter.aFmObjs[iLoop].iDispObjId    = iLoop;
+        gCcb.FlowMeter.aFmObjs[iLoop].iVChoice      = APP_OBJ_VALUE_U32;
 
-       gCcb.FlowMeter.aHist[iLoop].ulSec           = gulSecond;
-       gCcb.FlowMeter.aHist[iLoop].iVChoice        = APP_OBJ_VALUE_U32;
-       gCcb.FlowMeter.aHist[iLoop].curValue.ulV    = INVALID_FM_VALUE;
-       gCcb.FlowMeter.aHist[iLoop].lstValue.ulV    = INVALID_FM_VALUE;
+        gCcb.FlowMeter.aHist[iLoop].ulSec           = gulSecond;
+        gCcb.FlowMeter.aHist[iLoop].iVChoice        = APP_OBJ_VALUE_U32;
+        gCcb.FlowMeter.aHist[iLoop].curValue.ulV    = INVALID_FM_VALUE;
+        gCcb.FlowMeter.aHist[iLoop].lstValue.ulV    = INVALID_FM_VALUE;
 
-       gCcb.FlowMeter.aulHistTotal[iLoop]          = 0;
-   }
+        gCcb.FlowMeter.aulHistTotal[iLoop]          = 0;
+    }
 
-   for (iLoop = 0; iLoop < PUMP_SPEED_NUM; iLoop++)
-   {
-       //2019.1.7
-       if(10 <= iLoop)
-       {
-           fv = 24.0;
-       }
-       else if(iLoop == 9)
-       {
-           fv = 18.0;
-       }
-       else if(iLoop == 8)
-       {
-           fv = 15.0;
-       }
-       else
-       {
-           fv = iLoop + 6.0;
-       }
-       gCcb.aiSpeed2ScaleMap[iLoop] = DispConvertVoltage2RPumpSpeed(fv);
-       //end
-       //gCcb.aiSpeed2ScaleMap[iLoop] = DispConvertVoltage2RPumpSpeed(((24.0 - 5.0)*iLoop)/PUMP_SPEED_NUM + 5);
-   }
-   
-   // for ccb init
-   gCcb.curWorkState.iMainWorkState = DISP_WORK_STATE_IDLE;
-   gCcb.curWorkState.iSubWorkState  = DISP_WORK_SUB_IDLE;
+    // for ccb init
+    gCcb.curWorkState.iMainWorkState = DISP_WORK_STATE_IDLE;
+    gCcb.curWorkState.iSubWorkState  = DISP_WORK_SUB_IDLE;
 
-   gCcb.curWorkState.iMainWorkState4Pw = DISP_WORK_STATE_IDLE;
-   gCcb.curWorkState.iSubWorkState4Pw  = DISP_WORK_SUB_IDLE;
+    gCcb.curWorkState.iMainWorkState4Pw = DISP_WORK_STATE_IDLE;
+    gCcb.curWorkState.iSubWorkState4Pw  = DISP_WORK_SUB_IDLE;
 
-   gCcb.ExeBrd.ucDinState = 0XFF;
+    gCcb.ExeBrd.ucDinState = 0XFF;
 
-   gCcb.ulAdapterAgingCount = 0XFFFFFF00;
+    gCcb.ulAdapterAgingCount = 0XFFFFFF00;
 
-   /* for other init */
-   MainInitInnerIpc();
+    /* for other init */
+    MainInitInnerIpc();
 
-   CcbGetParamNotify(NOT_PARAM_ALL_PARAM); /* GET ALL */
+    CcbGetParamNotify(NOT_PARAM_ALL_PARAM); /* GET ALL */
 
-   for (iLoop = 0; iLoop < WORK_LIST_NUM + 1; iLoop++)
-   {
-       sp_thread_sem_init(&gCcb.Sem4Delay[iLoop],0,1); /* binary semphone */
-   }
+    for (iLoop = 0; iLoop < WORK_LIST_NUM + 1; iLoop++)
+    {
+        sp_thread_sem_init(&gCcb.Sem4Delay[iLoop],0,1); /* binary semphone */
+    }
 
-   sp_thread_mutex_init(&gCcb.WorkMutex,NULL);
-   
-   sp_thread_mutex_init(&gCcb.ModbusMutex,NULL);
+    sp_thread_mutex_init(&gCcb.WorkMutex,NULL);
 
+    sp_thread_mutex_init(&gCcb.ModbusMutex,NULL);
 
-   // set reset to all sub modulers
-   MainResetModulers();
+    // set reset to all sub modulers
+    MainResetModulers();
 }
 
 void MainDeInitMsg(void)
@@ -15621,6 +16063,64 @@ void CcbSyncSetMachineParams(DISP_MACHINE_PARAM_STRU *pParam)
     
 }
 
+//dcj
+void SetSpeed2ScaleMap()
+{
+	int iLoop;
+	float fv; 
+	for (iLoop = 0; iLoop < PUMP_SPEED_NUM; iLoop++)
+	{
+#ifdef STEPPERMOTOR
+		if(haveStepper(&gCcb))
+		{
+			fv = GetSpeedVoltage(iLoop);
+		}
+		else
+		{
+			
+			if(10 <= iLoop)
+			{
+				fv = 24.0;
+			}
+			else if(iLoop == 9)
+			{
+				fv = 18.0;
+			}
+			else if(iLoop == 8)
+			{
+				fv = 15.0;
+			}
+			else
+			{
+				fv = iLoop + 6.0;
+			}
+		}
+#else
+		//2019.1.7
+		if(10 <= iLoop)
+		{
+			fv = 24.0;
+		}
+		else if(iLoop == 9)
+		{
+			fv = 18.0;
+		}
+		else if(iLoop == 8)
+		{
+			fv = 15.0;
+		}
+		else
+		{
+			fv = iLoop + 6.0;
+		}
+#endif
+	   gCcb.aiSpeed2ScaleMap[iLoop] = DispConvertVoltage2RPumpSpeed(fv);
+	   //end
+	   //gCcb.aiSpeed2ScaleMap[iLoop] = DispConvertVoltage2RPumpSpeed(((24.0 - 5.0)*iLoop)/PUMP_SPEED_NUM + 5);
+	}
+
+}
+
 void CcbSyncSetModuleParams(DISP_SUB_MODULE_SETTING_STRU *pParam)
 {
     gCcb.SubModSetting = *pParam;
@@ -15630,6 +16130,7 @@ void CcbSyncSetModuleParams(DISP_SUB_MODULE_SETTING_STRU *pParam)
         gCcb.bit1NeedFillTank = 0;
         gCcb.bit1FillingTank  = 0;
     }
+	SetSpeed2ScaleMap();
 }
 
 void CcbSyncSetAlarmParams(DISP_ALARM_SETTING_STRU *pParam)
@@ -15690,6 +16191,28 @@ void CcbInit(void)
     VOS_SndMsg2(TASK_HANDLE_MOCAN   ,INIT_ALL_THREAD_EVENT,0,NULL);
     VOS_SndMsg2(TASK_HANDLE_ZB      ,INIT_ALL_THREAD_EVENT,0,NULL);
 }
+
+/**
+ * @Author: dcj
+ * @Date: 2020-12-16 08:53:52
+ * @Description: 若设备处于循环状态，则停止循环。
+ * @Param : 
+ * @Return: 
+ */
+void DispStopCir()
+{
+    /* remove cir work if any */
+    if (DISP_WORK_STATE_RUN == gCcb.curWorkState.iMainWorkState4Pw
+        && DISP_WORK_SUB_RUN_CIR == gCcb.curWorkState.iSubWorkState4Pw)
+    {
+        if (!SearchWork(work_stop_cir))
+        {
+            CcbInnerWorkStopCir();
+        } 
+    }
+    CcbRmvWork(work_start_cir);
+}
+
 
 //质量检验主板用
 int Ex_FactoryTest(int select)
