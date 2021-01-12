@@ -232,11 +232,14 @@ void DWaterQualityPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info)
         {
             switch(gGlobalParam.iMachineType)
             {
-            case MACHINE_PURIST:
+            case MACHINE_L_RO_LOOP:
+			case MACHINE_L_UP:
             case MACHINE_RO:
             case MACHINE_UP:
+			case MACHINE_PURIST:
             case MACHINE_ADAPT:
                 break;
+			case MACHINE_L_EDI_LOOP:
 			case MACHINE_EDI:
 				if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
 				{
@@ -308,6 +311,8 @@ void DWaterQualityPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info)
 
 		switch (gGlobalParam.iMachineType)	
 		{
+		case MACHINE_L_RO_LOOP:
+		case MACHINE_L_UP:
 		case MACHINE_RO:
 		case MACHINE_UP:
 			if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
@@ -322,6 +327,7 @@ void DWaterQualityPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info)
                 }
 			}
 			break;
+		case MACHINE_L_EDI_LOOP:
 		case MACHINE_EDI:
 			if(!(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir)))
 			{
@@ -372,6 +378,8 @@ void DWaterQualityPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info)
 
             switch(gGlobalParam.iMachineType)
             {
+            case MACHINE_L_RO_LOOP:
+			case MACHINE_L_UP:
             case MACHINE_RO:
             case MACHINE_UP:
             {
@@ -845,6 +853,8 @@ void DWaterQualityPage::updHistoryEcoInfo()
 
         switch(gGlobalParam.iMachineType)
         {
+        case MACHINE_L_RO_LOOP:
+		case MACHINE_L_UP:
         case MACHINE_RO:
         case MACHINE_UP:
             if(!(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir)))
@@ -866,6 +876,8 @@ void DWaterQualityPage::updHistoryEcoInfo()
 
         switch(gGlobalParam.iMachineType)
         {
+        case MACHINE_L_RO_LOOP:
+		case MACHINE_L_UP:
         case MACHINE_RO:
         case MACHINE_UP:
             if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))

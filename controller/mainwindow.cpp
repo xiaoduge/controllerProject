@@ -9579,7 +9579,7 @@ void MainWindow::updateRectAlarmState()
         DispGetOtherCurrent(APP_EXE_N1_NO, &iTmpData);
         if((ex_gulSecond - ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectTick[EX_RECT_N1]) > 15)
         {
-            if(iTmpData < 300)
+            if(iTmpData < 100)
             {
                 //Alaram
                 if(ex_gCcb.Ex_Alarm_Bit.bit1AlarmN1 == 0)
