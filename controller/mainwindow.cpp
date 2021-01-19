@@ -4329,15 +4329,7 @@ MainWindow::MainWindow(QMainWindow *parent) :
     else
     {
         setStartCheckConsumable(true);
-
-        if(0 == gAdditionalCfgParam.productInfo.iCompany)
-        {
-            Splash();
-        }
-        else
-        {
-            mainDisplay();
-        }
+        Splash();
     }
 
     initScreenSleep();
@@ -5077,7 +5069,15 @@ void MainWindow::Splash()
     m_pLabelGif = new QLabel(mainWidget);
     m_pLabelGif->setGeometry(QRect(0, 0, 800, 600));
 
-    m_pMovieGif = new QMovie(":/pic/LOGO.gif");
+    switch(gAdditionalCfgParam.productInfo.iCompany)
+    {
+    case 1:
+        m_pMovieGif = new QMovie(":/pic/LOGO_VWR.gif");
+        break;
+    default:
+        m_pMovieGif = new QMovie(":/pic/LOGO.gif");
+        break;
+    }
 
     m_pLabelGif->setMovie(m_pMovieGif);
     
