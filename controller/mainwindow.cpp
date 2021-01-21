@@ -6161,22 +6161,22 @@ void MainWindow::initMachineNameVWR()
         m_strMachineName = QString("Super Genie R") + tr(" %1").arg(iMachineFlow);
         break;
     case MACHINE_Genie:
-        m_strMachineName = QString("VWR G") + tr(" %1").arg(iMachineFlow);
+        m_strMachineName = tr("VWR G") + tr(" %1").arg(iMachineFlow);
         break;
     case MACHINE_UP:
-        m_strMachineName = QString("VWR U") + tr(" %1").arg(iMachineFlow);
+        m_strMachineName = tr("VWR U") + tr(" %1").arg(iMachineFlow);
         break;
     case MACHINE_EDI:
-        m_strMachineName = QString("VWR E") + tr(" %1").arg(iMachineFlow);
+        m_strMachineName = tr("VWR E") + tr(" %1").arg(iMachineFlow);
         break;
     case MACHINE_RO:
-        m_strMachineName = QString("VWR R") + tr(" %1").arg(iMachineFlow);
+        m_strMachineName = tr("VWR R") + tr(" %1").arg(iMachineFlow);
         break;
     case MACHINE_PURIST:
-        m_strMachineName = QString("VWR P");
+        m_strMachineName = tr("VWR P");
         break;
     case MACHINE_ADAPT:
-        m_strMachineName = QString("VWR A") + tr(" %1").arg(iMachineFlow);
+        m_strMachineName = tr("VWR A") + tr(" %1").arg(iMachineFlow);
         break;
     default:
 		m_strMachineName = QString("unknow");
