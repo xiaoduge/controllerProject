@@ -7451,6 +7451,38 @@ int CcbC2Regulator(int id,float fv,int on)
     return 0;
 }
 
+#define SMOOTHI2
+
+#ifdef SMOOTHI2
+/**
+ * @Author: dcj
+ * @Date: 2021-01-14 08:58:17
+ * @Description: 针对I2超量程数据波动问题增加此函数；
+ *               当新数据大于当前数据的3倍时，认为数据出现波动，不予更新。若连续10个数据都大于当前数据的3倍，则选择更新当前数据。
+ *               因为I2采样时，正常是趋于下降到平缓的趋势。
+ * @param {float} newValue： 新数据
+ */
+void smoothI2Data(float newValue)
+{
+    static float oldValue = 1000.0;
+    static int discard;
+
+    float multiple = newValue/oldValue;
+    if(multiple < 3 || discard >= 10)
+    {
+        gCcb.ExeBrd.aEcoObjs[APP_EXE_I2_NO].Value.eV.fWaterQ = newValue;
+        oldValue = newValue;
+    }
+    else
+    {
+        discard++;
+        return;
+    }
+
+    discard = 0;
+}
+#endif
+
 int CanCcbAfDataClientRpt4ExeBoard(MAIN_CANITF_MSG_STRU *pCanItfMsg)
 {
     APP_PACKET_CLIENT_RPT_IND_STRU *pmg = (APP_PACKET_CLIENT_RPT_IND_STRU *)&pCanItfMsg->aucData[1 + RPC_POS_DAT0];
@@ -7468,9 +7500,23 @@ int CanCcbAfDataClientRpt4ExeBoard(MAIN_CANITF_MSG_STRU *pCanItfMsg)
             {
                 if (pEco->ucId < APP_EXE_ECO_NUM)
                 {
+#ifdef SMOOTHI2
+                    if(APP_EXE_I2_NO == pEco->ucId && gCcb.bit1ProduceWater)
+                    {
+                        smoothI2Data(pEco->ev.fWaterQ);
+                    }
+                    else
+                    {
+                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ = pEco->ev.fWaterQ;
+                    }
+                    gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.usTemp = pEco->ev.usTemp;
+                    gCcb.ExeBrd.ulEcoValidFlags |= 1 << pEco->ucId;
+
+#else                    
                     gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ = pEco->ev.fWaterQ;
                     gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.usTemp = pEco->ev.usTemp;
                     gCcb.ExeBrd.ulEcoValidFlags |= 1 << pEco->ucId;
+#endif
 
                     //ex_dcj
                     switch(pEco->ucId)
