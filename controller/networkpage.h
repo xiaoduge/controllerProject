@@ -66,7 +66,6 @@ private:
     QWidget *m_pWifiSSIDAddWidget;
 
     QProcess *m_pProcess;
-	QProcess *m_pGetInfoProcess;
 	bool m_bRefreshed;
 
 public slots:
@@ -80,7 +79,6 @@ public slots:
     void on_addCheckBox_stateChanged(int state);
 
 	void on_getNetInfoBtn_clicked();
-	void on_getNetInfo();
 };
 
 #endif // NETWORKPAGE_H

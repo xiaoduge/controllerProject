@@ -1474,32 +1474,25 @@
 <context>
     <name>DFactoryTestPage</name>
     <message>
-        <location filename="dfactorytestpage.cpp" line="34"/>
+        <location filename="dfactorytestpage.cpp" line="36"/>
         <source>Factory Test</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="59"/>
+        <location filename="dfactorytestpage.cpp" line="61"/>
         <source>RFID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="61"/>
+        <location filename="dfactorytestpage.cpp" line="63"/>
         <source>Wifi Test</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="62"/>
-        <location filename="dfactorytestpage.cpp" line="300"/>
+        <location filename="dfactorytestpage.cpp" line="64"/>
+        <location filename="dfactorytestpage.cpp" line="302"/>
         <source>Maintenance</source>
         <translation type="unfinished">Wartung</translation>
-    </message>
-    <message>
-        <location filename="dfactorytestpage.cpp" line="64"/>
-        <location filename="dfactorytestpage.cpp" line="315"/>
-        <location filename="dfactorytestpage.cpp" line="318"/>
-        <source>Update</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="dfactorytestpage.cpp" line="67"/>
@@ -1595,110 +1588,125 @@
         <translation type="unfinished">Füllstand Speisewassertank</translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="333"/>
-        <source>No online update function</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="dfactorytestpage.cpp" line="592"/>
+        <location filename="dfactorytestpage.cpp" line="643"/>
         <source>FAIL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="60"/>
-        <location filename="dfactorytestpage.cpp" line="196"/>
+        <location filename="dfactorytestpage.cpp" line="62"/>
+        <location filename="dfactorytestpage.cpp" line="198"/>
         <source>Flow &amp; Pressure</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="dfactorytestpage.cpp" line="65"/>
+        <location filename="dfactorytestpage.cpp" line="330"/>
+        <source>Tools</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="dfactorytestpage.cpp" line="104"/>
-        <location filename="dfactorytestpage.cpp" line="294"/>
+        <location filename="dfactorytestpage.cpp" line="296"/>
         <source>Zigbee Upd</source>
         <translation type="unfinished">Aktualisierung Zigbee</translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="213"/>
-        <source>20</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="dfactorytestpage.cpp" line="214"/>
-        <source>21</source>
+        <location filename="dfactorytestpage.cpp" line="106"/>
+        <source>Open All Valves</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="dfactorytestpage.cpp" line="215"/>
-        <source>22</source>
+        <source>20</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="dfactorytestpage.cpp" line="216"/>
-        <source>23</source>
+        <source>21</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="dfactorytestpage.cpp" line="217"/>
+        <source>22</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="218"/>
+        <source>23</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="219"/>
         <source>24</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="253"/>
+        <location filename="dfactorytestpage.cpp" line="255"/>
         <source>RFID TEST</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="276"/>
+        <location filename="dfactorytestpage.cpp" line="278"/>
         <source>Update Wifi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="357"/>
+        <location filename="dfactorytestpage.cpp" line="347"/>
         <source>Fail: Flow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="357"/>
-        <location filename="dfactorytestpage.cpp" line="374"/>
+        <location filename="dfactorytestpage.cpp" line="347"/>
+        <location filename="dfactorytestpage.cpp" line="364"/>
         <source>Can not enter test Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="374"/>
+        <location filename="dfactorytestpage.cpp" line="364"/>
         <source>Fail: Pressure</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="333"/>
-        <location filename="dfactorytestpage.cpp" line="396"/>
-        <location filename="dfactorytestpage.cpp" line="401"/>
-        <location filename="dfactorytestpage.cpp" line="407"/>
-        <location filename="dfactorytestpage.cpp" line="412"/>
+        <location filename="dfactorytestpage.cpp" line="386"/>
+        <location filename="dfactorytestpage.cpp" line="391"/>
+        <location filename="dfactorytestpage.cpp" line="397"/>
+        <location filename="dfactorytestpage.cpp" line="402"/>
         <source>Warning</source>
         <translation type="unfinished">Warnung</translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="396"/>
+        <location filename="dfactorytestpage.cpp" line="386"/>
         <source>write cat error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="401"/>
+        <location filename="dfactorytestpage.cpp" line="391"/>
         <source>write lot error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="407"/>
+        <location filename="dfactorytestpage.cpp" line="397"/>
         <source>write install date error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="412"/>
+        <location filename="dfactorytestpage.cpp" line="402"/>
         <source>write vol data error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="415"/>
+        <location filename="dfactorytestpage.cpp" line="405"/>
         <source>Write finished</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="457"/>
+        <source>Notice</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="457"/>
+        <source>Please Stop System First!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2759,7 +2767,7 @@
 <context>
     <name>DManagerSetPage</name>
     <message>
-        <location filename="dmanagersetpage.cpp" line="59"/>
+        <location filename="dmanagersetpage.cpp" line="60"/>
         <source>Manager Config</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2769,11 +2777,11 @@
         <translation type="obsolete">Durchfluss </translation>
     </message>
     <message>
-        <location filename="dmanagersetpage.cpp" line="69"/>
-        <location filename="dmanagersetpage.cpp" line="78"/>
-        <location filename="dmanagersetpage.cpp" line="85"/>
-        <location filename="dmanagersetpage.cpp" line="93"/>
-        <location filename="dmanagersetpage.cpp" line="753"/>
+        <location filename="dmanagersetpage.cpp" line="70"/>
+        <location filename="dmanagersetpage.cpp" line="79"/>
+        <location filename="dmanagersetpage.cpp" line="86"/>
+        <location filename="dmanagersetpage.cpp" line="94"/>
+        <location filename="dmanagersetpage.cpp" line="778"/>
         <source>Time &amp; Date</source>
         <oldsource>Time</oldsource>
         <translation>Datum &amp; Uhrzeit</translation>
@@ -2783,11 +2791,11 @@
         <translation type="obsolete">Sprache</translation>
     </message>
     <message>
-        <location filename="dmanagersetpage.cpp" line="71"/>
-        <location filename="dmanagersetpage.cpp" line="79"/>
-        <location filename="dmanagersetpage.cpp" line="87"/>
-        <location filename="dmanagersetpage.cpp" line="95"/>
-        <location filename="dmanagersetpage.cpp" line="887"/>
+        <location filename="dmanagersetpage.cpp" line="72"/>
+        <location filename="dmanagersetpage.cpp" line="80"/>
+        <location filename="dmanagersetpage.cpp" line="88"/>
+        <location filename="dmanagersetpage.cpp" line="96"/>
+        <location filename="dmanagersetpage.cpp" line="928"/>
         <source>Audio</source>
         <translation>Toneinstellungen</translation>
     </message>
@@ -2796,57 +2804,57 @@
         <translation type="obsolete">Einheiten</translation>
     </message>
     <message>
-        <location filename="dmanagersetpage.cpp" line="72"/>
-        <location filename="dmanagersetpage.cpp" line="80"/>
-        <location filename="dmanagersetpage.cpp" line="88"/>
-        <location filename="dmanagersetpage.cpp" line="96"/>
-        <location filename="dmanagersetpage.cpp" line="980"/>
+        <location filename="dmanagersetpage.cpp" line="73"/>
+        <location filename="dmanagersetpage.cpp" line="81"/>
+        <location filename="dmanagersetpage.cpp" line="89"/>
+        <location filename="dmanagersetpage.cpp" line="97"/>
+        <location filename="dmanagersetpage.cpp" line="1021"/>
         <source>LCD</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dmanagersetpage.cpp" line="115"/>
-        <location filename="dmanagersetpage.cpp" line="127"/>
-        <location filename="dmanagersetpage.cpp" line="137"/>
-        <location filename="dmanagersetpage.cpp" line="142"/>
+        <location filename="dmanagersetpage.cpp" line="116"/>
+        <location filename="dmanagersetpage.cpp" line="128"/>
+        <location filename="dmanagersetpage.cpp" line="138"/>
+        <location filename="dmanagersetpage.cpp" line="143"/>
         <source>Save</source>
         <translation>Speichern</translation>
     </message>
     <message>
-        <location filename="dmanagersetpage.cpp" line="103"/>
+        <location filename="dmanagersetpage.cpp" line="104"/>
         <source>Select Date</source>
         <translation>Datum einstellen</translation>
     </message>
     <message>
-        <location filename="dmanagersetpage.cpp" line="81"/>
-        <location filename="dmanagersetpage.cpp" line="89"/>
-        <location filename="dmanagersetpage.cpp" line="97"/>
-        <location filename="dmanagersetpage.cpp" line="1033"/>
+        <location filename="dmanagersetpage.cpp" line="82"/>
+        <location filename="dmanagersetpage.cpp" line="90"/>
+        <location filename="dmanagersetpage.cpp" line="98"/>
+        <location filename="dmanagersetpage.cpp" line="1075"/>
         <source>Additional Settings</source>
         <translation type="unfinished">Weitere Einstellungen</translation>
     </message>
     <message>
-        <location filename="dmanagersetpage.cpp" line="104"/>
+        <location filename="dmanagersetpage.cpp" line="105"/>
         <source>Select Time</source>
         <translation>Uhrzeit einstellen</translation>
     </message>
     <message>
-        <location filename="dmanagersetpage.cpp" line="109"/>
+        <location filename="dmanagersetpage.cpp" line="110"/>
         <source>Date &amp; Time</source>
         <translation>Datum &amp; Uhrzeit</translation>
     </message>
     <message>
-        <location filename="dmanagersetpage.cpp" line="110"/>
+        <location filename="dmanagersetpage.cpp" line="111"/>
         <source>Cancel</source>
         <translation>Abbrechen</translation>
     </message>
     <message>
-        <location filename="dmanagersetpage.cpp" line="111"/>
+        <location filename="dmanagersetpage.cpp" line="112"/>
         <source>OK</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dmanagersetpage.cpp" line="117"/>
+        <location filename="dmanagersetpage.cpp" line="118"/>
         <source>Motor Valve</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2883,20 +2891,20 @@
         <translation type="obsolete">русский</translation>
     </message>
     <message>
-        <location filename="dmanagersetpage.cpp" line="121"/>
+        <location filename="dmanagersetpage.cpp" line="122"/>
         <source>Touch-tone</source>
         <translation>Ton Touchpanel</translation>
     </message>
     <message>
-        <location filename="dmanagersetpage.cpp" line="70"/>
-        <location filename="dmanagersetpage.cpp" line="86"/>
-        <location filename="dmanagersetpage.cpp" line="94"/>
-        <location filename="dmanagersetpage.cpp" line="815"/>
+        <location filename="dmanagersetpage.cpp" line="71"/>
+        <location filename="dmanagersetpage.cpp" line="87"/>
+        <location filename="dmanagersetpage.cpp" line="95"/>
+        <location filename="dmanagersetpage.cpp" line="856"/>
         <source>Calibration</source>
         <translation type="unfinished">Kalibration</translation>
     </message>
     <message>
-        <location filename="dmanagersetpage.cpp" line="114"/>
+        <location filename="dmanagersetpage.cpp" line="115"/>
         <source>Disp. Rate</source>
         <translation type="unfinished">Durchflussmessinstrument</translation>
     </message>
@@ -2905,7 +2913,7 @@
         <translation type="obsolete">Warnton</translation>
     </message>
     <message>
-        <location filename="dmanagersetpage.cpp" line="122"/>
+        <location filename="dmanagersetpage.cpp" line="123"/>
         <source>Audio Alarms</source>
         <translation>Alarmton</translation>
     </message>
@@ -2942,35 +2950,35 @@
         <translation type="obsolete">F</translation>
     </message>
     <message>
-        <location filename="dmanagersetpage.cpp" line="130"/>
+        <location filename="dmanagersetpage.cpp" line="131"/>
         <source>Brightness</source>
         <translation>Helligkeit</translation>
     </message>
     <message>
-        <location filename="dmanagersetpage.cpp" line="131"/>
+        <location filename="dmanagersetpage.cpp" line="132"/>
         <source>Energy-saving</source>
         <translation type="unfinished">Energiesparen</translation>
     </message>
     <message>
-        <location filename="dmanagersetpage.cpp" line="132"/>
+        <location filename="dmanagersetpage.cpp" line="133"/>
         <source>SleepTime</source>
         <translation>Bildschirmschoner</translation>
     </message>
     <message>
-        <location filename="dmanagersetpage.cpp" line="140"/>
+        <location filename="dmanagersetpage.cpp" line="141"/>
         <source>RephiLink</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dmanagersetpage.cpp" line="141"/>
+        <location filename="dmanagersetpage.cpp" line="142"/>
         <source>HP Recir.</source>
         <translation>Tankumwälzung</translation>
     </message>
     <message>
-        <location filename="dmanagersetpage.cpp" line="465"/>
-        <location filename="dmanagersetpage.cpp" line="510"/>
-        <location filename="dmanagersetpage.cpp" line="530"/>
-        <location filename="dmanagersetpage.cpp" line="605"/>
+        <location filename="dmanagersetpage.cpp" line="467"/>
+        <location filename="dmanagersetpage.cpp" line="512"/>
+        <location filename="dmanagersetpage.cpp" line="532"/>
+        <location filename="dmanagersetpage.cpp" line="607"/>
         <source>Successfully saved</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3098,23 +3106,23 @@
 <context>
     <name>DRephiLinkProtocolDlg</name>
     <message>
-        <location filename="drephilinkprotocoldlg.cpp" line="43"/>
+        <location filename="drephilinkprotocoldlg.cpp" line="49"/>
         <source>RephiLink Service Privacy Policy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="drephilinkprotocoldlg.cpp" line="50"/>
+        <location filename="drephilinkprotocoldlg.cpp" line="56"/>
         <source>I have read and agree to the terms contained in the Service Privacy Policy</source>
         <oldsource>I have read and agree to the terms contained in the license agreements</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="drephilinkprotocoldlg.cpp" line="54"/>
+        <location filename="drephilinkprotocoldlg.cpp" line="60"/>
         <source>Agree</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="drephilinkprotocoldlg.cpp" line="55"/>
+        <location filename="drephilinkprotocoldlg.cpp" line="61"/>
         <source>Disagree</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4348,16 +4356,16 @@
         <location filename="mainpage.cpp" line="684"/>
         <location filename="mainpage.cpp" line="692"/>
         <location filename="mainpage.cpp" line="813"/>
-        <location filename="mainpage.cpp" line="1740"/>
+        <location filename="mainpage.cpp" line="1735"/>
         <source>omg</source>
         <translation>MΩ.cm</translation>
     </message>
     <message>
         <location filename="mainpage.cpp" line="814"/>
-        <location filename="mainpage.cpp" line="1584"/>
-        <location filename="mainpage.cpp" line="1601"/>
-        <location filename="mainpage.cpp" line="1615"/>
-        <location filename="mainpage.cpp" line="1632"/>
+        <location filename="mainpage.cpp" line="1579"/>
+        <location filename="mainpage.cpp" line="1596"/>
+        <location filename="mainpage.cpp" line="1610"/>
+        <location filename="mainpage.cpp" line="1627"/>
         <source>us</source>
         <translation>μS/cm</translation>
     </message>
@@ -4389,80 +4397,80 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="1355"/>
+        <location filename="mainpage.cpp" line="1351"/>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="1355"/>
+        <location filename="mainpage.cpp" line="1351"/>
         <source>Start Motor Failed!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="1395"/>
+        <location filename="mainpage.cpp" line="1390"/>
         <source>&gt;200</source>
         <oldsource>&gt;100</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="1462"/>
+        <location filename="mainpage.cpp" line="1457"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="1463"/>
+        <location filename="mainpage.cpp" line="1458"/>
         <source>Please stop dispensing water before switching system into Standby mode</source>
         <translation>Stoppen Sie bitte die Ausgabe von Wasser, bevor Sie das System in den Standby-Modus schalten</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="1974"/>
-        <location filename="mainpage.cpp" line="2035"/>
+        <location filename="mainpage.cpp" line="1969"/>
+        <location filename="mainpage.cpp" line="2030"/>
         <source>Tank Full</source>
         <translation>Tank voll</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="1987"/>
-        <location filename="mainpage.cpp" line="2004"/>
+        <location filename="mainpage.cpp" line="1982"/>
+        <location filename="mainpage.cpp" line="1999"/>
         <source>Flush</source>
         <translation>Spülen</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="1997"/>
+        <location filename="mainpage.cpp" line="1992"/>
         <source>Rinsing</source>
         <translation>Wässern</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="2011"/>
+        <location filename="mainpage.cpp" line="2006"/>
         <source>Filling</source>
         <translation>Füllung</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="2045"/>
-        <location filename="mainpage.cpp" line="2048"/>
+        <location filename="mainpage.cpp" line="2040"/>
+        <location filename="mainpage.cpp" line="2043"/>
         <source>Pressure Relief</source>
         <translation>Druckentlastung</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="2052"/>
-        <location filename="mainpage.cpp" line="2055"/>
+        <location filename="mainpage.cpp" line="2047"/>
+        <location filename="mainpage.cpp" line="2050"/>
         <source>Standby</source>
         <translation>Standby</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="2069"/>
-        <location filename="mainpage.cpp" line="2085"/>
+        <location filename="mainpage.cpp" line="2064"/>
+        <location filename="mainpage.cpp" line="2080"/>
         <source>Dispense</source>
         <translation>Dosieren</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="2073"/>
-        <location filename="mainpage.cpp" line="2098"/>
+        <location filename="mainpage.cpp" line="2068"/>
+        <location filename="mainpage.cpp" line="2093"/>
         <source>Recirculation</source>
         <translation>Rezirkulation</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="2077"/>
-        <location filename="mainpage.cpp" line="2091"/>
+        <location filename="mainpage.cpp" line="2072"/>
+        <location filename="mainpage.cpp" line="2086"/>
         <source>Ready</source>
         <translation>Ready</translation>
     </message>
@@ -4622,6 +4630,36 @@
         <location filename="mainwindow.cpp" line="6179"/>
         <source> %1</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="6164"/>
+        <source>VWR G</source>
+        <translation>VWR® G</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="6167"/>
+        <source>VWR U</source>
+        <translation>VWR® U</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="6170"/>
+        <source>VWR E</source>
+        <translation>VWR® E</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="6173"/>
+        <source>VWR R</source>
+        <translation>VWR® R</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="6176"/>
+        <source>VWR P</source>
+        <translation>VWR® P</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="6179"/>
+        <source>VWR A</source>
+        <translation>VWR® A</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="8634"/>
@@ -4884,60 +4922,54 @@
 <context>
     <name>NetworkPage</name>
     <message>
-        <location filename="networkpage.cpp" line="38"/>
+        <location filename="networkpage.cpp" line="40"/>
         <source>Connectivity</source>
         <translation type="unfinished">Verbindungseinstellungen</translation>
     </message>
     <message>
-        <location filename="networkpage.cpp" line="47"/>
+        <location filename="networkpage.cpp" line="49"/>
         <source>CAN</source>
         <translation>CAN</translation>
     </message>
     <message>
-        <location filename="networkpage.cpp" line="48"/>
+        <location filename="networkpage.cpp" line="50"/>
         <source>Zigbee</source>
         <oldsource>ZIGBEE</oldsource>
         <translation>Drahtlos</translation>
     </message>
     <message>
-        <location filename="networkpage.cpp" line="49"/>
+        <location filename="networkpage.cpp" line="51"/>
         <source>WIFI</source>
         <translation>WLAN</translation>
     </message>
     <message>
-        <location filename="networkpage.cpp" line="56"/>
+        <location filename="networkpage.cpp" line="58"/>
         <source>Save</source>
         <translation>Speichern</translation>
     </message>
     <message>
-        <location filename="networkpage.cpp" line="58"/>
+        <location filename="networkpage.cpp" line="60"/>
         <source>SSID:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="networkpage.cpp" line="59"/>
+        <location filename="networkpage.cpp" line="61"/>
         <source>Add</source>
         <translation type="unfinished">Hinzufügen</translation>
     </message>
     <message>
-        <location filename="networkpage.cpp" line="60"/>
+        <location filename="networkpage.cpp" line="62"/>
         <source>Refresh</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="networkpage.cpp" line="61"/>
+        <location filename="networkpage.cpp" line="63"/>
         <source>Add network</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="networkpage.cpp" line="63"/>
+        <location filename="networkpage.cpp" line="65"/>
         <source>Information</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="networkpage.cpp" line="386"/>
-        <location filename="networkpage.cpp" line="406"/>
-        <source>No internet connection</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

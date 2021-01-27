@@ -4,8 +4,6 @@
 #include "subpage.h"
 #include "ctrlapplication.h"
 
-//#define NETUPDATE
-
 class MainWindow;
 class QPushButton;
 class QLabel;
@@ -14,6 +12,7 @@ class QFrame;
 class QComboBox;
 class QTextBrowser;
 class QTabWidget;
+class QCheckBox;
 
 class DFactoryTestPage : public CSubPage
 {
@@ -47,9 +46,7 @@ public:
         FACTORY_PAGE_FLOW,
         FACTORY_PAGE_UPDWIFI,
         FACTORY_PAGE_UPDZIGBEE,
-#ifdef NETUPDATE
-        FACTORY_PAGE_NETUPDATE,
-#endif
+		FACTORY_PAGE_TOOLS,
         FACTORY_PAGE_NUM
     };
 
@@ -97,10 +94,7 @@ private:
     void initRFIDTestPage();
     void initUpdateWifiPage();
     void initzigbeePage();
-
-#ifdef NETUPDATE
-    void initNetUpdate();
-#endif
+	void initToolsPage();
 
 private slots:
     void on_flowBtn_clicked();
@@ -114,10 +108,8 @@ private slots:
     void on_clearWifiMsgBtn_clicked();
 
     void on_updZigbeeBtn_clicked();
-    
-#ifdef NETUPDATE
-    void on_netUpdateBtn_clicked();
-#endif
+
+	void on_switchAllValve_stateChanged(int state);
 
 private:
     bool isFlow;
@@ -158,9 +150,9 @@ private:
     QPushButton *m_pBtnZigbeeUpd;
     QLabel      *m_plbZigbeeUpd;
 
-#ifdef NETUPDATE
-    QPushButton *m_pNetUpdateBtn;
-#endif
+	QCheckBox *m_pSwitchAllValve;
+	bool bEngMode;
+
 };
 
 extern CtrlApplication *gApp;

@@ -119,6 +119,7 @@
         <file alias="downArrow.png">pics/image/downArrow.png</file>
         <file alias="settime.png">pics/image/settime.png</file>
         <file alias="timelogo.png">pics/image/timelogo.png</file>
+        <file alias="LOGO_VWR.gif">pics/image/LOGO_VWR.gif</file>
     </qresource>
     <qresource prefix="/userManual">
         <file alias="G_E_1.png">pics/Manual/Genie_G_EN/G_E_1.png</file>

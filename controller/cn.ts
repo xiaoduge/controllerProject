@@ -1626,32 +1626,25 @@
 <context>
     <name>DFactoryTestPage</name>
     <message>
-        <location filename="dfactorytestpage.cpp" line="34"/>
+        <location filename="dfactorytestpage.cpp" line="36"/>
         <source>Factory Test</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="59"/>
+        <location filename="dfactorytestpage.cpp" line="61"/>
         <source>RFID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="61"/>
+        <location filename="dfactorytestpage.cpp" line="63"/>
         <source>Wifi Test</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="62"/>
-        <location filename="dfactorytestpage.cpp" line="300"/>
+        <location filename="dfactorytestpage.cpp" line="64"/>
+        <location filename="dfactorytestpage.cpp" line="302"/>
         <source>Maintenance</source>
         <translation type="unfinished">维护</translation>
-    </message>
-    <message>
-        <location filename="dfactorytestpage.cpp" line="64"/>
-        <location filename="dfactorytestpage.cpp" line="315"/>
-        <location filename="dfactorytestpage.cpp" line="318"/>
-        <source>Update</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="dfactorytestpage.cpp" line="67"/>
@@ -1747,111 +1740,126 @@
         <translation type="unfinished">原水箱液位</translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="333"/>
-        <source>No online update function</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="dfactorytestpage.cpp" line="592"/>
+        <location filename="dfactorytestpage.cpp" line="643"/>
         <source>FAIL</source>
         <translation type="unfinished">失败</translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="60"/>
-        <location filename="dfactorytestpage.cpp" line="196"/>
+        <location filename="dfactorytestpage.cpp" line="62"/>
+        <location filename="dfactorytestpage.cpp" line="198"/>
         <source>Flow &amp; Pressure</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="dfactorytestpage.cpp" line="65"/>
+        <location filename="dfactorytestpage.cpp" line="330"/>
+        <source>Tools</source>
+        <translation>工具</translation>
+    </message>
+    <message>
         <location filename="dfactorytestpage.cpp" line="104"/>
-        <location filename="dfactorytestpage.cpp" line="294"/>
+        <location filename="dfactorytestpage.cpp" line="296"/>
         <source>Zigbee Upd</source>
         <translation type="unfinished">Zigbee升级</translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="213"/>
+        <location filename="dfactorytestpage.cpp" line="106"/>
+        <source>Open All Valves</source>
+        <translation>打开所有阀</translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="215"/>
         <source>20</source>
         <translation type="unfinished">20</translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="214"/>
+        <location filename="dfactorytestpage.cpp" line="216"/>
         <source>21</source>
         <translation type="unfinished">21</translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="215"/>
+        <location filename="dfactorytestpage.cpp" line="217"/>
         <source>22</source>
         <translation type="unfinished">22</translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="216"/>
+        <location filename="dfactorytestpage.cpp" line="218"/>
         <source>23</source>
         <translation type="unfinished">23</translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="217"/>
+        <location filename="dfactorytestpage.cpp" line="219"/>
         <source>24</source>
         <translation type="unfinished">24</translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="253"/>
+        <location filename="dfactorytestpage.cpp" line="255"/>
         <source>RFID TEST</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="276"/>
+        <location filename="dfactorytestpage.cpp" line="278"/>
         <source>Update Wifi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="357"/>
+        <location filename="dfactorytestpage.cpp" line="347"/>
         <source>Fail: Flow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="357"/>
-        <location filename="dfactorytestpage.cpp" line="374"/>
+        <location filename="dfactorytestpage.cpp" line="347"/>
+        <location filename="dfactorytestpage.cpp" line="364"/>
         <source>Can not enter test Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="374"/>
+        <location filename="dfactorytestpage.cpp" line="364"/>
         <source>Fail: Pressure</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="333"/>
-        <location filename="dfactorytestpage.cpp" line="396"/>
-        <location filename="dfactorytestpage.cpp" line="401"/>
-        <location filename="dfactorytestpage.cpp" line="407"/>
-        <location filename="dfactorytestpage.cpp" line="412"/>
+        <location filename="dfactorytestpage.cpp" line="386"/>
+        <location filename="dfactorytestpage.cpp" line="391"/>
+        <location filename="dfactorytestpage.cpp" line="397"/>
+        <location filename="dfactorytestpage.cpp" line="402"/>
         <source>Warning</source>
         <translation type="unfinished">提示</translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="396"/>
+        <location filename="dfactorytestpage.cpp" line="386"/>
         <source>write cat error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="401"/>
+        <location filename="dfactorytestpage.cpp" line="391"/>
         <source>write lot error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="407"/>
+        <location filename="dfactorytestpage.cpp" line="397"/>
         <source>write install date error</source>
         <translation type="unfinished">写入安装日期错误</translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="412"/>
+        <location filename="dfactorytestpage.cpp" line="402"/>
         <source>write vol data error</source>
         <translation type="unfinished">过水量写入错误</translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="415"/>
+        <location filename="dfactorytestpage.cpp" line="405"/>
         <source>Write finished</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="457"/>
+        <source>Notice</source>
+        <translation type="unfinished">提示</translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="457"/>
+        <source>Please Stop System First!</source>
+        <translation type="unfinished">先停止设备!</translation>
     </message>
 </context>
 <context>
@@ -2951,7 +2959,7 @@
 <context>
     <name>DManagerSetPage</name>
     <message>
-        <location filename="dmanagersetpage.cpp" line="59"/>
+        <location filename="dmanagersetpage.cpp" line="60"/>
         <source>Manager Config</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2961,11 +2969,11 @@
         <translation type="obsolete">流速</translation>
     </message>
     <message>
-        <location filename="dmanagersetpage.cpp" line="69"/>
-        <location filename="dmanagersetpage.cpp" line="78"/>
-        <location filename="dmanagersetpage.cpp" line="85"/>
-        <location filename="dmanagersetpage.cpp" line="93"/>
-        <location filename="dmanagersetpage.cpp" line="753"/>
+        <location filename="dmanagersetpage.cpp" line="70"/>
+        <location filename="dmanagersetpage.cpp" line="79"/>
+        <location filename="dmanagersetpage.cpp" line="86"/>
+        <location filename="dmanagersetpage.cpp" line="94"/>
+        <location filename="dmanagersetpage.cpp" line="778"/>
         <source>Time &amp; Date</source>
         <oldsource>Time</oldsource>
         <translation>时间</translation>
@@ -2975,11 +2983,11 @@
         <translation type="obsolete">语言</translation>
     </message>
     <message>
-        <location filename="dmanagersetpage.cpp" line="71"/>
-        <location filename="dmanagersetpage.cpp" line="79"/>
-        <location filename="dmanagersetpage.cpp" line="87"/>
-        <location filename="dmanagersetpage.cpp" line="95"/>
-        <location filename="dmanagersetpage.cpp" line="887"/>
+        <location filename="dmanagersetpage.cpp" line="72"/>
+        <location filename="dmanagersetpage.cpp" line="80"/>
+        <location filename="dmanagersetpage.cpp" line="88"/>
+        <location filename="dmanagersetpage.cpp" line="96"/>
+        <location filename="dmanagersetpage.cpp" line="928"/>
         <source>Audio</source>
         <translation>声音</translation>
     </message>
@@ -2988,57 +2996,57 @@
         <translation type="obsolete">单位</translation>
     </message>
     <message>
-        <location filename="dmanagersetpage.cpp" line="72"/>
-        <location filename="dmanagersetpage.cpp" line="80"/>
-        <location filename="dmanagersetpage.cpp" line="88"/>
-        <location filename="dmanagersetpage.cpp" line="96"/>
-        <location filename="dmanagersetpage.cpp" line="980"/>
+        <location filename="dmanagersetpage.cpp" line="73"/>
+        <location filename="dmanagersetpage.cpp" line="81"/>
+        <location filename="dmanagersetpage.cpp" line="89"/>
+        <location filename="dmanagersetpage.cpp" line="97"/>
+        <location filename="dmanagersetpage.cpp" line="1021"/>
         <source>LCD</source>
         <translation>显示屏调节</translation>
     </message>
     <message>
-        <location filename="dmanagersetpage.cpp" line="115"/>
-        <location filename="dmanagersetpage.cpp" line="127"/>
-        <location filename="dmanagersetpage.cpp" line="137"/>
-        <location filename="dmanagersetpage.cpp" line="142"/>
+        <location filename="dmanagersetpage.cpp" line="116"/>
+        <location filename="dmanagersetpage.cpp" line="128"/>
+        <location filename="dmanagersetpage.cpp" line="138"/>
+        <location filename="dmanagersetpage.cpp" line="143"/>
         <source>Save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="dmanagersetpage.cpp" line="103"/>
+        <location filename="dmanagersetpage.cpp" line="104"/>
         <source>Select Date</source>
         <translation>日期</translation>
     </message>
     <message>
-        <location filename="dmanagersetpage.cpp" line="81"/>
-        <location filename="dmanagersetpage.cpp" line="89"/>
-        <location filename="dmanagersetpage.cpp" line="97"/>
-        <location filename="dmanagersetpage.cpp" line="1033"/>
+        <location filename="dmanagersetpage.cpp" line="82"/>
+        <location filename="dmanagersetpage.cpp" line="90"/>
+        <location filename="dmanagersetpage.cpp" line="98"/>
+        <location filename="dmanagersetpage.cpp" line="1075"/>
         <source>Additional Settings</source>
         <translation>更多设置</translation>
     </message>
     <message>
-        <location filename="dmanagersetpage.cpp" line="104"/>
+        <location filename="dmanagersetpage.cpp" line="105"/>
         <source>Select Time</source>
         <translation>时间</translation>
     </message>
     <message>
-        <location filename="dmanagersetpage.cpp" line="109"/>
+        <location filename="dmanagersetpage.cpp" line="110"/>
         <source>Date &amp; Time</source>
         <translation>时间设置</translation>
     </message>
     <message>
-        <location filename="dmanagersetpage.cpp" line="110"/>
+        <location filename="dmanagersetpage.cpp" line="111"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="dmanagersetpage.cpp" line="111"/>
+        <location filename="dmanagersetpage.cpp" line="112"/>
         <source>OK</source>
         <translation>确认</translation>
     </message>
     <message>
-        <location filename="dmanagersetpage.cpp" line="117"/>
+        <location filename="dmanagersetpage.cpp" line="118"/>
         <source>Motor Valve</source>
         <translation>步进电磁阀</translation>
     </message>
@@ -3075,20 +3083,20 @@
         <translation type="obsolete">русский</translation>
     </message>
     <message>
-        <location filename="dmanagersetpage.cpp" line="121"/>
+        <location filename="dmanagersetpage.cpp" line="122"/>
         <source>Touch-tone</source>
         <translation>按键音</translation>
     </message>
     <message>
-        <location filename="dmanagersetpage.cpp" line="70"/>
-        <location filename="dmanagersetpage.cpp" line="86"/>
-        <location filename="dmanagersetpage.cpp" line="94"/>
-        <location filename="dmanagersetpage.cpp" line="815"/>
+        <location filename="dmanagersetpage.cpp" line="71"/>
+        <location filename="dmanagersetpage.cpp" line="87"/>
+        <location filename="dmanagersetpage.cpp" line="95"/>
+        <location filename="dmanagersetpage.cpp" line="856"/>
         <source>Calibration</source>
         <translation>参数校正</translation>
     </message>
     <message>
-        <location filename="dmanagersetpage.cpp" line="114"/>
+        <location filename="dmanagersetpage.cpp" line="115"/>
         <source>Disp. Rate</source>
         <translation>取水流速</translation>
     </message>
@@ -3097,7 +3105,7 @@
         <translation type="obsolete">提醒音</translation>
     </message>
     <message>
-        <location filename="dmanagersetpage.cpp" line="122"/>
+        <location filename="dmanagersetpage.cpp" line="123"/>
         <source>Audio Alarms</source>
         <translation>警报音</translation>
     </message>
@@ -3158,35 +3166,35 @@
         <translation type="obsolete">gal/min</translation>
     </message>
     <message>
-        <location filename="dmanagersetpage.cpp" line="130"/>
+        <location filename="dmanagersetpage.cpp" line="131"/>
         <source>Brightness</source>
         <translation>亮度</translation>
     </message>
     <message>
-        <location filename="dmanagersetpage.cpp" line="131"/>
+        <location filename="dmanagersetpage.cpp" line="132"/>
         <source>Energy-saving</source>
         <translation>节能模式</translation>
     </message>
     <message>
-        <location filename="dmanagersetpage.cpp" line="132"/>
+        <location filename="dmanagersetpage.cpp" line="133"/>
         <source>SleepTime</source>
         <translation>降低亮度</translation>
     </message>
     <message>
-        <location filename="dmanagersetpage.cpp" line="140"/>
+        <location filename="dmanagersetpage.cpp" line="141"/>
         <source>RephiLink</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="dmanagersetpage.cpp" line="141"/>
+        <location filename="dmanagersetpage.cpp" line="142"/>
         <source>HP Recir.</source>
         <translation>水箱循环</translation>
     </message>
     <message>
-        <location filename="dmanagersetpage.cpp" line="465"/>
-        <location filename="dmanagersetpage.cpp" line="510"/>
-        <location filename="dmanagersetpage.cpp" line="530"/>
-        <location filename="dmanagersetpage.cpp" line="605"/>
+        <location filename="dmanagersetpage.cpp" line="467"/>
+        <location filename="dmanagersetpage.cpp" line="512"/>
+        <location filename="dmanagersetpage.cpp" line="532"/>
+        <location filename="dmanagersetpage.cpp" line="607"/>
         <source>Successfully saved</source>
         <translation>保存成功</translation>
     </message>
@@ -3314,23 +3322,23 @@
 <context>
     <name>DRephiLinkProtocolDlg</name>
     <message>
-        <location filename="drephilinkprotocoldlg.cpp" line="43"/>
+        <location filename="drephilinkprotocoldlg.cpp" line="49"/>
         <source>RephiLink Service Privacy Policy</source>
         <translation>RephiLink 服务协议</translation>
     </message>
     <message>
-        <location filename="drephilinkprotocoldlg.cpp" line="50"/>
+        <location filename="drephilinkprotocoldlg.cpp" line="56"/>
         <source>I have read and agree to the terms contained in the Service Privacy Policy</source>
         <oldsource>I have read and agree to the terms contained in the license agreements</oldsource>
         <translation>我已阅读并同意服务协议中包含的条款</translation>
     </message>
     <message>
-        <location filename="drephilinkprotocoldlg.cpp" line="54"/>
+        <location filename="drephilinkprotocoldlg.cpp" line="60"/>
         <source>Agree</source>
         <translation>同意</translation>
     </message>
     <message>
-        <location filename="drephilinkprotocoldlg.cpp" line="55"/>
+        <location filename="drephilinkprotocoldlg.cpp" line="61"/>
         <source>Disagree</source>
         <translation>不同意</translation>
     </message>
@@ -4775,16 +4783,16 @@
         <location filename="mainpage.cpp" line="684"/>
         <location filename="mainpage.cpp" line="692"/>
         <location filename="mainpage.cpp" line="813"/>
-        <location filename="mainpage.cpp" line="1740"/>
+        <location filename="mainpage.cpp" line="1735"/>
         <source>omg</source>
         <translation>MΩ.cm</translation>
     </message>
     <message>
         <location filename="mainpage.cpp" line="814"/>
-        <location filename="mainpage.cpp" line="1584"/>
-        <location filename="mainpage.cpp" line="1601"/>
-        <location filename="mainpage.cpp" line="1615"/>
-        <location filename="mainpage.cpp" line="1632"/>
+        <location filename="mainpage.cpp" line="1579"/>
+        <location filename="mainpage.cpp" line="1596"/>
+        <location filename="mainpage.cpp" line="1610"/>
+        <location filename="mainpage.cpp" line="1627"/>
         <source>us</source>
         <translation>μS/cm</translation>
     </message>
@@ -4816,80 +4824,80 @@
         <translation type="unfinished">退出登陆</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="1355"/>
+        <location filename="mainpage.cpp" line="1351"/>
         <source>Main</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="1355"/>
+        <location filename="mainpage.cpp" line="1351"/>
         <source>Start Motor Failed!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="1395"/>
+        <location filename="mainpage.cpp" line="1390"/>
         <source>&gt;200</source>
         <oldsource>&gt;100</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="1462"/>
+        <location filename="mainpage.cpp" line="1457"/>
         <source>Warning</source>
         <translation type="unfinished">提示</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="1463"/>
+        <location filename="mainpage.cpp" line="1458"/>
         <source>Please stop dispensing water before switching system into Standby mode</source>
         <translation type="unfinished">请先停止取水后再切换至待机状态</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="1974"/>
-        <location filename="mainpage.cpp" line="2035"/>
+        <location filename="mainpage.cpp" line="1969"/>
+        <location filename="mainpage.cpp" line="2030"/>
         <source>Tank Full</source>
         <translation>水箱满</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="1987"/>
-        <location filename="mainpage.cpp" line="2004"/>
+        <location filename="mainpage.cpp" line="1982"/>
+        <location filename="mainpage.cpp" line="1999"/>
         <source>Flush</source>
         <translation>冲洗</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="1997"/>
+        <location filename="mainpage.cpp" line="1992"/>
         <source>Rinsing</source>
         <translation>清洗</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="2011"/>
+        <location filename="mainpage.cpp" line="2006"/>
         <source>Filling</source>
         <translation>注水</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="2045"/>
-        <location filename="mainpage.cpp" line="2048"/>
+        <location filename="mainpage.cpp" line="2040"/>
+        <location filename="mainpage.cpp" line="2043"/>
         <source>Pressure Relief</source>
         <translation>泄压</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="2052"/>
-        <location filename="mainpage.cpp" line="2055"/>
+        <location filename="mainpage.cpp" line="2047"/>
+        <location filename="mainpage.cpp" line="2050"/>
         <source>Standby</source>
         <translation type="unfinished">待机</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="2069"/>
-        <location filename="mainpage.cpp" line="2085"/>
+        <location filename="mainpage.cpp" line="2064"/>
+        <location filename="mainpage.cpp" line="2080"/>
         <source>Dispense</source>
         <translation type="unfinished">产水</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="2073"/>
-        <location filename="mainpage.cpp" line="2098"/>
+        <location filename="mainpage.cpp" line="2068"/>
+        <location filename="mainpage.cpp" line="2093"/>
         <source>Recirculation</source>
         <translation>循环</translation>
     </message>
     <message>
-        <location filename="mainpage.cpp" line="2077"/>
-        <location filename="mainpage.cpp" line="2091"/>
+        <location filename="mainpage.cpp" line="2072"/>
+        <location filename="mainpage.cpp" line="2086"/>
         <source>Ready</source>
         <translation>就绪</translation>
     </message>
@@ -4997,6 +5005,36 @@
         <location filename="mainwindow.cpp" line="6179"/>
         <source> %1</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="6164"/>
+        <source>VWR G</source>
+        <translation>VWR® G</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="6167"/>
+        <source>VWR U</source>
+        <translation>VWR® U</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="6170"/>
+        <source>VWR E</source>
+        <translation>VWR® E</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="6173"/>
+        <source>VWR R</source>
+        <translation>VWR® R</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="6176"/>
+        <source>VWR P</source>
+        <translation>VWR® P</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="6179"/>
+        <source>VWR A</source>
+        <translation>VWR® A</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="8634"/>
@@ -5386,61 +5424,59 @@
 <context>
     <name>NetworkPage</name>
     <message>
-        <location filename="networkpage.cpp" line="38"/>
+        <location filename="networkpage.cpp" line="40"/>
         <source>Connectivity</source>
         <translation>网络连接</translation>
     </message>
     <message>
-        <location filename="networkpage.cpp" line="47"/>
+        <location filename="networkpage.cpp" line="49"/>
         <source>CAN</source>
         <translation>CAN</translation>
     </message>
     <message>
-        <location filename="networkpage.cpp" line="48"/>
+        <location filename="networkpage.cpp" line="50"/>
         <source>Zigbee</source>
         <oldsource>ZIGBEE</oldsource>
         <translation>无线连接</translation>
     </message>
     <message>
-        <location filename="networkpage.cpp" line="49"/>
+        <location filename="networkpage.cpp" line="51"/>
         <source>WIFI</source>
         <translation>WIFI</translation>
     </message>
     <message>
-        <location filename="networkpage.cpp" line="56"/>
+        <location filename="networkpage.cpp" line="58"/>
         <source>Save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="networkpage.cpp" line="58"/>
+        <location filename="networkpage.cpp" line="60"/>
         <source>SSID:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="networkpage.cpp" line="59"/>
+        <location filename="networkpage.cpp" line="61"/>
         <source>Add</source>
         <translation>添加</translation>
     </message>
     <message>
-        <location filename="networkpage.cpp" line="60"/>
+        <location filename="networkpage.cpp" line="62"/>
         <source>Refresh</source>
         <translation>刷新</translation>
     </message>
     <message>
-        <location filename="networkpage.cpp" line="61"/>
+        <location filename="networkpage.cpp" line="63"/>
         <source>Add network</source>
         <translation>添加网络</translation>
     </message>
     <message>
-        <location filename="networkpage.cpp" line="63"/>
+        <location filename="networkpage.cpp" line="65"/>
         <source>Information</source>
         <translation>网络信息</translation>
     </message>
     <message>
-        <location filename="networkpage.cpp" line="386"/>
-        <location filename="networkpage.cpp" line="406"/>
         <source>No internet connection</source>
-        <translation>无网络连接</translation>
+        <translation type="obsolete">无网络连接</translation>
     </message>
 </context>
 <context>

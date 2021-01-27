@@ -164,6 +164,8 @@ typedef enum
    DISP_CMD_CANCEL_WORK = 0x80,
 
    DISP_CMD_HALT,
+
+   DISP_CMD_OPENALLVALVES,
    
 }DISP_CMD_ENUM;
 

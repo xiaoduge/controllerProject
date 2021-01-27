@@ -4329,15 +4329,7 @@ MainWindow::MainWindow(QMainWindow *parent) :
     else
     {
         setStartCheckConsumable(true);
-
-        if(0 == gAdditionalCfgParam.productInfo.iCompany)
-        {
-            Splash();
-        }
-        else
-        {
-            mainDisplay();
-        }
+        Splash();
     }
 
     initScreenSleep();
@@ -5077,7 +5069,15 @@ void MainWindow::Splash()
     m_pLabelGif = new QLabel(mainWidget);
     m_pLabelGif->setGeometry(QRect(0, 0, 800, 600));
 
-    m_pMovieGif = new QMovie(":/pic/LOGO.gif");
+    switch(gAdditionalCfgParam.productInfo.iCompany)
+    {
+    case 1:
+        m_pMovieGif = new QMovie(":/pic/LOGO_VWR.gif");
+        break;
+    default:
+        m_pMovieGif = new QMovie(":/pic/LOGO.gif");
+        break;
+    }
 
     m_pLabelGif->setMovie(m_pMovieGif);
     
@@ -6161,22 +6161,22 @@ void MainWindow::initMachineNameVWR()
         m_strMachineName = QString("Super Genie R") + tr(" %1").arg(iMachineFlow);
         break;
     case MACHINE_Genie:
-        m_strMachineName = QString("VWR G") + tr(" %1").arg(iMachineFlow);
+        m_strMachineName = tr("VWR G") + tr(" %1").arg(iMachineFlow);
         break;
     case MACHINE_UP:
-        m_strMachineName = QString("VWR U") + tr(" %1").arg(iMachineFlow);
+        m_strMachineName = tr("VWR U") + tr(" %1").arg(iMachineFlow);
         break;
     case MACHINE_EDI:
-        m_strMachineName = QString("VWR E") + tr(" %1").arg(iMachineFlow);
+        m_strMachineName = tr("VWR E") + tr(" %1").arg(iMachineFlow);
         break;
     case MACHINE_RO:
-        m_strMachineName = QString("VWR R") + tr(" %1").arg(iMachineFlow);
+        m_strMachineName = tr("VWR R") + tr(" %1").arg(iMachineFlow);
         break;
     case MACHINE_PURIST:
-        m_strMachineName = QString("VWR P");
+        m_strMachineName = tr("VWR P");
         break;
     case MACHINE_ADAPT:
-        m_strMachineName = QString("VWR A") + tr(" %1").arg(iMachineFlow);
+        m_strMachineName = tr("VWR A") + tr(" %1").arg(iMachineFlow);
         break;
     default:
 		m_strMachineName = QString("unknow");
@@ -9579,7 +9579,7 @@ void MainWindow::updateRectAlarmState()
         DispGetOtherCurrent(APP_EXE_N1_NO, &iTmpData);
         if((ex_gulSecond - ex_gCcb.Ex_Alarm_Tick.ulAlarmNRectTick[EX_RECT_N1]) > 15)
         {
-            if(iTmpData < 300)
+            if(iTmpData < 100)
             {
                 //Alaram
                 if(ex_gCcb.Ex_Alarm_Bit.bit1AlarmN1 == 0)

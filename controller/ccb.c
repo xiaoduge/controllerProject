@@ -3647,6 +3647,8 @@ void work_start_qtw(void *para)
         case MACHINE_PURIST:
             iTmp |= (1 << APP_EXE_I2_NO);
             break;
+		case MACHINE_L_RO_LOOP:
+		case MACHINE_L_UP:
         case MACHINE_UP:
         case MACHINE_RO:
             iTmp |= (1 << APP_EXE_I3_NO);
@@ -3758,6 +3760,8 @@ void work_stop_qtw(void *para)
     case MACHINE_ADAPT:
         iTmp |= (1 << APP_EXE_I2_NO);
         break;
+	case MACHINE_L_RO_LOOP:
+	case MACHINE_L_UP:
     case MACHINE_UP:
     case MACHINE_RO:
         iTmp |= (1 << APP_EXE_I3_NO);
@@ -4069,45 +4073,45 @@ void work_start_cir(void *para)
                 }
             }
             
-             iTmp = (1 << APP_EXE_E4_NO) | (1 << APP_EXE_E6_NO) |(1 << APP_EXE_E9_NO)| (1 << APP_EXE_C2_NO);
-     
-             iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulCirMask ,iTmp);
-             if (iRet )
-             {
-                 VOS_LOG(VOS_LOG_WARNING,"CcbUpdateSwitch Fail %d",iRet);    
-                 work_cir_fail(pWorkItem->id);
-                 return ;
-             }
+            iTmp = (1 << APP_EXE_E4_NO) | (1 << APP_EXE_E6_NO) |(1 << APP_EXE_E9_NO)| (1 << APP_EXE_C2_NO);
+    
+            iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulCirMask ,iTmp);
+            if (iRet )
+            {
+                VOS_LOG(VOS_LOG_WARNING,"CcbUpdateSwitch Fail %d",iRet);    
+                work_cir_fail(pWorkItem->id);
+                return ;
+            }
 
-     
-             if ((pCcb->ulCirMask & (1 << APP_EXE_C2_NO))
-                && pCcb->bit1CirSpeedAdjust)
-             {
-                 CcbC2Regulator(pWorkItem->id,8,TRUE);
-             }
+            if ((pCcb->ulCirMask & (1 << APP_EXE_C2_NO))
+            && pCcb->bit1CirSpeedAdjust)
+            {
+                CcbC2Regulator(pWorkItem->id,8,TRUE);
+            }
              
-             iTmp = (1 << APP_EXE_I4_NO);
+            iTmp = (1 << APP_EXE_I4_NO);
+            
+            switch(pCcb->ulMachineType)
+            {
+            case MACHINE_L_RO_LOOP:
+            case MACHINE_L_UP:
+            case MACHINE_UP:
+            case MACHINE_RO:
+                iTmp |= (1 << APP_EXE_I3_NO);
+                break;
+            default:
+                break;
 
-             //ex UP Tank I3 Report
-             if(MACHINE_UP == pCcb->ulMachineType)
-             {
-                 iTmp |= (1 << APP_EXE_I3_NO);
-             }
+            }
 
-             if(MACHINE_RO == pCcb->ulMachineType) // && haveHPCir(&gCcb))
-             {
-                 iTmp |= (1 << APP_EXE_I3_NO);
-             }
-             //endl
-
-             iRet = CcbUpdateIAndBs(pWorkItem->id,0,iTmp,iTmp);
-             if (iRet )
-             {
-                 VOS_LOG(VOS_LOG_WARNING,"CcbUpdateIAndBs Fail %d",iRet);    
-                 /* notify ui (late implemnt) */
-                 work_cir_fail(pWorkItem->id);        
-                 return ;
-             } 
+            iRet = CcbUpdateIAndBs(pWorkItem->id,0,iTmp,iTmp);
+            if (iRet )
+            {
+                VOS_LOG(VOS_LOG_WARNING,"CcbUpdateIAndBs Fail %d",iRet);    
+                /* notify ui (late implemnt) */
+                work_cir_fail(pWorkItem->id);        
+                return ;
+            } 
 
             iTmp = (1 << APP_FM_FM1_NO); /* start flow report */
             
@@ -4207,16 +4211,17 @@ void work_stop_cir(void *para)
 
     iTmp = (1 << APP_EXE_I4_NO)|(1 << APP_EXE_I5_NO);
 
-    //ex UP Tank I3 Report
-    if(MACHINE_UP == pCcb->ulMachineType)
+    switch(pCcb->ulMachineType)
     {
+    case MACHINE_L_UP:
+    case MACHINE_L_RO_LOOP:
+    case MACHINE_UP:
+    case MACHINE_RO:
         iTmp |= (1 << APP_EXE_I3_NO);
+        break;
+    default:
+        break;
     }
-    if(MACHINE_RO == pCcb->ulMachineType)// && haveHPCir(&gCcb))
-    {
-        iTmp |= (1 << APP_EXE_I3_NO);
-    }
-    //endl
 
     iRet = CcbUpdateIAndBs(pWorkItem->id,0,iTmp,0);
     if (iRet )
@@ -5656,8 +5661,12 @@ void CanCcbEcoMeasurePostProcess(int iEcoId)
                     }
                     case CIR_TYPE_HP:
                         {
-                            if((gCcb.ulMachineType == MACHINE_UP)
-                               || (gCcb.ulMachineType == MACHINE_RO))
+                            switch(gCcb.ulMachineType)
+                            {
+                            case MACHINE_L_RO_LOOP:
+                            case MACHINE_L_UP:
+                            case MACHINE_UP:
+                            case MACHINE_RO:
                             {
                                 if(iEcoId == APP_EXE_I3_NO)
                                 {
@@ -5668,8 +5677,9 @@ void CanCcbEcoMeasurePostProcess(int iEcoId)
                                         CcbInnerWorkStopCir();
                                     }
                                 }
+                                break;
                             }
-                            else
+                            default:
                             {
                                 if (iEcoId == APP_EXE_I4_NO)
                                 {
@@ -5680,8 +5690,9 @@ void CanCcbEcoMeasurePostProcess(int iEcoId)
                                         CcbInnerWorkStopCir();
                                     }
                                 }
+                                break;
                             }
-
+                            }
                         }
                         break;
                     }
@@ -5691,10 +5702,19 @@ void CanCcbEcoMeasurePostProcess(int iEcoId)
                 switch(iEcoId)
                 {
                 case APP_EXE_I3_NO:
-                    if((gCcb.ulMachineType == MACHINE_UP) || (gCcb.ulMachineType == MACHINE_RO))
+                    switch(gCcb.ulMachineType)
+                    {
+                    case MACHINE_L_RO_LOOP:
+                    case MACHINE_L_UP:
+                    case MACHINE_UP:
+                    case MACHINE_RO:
                     {
                         float fValue = gCcb.ExeBrd.aEcoObjs[APP_EXE_I3_NO].Value.eV.fWaterQ;
                         gCcb.bit1I44Nw = fValue >= CcbGetSp10() ? TRUE : FALSE ;
+                        break;
+                    }
+                    default:
+                        break;
                     }
                     break;
                 case APP_EXE_I4_NO:
@@ -7431,6 +7451,38 @@ int CcbC2Regulator(int id,float fv,int on)
     return 0;
 }
 
+#define SMOOTHI2
+
+#ifdef SMOOTHI2
+/**
+ * @Author: dcj
+ * @Date: 2021-01-14 08:58:17
+ * @Description: 针对I2超量程数据波动问题增加此函数；
+ *               当新数据大于当前数据的3倍时，认为数据出现波动，不予更新。若连续10个数据都大于当前数据的3倍，则选择更新当前数据。
+ *               因为I2采样时，正常是趋于下降到平缓的趋势。
+ * @param {float} newValue： 新数据
+ */
+void smoothI2Data(float newValue)
+{
+    static float oldValue = 1000.0;
+    static int discard;
+
+    float multiple = newValue/oldValue;
+    if(multiple < 3 || discard >= 10)
+    {
+        gCcb.ExeBrd.aEcoObjs[APP_EXE_I2_NO].Value.eV.fWaterQ = newValue;
+        oldValue = newValue;
+    }
+    else
+    {
+        discard++;
+        return;
+    }
+
+    discard = 0;
+}
+#endif
+
 int CanCcbAfDataClientRpt4ExeBoard(MAIN_CANITF_MSG_STRU *pCanItfMsg)
 {
     APP_PACKET_CLIENT_RPT_IND_STRU *pmg = (APP_PACKET_CLIENT_RPT_IND_STRU *)&pCanItfMsg->aucData[1 + RPC_POS_DAT0];
@@ -7448,9 +7500,23 @@ int CanCcbAfDataClientRpt4ExeBoard(MAIN_CANITF_MSG_STRU *pCanItfMsg)
             {
                 if (pEco->ucId < APP_EXE_ECO_NUM)
                 {
+#ifdef SMOOTHI2
+                    if(APP_EXE_I2_NO == pEco->ucId && gCcb.bit1ProduceWater)
+                    {
+                        smoothI2Data(pEco->ev.fWaterQ);
+                    }
+                    else
+                    {
+                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ = pEco->ev.fWaterQ;
+                    }
+                    gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.usTemp = pEco->ev.usTemp;
+                    gCcb.ExeBrd.ulEcoValidFlags |= 1 << pEco->ucId;
+
+#else                    
                     gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ = pEco->ev.fWaterQ;
                     gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.usTemp = pEco->ev.usTemp;
                     gCcb.ExeBrd.ulEcoValidFlags |= 1 << pEco->ucId;
+#endif
 
                     //ex_dcj
                     switch(pEco->ucId)
@@ -11086,6 +11152,8 @@ void work_init_run_succ(int iWorkId)
 
 }
 
+//#define EDI_Drain_E5   //E5阀做为EDI不合格排放阀
+
 //设备运行10s冲洗，10s测压，清洗，制水
 void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem, CCB *pCcb, RUN_COMM_CALL_BACK cbf, RUN_COMM_CALL_BACK cbs)
 {
@@ -11428,7 +11496,7 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem, CCB *pCcb, RUN_COMM_CALL_BACK
                 CcbNotState(NOT_STATE_OTHER);
                 
                 VOS_LOG(VOS_LOG_WARNING,"E1,C1,C3,T,N1 ON I1b,I2,I3,B1,B2,S2,S3,S4"); 
-
+#ifndef EDI_Drain_E5
                 /* 开始产水：E1,C1,C3,T,N1 ON I1b,I2,I3,B1,B2,S2,S3,S4 */
                 if(haveB3(&gCcb))
                 {
@@ -11440,7 +11508,18 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem, CCB *pCcb, RUN_COMM_CALL_BACK
                     iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_C1_NO)|(1 << APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
                     iTmp |=(1 << APP_EXE_T1_NO)|(1 << APP_EXE_N1_NO);
                 }
-
+#else
+                if(haveB3(&gCcb))
+                {
+                    iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_C1_NO)|(1<<APP_EXE_C3_NO);
+                    iTmp |=(1 << APP_EXE_T1_NO)|(1 << APP_EXE_N1_NO)|(1 << APP_EXE_E5_NO);
+                }
+                else
+                {
+                    iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_C1_NO)|(1 << APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
+                    iTmp |=(1 << APP_EXE_T1_NO)|(1 << APP_EXE_N1_NO)|(1 << APP_EXE_E5_NO);
+                }
+#endif
                 iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
                 if (iRet )
                 {
@@ -11485,8 +11564,9 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem, CCB *pCcb, RUN_COMM_CALL_BACK
                     /* notify ui (late implemnt) */
                     cbf(pWorkItem->id);        
                     return ;
-                }  
-        
+                }
+
+#ifndef EDI_Drain_E5
                 /* wait a moment for I3 check */
                 iRet = CcbWorkDelayEntry(pWorkItem->id,3000,CcbDelayCallBack); 
                 if (iRet )
@@ -11504,6 +11584,40 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem, CCB *pCcb, RUN_COMM_CALL_BACK
                     gCcb.bit1AlarmEDI   = TRUE;
                     gCcb.ulAlarmEDITick = gulSecond;
                 }
+#else
+                while(gCcb.ExeBrd.aEcoObjs[APP_EXE_I3_NO].Value.eV.fWaterQ < CcbGetSp4())
+                {
+                    iRet = CcbWorkDelayEntry(pWorkItem->id,1000,CcbDelayCallBack); 
+                    if (iRet )
+                    {
+                        VOS_LOG(VOS_LOG_WARNING,"CcbModbusWorkEntry Fail %d",iRet);  
+                        /* notify ui (late implemnt) */
+                        cbf(pWorkItem->id);   
+                    
+                        return ;
+                    }  
+                }
+                
+                if(haveB3(&gCcb))
+                {
+                    iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_C1_NO)|(1<<APP_EXE_C3_NO);
+                    iTmp |=(1 << APP_EXE_T1_NO)|(1 << APP_EXE_N1_NO);
+                }
+                else
+                {
+                    iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_C1_NO)|(1 << APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
+                    iTmp |=(1 << APP_EXE_T1_NO)|(1 << APP_EXE_N1_NO);
+                }
+				
+                iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
+                if (iRet )
+                {
+                    VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet);    
+                    /* notify ui (late implemnt) */
+                    cbf(pWorkItem->id);        
+                    return ;
+                }
+#endif
             }    
         }
         break;
@@ -14619,6 +14733,37 @@ DISPHANDLE DispCmdSwitchReport(unsigned char *pucData, int iLength)
    return DISP_SPECIAL_HANDLE;
 }
 
+/**
+ * @Author: dcj
+ * @Date: 2021-01-26 12:44:28
+ * @Description: 执行打开所有电磁阀的命令，请确保在待机状态下调用此函数
+ * @param {unsignedchar} *pucData: 命令的附加参数
+ * @param {int} iLength: 附件参数的长度
+ */
+DISPHANDLE DispCmdOpenValvesCmdProc(unsigned char *pucData, int iLength)
+{
+    int iRet = -1;
+    int iTmp;
+    (void)iLength;
+
+    if (0 == (gCcb.ulActiveMask & (1 << APP_DEV_TYPE_EXE_BOARD)))
+    {
+        return DISP_INVALID_HANDLE;
+    }  
+
+    if ( !(DISP_WORK_STATE_IDLE == gCcb.curWorkState.iMainWorkState
+        && DISP_WORK_SUB_IDLE   == gCcb.curWorkState.iSubWorkState ))
+    {
+        return DISP_INVALID_HANDLE;
+    }
+
+    iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_E4_NO)
+          |(1 << APP_EXE_E5_NO)|(1<<APP_EXE_E6_NO)|(1<<APP_EXE_E9_NO)|(1<<APP_EXE_E10_NO);
+    iRet = CcbUpdateSwitch(WORK_LIST_NUM,0, iTmp, pucData[0] ? iTmp : 0);
+   
+    return (-1 == iRet) ?  DISP_INVALID_HANDLE : DISP_SPECIAL_HANDLE;
+}
+
 
 DISPHANDLE DispCmdEntry(int iCmdId,unsigned char *pucData, int iLength)
 {
@@ -14652,6 +14797,8 @@ DISPHANDLE DispCmdEntry(int iCmdId,unsigned char *pucData, int iLength)
         return gCcb.bit1EngineerMode ? NULL : DispCmdCir(pucData,iLength);
     case DISP_CMD_SWITCH_REPORT:
         return gCcb.bit1EngineerMode ? NULL : DispCmdSwitchReport(pucData,iLength);
+    case DISP_CMD_OPENALLVALVES:
+        return DispCmdOpenValvesCmdProc(pucData,iLength);
     }
     return DISP_INVALID_HANDLE;
 }
