@@ -11152,6 +11152,8 @@ void work_init_run_succ(int iWorkId)
 
 }
 
+//#define EDI_Drain_E5   //E5阀做为EDI不合格排放阀
+
 //设备运行10s冲洗，10s测压，清洗，制水
 void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem, CCB *pCcb, RUN_COMM_CALL_BACK cbf, RUN_COMM_CALL_BACK cbs)
 {
@@ -11494,7 +11496,7 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem, CCB *pCcb, RUN_COMM_CALL_BACK
                 CcbNotState(NOT_STATE_OTHER);
                 
                 VOS_LOG(VOS_LOG_WARNING,"E1,C1,C3,T,N1 ON I1b,I2,I3,B1,B2,S2,S3,S4"); 
-
+#ifndef EDI_Drain_E5
                 /* 开始产水：E1,C1,C3,T,N1 ON I1b,I2,I3,B1,B2,S2,S3,S4 */
                 if(haveB3(&gCcb))
                 {
@@ -11506,7 +11508,18 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem, CCB *pCcb, RUN_COMM_CALL_BACK
                     iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_C1_NO)|(1 << APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
                     iTmp |=(1 << APP_EXE_T1_NO)|(1 << APP_EXE_N1_NO);
                 }
-
+#else
+                if(haveB3(&gCcb))
+                {
+                    iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_C1_NO)|(1<<APP_EXE_C3_NO);
+                    iTmp |=(1 << APP_EXE_T1_NO)|(1 << APP_EXE_N1_NO)|(1 << APP_EXE_E5_NO);
+                }
+                else
+                {
+                    iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_C1_NO)|(1 << APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
+                    iTmp |=(1 << APP_EXE_T1_NO)|(1 << APP_EXE_N1_NO)|(1 << APP_EXE_E5_NO);
+                }
+#endif
                 iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
                 if (iRet )
                 {
@@ -11551,8 +11564,9 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem, CCB *pCcb, RUN_COMM_CALL_BACK
                     /* notify ui (late implemnt) */
                     cbf(pWorkItem->id);        
                     return ;
-                }  
-        
+                }
+
+#ifndef EDI_Drain_E5
                 /* wait a moment for I3 check */
                 iRet = CcbWorkDelayEntry(pWorkItem->id,3000,CcbDelayCallBack); 
                 if (iRet )
@@ -11570,6 +11584,40 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem, CCB *pCcb, RUN_COMM_CALL_BACK
                     gCcb.bit1AlarmEDI   = TRUE;
                     gCcb.ulAlarmEDITick = gulSecond;
                 }
+#else
+                while(gCcb.ExeBrd.aEcoObjs[APP_EXE_I3_NO].Value.eV.fWaterQ < CcbGetSp4())
+                {
+                    iRet = CcbWorkDelayEntry(pWorkItem->id,1000,CcbDelayCallBack); 
+                    if (iRet )
+                    {
+                        VOS_LOG(VOS_LOG_WARNING,"CcbModbusWorkEntry Fail %d",iRet);  
+                        /* notify ui (late implemnt) */
+                        cbf(pWorkItem->id);   
+                    
+                        return ;
+                    }  
+                }
+                
+                if(haveB3(&gCcb))
+                {
+                    iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_C1_NO)|(1<<APP_EXE_C3_NO);
+                    iTmp |=(1 << APP_EXE_T1_NO)|(1 << APP_EXE_N1_NO);
+                }
+                else
+                {
+                    iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_C1_NO)|(1 << APP_EXE_E10_NO)|(1<<APP_EXE_C3_NO);
+                    iTmp |=(1 << APP_EXE_T1_NO)|(1 << APP_EXE_N1_NO);
+                }
+				
+                iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
+                if (iRet )
+                {
+                    VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet);    
+                    /* notify ui (late implemnt) */
+                    cbf(pWorkItem->id);        
+                    return ;
+                }
+#endif
             }    
         }
         break;
@@ -14685,6 +14733,37 @@ DISPHANDLE DispCmdSwitchReport(unsigned char *pucData, int iLength)
    return DISP_SPECIAL_HANDLE;
 }
 
+/**
+ * @Author: dcj
+ * @Date: 2021-01-26 12:44:28
+ * @Description: 执行打开所有电磁阀的命令，请确保在待机状态下调用此函数
+ * @param {unsignedchar} *pucData: 命令的附加参数
+ * @param {int} iLength: 附件参数的长度
+ */
+DISPHANDLE DispCmdOpenValvesCmdProc(unsigned char *pucData, int iLength)
+{
+    int iRet = -1;
+    int iTmp;
+    (void)iLength;
+
+    if (0 == (gCcb.ulActiveMask & (1 << APP_DEV_TYPE_EXE_BOARD)))
+    {
+        return DISP_INVALID_HANDLE;
+    }  
+
+    if ( !(DISP_WORK_STATE_IDLE == gCcb.curWorkState.iMainWorkState
+        && DISP_WORK_SUB_IDLE   == gCcb.curWorkState.iSubWorkState ))
+    {
+        return DISP_INVALID_HANDLE;
+    }
+
+    iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1<<APP_EXE_E3_NO)|(1<<APP_EXE_E4_NO)
+          |(1 << APP_EXE_E5_NO)|(1<<APP_EXE_E6_NO)|(1<<APP_EXE_E9_NO)|(1<<APP_EXE_E10_NO);
+    iRet = CcbUpdateSwitch(WORK_LIST_NUM,0, iTmp, pucData[0] ? iTmp : 0);
+   
+    return (-1 == iRet) ?  DISP_INVALID_HANDLE : DISP_SPECIAL_HANDLE;
+}
+
 
 DISPHANDLE DispCmdEntry(int iCmdId,unsigned char *pucData, int iLength)
 {
@@ -14718,6 +14797,8 @@ DISPHANDLE DispCmdEntry(int iCmdId,unsigned char *pucData, int iLength)
         return gCcb.bit1EngineerMode ? NULL : DispCmdCir(pucData,iLength);
     case DISP_CMD_SWITCH_REPORT:
         return gCcb.bit1EngineerMode ? NULL : DispCmdSwitchReport(pucData,iLength);
+    case DISP_CMD_OPENALLVALVES:
+        return DispCmdOpenValvesCmdProc(pucData,iLength);
     }
     return DISP_INVALID_HANDLE;
 }
