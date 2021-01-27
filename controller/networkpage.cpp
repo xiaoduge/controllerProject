@@ -8,6 +8,8 @@
 #include "dlineedit.h"
 #include "exconfig.h"
 #include <QFile>
+#include <QNetworkInterface>
+
 
 NetworkPage::NetworkPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) 
                         : CSubPage(parent,widget,wndMain), m_bRefreshed(false)
@@ -201,16 +203,15 @@ void NetworkPage::initUi()
 
     m_pProcess = new QProcess(this);
     connect(m_pProcess, SIGNAL(readyReadStandardOutput()), this, SLOT(on_refreshWifiMsg()));
-
-	m_pGetInfoProcess = new QProcess(this);
-	connect(m_pGetInfoProcess, SIGNAL(readyReadStandardOutput()), this, SLOT(on_getNetInfo()));
 	
+	/*
     if(!(Qt::Checked == m_chkSwitchs[DISPLAY_NETWORK_WIFI]->checkState()))
     {
         m_pWifiConfigWidget->hide();
         m_pWifiSSIDAddWidget->hide();
     }
-
+	*/
+	
     if(!(Qt::Checked == m_pAddCheckBox->checkState()))
     {
         m_pWifiSSIDAddWidget->hide();
@@ -295,16 +296,16 @@ void NetworkPage::on_checkBox_changeState(int state)
            m_iNetworkMask &= ~(1 << iLoop);
        }
     }
-
-    if(Qt::Checked == m_chkSwitchs[DISPLAY_NETWORK_WIFI]->checkState())
-    {
-        m_pWifiConfigWidget->show();
-    }
-    else
-    {
-        m_pWifiConfigWidget->hide();
-        m_pWifiSSIDAddWidget->hide();
-    }
+    
+    // if(Qt::Checked == m_chkSwitchs[DISPLAY_NETWORK_WIFI]->checkState())
+    // {
+    //     m_pWifiConfigWidget->show();
+    // }
+    // else
+    // {
+    //     m_pWifiConfigWidget->hide();
+    //     m_pWifiSSIDAddWidget->hide();
+    // }
 }
 
 void NetworkPage::on_addSSIDBtn_clicked()
@@ -322,9 +323,45 @@ void NetworkPage::on_wifiRefreshBtn_clicked()
 
 void NetworkPage::on_getNetInfoBtn_clicked()
 {
-	m_pGetInfoProcess->start("ifconfig");
     m_pWifiMsgListWidget->clear();
-    m_pWifiMsgListWidget->addItem("Searching");
+
+    QStringList names;  //设置我们关心的网络设备名称
+    names << "eth0";
+    if(Qt::Checked == m_chkSwitchs[DISPLAY_NETWORK_WIFI]->checkState())
+    {
+        names << "wlan0";
+    }
+
+    QList<QNetworkInterface> list = QNetworkInterface::allInterfaces();
+    QList<QNetworkInterface>::const_iterator iter;
+    for(iter = list.constBegin(); iter != list.constEnd(); iter++)
+    {
+        QNetworkInterface interface = (*iter);
+        if(names.contains(interface.name()))
+        {
+            //获取IP地址条目列表，每个条目中包含一个IP地址，一个子网掩码和一个广播地址
+            QList<QNetworkAddressEntry> entryList = interface.addressEntries();
+
+            int listSize = entryList.size();
+            if(listSize > 0)
+            {
+                m_pWifiMsgListWidget->addItem(interface.name() + ":"); //设备名
+            }
+
+            foreach(QNetworkAddressEntry entry, entryList) //遍历每一个IP地址条目
+            {
+                m_pWifiMsgListWidget->addItem("IP Address:" + entry.ip().toString()); //IP地址
+                m_pWifiMsgListWidget->addItem("Netmask:" + entry.netmask().toString()); //子网掩码
+                m_pWifiMsgListWidget->addItem("Broadcast:" + entry.broadcast().toString()); //广播地址
+            }
+            if(listSize > 0)
+            {
+                m_pWifiMsgListWidget->addItem(" ");
+            }
+        }
+
+    }
+    m_bRefreshed = false;
 }
 
 void NetworkPage::on_refreshWifiMsg()
@@ -351,69 +388,11 @@ void NetworkPage::on_refreshWifiMsg()
 	m_bRefreshed = true;
 }
 
-void NetworkPage::on_getNetInfo()
-{
-    m_pWifiMsgListWidget->clear();
-
-    //读取连接的网络名称
-    QString strFileName(WIFICONFIG_FILE);
-    if(strFileName.isEmpty())
-    {
-        return;
-    }
-
-    QFile sourceFile(strFileName);
-    if(!sourceFile.open(QIODevice::ReadOnly))
-    {
-        qDebug() << "Open wifi config file failed: 1";
-        return;
-    }
-    QString strWifiCfg = sourceFile.readAll();
-    QRegExp rxSSID("ssid=\"([^\"]*)\"");
-
-    int iPos = rxSSID.indexIn(strWifiCfg);
-    if(iPos > -1)
-    {
-        m_pWifiMsgListWidget->addItem(rxSSID.cap(0));
-
-        if(sourceFile.isOpen())
-        {
-            sourceFile.close();
-        }
-    }
-    else
-    {
-        m_pWifiMsgListWidget->addItem(tr("No internet connection"));
-        if(sourceFile.isOpen())
-        {
-            sourceFile.close();
-        }
-        return;
-    }
-    //读取IP地址
-    QString strAll = m_pGetInfoProcess->readAllStandardOutput();
-	int index = strAll.indexOf("wlan0");
-	QString strDest = strAll.mid(index);
-
-    QRegExp rxIP("inet addr:[0-9]{1,3}[\.][0-9]{1,3}[\.][0-9]{1,3}[\.][0-9]{1,3}");
-    int pos = rxIP.indexIn(strDest);
-    if(pos > -1)
-    {
-        m_pWifiMsgListWidget->addItem(rxIP.cap(0));
-    }
-    else
-    {
-        m_pWifiMsgListWidget->addItem(tr("No internet connection"));
-    }
-	m_bRefreshed = false;
-}
-
 void NetworkPage::on_wifiListWidget_itemClicked(QListWidgetItem *item)
 {
-    //
-    QString strName = item->text().remove("ESSID:").remove("\"");
     if(m_bRefreshed)
     {
+        QString strName = item->text().remove("ESSID:").remove("\"");
     	m_wndMain->showWifiConfigDlg(strName);
     }
 }
@@ -452,14 +431,14 @@ void NetworkPage::update()
     if(gGlobalParam.MiscParam.iNetworkMask & 1 << DISPLAY_NETWORK_WIFI)
     {
         m_chkSwitchs[DISPLAY_NETWORK_WIFI]->setChecked(true);
-        m_pWifiConfigWidget->show();
+        //m_pWifiConfigWidget->show();
 
     }
     else
     {
         m_chkSwitchs[DISPLAY_NETWORK_WIFI]->setChecked(false);
-        m_pWifiConfigWidget->hide();
-        m_pWifiSSIDAddWidget->hide();
+        //m_pWifiConfigWidget->hide();
+        //m_pWifiSSIDAddWidget->hide();
     }
 }
 
