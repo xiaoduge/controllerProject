@@ -3660,6 +3660,11 @@ void MainWindow::initConsumablesCfg()
             
             m_cMas[iLoop].aulMask[0] &= (~((1 << DISP_AT_PACK)
                                           |(1 << DISP_AC_PACK)));
+
+            if(gAdditionalCfgParam.machineInfo.iMachineFlow >= 300)
+            {
+                m_cMas[iLoop].aulMask[0] &= (~(1 << DISP_H_PACK));
+            }
             break;
         case MACHINE_L_EDI_LOOP:
             m_cMas[iLoop].aulMask[0]  = DISP_NOTIFY_DEFAULT;
@@ -3840,9 +3845,13 @@ void MainWindow::initRFIDCfg()
     case MACHINE_L_UP:
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ROPACK_OTHERS);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ROPACK_OTHERS] = DISP_P_PACK;
-        
-        MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_HPACK_ATPACK);
-        MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_HPACK_ATPACK] = DISP_H_PACK;
+
+        //SuperGenie U 300 不配置H Pack
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow < 300)
+        {
+            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_HPACK_ATPACK);
+            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_HPACK_ATPACK] = DISP_H_PACK;
+        }
 
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_UPACK_HPACK);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_UPACK_HPACK] = DISP_U_PACK;
@@ -3851,8 +3860,11 @@ void MainWindow::initRFIDCfg()
         MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_ROPACK_OTHERS);
         MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_ROPACK_OTHERS] = DISP_P_PACK | (1 << 16);
         
-        MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_HPACK_ATPACK);
-        MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_HPACK_ATPACK] = DISP_H_PACK;
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow < 300)
+        {
+            MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_HPACK_ATPACK);
+            MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_HPACK_ATPACK] = DISP_H_PACK;
+        }
 
         MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_UPACK_HPACK);
         MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_UPACK_HPACK] = DISP_U_PACK;

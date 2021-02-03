@@ -141,6 +141,17 @@ MaintenanceCyclePage::MaintenanceCyclePage(QObject *parent,CBaseWidget *widget ,
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_L_UP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow < 300)
+        {
+            aIds[iIdx].iDspType = 2;
+            aIds[iIdx].iId      = DISP_H_PACK;
+            aIds[iIdx].vi.v1Min = 0;
+            aIds[iIdx].vi.v1Max = 99999;
+            aIds[iIdx].vi.v2Min = 0;
+            aIds[iIdx].vi.v2Max = 99999;
+            iIdx++;
+        }
+        break;
     case MACHINE_UP:
     case MACHINE_PURIST:
         aIds[iIdx].iDspType = 2;

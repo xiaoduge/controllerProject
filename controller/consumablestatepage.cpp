@@ -89,6 +89,13 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_L_UP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow < 300)
+        {
+            aIds[iIdx].iType = 0;
+            aIds[iIdx].iId   = DISP_H_PACK;
+            iIdx++;
+        }
+        break;
     case MACHINE_UP:
     case MACHINE_PURIST:
         aIds[iIdx].iType = 0;
