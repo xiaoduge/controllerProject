@@ -3755,6 +3755,7 @@ void MainWindow::initConsumablesCfg()
                                          |(1 << DISP_N3_UV)
                                          |(1 << DISP_N4_UV)
                                          |(1 << DISP_N5_UV)
+                                         |(1 << DISP_W_FILTER)
                                          |(1 << DISP_TUBE_FILTER)
                                          |(1 << DISP_TUBE_DI)));
             
@@ -3771,6 +3772,7 @@ void MainWindow::initConsumablesCfg()
                                            |(1 << DISP_N4_UV)
                                            |(1 << DISP_N5_UV)
                                            |(1 << DISP_TUBE_FILTER)
+                                           |(1 << DISP_W_FILTER)
                                            |(1 << DISP_TUBE_DI)));
             break;
         default:
