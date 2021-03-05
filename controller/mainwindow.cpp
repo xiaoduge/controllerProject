@@ -2110,7 +2110,7 @@ void MainSaveCalibrateParam(int iMachineType, QMap<int, DISP_PARAM_CALI_ITEM_STR
 	
 	float quarterInchFM = 7055;  // 1/4流量计
     float halfInchFM = 450.0;    // 1/2流量计
-	float oneInchFm = 120.0;     // 1寸流量计
+	float oneInchFm = 225.0;     // 1寸流量计
 
     switch(iMachineType)
     {
@@ -3351,7 +3351,7 @@ void MainWindow::initConsumablesInfo()
 
     m_strConsuamble[CLEANPACK_CATNO] << "RR700CL01" << "RR504CL0" << "171-1281";
 
-    m_strConsuamble[UV254_CATNO] << "RAUV135A7" << "RAUV212A7" << "171-1282";
+    m_strConsuamble[UV254_CATNO] << "RAUV135A7" << "RAUV212A7" << "171-1282" << "RAUV357A8";
 
     m_strConsuamble[UV185_CATNO] << "RAUV357B7" << "171-1283";
 
@@ -5823,7 +5823,8 @@ void MainWindow::alarmCommProc(bool bAlarm,int iAlarmPart,int iAlarmId)
 
 #ifdef D_HTTPWORK
 			if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_REPHILINK)
-                && gAdditionalCfgParam.initMachine)
+                && gAdditionalCfgParam.initMachine
+                && (iAlarmId != DISP_ALARM_PART1_LOWER_PWTANKE_WATER_LEVEL))
             {
                 DNetworkAlaramInfo alarmInfo = {0, iAlarmPart * DISP_ALARM_PART0_NUM + iAlarmId, 1, QDateTime::currentDateTime()};
                 emitHttpAlarm(alarmInfo);
@@ -5861,7 +5862,8 @@ void MainWindow::alarmCommProc(bool bAlarm,int iAlarmPart,int iAlarmId)
 
 #ifdef D_HTTPWORK
             if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_REPHILINK)
-                && gAdditionalCfgParam.initMachine)
+                && gAdditionalCfgParam.initMachine
+                && (iAlarmId != DISP_ALARM_PART1_LOWER_PWTANKE_WATER_LEVEL))
             {
                 DNetworkAlaramInfo alarmInfo = {0, iAlarmPart * DISP_ALARM_PART0_NUM + iAlarmId, 0, QDateTime::currentDateTime()};
                 emitHttpAlarm(alarmInfo);
