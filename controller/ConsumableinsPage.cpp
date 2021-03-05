@@ -514,6 +514,14 @@ void ConsumableInsPage::initNormalItem()
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_L_UP:  
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow < 300)
+        {
+            aIds[iIdx].iType = 0;
+            aIds[iIdx].iId   = DISP_H_PACK;
+            aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_HPACK_ATPACK;
+            iIdx++;
+        }
+        break;
     case MACHINE_UP:
     case MACHINE_PURIST:
         aIds[iIdx].iType = 0;

@@ -13516,6 +13516,7 @@ void work_idle_rowash(void *para)
     case MACHINE_UP:
     case MACHINE_EDI:
     case MACHINE_RO:
+    case MACHINE_ADAPT:
         CanCcbTransState(DISP_WORK_STATE_IDLE,DISP_WORK_SUB_WASH);        
    
 		// 第一步：进水阀、弃水阀、排放阀、原水泵、原水阀工作13min
@@ -13771,6 +13772,7 @@ void work_idle_phwash(void *para)
     case MACHINE_UP:
     case MACHINE_EDI:
     case MACHINE_RO:
+    case MACHINE_ADAPT:
         CanCcbTransState(DISP_WORK_STATE_IDLE,DISP_WORK_SUB_WASH);   
 
         // 第一步：进水阀、弃水阀、排放阀、原水泵，持续10s

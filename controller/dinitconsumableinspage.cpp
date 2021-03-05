@@ -346,6 +346,14 @@ void DInitConsumableInsPage::initPackConfig()
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_L_UP:
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow < 300)
+        {
+            install_info.iRfid = APP_RFID_SUB_TYPE_HPACK_ATPACK;
+            install_info.strName = tr("H Pack");
+            m_map[Type0].insert(DISP_H_PACK, install_info);
+            m_list[Type0].append(DISP_H_PACK);
+        }
+        break;
     case MACHINE_UP:
     case MACHINE_PURIST:
         install_info.iRfid = APP_RFID_SUB_TYPE_HPACK_ATPACK;
