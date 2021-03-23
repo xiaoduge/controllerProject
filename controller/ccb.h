@@ -277,6 +277,7 @@ typedef struct
     unsigned int     bit1ROWashPause       : 1;  //系统清洗时，原水箱空，则暂定清洗
     unsigned int     bit1TocAlarmNeedCheck : 1;  //是否开启TOC报警检测
     unsigned int     bit1AlarmWorkPressHigh: 1;  //工作压力高报警
+    unsigned int     bit1AlarmWorkPressLow : 1;  //工作压力低报警
 
     unsigned int     ulMachineType;         /* refer MACHINE_TYPE_ENUM */
     unsigned int     ulRegisterMask;

@@ -5165,6 +5165,11 @@ void checkB1DuringRunState()
                 if (fValue >= fThd)
                 {
                     gCcb.bit1B1UnderPressureDetected = 0;
+                    if (gCcb.bit1AlarmWorkPressLow)
+                    {
+                        gCcb.bit1AlarmWorkPressLow = FALSE;
+                        CcbNotAlarmFire(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_WORK_PRESSURE,FALSE);
+                    }
                 }
                 else
                 {
@@ -5181,6 +5186,11 @@ void checkB1DuringRunState()
             if (fValue >= fThd)
             {
                 gCcb.bit1B1UnderPressureDetected = 0;
+                if (gCcb.bit1AlarmWorkPressLow)
+                {
+                    gCcb.bit1AlarmWorkPressLow = FALSE;
+                    CcbNotAlarmFire(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_WORK_PRESSURE,FALSE);
+                }
             }
             else
             {
@@ -13906,13 +13916,13 @@ void work_start_lpp(void *para)
     }
     
     /* fire alarm */
-    if (!gCcb.bit1AlarmTapInPress)
+    if (!gCcb.bit1AlarmWorkPressLow)
     {
-        gCcb.bit1AlarmTapInPress   = TRUE;
+        gCcb.bit1AlarmWorkPressLow   = TRUE;
     
-        gCcb.ulFiredAlarmFlags |= ALARM_TLP;
+        //gCcb.ulFiredAlarmFlags |= ALARM_TLP;
     
-        CcbNotAlarmFire(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE,TRUE);
+        CcbNotAlarmFire(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_WORK_PRESSURE,TRUE);
     }
     VOS_LOG(VOS_LOG_WARNING," DISP_WORK_STATE_LPP %d",iRet);  
     
@@ -15592,7 +15602,6 @@ void MainSecondTask4MainState()
             if (gulSecond - gCcb.ulB1UnderPressureTick >= DEFAULT_LPP_CHECK_NUMBER)
             {
                 //2019.11.08 add for adpet, 
-                //TOTEST
                 if(MACHINE_ADAPT == gCcb.ulMachineType)
                 {
                     for(iLoop = 0; iLoop < MAX_HANDLER_NUM; iLoop++)
@@ -15620,8 +15629,8 @@ void MainSecondTask4MainState()
                     CcbInnerWorkLpp();
                 }   
 
-               /* Cancel Running task */
-               {
+                /* Cancel Running task */
+                {
                     DISPHANDLE hdl ;        
                     hdl = SearchWork(work_init_run);
 
@@ -15636,7 +15645,7 @@ void MainSecondTask4MainState()
                     {
                         CcbCancelWork(hdl);
                     }                   
-               }
+                }
             }
         }
 

@@ -428,7 +428,8 @@ QString gastrAlarmName[] =
     "Low TOC Sensor Temperature",
     "TOC Feed Water Resistivity<SP",
     "Leakage or Tank Overflow",
-    "High Work Pressure"
+    "High Work Pressure",
+    "Low Work Pressure"
 };
 
 void MainRetriveLastRunState(int iMachineType)
@@ -3596,7 +3597,8 @@ void MainWindow::initAlarmCfg()
                                                          |(1 << DISP_ALARM_PART1_LOWER_TUBE_TEMPERATURE)
                                                          |(1 << DISP_ALARM_PART1_HIGHER_SOURCE_WATER_TEMPERATURE)
                                                          |(1 << DISP_ALARM_PART1_LOWER_SOURCE_WATER_TEMPERATURE)
-                                                         |(1 << DISP_ALARM_PART1_HIGH_WORK_PRESSURE)));
+                                                         |(1 << DISP_ALARM_PART1_HIGH_WORK_PRESSURE)
+                                                         |(1 << DISP_ALARM_PART1_LOWER_WORK_PRESSURE)));
             
             m_bC1Regulator = true;
             break;
