@@ -392,11 +392,18 @@ void AlarmDisplayPage::buildTranslation()
             break;
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGH_WORK_PRESSURE):
             /*
-            work pressure
+            hight work pressure
             */
             m_astrPartAlarm[iIdx] = tr("High Work Pressure");
             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx;
             break;
+		case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_WORK_PRESSURE):
+			/*
+            low work pressure
+            */
+			m_astrPartAlarm[iIdx] = tr("Low Working Pressure");
+            aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx;
+			break;
         default:
             break;
         }
