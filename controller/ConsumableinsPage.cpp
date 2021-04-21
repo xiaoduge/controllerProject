@@ -430,7 +430,7 @@ void ConsumableInsPage::initTypeMap()
 void ConsumableInsPage::initNormalItem()
 {
     int iIdx = 0;
-	m_bRfidWork = true;
+    m_bRfidWork = true;
     if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter)) //DISP_SM_PreFilterColumn
     {
         aIds[iIdx].iType = 0;
@@ -655,7 +655,23 @@ void ConsumableInsPage::initNormalItem()
         iIdx++;
         break;
     }
-    
+
+    if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_FINALFILTER_B))
+    {
+        aIds[iIdx].iType = 0;
+        aIds[iIdx].iId   = DISP_T_B_FILTER;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        iIdx++;
+    }
+    if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_FINALFILTER_A))
+    {
+        aIds[iIdx].iType = 0;
+        aIds[iIdx].iId   = DISP_T_A_FILTER;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        iIdx++;
+    }
+
+#if 0
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_L_Genie:
@@ -672,9 +688,9 @@ void ConsumableInsPage::initNormalItem()
 	default:
 		break;
     }
-    
-    switch(gGlobalParam.iMachineType)
-    {
+
+	switch(gGlobalParam.iMachineType)
+	{
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
     case MACHINE_L_EDI_LOOP:
@@ -691,6 +707,8 @@ void ConsumableInsPage::initNormalItem()
         iIdx++;
         break;
     }
+#endif
+
 
     switch(gGlobalParam.iMachineType)
     {
@@ -912,7 +930,26 @@ void ConsumableInsPage::initManualItem()
     default:
         break;
     }
-    
+
+    if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
+    {
+        if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_FINALFILTER_B))
+        {
+            aIds[iIdx].iType = 0;
+            aIds[iIdx].iId   = DISP_T_B_FILTER;
+            aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+            iIdx++;
+        }
+        if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_FINALFILTER_A))
+        {
+            aIds[iIdx].iType = 0;
+            aIds[iIdx].iId   = DISP_T_A_FILTER;
+            aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+            iIdx++;
+        }
+    }
+
+#if 0
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_L_Genie:
@@ -929,7 +966,7 @@ void ConsumableInsPage::initManualItem()
     default:
         break;
     }
-    
+	
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_L_EDI_LOOP:
@@ -958,6 +995,7 @@ void ConsumableInsPage::initManualItem()
     default:
         break;
     }
+#endif
 
     switch(gGlobalParam.iMachineType)
     {

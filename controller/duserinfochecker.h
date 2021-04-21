@@ -39,7 +39,7 @@ public:
     int checkUserInfo(const QString& userName, const QString& passWord);
     bool checkManagerInfo(const QString &userName);
     bool checkEngineerInfo(const QString &userName);
-    bool checkSuperService(const QString &userName, const QString& password);
+    bool checkSuperService(const QString &userName);
     bool checkSuperInfo(const QString& userName); 
 };
 

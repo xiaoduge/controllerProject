@@ -21,7 +21,8 @@ class DWifiConfigDialog : public DWifiConfigWidget
     Q_OBJECT
 public:
     DWifiConfigDialog(QWidget *parent = 0);
-
+    ~DWifiConfigDialog();
+    
     void updatePage();
 
     void setSSIDName(const QString &name);

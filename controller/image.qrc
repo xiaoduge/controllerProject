@@ -233,4 +233,12 @@
         <file alias="TANKUV_YELLOW.png">pics/devices/TANKUV_YELLOW.png</file>
         <file alias="UV_YELLOW.png">pics/devices/UV_YELLOW.png</file>
     </qresource>
+    <qresource prefix="/wifiinfo">
+        <file alias="connected.png">pics/wifiinfo/connected.png</file>
+        <file alias="Signal_Level_1.png">pics/wifiinfo/Signal_Level_1.png</file>
+        <file alias="Signal_Level_2.png">pics/wifiinfo/Signal_Level_2.png</file>
+        <file alias="Signal_Level_3.png">pics/wifiinfo/Signal_Level_3.png</file>
+        <file alias="Signal_Level_4.png">pics/wifiinfo/Signal_Level_4.png</file>
+        <file alias="Signal_Level_5.png">pics/wifiinfo/Signal_Level_5.png</file>
+    </qresource>
 </RCC>

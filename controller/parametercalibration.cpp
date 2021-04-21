@@ -367,7 +367,7 @@ void ParameterCalibrationPage::buildTranslation()
             switch(gGlobalParam.iMachineType)/*EDI电阻率*/
             {
             case MACHINE_PURIST:
-                m_aParameterlistItem[iLoop]->setName(tr("Tap Cond."));
+                m_aParameterlistItem[iLoop]->setName(tr("Feed Conductivity"));
                 m_aParameterlistItem[iLoop]->setP1Name(tr(""));  //K:
                 m_aParameterlistItem[iLoop]->setP2Name(tr("C:"));
                 m_aParameterlistItem[iLoop]->setP3Name(tr("us/cm"));
@@ -387,7 +387,7 @@ void ParameterCalibrationPage::buildTranslation()
             switch(gGlobalParam.iMachineType)/*EDI电阻率*/
             {
             case MACHINE_PURIST:
-                m_aParameterlistItem[iLoop]->setName(tr("Tap Temp."));
+                m_aParameterlistItem[iLoop]->setName(tr("Feed Temperature"));
                 m_aParameterlistItem[iLoop]->setP1Name(tr(""));
                 m_aParameterlistItem[iLoop]->setP3Name(tr("celsius"));
                 break;

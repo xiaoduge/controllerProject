@@ -429,6 +429,8 @@ public:
     void stopBuzzing();
 
     const QString& machineName();
+    void initAlarmName();
+    const QString alarmName(int iIndex) const;
 
 public slots:
     void retriveLastRunState();
@@ -622,8 +624,6 @@ private:
     QTimer* m_timerPeriodEvent;
     QTimer* m_timeSecondTimer;
     QTimer* m_screenSleepTimer;
-
-
     
     int  m_periodEvents;
 
@@ -665,7 +665,6 @@ private:
     int         m_iLstDay;
 
     QFont       *m_pFonts[GLOBAL_FONT_NUM];
-
 
     int         m_iAlarmRcdMask[2][DISP_ALARM_PART_NUM]; /* array 0 for fired alarm, array 1 for restored alarm */
 
@@ -722,7 +721,10 @@ private:
     QString m_consuambleInitDate; //Used to determine if it is a new consumable
 
 	QString m_strMachineName;
-	
+
+    QStringList m_AlarmName;
+    int m_alarmNameLen;
+
     class RFIDPackInfo
     {
     public:

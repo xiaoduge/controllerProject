@@ -95,6 +95,16 @@ SystemCfgPage::SystemCfgPage(QObject *parent,CBaseWidget *widget ,MainWindow *wn
         break;
     }
 
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_PURIST:
+        aCHKsIds[iIdx].iId = DISP_SM_UP_IN;
+        iIdx++;
+        break;
+    default:
+        break;
+    }
+
     m_iRealChkNum = iIdx;
     
     creatTitle();
@@ -179,6 +189,9 @@ void SystemCfgPage::buildTranslation()
             break;
         case DISP_SM_SW_PUMP:
             m_aChks[iLoop]->setText(tr("Feed PUMP"));
+            break;
+        case DISP_SM_UP_IN:
+            m_aChks[iLoop]->setText(tr("Feed Quality Check"));
             break;
         }
     }
@@ -991,6 +1004,16 @@ void SystemCfgPage::connectData()
                 m_aChks[iLoop]->setChecked(false);
             }  
             break;
+            case DISP_SM_UP_IN:
+            if (gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_UP_IN))
+            {
+                m_aChks[iLoop]->setChecked(true);
+            }
+            else
+            {
+                m_aChks[iLoop]->setChecked(false);
+            }  
+            break;
         }
     }
 
@@ -1270,6 +1293,16 @@ void SystemCfgPage::save()
             else
             {
                 miscParam.ulMisFlags &= ~(1 << DISP_SM_SW_PUMP);
+            }  
+            break;
+        case DISP_SM_UP_IN:
+            if ((Qt::Checked == m_aChks[iLoop]->checkState()))
+            {
+                miscParam.ulMisFlags |= 1 << DISP_SM_UP_IN;
+            }
+            else
+            {
+                miscParam.ulMisFlags &= ~(1 << DISP_SM_UP_IN);
             }  
             break;
         }

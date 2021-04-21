@@ -271,6 +271,30 @@ MaintenanceCyclePage::MaintenanceCyclePage(QObject *parent,CBaseWidget *widget ,
         break;
     }
 
+    if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
+    {
+        if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_FINALFILTER_B))
+        {
+            aIds[iIdx].iDspType = 1;
+            aIds[iIdx].iId      = DISP_T_B_FILTER;
+            aIds[iIdx].vi.v1Min = 0;
+            aIds[iIdx].vi.v1Max = 99999;
+            aIds[iIdx].vi.v2Min = 0;
+            aIds[iIdx].vi.v2Max = 99999;
+            iIdx++;
+        }
+        if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_FINALFILTER_A))
+        {
+            aIds[iIdx].iDspType = 1;
+            aIds[iIdx].iId      = DISP_T_A_FILTER;
+            aIds[iIdx].vi.v1Min = 0;
+            aIds[iIdx].vi.v1Max = 99999;
+            aIds[iIdx].vi.v2Min = 0;
+            aIds[iIdx].vi.v2Max = 0;
+            iIdx++;
+        }
+    }
+#if 0
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_L_Genie:
@@ -325,6 +349,7 @@ MaintenanceCyclePage::MaintenanceCyclePage(QObject *parent,CBaseWidget *widget ,
     default:
         break;
     }
+#endif
 
     switch(gGlobalParam.iMachineType)
     {

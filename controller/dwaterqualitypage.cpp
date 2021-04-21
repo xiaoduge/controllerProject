@@ -74,7 +74,7 @@ void DWaterQualityPage::buildTranslation()
     strMsg[Pure_Tank_Level] = tr("Pure Tank Level");
     strMsg[HP_Resis] = tr("HP Resis.");
     strMsg[HP_Disp_Rate] = tr("HP Disp. rate");
-    strMsg[UP_IN] = tr("UP IN");
+    strMsg[UP_IN] = tr("Feed");
     strMsg[UP_Resis] = tr("UP");
     strMsg[TOC_Value] = tr("TOC");
     strMsg[UP_Disp_Rate] = tr("UP Disp. rate");
@@ -530,10 +530,14 @@ void DWaterQualityPage::updTOC(float fToc)
         QString str = strUnitMsg[UNIT_PPB].arg(">200");
         updateValue(m_tags[TOC_Value], str);
     }
-    else
+    else if(fToc < 10)
     {
-        updateValue(m_tags[TOC_Value], strUnitMsg[UNIT_PPB].arg(fToc, 0, 'f', 0));
+        updateValue(m_tags[TOC_Value], strUnitMsg[UNIT_PPB].arg(static_cast<double>(fToc), 0, 'f', 1));
     }
+	else
+	{
+		updateValue(m_tags[TOC_Value], strUnitMsg[UNIT_PPB].arg(static_cast<double>(fToc), 0, 'f', 0));
+	}
     m_historyInfo[TOC_Value].value1 = fToc;
 }
 
@@ -801,7 +805,10 @@ void DWaterQualityPage::initConfigList()
         break;
     case MACHINE_PURIST:
         m_cfglist.append(m_tags[Pure_Tank_Level]);
-        m_cfglist.append(m_tags[UP_IN]);
+        if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_UP_IN))
+        {
+            m_cfglist.append(m_tags[UP_IN]);
+        }
         m_cfglist.append(m_tags[UP_Resis]);
         if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveTOC))
         {
@@ -987,7 +994,7 @@ void DWaterQualityPage::updHistoryEcoInfo()
     updateValue(m_tags[RO_Rejection],
                 strUnitMsg[UNIT_PERCENTAGE].arg(m_historyInfo[RO_Rejection].value1, 0, 'f', 0));
 
-    if( MACHINE_PURIST == gGlobalParam.iMachineType)
+    if( MACHINE_PURIST == gGlobalParam.iMachineType && (gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_UP_IN)))
     {
         updateValue(m_tags[UP_IN],
                     strUnitMsg[UNIT_USCM].arg(m_historyInfo[UP_IN].value1, 0, 'f', 1),
@@ -1068,11 +1075,16 @@ void DWaterQualityPage::updHistoryTOC()
         QString str = strUnitMsg[UNIT_PPB].arg(">200");
         updateValue(m_tags[TOC_Value], str);
     }
-    else
+    else if(m_historyInfo[TOC_Value].value1 < 10)
     {
         updateValue(m_tags[TOC_Value],
-                    strUnitMsg[UNIT_PPB].arg(m_historyInfo[TOC_Value].value1, 0, 'f', 0));
+                    strUnitMsg[UNIT_PPB].arg(m_historyInfo[TOC_Value].value1, 0, 'f', 1));
     }
+	else
+	{
+		updateValue(m_tags[TOC_Value],
+                    strUnitMsg[UNIT_PPB].arg(m_historyInfo[TOC_Value].value1, 0, 'f', 0));
+	}
 }
 
 #ifdef CFG_DO_PH

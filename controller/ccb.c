@@ -1115,6 +1115,11 @@ float CcbGetSp33(void)
     return gCcb.MMParam.SP[MACHINE_PARAM_SP33];
 }
 
+float CcbGetSp34(void)
+{
+    return gCcb.MMParam.SP[MACHINE_PARAM_SP34];
+}
+
 float CcbGetB2Full(void)
 {
     return 0.9;
@@ -7049,7 +7054,7 @@ void work_stop_Leak(void *para)
  * @Param : 
  * @Return: 
  */
-DISPHANDLE CcbInnerWorkStartLeakWok()
+DISPHANDLE CcbInnerWorkStartLeakWork()
 {
     int iLoop;
     //如果漏水保护停止机器运行
@@ -7124,7 +7129,7 @@ void CanCcbLeakProcess(void)
     {
         if(!gCcb.ucLeakWorkStates)
         {
-            CcbInnerWorkStartLeakWok();
+            CcbInnerWorkStartLeakWork();
             gCcb.ucLeakWorkStates = gCcb.ExeBrd.ucLeakState;
             return;
         }
@@ -10695,7 +10700,6 @@ void CcbWorMsgProc(SAT_MSG_HEAD *pucMsg)
             {
                 gCcb.bit1ProduceWater = FALSE;
                 gCcb.bit1B1Check4RuningState = FALSE;
-            
                 CanCcbTransState(DISP_WORK_STATE_IDLE,DISP_WORK_SUB_IDLE);
             }
 
@@ -15622,13 +15626,13 @@ void MainSecondTask4MainState()
                         }
                     }
                 } 
-
+#if 0
                 /* move to LPP state */
                 if (!SearchWork(work_start_lpp))
                 {
                     CcbInnerWorkLpp();
                 }   
-
+#endif
                 /* Cancel Running task */
                 {
                     DISPHANDLE hdl ;        
@@ -15646,6 +15650,13 @@ void MainSecondTask4MainState()
                         CcbCancelWork(hdl);
                     }                   
                 }
+                
+                /* move to LPP state */
+                if (!SearchWork(work_start_lpp))
+                {
+                    CcbInnerWorkLpp();
+                }
+ 
             }
         }
 

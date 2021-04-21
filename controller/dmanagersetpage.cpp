@@ -1,6 +1,7 @@
 #include "dmanagersetpage.h"
 #include "mainwindow.h"
 #include "drephilinkprotocoldlg.h"
+#include "dnetworkwidget.h"
 #include <fcntl.h>
 #include <sys/ioctl.h>
 #include <linux/rtc.h>
@@ -40,6 +41,11 @@ DManagerSetPage::~DManagerSetPage()
                 m_pageWidget[MANAGER_PAGE_CALIBRATION]->deleteLater();
                 m_pageWidget[MANAGER_PAGE_CALIBRATION] = NULL;
             }
+            if(m_pageWidget[MANAGER_PAGE_FINALFILTER])
+            {
+                m_pageWidget[MANAGER_PAGE_FINALFILTER]->deleteLater();
+                m_pageWidget[MANAGER_PAGE_FINALFILTER] = NULL;
+            }
         }
         break;
     default:
@@ -63,40 +69,23 @@ void DManagerSetPage::buildTitles()
 
 void DManagerSetPage::buildTranslation()
 {
-    switch(gGlobalParam.iMachineType)
+    if(gAdditionalCfgParam.machineInfo.iMachineFlow >= 500)
     {
-    case MACHINE_PURIST:
-    case MACHINE_ADAPT:
         m_tabWidget->setTabText(0, tr("Time & Date"));
-        m_tabWidget->setTabText(1, tr("Calibration"));
-        m_tabWidget->setTabText(2, tr("Audio"));
-        m_tabWidget->setTabText(3, tr("LCD"));
-        break;
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-        if(gAdditionalCfgParam.machineInfo.iMachineFlow >= 500)
-        {
-            m_tabWidget->setTabText(0, tr("Time & Date"));
-            m_tabWidget->setTabText(1, tr("Audio"));
-            m_tabWidget->setTabText(2, tr("LCD"));
-            m_tabWidget->setTabText(3, tr("Additional Settings"));
-        }
-        else
-        {
-            m_tabWidget->setTabText(0, tr("Time & Date"));
-            m_tabWidget->setTabText(1, tr("Calibration"));
-            m_tabWidget->setTabText(2, tr("Audio"));
-            m_tabWidget->setTabText(3, tr("LCD"));
-            m_tabWidget->setTabText(4, tr("Additional Settings"));
-        }
-        break;
-    default:
-        m_tabWidget->setTabText(0, tr("Time & Date"));
-        m_tabWidget->setTabText(1, tr("Calibration"));
-        m_tabWidget->setTabText(2, tr("Audio"));
-        m_tabWidget->setTabText(3, tr("LCD"));
+        m_tabWidget->setTabText(1, tr("Audio"));
+        m_tabWidget->setTabText(2, tr("LCD"));
+        m_tabWidget->setTabText(3, tr("Network"));
         m_tabWidget->setTabText(4, tr("Additional Settings"));
-        break;
+    }
+    else
+    {
+        m_tabWidget->setTabText(0, tr("Time & Date"));
+        m_tabWidget->setTabText(1, tr("Calibration"));
+        m_tabWidget->setTabText(2, tr("Audio"));
+        m_tabWidget->setTabText(3, tr("LCD"));
+        m_tabWidget->setTabText(4, tr("Final Filter"));
+        m_tabWidget->setTabText(5, tr("Network"));
+        m_tabWidget->setTabText(6, tr("Additional Settings"));
     }
 
     //Time
@@ -137,10 +126,26 @@ void DManagerSetPage::buildTranslation()
     }
     m_pLcdBtnSave->setText(tr("Save"));
 
+    m_pFilterLabel[0]->setText(tr("Final Fliter A"));
+    if(0 == gAdditionalCfgParam.productInfo.iCompany)
+    {
+        m_pFilterLabel[1]->setText(tr("Final Fliter B"));
+    }
+    else
+    {
+        m_pFilterLabel[1]->setText(tr("Bio-filter"));
+    }
+    m_pFilterSaveBtn->setText(tr("Save"));
+
+    //Network
+    m_pWifiLabel->setText(tr("WIFI"));
+    m_pNetworkSaveBtn->setText(tr("Save"));
+
     //Additional Settings
     m_pAdditionalLb[REPHILINK_SETTING]->setText(tr("RephiLink"));
     m_pAdditionalLb[HPCIR_SETTING]->setText(tr("HP Recir."));
     m_pAddBtnSave->setText(tr("Save"));
+    m_pNetworkWidget->buildTranslation();
 }
 
 void DManagerSetPage::switchLanguage()
@@ -177,19 +182,14 @@ void DManagerSetPage::initUi()
 
     initAudioPage();
     initLcdPage();
+    initFinalFilterPage();
+    initNetworkPage();
     initAdditionalSettingsPage();
 
-    switch(gGlobalParam.iMachineType)
+    if(gAdditionalCfgParam.machineInfo.iMachineFlow >= 500)
     {
-    case MACHINE_L_EDI_LOOP:
-	case MACHINE_L_RO_LOOP:
-        if(gAdditionalCfgParam.machineInfo.iMachineFlow >= 500)
-        {
-            m_tabWidget->removeTab(1);
-        }
-        break;
-    default:
-        break;
+        m_tabWidget->removeTab(1);
+        m_tabWidget->removeTab(3);
     }
 
     mainLayout->addWidget(m_tabWidget, 0, 0);
@@ -265,6 +265,33 @@ void DManagerSetPage::update()
     m_iSleepTime = gAdditionalCfgParam.additionalParam.iScreenSleepTime;
     m_comboBox->setCurrentIndex(m_iSleepTime - 1);
 
+    if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_FINALFILTER_A))
+    {
+        m_pFilterCheck[0]->setChecked(true);
+    }
+    else
+    {
+        m_pFilterCheck[0]->setChecked(false);
+    }
+    if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_FINALFILTER_B))
+    {
+        m_pFilterCheck[1]->setChecked(true);
+    }
+    else
+    {
+        m_pFilterCheck[1]->setChecked(false);
+    }
+
+    //Network
+    if (gGlobalParam.MiscParam.iNetworkMask & 1 << DISPLAY_NETWORK_WIFI)
+    {
+        m_pWifiCheckBox->setChecked(true);
+    }
+    else
+    {
+        m_pWifiCheckBox->setChecked(false);
+    }
+
     //Additional Settings
     if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_REPHILINK))
     {
@@ -335,7 +362,6 @@ void DManagerSetPage::on_timeDateSet_clicked()
     m_pBtns[TIMEPAGE_BTN_OK]->show();
 
     m_wndMain->prepareKeyStroke();
-
 }
 
 void DManagerSetPage::on_timeTimeSet_clicked()
@@ -366,12 +392,10 @@ void DManagerSetPage::on_timeTimeSet_clicked()
     ShowWidget[TIME_SET]->hide();
 
     m_wndMain->prepareKeyStroke();
-
 }
 
 void DManagerSetPage::on_timeOkBtn_clicked()
 {
-
     if(CalS->isVisible())
     {
         QDate date  = CalS->selectedDate();
@@ -489,7 +513,6 @@ void DManagerSetPage::on_checkBox_changeState(int state)
            m_iSoundMask &= ~(1 << iLoop);
        }
     }
-
 }
 
 void DManagerSetPage::on_audioBtnSavebtn_clicked()
@@ -572,6 +595,62 @@ void DManagerSetPage::setValue(int value)
     m_iBrightness = value;
 
     Write_sys_int(PWMLCD_FILE,m_iBrightness);
+}
+
+void DManagerSetPage::on_FilterSaveBtn_clicked()
+{
+    DISP_MISC_SETTING_STRU        miscParam = gGlobalParam.MiscParam;
+
+    if(Qt::Checked ==m_pFilterCheck[0]->checkState())
+    {
+        miscParam.ulMisFlags |= 1 << DISP_SM_FINALFILTER_A;
+    }
+    else
+    {
+        miscParam.ulMisFlags &= ~(1 << DISP_SM_FINALFILTER_A);
+    }
+
+    if(Qt::Checked ==m_pFilterCheck[1]->checkState())
+    {
+        miscParam.ulMisFlags |= 1 << DISP_SM_FINALFILTER_B;
+    }
+    else
+    {
+        miscParam.ulMisFlags &= ~(1 << DISP_SM_FINALFILTER_B);
+    }
+    MainSaveMiscParam(gGlobalParam.iMachineType,miscParam);
+    MainUpdateGlobalParam();
+
+    m_wndMain->prepareKeyStroke();
+    DHintDialog::getInstance(tr("Successfully saved"));
+}
+
+void DManagerSetPage::onWifiCheckBoxChangeState(int state)
+{
+    Q_UNUSED(state);
+
+    if ((Qt::Checked == m_pWifiCheckBox->checkState()))
+    {
+        m_iNetworkMask |= 1 << DISPLAY_NETWORK_WIFI;
+    }
+    else
+    {
+        m_iNetworkMask &= ~(1 << DISPLAY_NETWORK_WIFI);
+    }
+
+    emit wifiEnabled(Qt::Checked == m_pWifiCheckBox->checkState());
+}
+
+void DManagerSetPage::on_NetworkSaveBtn_clicked()
+{
+    if (m_iNetworkMask != gGlobalParam.MiscParam.iNetworkMask)
+    {
+        DISP_MISC_SETTING_STRU MiscParam = gGlobalParam.MiscParam;
+        MiscParam.iNetworkMask = m_iNetworkMask;
+        MainSaveMiscParam(gGlobalParam.iMachineType, MiscParam);
+        MainUpdateSpecificParam(NOT_PARAM_MISC_PARAM);
+    }
+    m_wndMain->MainWriteLoginOperationInfo2Db(SETPAGE_SYSTEM_NETWORK);
 }
 
 void DManagerSetPage::on_AdditionalBtnSave_clicked()
@@ -1016,9 +1095,92 @@ void DManagerSetPage::initLcdPage()
 
     connect(m_pLcdBtnSave, SIGNAL(clicked()), this, SLOT(on_LcdSaveBtn_clicked()));
 
-
     QIcon icon1(":/pic/unselected.png");
     m_tabWidget->addTab(m_pageWidget[MANAGER_PAGE_LCD], icon1, tr("LCD"));
+}
+
+void DManagerSetPage::initFinalFilterPage()
+{
+    m_pageWidget[MANAGER_PAGE_FINALFILTER] = new QWidget;
+
+    for(int i = 0; i < 2; i++)
+    {
+        m_pFilterBackWidget[i] = new QWidget(m_pageWidget[MANAGER_PAGE_FINALFILTER]);
+
+        QPalette pal(m_pFilterBackWidget[i]->palette());
+        pal.setColor(QPalette::Background, Qt::white);
+        m_pFilterBackWidget[i]->setAutoFillBackground(true);
+        m_pFilterBackWidget[i]->setPalette(pal);
+        m_pFilterBackWidget[i]->setGeometry(QRect(120 , 120 + 70 * i , 530 ,60));
+
+        m_pFilterLabel[i] = new QLabel(m_pFilterBackWidget[i]);
+        m_pFilterLabel[i]->setPixmap(NULL);
+        m_pFilterLabel[i]->setGeometry(QRect(25, 25 , 260 , 20));
+        m_pFilterLabel[i]->setStyleSheet(" font-size:18px;color:#16181e;font-family:Arial;QFont::Bold");
+        m_pFilterLabel[i]->show();
+        m_pFilterLabel[i]->setAlignment(Qt::AlignLeft);
+
+        m_pFilterCheck[i] = new QCheckBox(m_pFilterBackWidget[i]);
+        m_pFilterCheck[i]->setGeometry(QRect(480 , 9 ,40,40));
+
+        QString strQss4Chk = m_wndMain->getQss4Chk();
+        m_pFilterCheck[i]->setStyleSheet(strQss4Chk);
+    }
+
+    m_pFilterSaveBtn = new QPushButton(m_pageWidget[MANAGER_PAGE_FINALFILTER]);
+    m_pFilterSaveBtn->move(580, 420);
+    connect(m_pFilterSaveBtn, SIGNAL(clicked()), this, SLOT(on_FilterSaveBtn_clicked()));
+
+    QIcon icon1(":/pic/unselected.png");
+    m_tabWidget->addTab(m_pageWidget[MANAGER_PAGE_FINALFILTER], icon1, tr("Final Filter"));
+}
+
+void DManagerSetPage::initNetworkPage()
+{
+    m_iNetworkMask = gGlobalParam.MiscParam.iNetworkMask;
+    m_pageWidget[MANAGER_PAGE_NETWORK] = new QWidget;
+
+    m_pWifiBackWidget = new QWidget(m_pageWidget[MANAGER_PAGE_NETWORK]);
+
+    QPalette pal(m_pWifiBackWidget->palette());
+    pal.setColor(QPalette::Background, Qt::white);
+    m_pWifiBackWidget->setAutoFillBackground(true);
+    m_pWifiBackWidget->setPalette(pal);
+    m_pWifiBackWidget->setGeometry(QRect(120, 40, 530, 50));
+
+    m_pWifiLabel = new QLabel(m_pWifiBackWidget);
+    m_pWifiLabel->setGeometry(QRect(25, 15, 260 , 20));
+    m_pWifiLabel->setStyleSheet(" font-size:18px;color:#16181e;font-family:Arial;QFont::Bold");
+    m_pWifiLabel->show();
+    m_pWifiLabel->setAlignment(Qt::AlignLeft);
+
+    m_pWifiCheckBox = new QCheckBox(m_pWifiBackWidget);
+    m_pWifiCheckBox->setGeometry(QRect(480, 5, 40, 40));
+    if (m_iNetworkMask & (1 << DISPLAY_NETWORK_WIFI))
+    {
+        m_pWifiCheckBox->setChecked(true);
+    }
+    else
+    {
+        m_pWifiCheckBox->setChecked(false);
+    }
+    connect(m_pWifiCheckBox, SIGNAL(stateChanged(int)), this, SLOT(onWifiCheckBoxChangeState(int)));
+
+    QString strQss4Chk = m_wndMain->getQss4Chk();
+    m_pWifiCheckBox->setStyleSheet(strQss4Chk);
+
+    m_pNetworkWidget = new DNetworkWidget(m_pageWidget[MANAGER_PAGE_NETWORK]);
+    m_pNetworkWidget->move(120, 100);
+    connect(this, SIGNAL(wifiEnabled(bool)), m_pNetworkWidget, SLOT(setWifiEnabled(bool)));
+
+    m_pNetworkSaveBtn = new QPushButton(m_pageWidget[MANAGER_PAGE_NETWORK]);
+    m_pNetworkSaveBtn->move(580, 420);
+    connect(m_pNetworkSaveBtn, SIGNAL(clicked()), this, SLOT(on_NetworkSaveBtn_clicked()));
+
+    QIcon icon1(":/pic/unselected.png");
+    m_tabWidget->addTab( m_pageWidget[MANAGER_PAGE_NETWORK], icon1, tr("Network"));
+
+    emit wifiEnabled(Qt::Checked == m_pWifiCheckBox->checkState());
 }
 
 void DManagerSetPage::initAdditionalSettingsPage()

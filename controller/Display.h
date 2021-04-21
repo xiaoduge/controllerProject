@@ -231,6 +231,7 @@ typedef struct
 #define MM_DEFALUT_SP31 1.0//        HP循环(水箱循环)水质下限15.0MΩ.cm   
 #define MM_DEFALUT_SP32 0.0//        HP产水水质下限15.0MΩ.cm   
 #define MM_DEFALUT_SP33 12.0//       bar 
+#define MM_DEFALUT_SP34 100.0//      ppb 
 
 typedef enum
 {
@@ -267,6 +268,7 @@ typedef enum
     MACHINE_PARAM_SP31,     // 水箱循环水质下限 用于T Pack耗材更换提醒  
     MACHINE_PARAM_SP32,     // HP 产水水质下限
     MACHINE_PARAM_SP33,     // RO工作压力上限
+    MACHINE_PARAM_SP34,     // TOC上限
     MACHINE_PARAM_SP_NUM,
 
 }MACHINE_PARAM_ENUM;
@@ -405,6 +407,7 @@ typedef enum
     DISP_ALARM_PART1_LEAK_OR_TANKOVERFLOW,                //漏水保护或溢流
     DISP_ALARM_PART1_HIGH_WORK_PRESSURE,                  //工作压力高
     DISP_ALARM_PART1_LOWER_WORK_PRESSURE,                 //工作压力低
+    DISP_ALARM_PART1_HIGHER_TOC,                          //TOC高
     DISP_ALARM_PART1_NUM,
 }DISP_ALARM_PART1_ENUM;
 
@@ -470,13 +473,18 @@ typedef enum
 
     DISP_SM_REPHILINK,  //RephiLink
 
+    DISP_SM_FINALFILTER_A,  
+    DISP_SM_FINALFILTER_B, 
+
+    DISP_SM_UP_IN, // PURIST UP IN
+
 #ifdef STEPPERMOTOR
     DISP_SM_STEPPERMOTOR, //Stepper Motor
 #endif
 
 #ifdef CFG_DO_PH
-	DISP_SM_DO,
-	DISP_SM_PH,
+    DISP_SM_DO,
+    DISP_SM_PH,
 #endif
 
     DISP_SM_NUM,

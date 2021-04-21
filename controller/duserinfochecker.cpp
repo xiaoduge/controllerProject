@@ -120,18 +120,16 @@ bool DUserInfoChecker::checkEngineerInfo(const QString &userName)
     return false;
 }
 
-bool DUserInfoChecker::checkSuperService(const QString &userName, const QString& password)
+bool DUserInfoChecker::checkSuperService(const QString &userName)
 {
     //超级用户，内部使用
-    if((userName.compare(managerName[Super_Name], Qt::CaseInsensitive) == 0)
-        && (0 == password.compare(userPassword[Super_Name])))
+    if(userName.compare(managerName[Super_Name], Qt::CaseInsensitive) == 0)
     {
         return true;
     }
 
     //VWR， 超级用户
-    if((userName.compare(managerName[Super_Service_Name], Qt::CaseInsensitive) == 0)
-        && (0 == password.compare(userPassword[Super_Service_Name])))
+    if(userName.compare(managerName[Super_Service_Name], Qt::CaseInsensitive) == 0)
     {
         return true;
     }

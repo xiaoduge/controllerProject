@@ -75,28 +75,26 @@ private:
     QComboBox *m_cmbDeviceFlow;
     QComboBox *m_cmbDeviceType;
 
-    CBitmapButton* m_pBtnSave;
+    CBitmapButton *m_pBtnSave;
 
-    QLabel* m_pCompanyLabel;
-    QComboBox* m_pCompanyComboBox;
-    QLabel* m_pExLabel[SYSCFGPAGE_LB_NUM];
-    DLineEdit* m_ExLineEdit[SYSCFGPAGE_LB_NUM];
+    QLabel *m_pCompanyLabel;
+    QComboBox *m_pCompanyComboBox;
+    QLabel *m_pExLabel[SYSCFGPAGE_LB_NUM];
+    DLineEdit *m_ExLineEdit[SYSCFGPAGE_LB_NUM];
 
 
-    QWidget* m_pDeleteWidget;
-    QLabel* m_pLbDbDel;
-    QComboBox* m_pCmDbDel;
-    QPushButton* m_pBtnDbDel;
-
+    //QWidget *m_pDeleteWidget;
+    QLabel *m_pLbDbDel;
+    QComboBox *m_pCmDbDel;
+    QPushButton *m_pBtnDbDel;
+    QLabel *m_pLbCfgDel;
     QComboBox* m_pCmConfigDel;
     QPushButton* m_pBtnDelCfg;
 
 public slots:
     void on_btn_clicked(int);
     void on_CmbIndexChange_DefaultState(int index);
-
     void on_CmbIndexChange_deviceType(int index);
-
     void on_btnDbDel_clicked();
     void on_btnDelCfg_clicked();
 };

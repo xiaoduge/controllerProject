@@ -6,8 +6,6 @@
 #include "systemcfgpage.h"
 #include "parametercalibration.h"
 #include "maintenancecycle.h"
-#include "networkpage.h"
-
 #include "alarmsetpage.h"
 #include "LoginDlg.h"
 #include "exconfig.h"
@@ -17,6 +15,8 @@
 #include "dfactorytestpage.h"
 #include "dloginwarningdialog.h"
 #include "dpushbutton.h"
+#include "dnetworkpage.h"
+
 
 #define BTNS_PER_ROW (4)
 
@@ -123,7 +123,7 @@ void SetPage::createSubPage()
             tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
             tmpWidget->setObjectName(SubPageName[index]);
             tmpWidget->setGeometry(0,0,800,600);
-            m_pSubPages[index] = new NetworkPage(this , tmpWidget , m_wndMain);
+            m_pSubPages[index] = new DNetworkPage(this , tmpWidget , m_wndMain);
             break;
         case SET_BTN_SYSTEM_PARAMETER_CALIBRATE:
             tmpWidget = new CBaseWidget(m_wndMain->getMainWidget());
@@ -248,7 +248,6 @@ void SetPage::initUi()
     */
     x = 400 - PAGEID_MARGIN/2 - PAGEID_MARGIN - gpGlobalPixmaps[GLOBAL_BMP_PAGE_SELECT]->width()*2;
 
-    m_pBtns[SET_BTN_SYSTEM_SUPER]->hide();
     m_pBtns[SET_BTN_SYSTEM_FACTORYTEST]->hide();
 
 }
@@ -272,7 +271,6 @@ void SetPage::on_btn_clicked()
         bool iEngineer = userInfo.checkEngineerInfo(userlog.m_strUserName);
         if(!gUserLoginState.loginState() || (!iEngineer))
         {
-            m_pBtns[SET_BTN_SYSTEM_SUPER]->hide(); //
             m_pBtns[SET_BTN_SYSTEM_FACTORYTEST]->hide();
             LoginDlg dlg;
             dlg.exec() ;
@@ -291,7 +289,6 @@ void SetPage::on_btn_clicked()
                     gUserLoginState.setLoginState(true);
                     if(3 != ret)
                     {
-                        m_pBtns[SET_BTN_SYSTEM_SUPER]->show(); //
                         m_pBtns[SET_BTN_SYSTEM_FACTORYTEST]->show();
                     }
                     break;
@@ -337,7 +334,6 @@ void SetPage::on_btn_clicked()
             bool iEngineer = userInfo.checkEngineerInfo(userlog.m_strUserName);
             if(!gUserLoginState.loginState() || (!iEngineer))
             {
-                m_pBtns[SET_BTN_SYSTEM_SUPER]->hide(); //
                 m_pBtns[SET_BTN_SYSTEM_FACTORYTEST]->hide();
                 LoginDlg dlg;
                 dlg.exec() ;
@@ -357,7 +353,6 @@ void SetPage::on_btn_clicked()
                         gUserLoginState.setLoginState(true);
                         if(3 != ret)
                         {
-                            m_pBtns[SET_BTN_SYSTEM_SUPER]->show(); //
                             m_pBtns[SET_BTN_SYSTEM_FACTORYTEST]->show();
                         }
                         break;
@@ -418,12 +413,10 @@ void SetPage::setSuperPage(bool bShow)
 {
     if(bShow)
     {
-        m_pBtns[SET_BTN_SYSTEM_SUPER]->show();
         m_pBtns[SET_BTN_SYSTEM_FACTORYTEST]->show();
     }
     else
     {
-        m_pBtns[SET_BTN_SYSTEM_SUPER]->hide();
         m_pBtns[SET_BTN_SYSTEM_FACTORYTEST]->hide();
     }
 }

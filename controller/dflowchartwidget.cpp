@@ -3178,6 +3178,14 @@ void DFlowChartWidget::paintValue(QPainter &painter)
         painter.drawText(338, 210, toString(m_flowRate[S1_VALUE], 1) + " L/min");
         break;
     case MACHINE_PURIST:
+        //I2
+        if (gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_UP_IN))
+        {
+            painter.drawText(480, 350,
+                            toString(m_waterInfo[I2_VALUE].fQuality, 1) + QString(" ") + strUs);
+            painter.drawText(480, 365,
+                            toString(m_waterInfo[I2_VALUE].fTemp, 1)  + QString(" ")+ m_strUnit[TEMP_UNIT]);
+        }
         //I4
         if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveTOC))
         {
@@ -3230,7 +3238,20 @@ void DFlowChartWidget::paintValue(QPainter &painter)
 
 		if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveTOC))
         {
-            painter.drawText(170, 495, tr("TOC") + ":  " + toString(m_fToc) + QString("ppb"));
+        	QString strToc;
+        	if(m_fToc >= 200)
+        	{
+        		strToc = ">200" + QString("ppb");
+        	}
+			else if(m_fToc < 10)
+			{
+				strToc = toString(m_fToc, 1) + QString("ppb");
+			}
+			else
+			{
+				strToc = toString(m_fToc) + QString("ppb");
+			}
+            painter.drawText(170, 495, tr("TOC") + ":  " + strToc);
         }
         break;
     case MACHINE_L_EDI_LOOP:
@@ -3262,7 +3283,20 @@ void DFlowChartWidget::paintValue(QPainter &painter)
                          tr("RO Rejection") + ":  " + toString(m_fResidue, 1) + QString("%"));
 		if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveTOC))
         {
-            painter.drawText(170, 475, tr("TOC") + ":  " + toString(m_fToc) + QString("ppb"));
+            QString strToc;
+        	if(m_fToc >= 200)
+        	{
+        		strToc = ">200" + QString("ppb");
+        	}
+			else if(m_fToc < 10)
+			{
+				strToc = toString(m_fToc, 1) + QString("ppb");
+			}
+			else
+			{
+				strToc = toString(m_fToc) + QString("ppb");
+			}
+            painter.drawText(170, 475, tr("TOC") + ":  " + strToc);
         }
         break;
     case MACHINE_UP:
@@ -3279,7 +3313,20 @@ void DFlowChartWidget::paintValue(QPainter &painter)
 
 	   	if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveTOC))
        	{
-           	painter.drawText(170, 475, tr("TOC") + ":  " + toString(m_fToc) + QString("ppb"));
+       	    QString strToc;
+        	if(m_fToc >= 200)
+        	{
+        		strToc = ">200" + QString("ppb");
+        	}
+			else if(m_fToc < 10)
+			{
+				strToc = toString(m_fToc, 1) + QString("ppb");
+			}
+			else
+			{
+				strToc = toString(m_fToc) + QString("ppb");
+			}
+           	painter.drawText(170, 475, tr("TOC") + ":  " + strToc);
        	}
         break;
     case MACHINE_L_RO_LOOP:
@@ -3312,7 +3359,20 @@ void DFlowChartWidget::paintValue(QPainter &painter)
 		
 		if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveTOC))
         {
-            painter.drawText(170, 475, tr("TOC") + ":  " + toString(m_fToc) + QString("ppb"));
+            QString strToc;
+        	if(m_fToc >= 200)
+        	{
+        		strToc = ">200" + QString("ppb");
+        	}
+			else if(m_fToc < 10)
+			{
+				strToc =toString(m_fToc, 1) + QString("ppb");
+			}
+			else
+			{
+				strToc = toString(m_fToc) + QString("ppb");
+			}
+            painter.drawText(170, 475, tr("TOC") + ":  " + strToc);
         }
         break;
     case MACHINE_PURIST:
@@ -3322,7 +3382,20 @@ void DFlowChartWidget::paintValue(QPainter &painter)
                          tr("185 UV") + QString(":  %1mA").arg(m_detectionPara[N2_DETECTION].iValueI));
         if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveTOC))
         {
-            painter.drawText(170, 490, tr("TOC") + ":  " + toString(m_fToc) + QString("ppb"));
+            QString strToc;
+        	if(m_fToc >= 200)
+        	{
+        		strToc = ">200" + QString("ppb");
+        	}
+			else if(m_fToc < 10)
+			{
+				strToc = toString(m_fToc, 1) + QString("ppb");
+			}
+			else
+			{
+				strToc = toString(m_fToc) + QString("ppb");
+			}
+            painter.drawText(170, 490, tr("TOC") + ":  " + strToc);
         }
         break;
     default:

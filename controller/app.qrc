@@ -6,5 +6,6 @@
         <file>Table.qss</file>
         <file>tabWidget.qss</file>
         <file>settimedlg.qss</file>
+        <file>other.qss</file>
     </qresource>
 </RCC>
