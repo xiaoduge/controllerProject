@@ -1,3 +1,6 @@
+/*
+* NetworkPage已弃用，改用新的DNetworkPage类代替
+*/
 #ifndef NETWORKPAGE_H
 #define NETWORKPAGE_H
 
@@ -36,7 +39,6 @@ public:
     void update();
 
 private:
-
     void buildTitles();
     
     void save();

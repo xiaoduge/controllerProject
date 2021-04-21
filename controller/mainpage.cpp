@@ -527,8 +527,16 @@ void MainPage::initUi()
         m_pLabels[LABEL_NAVI_WT_WQ_UNIT]->hide();
         break;
     case MACHINE_PURIST:
-        m_pLabels[LABEL_NAVI_WT_WQ_VALUE]->show();
-        m_pLabels[LABEL_NAVI_WT_WQ_UNIT]->show();
+        if (gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_UP_IN))
+        {
+            m_pLabels[LABEL_NAVI_WT_WQ_VALUE]->show();
+            m_pLabels[LABEL_NAVI_WT_WQ_UNIT]->show();
+        }
+        else
+        {
+            m_pLabels[LABEL_NAVI_WT_WQ_VALUE]->hide();
+            m_pLabels[LABEL_NAVI_WT_WQ_UNIT]->hide();
+        }
         break;
     default:     
         m_pLabels[LABEL_NAVI_EDI_LOOP_VALUE]->hide();
@@ -610,6 +618,8 @@ void MainPage::update()
    
     switch(gGlobalParam.iMachineType)
     {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
     case MACHINE_Genie:
     case MACHINE_UP:
     case MACHINE_PURIST:
@@ -619,6 +629,21 @@ void MainPage::update()
     default:
         break;
     }
+
+    if(MACHINE_PURIST == gGlobalParam.iMachineType)
+    {
+        if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_UP_IN))
+        {
+            m_pLabels[LABEL_NAVI_WT_WQ_VALUE]->show();
+            m_pLabels[LABEL_NAVI_WT_WQ_UNIT]->show();
+        }
+        else
+        {
+            m_pLabels[LABEL_NAVI_WT_WQ_VALUE]->hide();
+            m_pLabels[LABEL_NAVI_WT_WQ_UNIT]->hide();
+        }
+    }
+
 #ifdef SUB_ACCOUNT
     if (gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_SUB_ACCOUNT))
     {
@@ -1385,15 +1410,18 @@ void  MainPage::updToc(float fToc)
 
     if (isVisible())
     {
-        if(fToc == 200)
+        if(fToc >= 200)
         {
             m_pLabels[m_aiLblMap[LABEL_NAVI_UP_TOC_VALUE]]->setText(tr(">200"));
         }
-        else
-        {
-            m_pLabels[m_aiLblMap[LABEL_NAVI_UP_TOC_VALUE]]->setText(QString::number(fToc,'f',0));
-        }
-
+    	else if(fToc < 10)
+    	{
+    		m_pLabels[m_aiLblMap[LABEL_NAVI_UP_TOC_VALUE]]->setText(QString::number(fToc,'f',1));
+    	}
+		else
+		{
+			m_pLabels[m_aiLblMap[LABEL_NAVI_UP_TOC_VALUE]]->setText(QString::number(fToc,'f',0));
+		}
     }
 }
 

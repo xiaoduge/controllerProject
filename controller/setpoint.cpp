@@ -416,6 +416,22 @@ SetPoint::SetPoint(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : C
     default:
         break;
     } 
+	
+	switch(gGlobalParam.iMachineType)/* TOC上限？ppb */
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_PURIST:
+    case MACHINE_ADAPT:
+        aIds[iIdx].iDspType    = SET_POINT_FORMAT1;
+        aIds[iIdx].iParamId[0] = MACHINE_PARAM_SP34;
+        iIdx++;
+        break;
+    default:
+        break;
+    }
 
     m_iRealNum = iIdx;
     
@@ -677,6 +693,12 @@ void SetPoint::buildTranslation()
             pSetPlistItem[iLoop]->setName(tr("Work Pressure"));
             pSetPlistItem[iLoop]->setP1Name(tr("Max."));
             pSetPlistItem[iLoop]->setP1Unit(tr("bar"));
+            break;
+		case MACHINE_PARAM_SP34:
+            /*Toc max 100ppb */
+            pSetPlistItem[iLoop]->setName(tr("TOC"));
+            pSetPlistItem[iLoop]->setP1Name(tr("Max."));
+            pSetPlistItem[iLoop]->setP1Unit(tr("ppb"));
             break;
         }
     }
@@ -958,6 +980,13 @@ void SetPoint::save()
             fTemp = pSetPlistItem[iLoop]->getP1().toFloat();
             MMParam.SP[MACHINE_PARAM_SP33] = fTemp;
             break;
+		case MACHINE_PARAM_SP34:
+            /*     
+            TOC上限100ppb
+            */
+            fTemp = pSetPlistItem[iLoop]->getP1().toFloat();
+            MMParam.SP[MACHINE_PARAM_SP34] = fTemp;
+            break;
         }
     }
 
@@ -990,8 +1019,6 @@ void SetPoint::on_btn_clicked(int index)
 
 void SetPoint::update()
 {
-    // {1,1,1,1,2,1,2,2,1,1,2,1,1,2,2,2,2,2,2,1}
-
     int iLoop;
     
     for(iLoop = 0 ; iLoop < m_iRealNum ; iLoop++)
@@ -1131,6 +1158,12 @@ void SetPoint::update()
             /* 自来水压力下限1.0bar */
             pSetPlistItem[iLoop]->setP1(QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP33],'f',1));
 
+            break;
+	   case MACHINE_PARAM_SP34:
+            /*     
+            TOC上限100ppb
+            */
+            pSetPlistItem[iLoop]->setP1(QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP34],'f',1));
             break;
         }
     }

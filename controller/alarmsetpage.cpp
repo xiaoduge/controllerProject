@@ -68,7 +68,6 @@ void AlarmSetPage::buildTranslation()
 {
     int iIdx = 0;
 
-    /* refer : QString gastrAlarmName */
     m_pBtnSave->setTip(tr("save"));
 
     for (iIdx = 0; iIdx < m_iRealNum; iIdx++)
@@ -120,7 +119,6 @@ void AlarmSetPage::buildTranslation()
             }
             else
             {
-                //High RO Conductivity
                 m_plistItem[iIdx]->setName(tr("High RO Conductivity"));
             }
             break;
@@ -222,9 +220,12 @@ void AlarmSetPage::buildTranslation()
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGH_WORK_PRESSURE):
             m_plistItem[iIdx]->setName(tr("High Work Pressure"));
             break;
-	    case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_WORK_PRESSURE):
-        	m_plistItem[iIdx]->setName(tr("Low Working Pressure"));
-        	break;
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_WORK_PRESSURE):
+            m_plistItem[iIdx]->setName(tr("Low Working Pressure"));
+            break;
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGHER_TOC):
+            m_plistItem[iIdx]->setName(tr("High TOC"));
+            break;
         default:
             break;
         }
@@ -789,7 +790,7 @@ void AlarmSetPage::save()
                 Param.aulFlag[DISP_ALARM_PART1] &= ~(1<<DISP_ALARM_PART1_HIGH_WORK_PRESSURE);
             }
             break;
-		case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_WORK_PRESSURE):
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_WORK_PRESSURE):
             if (BITMAPBUTTON_STATE_SEL == m_plistItem[iIdx]->getSwitchState())
             {
                 Param.aulFlag[DISP_ALARM_PART1] |= (1<<DISP_ALARM_PART1_LOWER_WORK_PRESSURE);
@@ -797,6 +798,16 @@ void AlarmSetPage::save()
             else
             {
                 Param.aulFlag[DISP_ALARM_PART1] &= ~(1<<DISP_ALARM_PART1_LOWER_WORK_PRESSURE);
+            }
+            break;
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGHER_TOC):            
+            if (BITMAPBUTTON_STATE_SEL == m_plistItem[iIdx]->getSwitchState())
+            {
+                Param.aulFlag[DISP_ALARM_PART1] |= (1<<DISP_ALARM_PART1_HIGHER_TOC);
+            }
+            else
+            {
+                Param.aulFlag[DISP_ALARM_PART1] &= ~(1<<DISP_ALARM_PART1_HIGHER_TOC);
             }
             break;
         }
@@ -1231,6 +1242,16 @@ void AlarmSetPage::update()
             break;
 		case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_WORK_PRESSURE):
             if (pParam->aulFlag[DISP_ALARM_PART1] & (1<<DISP_ALARM_PART1_LOWER_WORK_PRESSURE))
+            {
+                m_plistItem[iIdx]->setSwitchState(BITMAPBUTTON_STATE_SEL);
+            }
+            else
+            {
+                m_plistItem[iIdx]->setSwitchState(BITMAPBUTTON_STATE_UNSEL);
+            }
+            break;
+		case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGHER_TOC): 
+            if (pParam->aulFlag[DISP_ALARM_PART1] & (1<<DISP_ALARM_PART1_HIGHER_TOC))
             {
                 m_plistItem[iIdx]->setSwitchState(BITMAPBUTTON_STATE_SEL);
             }

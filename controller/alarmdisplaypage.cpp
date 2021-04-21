@@ -92,97 +92,57 @@ void AlarmDisplayPage::buildTranslation()
         switch(aAsIds[iIdx].iId)
         {
          /* Part One */
-        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP):
-            /*
-            检查254UV
-            */
+        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP): //检查254UV
             m_astrPartAlarm[iIdx] = tr("Check 254 UV");
-
             aAsIndex[DISP_ALARM_PART0][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP)] = iIdx; 
             break;
-        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_185UV_OOP):
-            /*
-            检查185UV
-            */
+        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_185UV_OOP): //检查185UV
             m_astrPartAlarm[iIdx] = tr("Check 185 UV");
             aAsIndex[DISP_ALARM_PART0][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP)] = iIdx; 
             break;
-        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_TANKUV_OOP):
-            /*
-            检查水箱U
-            */
+        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_TANKUV_OOP): //检查水箱U
             m_astrPartAlarm[iIdx] = tr("Check Tank UV");
             aAsIndex[DISP_ALARM_PART0][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP)] = iIdx; 
             break;
-        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_TUBEUV_OOP):
-            /*
-            检查管路UV
-            */
+        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_TUBEUV_OOP): //检查管路UV
             m_astrPartAlarm[iIdx] = tr("Check TUBE UV");
             aAsIndex[DISP_ALARM_PART0][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP)] = iIdx; 
             break;
-        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_PREPACK_OOP):
-            /*
-            PRE-Pack脱落
-            */
+        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_PREPACK_OOP): //PRE-Pack脱落
             m_astrPartAlarm[iIdx] = tr("PRE Pack Not Detected");
             aAsIndex[DISP_ALARM_PART0][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP)] = iIdx;
             break;
-        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_ACPACK_OOP):
-            /*
-            AC-Pack脱落
-            */
+        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_ACPACK_OOP): //AC-Pack脱落
             m_astrPartAlarm[iIdx] = tr("AC Pack Not Detected");
             aAsIndex[DISP_ALARM_PART0][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP)] = iIdx;
             break;
-        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_PPACK_OOP):
-            /*
-            P-Pack脱落
-            */
+        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_PPACK_OOP): //P-Pack脱落
             m_astrPartAlarm[iIdx] = tr("P Pack Not Detected");
             aAsIndex[DISP_ALARM_PART0][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP)] = iIdx; 
             break;
-        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_ATPACK_OOP):
-            /*
-            AT-Pack脱落
-            */
+        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_ATPACK_OOP): //AT-Pack脱落
             m_astrPartAlarm[iIdx] = tr("AT Pack Not Detected");
             aAsIndex[DISP_ALARM_PART0][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP)] = iIdx; 
             break;
-        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_HPACK_OOP):
-            /*
-            H-Pack脱落
-            */
+        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_HPACK_OOP): //H-Pack脱落
             m_astrPartAlarm[iIdx] = tr("H Pack Not Detected");
             aAsIndex[DISP_ALARM_PART0][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP)] = iIdx; 
             break;
-        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_UPACK_OOP):
-            /*
-            U-Pack脱落
-            */
+        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_UPACK_OOP): //U-Pack脱落
             m_astrPartAlarm[iIdx] = tr("U Pack Not Detected");
             aAsIndex[DISP_ALARM_PART0][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP)] = iIdx; 
             break;
 
-             /* Part Two */
-        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE):
-            /*
-            自来水压力低
-            */
+        /* Part Two */
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE): //自来水压力低
             m_astrPartAlarm[iIdx] = tr("Lower Tap Pres.");
             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
             break;
-        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGER_SOURCE_WATER_CONDUCTIVITY):
-            /*
-            自来水电导率>设定值
-            */
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGER_SOURCE_WATER_CONDUCTIVITY): //自来水电导率>设定值
             m_astrPartAlarm[iIdx] = tr("Tap Cond. > ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP13]) + tr("us/cm");
             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
             break;
-        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGER_RO_PRODUCT_CONDUCTIVITY):
-            /*
-            RO产水>设定值
-            */
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGER_RO_PRODUCT_CONDUCTIVITY): //RO产水>设定值
             if (MACHINE_PURIST == gGlobalParam.iMachineType)
             {
                 m_astrPartAlarm[iIdx] = tr("UP Feed Cond. > ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP3]) + tr("us/cm");
@@ -193,108 +153,65 @@ void AlarmDisplayPage::buildTranslation()
             }
             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
             break;
-        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_RO_RESIDUE_RATIO):
-            /*
-            RO截留率<设定值
-            */
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_RO_RESIDUE_RATIO): //RO截留率<设定值
             m_astrPartAlarm[iIdx] = tr("RO Rejection < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP2]) + tr("%");
             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
             break;
-        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_EDI_PRODUCT_RESISTENCE):
-            /*
-            EDI产水<设定值
-            */
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_EDI_PRODUCT_RESISTENCE): //EDI产水<设定值
             m_astrPartAlarm[iIdx] = tr("EDI Product Resis. < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP4]) + tr("omg");
             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
             break;
-        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_UP_PRODUCT_RESISTENCE):
-            /*
-            UP取水<设定值
-            */
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_UP_PRODUCT_RESISTENCE): //UP取水<设定值
             m_astrPartAlarm[iIdx] = tr("UP Product Resis. < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP7]) + tr("omg");
             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
             break;
-        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_TUBE_RESISTENCE):
-            /*
-            管路水质<设定值
-            */
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_TUBE_RESISTENCE): //管路水质<设定值
             m_astrPartAlarm[iIdx] = tr("Loop Resis. < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP17]) + tr("omg");
             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
             break;
-        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_PWTANKE_WATER_LEVEL):
-            /*
-            纯水箱液位<设定值
-            */
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_PWTANKE_WATER_LEVEL): //纯水箱液位<设定值
             m_astrPartAlarm[iIdx] = tr("Pure Tank Level < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP6]) + tr("%");
             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
             break;
-        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SWTANKE_WATER_LEVEL):
-            /*
-            源水箱液位<设定值 
-            */
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SWTANKE_WATER_LEVEL): //源水箱液位<设定值 
             m_astrPartAlarm[iIdx] = tr("Feed Tank Level < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP9]) + tr("%");
             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
             break;
-        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_RO_PRODUCT_FLOWING_VELOCITY):
-            /*
-            RO产水流速<设定值
-            */
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_RO_PRODUCT_FLOWING_VELOCITY): //RO产水流速<设定值
             m_astrPartAlarm[iIdx] = tr("RO Prod. Rate < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP15]) + tr("L/h");
             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
             break;
-        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_RO_WASTE_FLOWING_VELOCITY):
-            /*
-            RO弃水流速<设定值
-            */
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_RO_WASTE_FLOWING_VELOCITY): //RO弃水流速<设定值
             m_astrPartAlarm[iIdx] = tr("RO Rej. Rate < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP16]) + tr("L/h");
             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
             break;
-        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_PWTANK_RESISTENCE):
-            /*
-            水箱水质 <设定值
-            */
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_PWTANK_RESISTENCE): //水箱水质 <设定值
             m_astrPartAlarm[iIdx] = tr("Tank Resis. < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP11]) + tr("omg");
             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
             break;
              /*
-        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_PW_PRODUCT_RESISTENCE):
-            //纯水取水<设定值
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_PW_PRODUCT_RESISTENCE): //纯水取水<设定值
             m_astrPartAlarm[iIdx] = tr("Feed Product Resis.") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP12]) + tr("omg");
             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
             break;
             */
-        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_CIR_WATER_CONDUCTIVITY):
-            /*
-            循环水质<设定值 
-            */
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_CIR_WATER_CONDUCTIVITY): //循环水质<设定值 
             m_astrPartAlarm[iIdx] = tr("Recir. Cond. < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP31]) + tr("omg");
             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
             break;
-        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_HP_PRODUCT_WATER_CONDUCTIVITY):
-            /*
-            HP产水<设定值 
-            */
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_HP_PRODUCT_WATER_CONDUCTIVITY): //HP产水<设定值 
             m_astrPartAlarm[iIdx] = tr("HP Product Cond. < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP32]) + tr("omg");
             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
             break;
-        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGHER_SOURCE_WATER_TEMPERATURE):
-            /*
-            进水温度>45℃
-            */
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGHER_SOURCE_WATER_TEMPERATURE): //进水温度>45℃
             m_astrPartAlarm[iIdx] = tr("Feed Temp. > ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP18]) + tr("Celsius");
             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
             break;
-        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_TEMPERATURE):
-            /*
-            进水温度<5℃
-            */
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_TEMPERATURE): // 进水温度<5℃
             m_astrPartAlarm[iIdx] = tr("Feed Temp. < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP19]) + tr("Celsius");
             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
             break;
-        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGHER_RO_PRODUCT_TEMPERATURE):
-            /*
-            RO产水温度>45℃
-            */
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGHER_RO_PRODUCT_TEMPERATURE): //RO产水温度>45℃
             if (MACHINE_PURIST == gGlobalParam.iMachineType)
             {
                 m_astrPartAlarm[iIdx] = tr("UP Feed Temp. > ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP20]) + tr("Celsius");
@@ -306,10 +223,7 @@ void AlarmDisplayPage::buildTranslation()
               
             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
             break;
-        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_RO_PRODUCT_TEMPERATURE):
-             /*
-             RO产水温度<5℃
-             */
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_RO_PRODUCT_TEMPERATURE): //RO产水温度<5℃
             if (MACHINE_PURIST == gGlobalParam.iMachineType)
             {
                 m_astrPartAlarm[iIdx] = tr("UP Feed Temp. < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP21]) + tr("Celsius");
@@ -320,90 +234,58 @@ void AlarmDisplayPage::buildTranslation()
             }
             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
             break;
-        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGHER_EDI_PRODUCT_TEMPERATURE):
-            /*
-            EDI产水温度>45℃
-            */
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGHER_EDI_PRODUCT_TEMPERATURE): //EDI产水温度>45℃
             m_astrPartAlarm[iIdx] = tr("EDI Temp. > ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP22]) + tr("Celsius");
             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
             break;
-        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_EDI_PRODUCT_TEMPERATURE):
-            /*
-            EDI产水温度<5℃
-            */
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_EDI_PRODUCT_TEMPERATURE): //EDI产水温度<5℃
             m_astrPartAlarm[iIdx] = tr("EDI Temp. < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP23]) + tr("Celsius");
             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
             break;
-        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGHER_UP_PRODUCT_TEMPERATURE):
-            /*
-            UP产水温度>45℃
-            */
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGHER_UP_PRODUCT_TEMPERATURE): //UP产水温度>45℃
             m_astrPartAlarm[iIdx] = tr("UP Temp. > ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP24]) + tr("Celsius");
             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
             break;
-        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_UP_PRODUCT_TEMPERATURE):
-            /*
-            UP产水温度<5℃
-            */
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_UP_PRODUCT_TEMPERATURE): //UP产水温度<5℃
             m_astrPartAlarm[iIdx] = tr("UP Temp. < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP25]) + tr("Celsius");
             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
             break;
-        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGHER_TUBE_TEMPERATURE):
-            /*
-            管路温度>45℃
-            */
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGHER_TUBE_TEMPERATURE): //管路温度>45℃
             m_astrPartAlarm[iIdx] = tr("Loop Temp. > ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP26]) + tr("Celsius");
             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
             break;
-        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_TUBE_TEMPERATURE):
-            /*
-            管路温度<5℃
-            */
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_TUBE_TEMPERATURE): //管路温度<5℃
             m_astrPartAlarm[iIdx] = tr("Loop Temp. < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP27]) + tr("Celsius");
             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
             break;
-        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGHER_TOC_SENSOR_TEMPERATURE):
-            /*
-            TOC温度>45℃
-            */
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGHER_TOC_SENSOR_TEMPERATURE): //TOC温度>45℃
             m_astrPartAlarm[iIdx] = tr("TOC Temp. > ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP28]) + tr("Celsius");
             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
             break;
-        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_TOC_SENSOR_TEMPERATURE):
-            /*
-            TOC温度<5℃
-            */
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_TOC_SENSOR_TEMPERATURE): //TOC温度<5℃
             m_astrPartAlarm[iIdx] = tr("TOC Temp. < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP29]) + tr("Celsius");
             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
             break;
-        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_TOC_SOURCE_WATER_RESISTENCE):            
-            /*
-            TOC进水水质<15MΩ。cm
-            */
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_TOC_SOURCE_WATER_RESISTENCE): //TOC进水水质<15MΩ。cm
             m_astrPartAlarm[iIdx] = tr("TOC Feed Resis. < ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP30]) + tr("omg");
             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
             break;
-        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LEAK_OR_TANKOVERFLOW): //LEAK
-            /*
-            Leak or Tank Overflow
-            */
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LEAK_OR_TANKOVERFLOW): //Leak or Tank Overflow
             m_astrPartAlarm[iIdx] = tr("Leak or Tank Overflow");
             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx;
             break;
-        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGH_WORK_PRESSURE):
-            /*
-            hight work pressure
-            */
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGH_WORK_PRESSURE): //工作压力高
             m_astrPartAlarm[iIdx] = tr("High Work Pressure");
             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx;
             break;
-		case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_WORK_PRESSURE):
-			/*
-            low work pressure
-            */
-			m_astrPartAlarm[iIdx] = tr("Low Working Pressure");
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_WORK_PRESSURE): //工作压力低
+            m_astrPartAlarm[iIdx] = tr("Low Working Pressure");
             aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx;
-			break;
+            break;
+        case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGHER_TOC): //TOC高于设定值
+            m_astrPartAlarm[iIdx] = tr("TOC > ") + QString::number(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP34]) + tr("ppb");
+            aAsIndex[DISP_ALARM_PART1][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE)] = iIdx; 
+            break;
         default:
             break;
         }
@@ -1076,8 +958,6 @@ void AlarmDisplayPage::csUpdate()
             if (gCMUsage.ulUsageState & (1 << DISP_TUBE_FILTERLIFE) 
                 || gCMUsage.ulUsageState & (1 << DISP_TUBE_FILTERLIFE))
             {
-                
-                /* for DISP_T_A_FILTER column */
                 strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_TUBE_FILTERLIFE]);
                 m_pCslistItem[iIdx]->setInstDate(strTmp);
                 

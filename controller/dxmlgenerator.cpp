@@ -1384,7 +1384,23 @@ void DXmlGenerator::createAlarmPointList(QList<QStringList> &elementsList)
     default:
         break;
     }
-
+	
+	switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_PURIST:
+    case MACHINE_ADAPT:
+        appendElement(elementsList, "TOC",
+                      "Max", toString1(gGlobalParam.MMParam.SP[MACHINE_PARAM_SP34]), "3");
+        break;
+    default:
+        break;
+    }
 }
 
 void DXmlGenerator::createDispenseDataList(QList<QStringList> &elementsList, const DDispenseData &data)

@@ -18,6 +18,7 @@ class DLineEdit;
 class QSlider;
 class QButtonGroup;
 class QSpinBox;
+class DNetworkWidget;
 
 class DManagerSetPage : public CSubPage
 {
@@ -46,6 +47,8 @@ public:
         MANAGER_PAGE_CALIBRATION,
         MANAGER_PAGE_AUDIO,
         MANAGER_PAGE_LCD,
+        MANAGER_PAGE_FINALFILTER,
+        MANAGER_PAGE_NETWORK,
         MANAGER_PAGE_ADDSETTINGS, //Additional settings
         MANAGER_PAGE_NUM
     };
@@ -70,6 +73,9 @@ public:
 protected:
     void timerEvent(QTimerEvent *event);
 
+signals:
+    void wifiEnabled(bool);
+
 protected slots:
     //time page
     void on_timeDateSet_clicked();
@@ -79,7 +85,7 @@ protected slots:
 
     //Dispense Rate
     void on_caliSaveBtn_clicked();
-	
+
     //Audio
     void on_checkBox_changeState(int state);
     void on_audioBtnSavebtn_clicked();
@@ -89,6 +95,13 @@ protected slots:
     void on_CheckEnergySave_stateChanged(int state);
     void on_comboBox_currentIndexChanged(int index);
     void setValue(int);
+
+    //Final Filter
+    void on_FilterSaveBtn_clicked();
+
+    //Network
+    void onWifiCheckBoxChangeState(int state);
+    void on_NetworkSaveBtn_clicked();
 
     //Additional Settings
     void on_AdditionalBtnSave_clicked();
@@ -107,6 +120,8 @@ private:
     void initAudioPage();
 
     void initLcdPage();
+    void initFinalFilterPage();
+    void initNetworkPage();
     void initAdditionalSettingsPage();
 
     void changeTime();
@@ -165,8 +180,23 @@ private:
     QString       m_DispNames[2];
     QPushButton   *m_pLcdBtnSave;
     int            m_iEnergySave;
-    int            m_iBrightness;
+    int            m_iBrightness; 
     int            m_iSleepTime;
+
+    //Final Filter
+    QWidget       *m_pFilterBackWidget[2];
+    QCheckBox     *m_pFilterCheck[2];
+    QLabel        *m_pFilterLabel[2];
+    QPushButton   *m_pFilterSaveBtn;
+
+    //network
+    QWidget        *m_pWifiBackWidget;
+    QLabel         *m_pWifiLabel;
+    QCheckBox      *m_pWifiCheckBox;
+    DNetworkWidget *m_pNetworkWidget;
+    QPushButton    *m_pNetworkSaveBtn;
+    int             m_iNetworkMask;
+
 
     //Additional Settings
     QWidget       *m_pAdditionalWidget[ADDITIONAL_NUM];

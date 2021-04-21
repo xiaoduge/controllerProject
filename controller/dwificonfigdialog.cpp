@@ -13,6 +13,11 @@ DWifiConfigDialog::DWifiConfigDialog(QWidget *parent) : DWifiConfigWidget(parent
     initUI();
 }
 
+DWifiConfigDialog::~DWifiConfigDialog()
+{
+    qDebug() << "~DWifiConfigDialog()";
+}
+
 void DWifiConfigDialog::updatePage()
 {
     m_pPSKLabel->setText(tr("PassWord"));

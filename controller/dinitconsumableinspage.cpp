@@ -28,10 +28,6 @@ void DInitConsumableInsPage::buildTranslation()
     m_pExNextBtn->setText(tr("Next"));
     m_pExBackBtn->setText(tr("Back"));
 
-    QString strSuggest = tr("Note:") + "\n"
-            + tr("Install the AC Pack after all other components with RFID chip are installed.") + "\n"
-            + tr("Scan the final filter and install it to the dispenser after finishing system setting-up.");
-
     m_pTitleLb->setText(tr("Follow the steps below to install and scan the chip for the consumables."));
     m_pSuggestLb[Type1]->setText(tr("Step 1: ") + tr("Scan the consumables on the RFID tags position") + "\n" + tr("Note:") + tr("Scan the final filter and install it to the dispenser after finishing system setting-up."));
     m_pSuggestLb[Type0]->setText(tr("Step 2: ") + tr("Install cartridges"));
@@ -181,15 +177,15 @@ void DInitConsumableInsPage::on_ExNextBtn_clicked()
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_L_EDI_LOOP:
-	case MACHINE_L_RO_LOOP:
+    case MACHINE_L_RO_LOOP:
         if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
         {
-        	m_wndMain->naviInitPage(Ex_Init_InstallConsumable, 0);
-        	m_wndMain->prepareKeyStroke();
+            m_wndMain->naviInitPage(Ex_Init_InstallConsumable, 0);
+            m_wndMain->prepareKeyStroke();
         }
         else
         {
-			QDate curDate = QDate::currentDate();
+            QDate curDate = QDate::currentDate();
             QString strDate = curDate.toString("yyyy-MM-dd");
             gAdditionalCfgParam.productInfo.strInstallDate = strDate;
             MainSaveInstallMsg(gGlobalParam.iMachineType);
@@ -200,7 +196,7 @@ void DInitConsumableInsPage::on_ExNextBtn_clicked()
 
             m_wndMain->restart();
         }
-		break;
+        break;
     default:
         m_wndMain->naviInitPage(Ex_Init_InstallConsumable, 0);
         m_wndMain->prepareKeyStroke();
@@ -425,13 +421,13 @@ void DInitConsumableInsPage::initPackConfig()
         }
         break;
     case MACHINE_L_Genie:
-		if(gAdditionalCfgParam.machineInfo.iMachineFlow != 250)
-		{
-		    install_info.iRfid = APP_RFID_SUB_TYPE_HPACK_ATPACK;
-	        install_info.strName = tr("AT Pack");
-	        m_map[Type0].insert(DISP_AT_PACK, install_info);
-	        m_list[Type0].append(DISP_AT_PACK);
-		}
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow != 250)
+        {
+            install_info.iRfid = APP_RFID_SUB_TYPE_HPACK_ATPACK;
+            install_info.strName = tr("AT Pack");
+            m_map[Type0].insert(DISP_AT_PACK, install_info);
+            m_list[Type0].append(DISP_AT_PACK);
+        }
         break;
     default:
         break;
@@ -464,6 +460,32 @@ void DInitConsumableInsPage::initOtherConfig()
         break;
     }
 
+    if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
+    {
+        //if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_FINALFILTER_B))
+        {
+            install_info.iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+            if(0 == gAdditionalCfgParam.productInfo.iCompany)
+            {
+                install_info.strName = tr("Final Fliter B");
+            }
+            else
+            {
+                install_info.strName = tr("Bio-filter");
+            }
+            m_map[Type1].insert(DISP_T_B_FILTER, install_info);
+            m_list[Type1].append(DISP_T_B_FILTER);
+        }
+        //if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_FINALFILTER_A))
+        {
+            install_info.iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+            install_info.strName = tr("Final Fliter A"); //0.2um
+            m_map[Type1].insert(DISP_T_A_FILTER, install_info);
+            m_list[Type1].append(DISP_T_A_FILTER);
+        }
+    }
+
+#if 0
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_L_Genie:
@@ -516,6 +538,7 @@ void DInitConsumableInsPage::initOtherConfig()
     default:
         break;
     }
+#endif
 
     switch(gGlobalParam.iMachineType)
     {

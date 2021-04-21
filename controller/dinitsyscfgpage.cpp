@@ -2,6 +2,7 @@
 #include "mainwindow.h"
 #include "dcheckboxlistitemwidget.h"
 #include "dinittankcfgwidget.h"
+#include "exconfig.h"
 #include <QMouseEvent>
 #include <QCheckBox>
 #include <QLabel>
@@ -19,36 +20,31 @@ DInitSyscfgpage::DInitSyscfgpage(QObject *parent,CBaseWidget *widget ,MainWindow
 void DInitSyscfgpage::creatTitle()
 {
     CSubPage::creatTitle();
-
     buildTitles();
-
     selectTitle(0);
 }
 
 void DInitSyscfgpage::buildTitles()
 {
     QStringList stringList;
-
     stringList << tr("System Config");
-
     setTitles(stringList);
-
 }
 
 void DInitSyscfgpage::buildTranslation()
 {
     m_pExLbTitle->setText(tr("Configuration"));
 
-	for(int i = 0; i < m_cfgMap.size(); ++i)
+    for(int i = 0; i < m_cfgMap.size(); ++i)
     {
         int code = m_cfgMap.value(i);
         QListWidgetItem *item = m_pListWidget->item(i);
         DCheckBoxListItemWidget* itemWidget = qobject_cast<DCheckBoxListItemWidget*>(m_pListWidget->itemWidget(item));
-		switch(code)
-		{
-		case DISP_SM_Printer:
+        switch(code)
+        {
+        case DISP_SM_Printer:
             itemWidget->setTag(tr("Printer"));
-			break;
+            break;  
         case DISP_SM_SW_PUMP:
             itemWidget->setTag(tr("Feed PUMP"));
             break;
@@ -64,10 +60,22 @@ void DInitSyscfgpage::buildTranslation()
         case DISP_SM_HaveTubeFilter:
             itemWidget->setTag(tr("Loop Filter"));
             break;
+        case DISP_SM_FINALFILTER_A:
+            itemWidget->setTag(tr("Final Fliter A"));
+            break;
+        case DISP_SM_FINALFILTER_B:
+            if(0 == gAdditionalCfgParam.productInfo.iCompany)
+            {
+                itemWidget->setTag(tr("Final Fliter B"));
+            }
+            else
+            {
+                itemWidget->setTag(tr("Bio-filter"));
+            }
+            break;
         default:
             break;
-		}
-
+        }   
     }
 
     m_pExNextBtn->setText(tr("Next"));
@@ -77,9 +85,7 @@ void DInitSyscfgpage::buildTranslation()
 void DInitSyscfgpage::switchLanguage()
 {
     buildTranslation();
-
     buildTitles();
-
     selectTitle(titleIndex());
 }
 
@@ -97,7 +103,7 @@ void DInitSyscfgpage::setBackColor()
 
 void DInitSyscfgpage::createControl()
 {
-	QColor colors[] = {QColor(200,200,188),QColor(228, 231, 240)};
+    QColor colors[] = {QColor(200,200,188),QColor(228, 231, 240)};
 
     m_pListWidget = new QListWidget(m_widget);
 
@@ -195,9 +201,11 @@ void DInitSyscfgpage::connectData()
         int code = m_cfgMap.value(i);
         QListWidgetItem *item = m_pListWidget->item(i);
         DCheckBoxListItemWidget* itemWidget = qobject_cast<DCheckBoxListItemWidget*>(m_pListWidget->itemWidget(item));
-		switch (code)
-		{
-		case DISP_SM_SW_PUMP:
+        switch (code)
+        {
+        case DISP_SM_SW_PUMP:
+        case DISP_SM_FINALFILTER_A:
+        case DISP_SM_FINALFILTER_B: 
             if(gGlobalParam.MiscParam.ulMisFlags & (1 << code))
             {
                 itemWidget->setCheckBoxState(true);
@@ -206,35 +214,37 @@ void DInitSyscfgpage::connectData()
             {
                 itemWidget->setCheckBoxState(false);
             }
-			break;
-		default:
-			if(gGlobalParam.SubModSetting.ulFlags & (1 << code))
-        	{
-            	itemWidget->setCheckBoxState(true);
-        	}
-        	else
-        	{
-            	itemWidget->setCheckBoxState(false);
-        	}
-			break;
-		}
+            break;
+        default:
+            if(gGlobalParam.SubModSetting.ulFlags & (1 << code))
+            {
+                itemWidget->setCheckBoxState(true);
+            }
+            else
+            {
+                itemWidget->setCheckBoxState(false);
+            }
+            break;
+        }
     }
 }
 
 void DInitSyscfgpage::save()
 {
     DISP_SUB_MODULE_SETTING_STRU  smParam = gGlobalParam.SubModSetting;
-	DISP_MISC_SETTING_STRU        miscParam = gGlobalParam.MiscParam;
+    DISP_MISC_SETTING_STRU        miscParam = gGlobalParam.MiscParam;
 
     for(int i = 0; i < m_cfgMap.size(); ++i)
     {
         int code = m_cfgMap.value(i);
         QListWidgetItem *item = m_pListWidget->item(i);
         DCheckBoxListItemWidget* itemWidget = qobject_cast<DCheckBoxListItemWidget*>(m_pListWidget->itemWidget(item));
-		switch (code)
-		{
-		case DISP_SM_SW_PUMP:
-			if(Qt::Checked == itemWidget->checkBoxState())
+        switch (code)
+        {
+        case DISP_SM_SW_PUMP:
+        case DISP_SM_FINALFILTER_A:
+        case DISP_SM_FINALFILTER_B: 
+            if(Qt::Checked == itemWidget->checkBoxState())
             {
                 miscParam.ulMisFlags |= 1 << code;
             }
@@ -242,19 +252,18 @@ void DInitSyscfgpage::save()
             {
                 miscParam.ulMisFlags &= ~(1 << code);
             } 
-			break;
-		default:
-			if(Qt::Checked == itemWidget->checkBoxState())
-	        {
-	            smParam.ulFlags |= 1 << code;
-	        }
-	        else
-	        {
-	            smParam.ulFlags &= ~(1 << code);
-	        }
-			break;
-		}
-
+            break;
+        default:
+            if(Qt::Checked == itemWidget->checkBoxState())
+            {
+                smParam.ulFlags |= 1 << code;
+            }
+            else
+            {
+                smParam.ulFlags &= ~(1 << code);
+            }
+            break;
+        }
     }
 
     MainSaveSubModuleSetting(gGlobalParam.iMachineType, smParam);
@@ -280,6 +289,12 @@ void DInitSyscfgpage::initCfgMap()
 {
     int ikey = 0;
     m_cfgMap.insert(ikey, DISP_SM_Printer);
+    
+    ++ikey;
+    m_cfgMap.insert(ikey, DISP_SM_FINALFILTER_B);
+    
+    ++ikey;
+    m_cfgMap.insert(ikey, DISP_SM_FINALFILTER_A);
     
     switch(gGlobalParam.iMachineType)
     {

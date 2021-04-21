@@ -3,9 +3,10 @@
 #include "mainwindow.h"
 #include "exconfig.h"
 #include <QMouseEvent>
-
+#include <QScrollArea>
 #include <QSqlDatabase>
 #include <QSqlQuery>
+#include <QFormLayout>
 
 #include "dlineedit.h"
 #include "duserinfochecker.h"
@@ -65,7 +66,8 @@ void DSuperPowerPage::buildTranslation()
     m_pBtnDbDel->setText(tr("Delete"));
     m_pLbDbDel->setText(tr("Delete Data"));
 
-    m_pBtnDelCfg->setText(tr("Delete Cfg"));
+    m_pBtnDelCfg->setText(tr("Delete"));
+    m_pLbCfgDel->setText(tr("Delete Cfg"));
 
     m_pBtnSave->setTip(tr("Save"),QColor(228, 231, 240),BITMAPBUTTON_TIP_CENTER);
 }
@@ -73,9 +75,7 @@ void DSuperPowerPage::buildTranslation()
 void DSuperPowerPage::switchLanguage()
 {
     buildTranslation();
-
     buildTitles();
-
     selectTitle(titleIndex());
 }
 
@@ -97,77 +97,37 @@ void DSuperPowerPage::setBackColor()
 
 void DSuperPowerPage::createControl()
 {
-    int yOffset = BACKWIDGET_START_Y ;
-    QWidget *tmpWidget = NULL;
-    QRect    rectTmp;
-    int iLoop;
-    /* line 1*/
-    tmpWidget = new QWidget(m_widget);
+    QScrollArea *scrollWidget = new QScrollArea(m_widget);
+    QWidget *mainWidget = new QWidget(m_widget);
+    mainWidget->setMinimumWidth(740);
+    QFormLayout *formLayout = new QFormLayout;
 
-    QPalette pal(tmpWidget->palette());
-    pal.setColor(QPalette::Background, QColor(255,255,255));
-
-    tmpWidget->setAutoFillBackground(true);
-    tmpWidget->setPalette(pal);
-
-    tmpWidget->setGeometry(QRect(BACKWIDGET_START_X , yOffset, BACKWIDGET_WIDTH ,BACKWIDGET_HEIGHT));
-    yOffset += BACKWIDGET_START_HIATUS;
-
-    rectTmp = sQrectAry[0];
-    m_lbDefaultState = new QLabel(tmpWidget);
-    m_lbDefaultState->setGeometry(rectTmp);
-    m_lbDefaultState->show();
-    m_lbDefaultState->setAlignment(Qt::AlignCenter);
-
-    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN + 10);
-    rectTmp.setWidth(X_VALUE_WIDTH*2 + 5);
-    m_cmbDefaultState = new QComboBox(tmpWidget);
+    m_lbDefaultState = new QLabel;
+    m_cmbDefaultState = new QComboBox;
     m_cmbDefaultState->addItem(tr("Yes"));
     m_cmbDefaultState->addItem(tr("No"));
     m_cmbDefaultState->setCurrentIndex(1);
-    m_cmbDefaultState->setGeometry(rectTmp);
-    connect(m_cmbDefaultState, SIGNAL(currentIndexChanged(int)),
-     this, SLOT(on_CmbIndexChange_DefaultState(int)));
+    connect(m_cmbDefaultState, SIGNAL(currentIndexChanged(int)), this, SLOT(on_CmbIndexChange_DefaultState(int)));
+    formLayout->addRow(m_lbDefaultState, m_cmbDefaultState);
 
-    rectTmp.setX(rectTmp.x() + rectTmp.width() + 80); //120
-    rectTmp.setWidth(120);
-    m_lbDeviceTypeName = new QLabel(tmpWidget);
-    m_lbDeviceTypeName->setGeometry(rectTmp);
-    m_lbDeviceTypeName->show();
-
-    //系统流速
-    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN - 10);
-    rectTmp.setWidth(X_VALUE_WIDTH + 30);
-    m_cmbDeviceFlow = new QComboBox(tmpWidget);
-    m_cmbDeviceFlow->setGeometry(rectTmp);
-    QStringList flowList;
-    flowList << "5" << "10" << "12" << "15"<< "24" << "32"
-             << "30" << "50" << "60" << "125" << "150" << "250" << "300" << "500" << "600";
-    m_cmbDeviceFlow->addItems(flowList);
-    updateMachineFlow();
-
-    //系统机型
-    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN + 10);
-    rectTmp.setWidth(X_VALUE_WIDTH*2 + 30);
-    m_cmbDeviceType = new QComboBox(tmpWidget);
-    m_cmbDeviceType->setGeometry(rectTmp);
-    for(iLoop = 0;iLoop < MACHINE_NUM; iLoop++)
+    m_lbDeviceTypeName = new QLabel;
+    m_cmbDeviceType = new QComboBox; //系统机型
+    for(int iLoop = 0;iLoop < MACHINE_NUM; iLoop++)
     {
         m_cmbDeviceType->addItem(gaMachineType[iLoop].strName);
     }
     m_cmbDeviceType->setCurrentIndex(gGlobalParam.iMachineType);
     connect(m_cmbDeviceType, SIGNAL(currentIndexChanged(int)), this, SLOT(on_CmbIndexChange_deviceType(int)));
-
-    //line2
-    tmpWidget = new QWidget(m_widget);
-    tmpWidget->setAutoFillBackground(true);
-    tmpWidget->setPalette(pal);
-    tmpWidget->setGeometry(QRect(BACKWIDGET_START_X , yOffset, BACKWIDGET_WIDTH ,BACKWIDGET_HEIGHT*5));
-    yOffset += (BACKWIDGET_HEIGHT*5 + 20);
-
-    QVBoxLayout* v1Layout = new QVBoxLayout;
-    QVBoxLayout* v2Layout = new QVBoxLayout; 
-    QHBoxLayout* hLayout = new QHBoxLayout;
+    m_cmbDeviceFlow = new QComboBox; //系统流速
+    QStringList flowList;
+    flowList << "5" << "10" << "12" << "15"<< "24" << "32"
+             << "30" << "50" << "60" << "125" << "150" << "250" << "300" << "500" << "600";
+    m_cmbDeviceFlow->addItems(flowList);
+    updateMachineFlow();
+    QHBoxLayout *deviceLayout = new QHBoxLayout;
+    deviceLayout->addWidget(m_cmbDeviceType);
+    deviceLayout->addWidget(m_cmbDeviceFlow);
+    formLayout->addRow(m_lbDeviceTypeName, deviceLayout);
 
     m_pCompanyLabel = new QLabel;
     m_pCompanyComboBox = new QComboBox;
@@ -175,61 +135,38 @@ void DSuperPowerPage::createControl()
     companyList << "Rephile" << "VWR";
     m_pCompanyComboBox->addItems(companyList);
     m_pCompanyComboBox->setCurrentIndex(0);
-
-
+    formLayout->addRow(m_pCompanyLabel, m_pCompanyComboBox);
+	
     m_pExLabel[SYSCFGPAGE_LB_CATALOGNO] = new QLabel;
     m_ExLineEdit[SYSCFGPAGE_LB_CATALOGNO] = new DLineEdit;
     m_pExLabel[SYSCFGPAGE_LB_CATALOGNO]->setBuddy(m_ExLineEdit[SYSCFGPAGE_LB_CATALOGNO]);
+    formLayout->addRow(m_pExLabel[SYSCFGPAGE_LB_CATALOGNO], m_ExLineEdit[SYSCFGPAGE_LB_CATALOGNO]);
 
     m_pExLabel[SYSCFGPAGE_LB_SERIALNO] = new QLabel;
     m_ExLineEdit[SYSCFGPAGE_LB_SERIALNO] = new DLineEdit;
     m_pExLabel[SYSCFGPAGE_LB_SERIALNO]->setBuddy(m_ExLineEdit[SYSCFGPAGE_LB_SERIALNO]);
+    formLayout->addRow(m_pExLabel[SYSCFGPAGE_LB_SERIALNO], m_ExLineEdit[SYSCFGPAGE_LB_SERIALNO]);
 
     m_pExLabel[SYSCFGPAGE_LB_PRODATE] = new QLabel;
     m_ExLineEdit[SYSCFGPAGE_LB_PRODATE] = new DLineEdit;
     m_ExLineEdit[SYSCFGPAGE_LB_PRODATE]->setInputMask("0000-00-00");
     m_pExLabel[SYSCFGPAGE_LB_PRODATE]->setBuddy(m_ExLineEdit[SYSCFGPAGE_LB_PRODATE]);
+    formLayout->addRow(m_pExLabel[SYSCFGPAGE_LB_PRODATE], m_ExLineEdit[SYSCFGPAGE_LB_PRODATE]);
 
     m_pExLabel[SYSCFGPAGE_LB_INSTALLDATE] = new QLabel;
     m_ExLineEdit[SYSCFGPAGE_LB_INSTALLDATE] = new DLineEdit;
     m_ExLineEdit[SYSCFGPAGE_LB_INSTALLDATE]->setInputMask("0000-00-00");
     m_pExLabel[SYSCFGPAGE_LB_INSTALLDATE]->setBuddy(m_ExLineEdit[SYSCFGPAGE_LB_INSTALLDATE]);
+    formLayout->addRow(m_pExLabel[SYSCFGPAGE_LB_INSTALLDATE], m_ExLineEdit[SYSCFGPAGE_LB_INSTALLDATE]);
 
     m_pExLabel[SYSCFGPAGE_LB_SOFTVER] = new QLabel;
     m_ExLineEdit[SYSCFGPAGE_LB_SOFTVER] = new DLineEdit;
     m_ExLineEdit[SYSCFGPAGE_LB_SOFTVER]->setReadOnly(true);
     m_pExLabel[SYSCFGPAGE_LB_SOFTVER]->setBuddy(m_ExLineEdit[SYSCFGPAGE_LB_SOFTVER]);
+    formLayout->addRow(m_pExLabel[SYSCFGPAGE_LB_SOFTVER], m_ExLineEdit[SYSCFGPAGE_LB_SOFTVER]);
 
-
-    v1Layout->addWidget(m_pCompanyLabel);
-    v1Layout->addWidget(m_pExLabel[SYSCFGPAGE_LB_CATALOGNO]);
-    v1Layout->addWidget(m_pExLabel[SYSCFGPAGE_LB_SERIALNO]);
-    v1Layout->addWidget(m_pExLabel[SYSCFGPAGE_LB_PRODATE]);
-    v1Layout->addWidget(m_pExLabel[SYSCFGPAGE_LB_INSTALLDATE]);
-    v1Layout->addWidget(m_pExLabel[SYSCFGPAGE_LB_SOFTVER]);
-
-    v2Layout->addWidget(m_pCompanyComboBox);
-    v2Layout->addWidget(m_ExLineEdit[SYSCFGPAGE_LB_CATALOGNO]);
-    v2Layout->addWidget(m_ExLineEdit[SYSCFGPAGE_LB_SERIALNO]);
-    v2Layout->addWidget(m_ExLineEdit[SYSCFGPAGE_LB_PRODATE]);
-    v2Layout->addWidget(m_ExLineEdit[SYSCFGPAGE_LB_INSTALLDATE]);
-    v2Layout->addWidget(m_ExLineEdit[SYSCFGPAGE_LB_SOFTVER]);
-
-    hLayout->addLayout(v1Layout);
-    hLayout->addLayout(v2Layout);
-
-    tmpWidget->setLayout(hLayout);
-
-    //Database Delete
-    QHBoxLayout* deleteLayout = new QHBoxLayout;
-
-    m_pDeleteWidget = new QWidget(m_widget);
-    m_pDeleteWidget->setAutoFillBackground(true);
-    m_pDeleteWidget->setPalette(pal);
-    m_pDeleteWidget->setGeometry(QRect(BACKWIDGET_START_X , yOffset, BACKWIDGET_WIDTH ,BACKWIDGET_HEIGHT));
-
+    //清空数据
     m_pLbDbDel = new QLabel;
-
     m_pCmDbDel = new QComboBox;
     QStringList cbList;
 #ifdef SUB_ACCOUNT
@@ -239,10 +176,14 @@ void DSuperPowerPage::createControl()
 #endif
     m_pCmDbDel->addItems(cbList);
     m_pCmDbDel->setCurrentIndex(0);
-
     m_pBtnDbDel = new QPushButton;
     connect(m_pBtnDbDel, SIGNAL(clicked()), this, SLOT(on_btnDbDel_clicked()));
+    QHBoxLayout *delDataLayout = new QHBoxLayout;
+    delDataLayout->addWidget(m_pCmDbDel);
+    delDataLayout->addWidget(m_pBtnDbDel);
+    formLayout->addRow(m_pLbDbDel, delDataLayout);
 
+    m_pLbCfgDel = new QLabel;
     m_pCmConfigDel = new QComboBox;
     QStringList configFileList;
     configFileList << tr("All") << tr("Consumables Info") << tr("Config Info") << tr("Cailbration Info");
@@ -250,18 +191,24 @@ void DSuperPowerPage::createControl()
     m_pCmConfigDel->setCurrentIndex(0);
     m_pBtnDelCfg = new QPushButton;
     connect(m_pBtnDelCfg, SIGNAL(clicked()), this, SLOT(on_btnDelCfg_clicked()));
+    QHBoxLayout *delCfgLayout = new QHBoxLayout;
+    delCfgLayout->addWidget(m_pCmConfigDel);
+    delCfgLayout->addWidget(m_pBtnDelCfg);
+    formLayout->addRow(m_pLbCfgDel, delCfgLayout);
+    formLayout->setVerticalSpacing(10);
+    formLayout->setHorizontalSpacing(10);
+    
+    QFile qss(":/app/other.qss");
+    qss.open(QFile::ReadOnly);
+    QString strQss = QLatin1String (qss.readAll());
+    qss.close(); 
 
-    deleteLayout->addWidget(m_pLbDbDel);
-    deleteLayout->addSpacing(8);
-    deleteLayout->addWidget(m_pCmDbDel);
-    deleteLayout->addWidget(m_pBtnDbDel);
-    deleteLayout->addSpacing(30);
-    deleteLayout->addWidget(m_pCmConfigDel);
-    deleteLayout->addWidget(m_pBtnDelCfg);
-    deleteLayout->addStretch();
-    m_pDeleteWidget->setLayout(deleteLayout);
+    mainWidget->setLayout(formLayout);
+    mainWidget->setStyleSheet(strQss);
+    scrollWidget->setWidget(mainWidget);
+    scrollWidget->setGeometry(QRect(5, 60, 780, 490));
+    scrollWidget->setStyleSheet("QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical{background: transparent;}");
 
-    //Save Btn
     m_pBtnSave = new CBitmapButton(m_widget,BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL,SYSCFGPAGE_BTN_SAVE);
     m_pBtnSave->setButtonPicture(gpGlobalPixmaps[GLOBAL_BMP_PAGE_NAVI_NORMAL]);
     m_pBtnSave->setPressPicture(gpGlobalPixmaps[GLOBAL_BMP_PAGE_NAVI_ACTIVE]);
@@ -269,9 +216,7 @@ void DSuperPowerPage::createControl()
     m_pBtnSave->setStyleSheet("background-color:transparent");
     connect(m_pBtnSave, SIGNAL(clicked(int)), this, SLOT(on_btn_clicked(int)));
     m_pBtnSave->show();
-
 }
-
 
 void DSuperPowerPage::initUi()
 {
@@ -309,7 +254,6 @@ void DSuperPowerPage::updateMachineFlow()
 void DSuperPowerPage::connectData()
 {
     m_cmbDefaultState->setCurrentIndex(gAdditionalCfgParam.initMachine);
-
     m_pCompanyComboBox->setCurrentIndex(gAdditionalCfgParam.productInfo.iCompany);
 }
 
@@ -318,15 +262,47 @@ void DSuperPowerPage::checkLoginInfo()
     DUserInfoChecker userInfo;
     DUserInfo userlog = m_wndMain->getLoginfo();
     bool iSuper = userInfo.checkSuperInfo(userlog.m_strUserName);
-    if(iSuper)
+    if(userInfo.checkSuperInfo(userlog.m_strUserName))
     {
-        m_pCompanyComboBox->setEnabled(true);
-        m_pDeleteWidget->show();
+        m_pCompanyLabel->show();
+        m_pCompanyComboBox->show();
+        m_pLbDbDel->show();
+        m_pCmDbDel->show();
+        m_pBtnDbDel->show();
+        m_pLbCfgDel->show();
+        m_pCmConfigDel->show();
+        m_pBtnDelCfg->show();
     }
     else
     {
-        m_pCompanyComboBox->setEnabled(false);
-        m_pDeleteWidget->hide();
+        
+        m_pCompanyLabel->hide();
+        m_pCompanyComboBox->hide();
+        m_pLbDbDel->hide();
+        m_pCmDbDel->hide();
+        m_pBtnDbDel->hide();
+        m_pLbCfgDel->hide();
+        m_pCmConfigDel->hide();
+        m_pBtnDelCfg->hide();
+    }
+
+    if(userInfo.checkSuperService(userlog.m_strUserName))
+    {
+        m_pExLabel[SYSCFGPAGE_LB_CATALOGNO]->show();
+        m_pExLabel[SYSCFGPAGE_LB_PRODATE]->show();
+        m_pExLabel[SYSCFGPAGE_LB_INSTALLDATE]->show();
+        m_ExLineEdit[SYSCFGPAGE_LB_CATALOGNO]->show(); 
+        m_ExLineEdit[SYSCFGPAGE_LB_PRODATE]->show();
+        m_ExLineEdit[SYSCFGPAGE_LB_INSTALLDATE]->show();
+    }
+    else
+    {
+        m_pExLabel[SYSCFGPAGE_LB_CATALOGNO]->hide();
+        m_pExLabel[SYSCFGPAGE_LB_PRODATE]->hide();
+        m_pExLabel[SYSCFGPAGE_LB_INSTALLDATE]->hide();
+        m_ExLineEdit[SYSCFGPAGE_LB_CATALOGNO]->hide(); 
+        m_ExLineEdit[SYSCFGPAGE_LB_PRODATE]->hide(); 
+        m_ExLineEdit[SYSCFGPAGE_LB_INSTALLDATE]->hide(); 
     }
 }
 

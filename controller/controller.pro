@@ -113,7 +113,6 @@ SOURCES += main.cpp\
     dhintdialog.cpp \
     dhistorypage.cpp \
     dinitlanguagepage.cpp \
-    dinitnetworkpage.cpp \
     dinitsyscfgpage.cpp \
     dinittankcfgpage.cpp \
     dinittimepage.cpp \
@@ -135,7 +134,11 @@ SOURCES += main.cpp\
     dcheckboxlistitemwidget.cpp \
     dinittankcfgwidget.cpp \
     dsettimedialog.cpp \
-    drephilinkprotocoldlg.cpp
+    drephilinkprotocoldlg.cpp \
+    dnetworkwidget.cpp \
+    dnetworkpage.cpp \
+    dinitnetworkpage.cpp \
+    dnetworkwifiinfoitem.cpp
 HEADERS  += mainwindow.h \
     ctrlapplication.h \
     log.h \
@@ -219,7 +222,6 @@ HEADERS  += mainwindow.h \
     dhintdialog.h \
     dhistorypage.h \
     dinitlanguagepage.h \
-    dinitnetworkpage.h \
     dinitsyscfgpage.h \
     dinittankcfgpage.h \
     dinittimepage.h \
@@ -240,7 +242,11 @@ HEADERS  += mainwindow.h \
     dcheckboxlistitemwidget.h \
     dinittankcfgwidget.h \
     dsettimedialog.h \
-    drephilinkprotocoldlg.h
+    drephilinkprotocoldlg.h \
+    dnetworkwidget.h \
+    dnetworkpage.h \
+    dinitnetworkpage.h \
+    dnetworkwifiinfoitem.h
 
 FORMS    += mainwindow.ui \
     syszuxpinyin.ui \
