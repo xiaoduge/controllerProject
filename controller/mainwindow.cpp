@@ -3611,11 +3611,7 @@ void MainWindow::initAlarmCfg()
                                                          |(1 << DISP_ALARM_PART1_HIGHER_EDI_PRODUCT_TEMPERATURE)
                                                          |(1 << DISP_ALARM_PART1_LOWER_EDI_PRODUCT_TEMPERATURE)
                                                          |(1 << DISP_ALARM_PART1_HIGHER_TUBE_TEMPERATURE)
-                                                         |(1 << DISP_ALARM_PART1_LOWER_TUBE_TEMPERATURE)
-                                                         |(1 << DISP_ALARM_PART1_HIGHER_TOC_SENSOR_TEMPERATURE)
-                                                         |(1 << DISP_ALARM_PART1_LOWER_TOC_SENSOR_TEMPERATURE)
-                                                         |(1 << DISP_ALARM_PART1_LOWER_TOC_SOURCE_WATER_RESISTENCE)
-                                                         |(1 << DISP_ALARM_PART1_HIGHER_TOC)));
+                                                         |(1 << DISP_ALARM_PART1_LOWER_TUBE_TEMPERATURE)));
             
             m_bC1Regulator = true;
             break;
