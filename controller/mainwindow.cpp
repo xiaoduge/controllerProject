@@ -8282,10 +8282,18 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                 fToc = -29.14 * log(pItem->fP) + 42;
             }
 
+            double integer;
+            float decimal = modf(fToc, &integer);
+            if(decimal < 0)
+            {
+                decimal *= -1;
+            }
+            
             if(fToc < 2)
             {
-                fToc = 2;
+                fToc = 2 + decimal;
             }
+            
             else if(fToc > 200)
             {
                 fToc = 200;
