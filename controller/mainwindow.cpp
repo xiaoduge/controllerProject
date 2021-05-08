@@ -9350,6 +9350,11 @@ void MainWindow::buildTranslation()
     m_astrDbName[5] = tr("Log");
 }
 
+void MainWindow::onScreenPageHide()
+{
+    on_Ex_ScreenPageHide();
+}
+
 void MainWindow::on_Ex_ScreenPageHide()
 {
     if(typeid(*m_pCurPage) == typeid(DScreenSleepPage))
