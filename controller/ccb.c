@@ -3964,7 +3964,7 @@ void work_start_cir(void *para)
              if ((pCcb->ulCirMask & (1 << APP_EXE_C2_NO))
                 && pCcb->bit1CirSpeedAdjust)
              {
-                 CcbC2Regulator(pWorkItem->id,8,TRUE);
+                 CcbC2Regulator(pWorkItem->id,12,TRUE);
              }
 
              iTmp = (1 << APP_EXE_I4_NO)|(1 << APP_EXE_I5_NO);
@@ -15855,11 +15855,11 @@ void MainSecondTask4Pw()
                         {
                         case APP_PACKET_EXE_TOC_STAGE_FLUSH1:
                         {
-                            if(gCcb.iTocStageTimer == 150)
+                            if(gCcb.iTocStageTimer == 180)
                             {
                                 gCcb.bit1TocAlarmNeedCheck = TRUE;
                             }
-                            if (gCcb.iTocStageTimer >= 160)
+                            if (gCcb.iTocStageTimer >= 190)
                             {
                                 gCcb.bit1TocAlarmNeedCheck = FALSE;
                                 if (!SearchWork(work_start_toc_cir))
