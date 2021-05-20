@@ -3794,20 +3794,20 @@ void MainWindow::initConsumablesCfg()
         //config final filter
         if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_FINALFILTER_B))
         {
-            m_cMas[iLoop].aulMask[0] |= (1 << 1 << DISP_T_B_FILTER);
+            m_cMas[iLoop].aulMask[0] |= (1 << DISP_T_B_FILTER);
         }
         else
         {
-            m_cMas[iLoop].aulMask[0] &= ~(1 << 1 << DISP_T_B_FILTER);
+            m_cMas[iLoop].aulMask[0] &= ~(1 << DISP_T_B_FILTER);
         }
         
         if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_FINALFILTER_A))
         {
-            m_cMas[iLoop].aulMask[0] |= (1 << 1 << DISP_T_A_FILTER);
+            m_cMas[iLoop].aulMask[0] |= (1 << DISP_T_A_FILTER);
         }
         else
         {
-            m_cMas[iLoop].aulMask[0] &= ~(1 << 1 << DISP_T_A_FILTER);
+            m_cMas[iLoop].aulMask[0] &= ~( 1 << DISP_T_A_FILTER);
         }
     }
 }
