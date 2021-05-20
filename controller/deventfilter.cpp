@@ -27,6 +27,7 @@ bool DEventFilter::eventFilter(QObject *watched, QEvent *event)
         if(gScreenSleeping)
         {
             gScreenSleeping = false;
+            gpMainWnd->onScreenPageHide();
             return true;
         }
 

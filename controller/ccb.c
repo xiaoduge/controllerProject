@@ -101,6 +101,46 @@ int is_B2_FULL(ulValue)
 
 }
 
+static unsigned int g_ulQtwLastTimeFm;
+int QtwWorkDone()
+{
+    unsigned int curFm = CcbConvert2Fm1Data(gCcb.QtwMeas.ulCurFm - gCcb.QtwMeas.ulBgnFm);
+    unsigned int increment = curFm - g_ulQtwLastTimeFm;
+    float fDeviation = 0;
+    float fNextDeviation = 0;
+    int offset = 5; //偏差补偿5，10
+    printf("dcj TotalFm:%d; curFm: %d; increment: %d; lastTimeFm: %d\n", gCcb.QtwMeas.ulTotalFm, curFm, increment, g_ulQtwLastTimeFm);
+    if(gCcb.QtwMeas.ulTotalFm == INVALID_FM_VALUE) //非定量取水直接返回
+    {
+        return 0;
+    }
+
+    if((curFm + offset) >= gCcb.QtwMeas.ulTotalFm) //当前取水量大于设定取水量，停止取水
+    {
+        return 1;
+    }
+
+    if(abs(gCcb.QtwMeas.ulTotalFm - (curFm + offset))*1.0/gCcb.QtwMeas.ulTotalFm < 0.05) //如果偏差小于5%了，停止取水
+    {
+        return 1;
+    }
+
+    if(increment >= (gCcb.QtwMeas.ulTotalFm - curFm)) //预计下次上报的取水量会超过设定取水量，则估算误差，确定是否停止取水
+    {
+        fDeviation = abs(gCcb.QtwMeas.ulTotalFm - (curFm + offset))*100.0/gCcb.QtwMeas.ulTotalFm;
+        fNextDeviation = abs(gCcb.QtwMeas.ulTotalFm - ((curFm + offset) + increment))*100.0/gCcb.QtwMeas.ulTotalFm;
+        
+        printf("dcj deviation: %f; next deviation: %f \n", fDeviation, fNextDeviation);
+        if( fNextDeviation >= fDeviation)
+        {
+            return 1;
+        }
+    }
+
+    g_ulQtwLastTimeFm = curFm;
+    return 0;
+}
+
 typedef enum
 {
     WORK_MSG_TYPE_START_QTW = 0,
@@ -3605,6 +3645,7 @@ void work_start_qtw(void *para)
 	        CcbWorkDelayEntry(pWorkItem->id, 500, CcbDelayCallBack);
 		}
 #endif
+   
         /* set  switchs */
         if (APP_DEV_HS_SUB_HYPER == pCcb->aHandler[iIndex].iDevType)
         {
@@ -3616,7 +3657,7 @@ void work_start_qtw(void *para)
             iTmp = (1<<APP_EXE_E4_NO)|(1<<APP_EXE_E9_NO)|(1<<APP_EXE_C2_NO);
             ulQtwSwMask = pCcb->ulNormalTwMask;
         }
-        
+
         iRet = CcbUpdateSwitch(pWorkItem->id,0,ulQtwSwMask,iTmp);
         if (iRet )
         {
@@ -3732,11 +3773,11 @@ void work_stop_qtw(void *para)
 
     if (APP_DEV_HS_SUB_HYPER == pCcb->aHandler[iIndex].iDevType)
     {
-        iTmp = pCcb->ulHyperTwMask;
+        iTmp = pCcb->ulHyperTwMask; 
     }
     else
     {
-        iTmp = pCcb->ulNormalTwMask;
+        iTmp = pCcb->ulNormalTwMask;  
     }
 
     CcbFiniHandlerQtwMeas(iIndex);
@@ -3799,6 +3840,7 @@ void work_stop_qtw(void *para)
     work_stop_qtw_succ(iIndex);
 
     pCcb->ulAdapterAgingCount = gulSecond;
+    g_ulQtwLastTimeFm = 0;
 }
 
 DISPHANDLE CcbInnerWorkStopQtw(int iIndex)
@@ -3964,7 +4006,7 @@ void work_start_cir(void *para)
              if ((pCcb->ulCirMask & (1 << APP_EXE_C2_NO))
                 && pCcb->bit1CirSpeedAdjust)
              {
-                 CcbC2Regulator(pWorkItem->id,8,TRUE);
+                 CcbC2Regulator(pWorkItem->id,12,TRUE);
              }
 
              iTmp = (1 << APP_EXE_I4_NO)|(1 << APP_EXE_I5_NO);
@@ -8174,14 +8216,20 @@ int CanCcbAfDataClientRpt4FlowMeter(MAIN_CANITF_MSG_STRU *pCanItfMsg)
                         
                         pQtw->ulCurFm = gCcb.FlowMeter.aFmObjs[APP_FM_FM1_NO].Value.ulV;
                     }
-
-
+#if 0
                     if (CcbConvert2Fm1Data(gCcb.QtwMeas.ulCurFm - gCcb.QtwMeas.ulBgnFm) >= gCcb.QtwMeas.ulTotalFm
                         && gCcb.QtwMeas.ulTotalFm != INVALID_FM_VALUE)
                     {
                         /* enough water has been taken */
                         CcbStopQtw();
                     }
+#endif
+
+                    if(QtwWorkDone())
+                    {
+                        CcbStopQtw();
+                    }
+
                     CcbRealTimeQTwVolumnNotify(CcbConvert2Fm1Data(gCcb.QtwMeas.ulCurFm - gCcb.QtwMeas.ulBgnFm));
                 }
             }
@@ -15855,11 +15903,11 @@ void MainSecondTask4Pw()
                         {
                         case APP_PACKET_EXE_TOC_STAGE_FLUSH1:
                         {
-                            if(gCcb.iTocStageTimer == 150)
+                            if(gCcb.iTocStageTimer == 180)
                             {
                                 gCcb.bit1TocAlarmNeedCheck = TRUE;
                             }
-                            if (gCcb.iTocStageTimer >= 160)
+                            if (gCcb.iTocStageTimer >= 190)
                             {
                                 gCcb.bit1TocAlarmNeedCheck = FALSE;
                                 if (!SearchWork(work_start_toc_cir))

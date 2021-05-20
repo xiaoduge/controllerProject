@@ -289,15 +289,15 @@ void DFlowChartWidget::updSwPressure(float fvalue)
 {
     if (PRESSURE_UINT_BAR == gGlobalParam.MiscParam.iUint4Pressure)
     {
-    	m_fFeedPressure = fvalue;
+        m_fFeedPressure = fvalue;
     }
     else if (PRESSURE_UINT_MPA == gGlobalParam.MiscParam.iUint4Pressure)
     {
-		m_fFeedPressure = toMpa(fvalue);
+        m_fFeedPressure = toMpa(fvalue);
     }
     else
     {
-		m_fFeedPressure = toPsi(fvalue);
+        m_fFeedPressure = toPsi(fvalue);
     }
 }
 
@@ -446,7 +446,7 @@ void DFlowChartWidget::paintWorkStatus(QPainter &painter)
 //绘制原水进水部分，包括原水箱及原水箱之前的部分
 void DFlowChartWidget::paintTapFeed(QPainter &painter)
 {
-	int offsetX = 80;
+    int offsetX = 80;
     int offsetY = 40;
 
     QPolygonF points;
@@ -499,33 +499,33 @@ void DFlowChartWidget::paintTapFeed(QPainter &painter)
             offsetX += 20;
             painter.drawPixmap(width() - offsetX, offsetY - 7, scaledToHeight(m_devicesPix[PRE_OFF], 70));
         }
-		//PRE Pack
+        //PRE Pack
         offsetX += 50;
-		if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
-		{
-			if (gCMUsage.ulUsageState & (1 << DISP_PRE_PACKLIFEDAY) 
+        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
+        {
+            if (gCMUsage.ulUsageState & (1 << DISP_PRE_PACKLIFEDAY) 
                 || gCMUsage.ulUsageState & (1 << DISP_PRE_PACKLIFEL))
             {
-				painter.drawPixmap(width() - offsetX, offsetY + 50, scaledToWidth(m_devicesPix[PREPACK_YELLOW], 20));
+                painter.drawPixmap(width() - offsetX, offsetY + 50, scaledToWidth(m_devicesPix[PREPACK_YELLOW], 20));
             }
-			else if(m_deviceState[E10_STATE])
-			{
-			    painter.drawPixmap(width() - offsetX, offsetY + 50, scaledToWidth(m_devicesPix[PREPACK_ON], 20));
-			}
-			else
-			{
-				painter.drawPixmap(width() - offsetX, offsetY + 50, scaledToWidth(m_devicesPix[PREPACK_OFF], 20));
-			}
-		}
+            else if(m_deviceState[E10_STATE])
+            {
+                painter.drawPixmap(width() - offsetX, offsetY + 50, scaledToWidth(m_devicesPix[PREPACK_ON], 20));
+            }
+            else
+            {
+                painter.drawPixmap(width() - offsetX, offsetY + 50, scaledToWidth(m_devicesPix[PREPACK_OFF], 20));
+            }
+        }
 
-		if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveB3))
-		{
-			//原水箱
-        	offsetX += 50;
-        	painter.drawPixmap(width() - offsetX, offsetY - 7, scaledToHeight(m_devicesPix[TANK], 70));
-        	paintSourceTankLevel(painter);
-		}
-		
+        if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveB3))
+        {
+            //原水箱
+            offsetX += 50;
+            painter.drawPixmap(width() - offsetX, offsetY - 7, scaledToHeight(m_devicesPix[TANK], 70));
+            paintSourceTankLevel(painter);
+        }
+
         break;
     default:
         break;
@@ -618,15 +618,15 @@ void DFlowChartWidget::paintFeed(QPainter &painter)
 
             //P Pack
             offsetX += 45;
-			if (gCMUsage.ulUsageState & (1 << DISP_P_PACKLIFEDAY) 
+            if (gCMUsage.ulUsageState & (1 << DISP_P_PACKLIFEDAY) 
                 || gCMUsage.ulUsageState & (1 << DISP_P_PACKLIFEL))
-			{
-				painter.drawPixmap(width() - offsetX, offsetY + 65, scaledToWidth(m_devicesPix[PACK_YELLOW], 28));
-			}
-			else
-			{
-				painter.drawPixmap(width() - offsetX, offsetY + 65, scaledToWidth(m_devicesPix[PACK_ON], 28));
-			}
+            {
+                painter.drawPixmap(width() - offsetX, offsetY + 65, scaledToWidth(m_devicesPix[PACK_YELLOW], 28));
+            }
+            else
+            {
+                painter.drawPixmap(width() - offsetX, offsetY + 65, scaledToWidth(m_devicesPix[PACK_ON], 28));
+            }
             
             //进水流量计
             offsetX += 80;
@@ -648,15 +648,15 @@ void DFlowChartWidget::paintFeed(QPainter &painter)
 
             //P Pack
             offsetX += 45;
-			if (gCMUsage.ulUsageState & (1 << DISP_P_PACKLIFEDAY) 
+            if (gCMUsage.ulUsageState & (1 << DISP_P_PACKLIFEDAY) 
                 || gCMUsage.ulUsageState & (1 << DISP_P_PACKLIFEL))
-			{
-				painter.drawPixmap(width() - offsetX, offsetY + 65, scaledToWidth(m_devicesPix[PACK_YELLOW], 28));
-			}
-			else
-			{
-				painter.drawPixmap(width() - offsetX, offsetY + 65, scaledToWidth(m_devicesPix[PACK_OFF], 28));
-			}
+            {
+                painter.drawPixmap(width() - offsetX, offsetY + 65, scaledToWidth(m_devicesPix[PACK_YELLOW], 28));
+            }
+            else
+            {
+                painter.drawPixmap(width() - offsetX, offsetY + 65, scaledToWidth(m_devicesPix[PACK_OFF], 28));
+            }
 
             //进水流量计
             offsetX += 80;
@@ -795,28 +795,28 @@ void DFlowChartWidget::paintFeed(QPainter &painter)
         points.append(QPointF(width() - 520, offsetY + 430));
         painter.drawPolyline(points);
 
-		//PRE Pack
+        //PRE Pack
         offsetX += 20;
-		if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
-		{
-			if (gCMUsage.ulUsageState & (1 << DISP_PRE_PACKLIFEDAY) 
+        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter))
+        {
+            if (gCMUsage.ulUsageState & (1 << DISP_PRE_PACKLIFEDAY) 
                 || gCMUsage.ulUsageState & (1 << DISP_PRE_PACKLIFEL))
             {
-				painter.drawPixmap(width() - offsetX, offsetY + 50, scaledToWidth(m_devicesPix[PREPACK_YELLOW], 20));
+                painter.drawPixmap(width() - offsetX, offsetY + 50, scaledToWidth(m_devicesPix[PREPACK_YELLOW], 20));
             }
-			else if(m_deviceState[E1_STATE])
-			{
-			    painter.drawPixmap(width() - offsetX, offsetY + 50, scaledToWidth(m_devicesPix[PREPACK_ON], 20));
-			}
-			else
-			{
-				painter.drawPixmap(width() - offsetX, offsetY + 50, scaledToWidth(m_devicesPix[PREPACK_OFF], 20));
-			}
-		}
+            else if(m_deviceState[E1_STATE])
+            {
+                painter.drawPixmap(width() - offsetX, offsetY + 50, scaledToWidth(m_devicesPix[PREPACK_ON], 20));
+            }
+            else
+            {
+                painter.drawPixmap(width() - offsetX, offsetY + 50, scaledToWidth(m_devicesPix[PREPACK_OFF], 20));
+            }
+        }
 
         if(m_deviceState[E1_STATE])
         {
-			//进水阀
+            //进水阀
             offsetX += 60;
             painter.drawPixmap(width() - offsetX, offsetY + 42, scaledToWidth(m_devicesPix[VALVE_ON], 28));
 
@@ -828,28 +828,28 @@ void DFlowChartWidget::paintFeed(QPainter &painter)
             offsetX += 60;
             if(gGlobalParam.iMachineType != MACHINE_ADAPT)
             {
-            	if (gCMUsage.ulUsageState & (1 << DISP_AC_PACKLIFEDAY)
-                	|| gCMUsage.ulUsageState & (1 << DISP_AC_PACKLIFEL))
-            	{
-            		painter.drawPixmap(width() - offsetX, offsetY + 65, scaledToWidth(m_devicesPix[PACK_YELLOW], 28));
-            	}
-				else
-				{
-                	painter.drawPixmap(width() - offsetX, offsetY + 65, scaledToWidth(m_devicesPix[PACK_ON], 28));
-				}
+                if (gCMUsage.ulUsageState & (1 << DISP_AC_PACKLIFEDAY)
+                    || gCMUsage.ulUsageState & (1 << DISP_AC_PACKLIFEL))
+                {
+                    painter.drawPixmap(width() - offsetX, offsetY + 65, scaledToWidth(m_devicesPix[PACK_YELLOW], 28));
+                }
+                else
+                {
+                    painter.drawPixmap(width() - offsetX, offsetY + 65, scaledToWidth(m_devicesPix[PACK_ON], 28));
+                }
             }
 
             //P Pack
             offsetX += 40;
-			if (gCMUsage.ulUsageState & (1 << DISP_P_PACKLIFEDAY) 
+            if (gCMUsage.ulUsageState & (1 << DISP_P_PACKLIFEDAY) 
                 || gCMUsage.ulUsageState & (1 << DISP_P_PACKLIFEL))
-			{
-				painter.drawPixmap(width() - offsetX, offsetY + 65, scaledToWidth(m_devicesPix[PACK_YELLOW], 28));
-			}
-			else
-			{
-				painter.drawPixmap(width() - offsetX, offsetY + 65, scaledToWidth(m_devicesPix[PACK_ON], 28));
-			}
+            {
+                painter.drawPixmap(width() - offsetX, offsetY + 65, scaledToWidth(m_devicesPix[PACK_YELLOW], 28));
+            }
+            else
+            {
+                painter.drawPixmap(width() - offsetX, offsetY + 65, scaledToWidth(m_devicesPix[PACK_ON], 28));
+            }
 
             //进水电导率电极
             offsetX += 245;
@@ -869,28 +869,28 @@ void DFlowChartWidget::paintFeed(QPainter &painter)
             offsetX += 60;
             if(gGlobalParam.iMachineType != MACHINE_ADAPT)
             {
-            	if (gCMUsage.ulUsageState & (1 << DISP_AC_PACKLIFEDAY)
-                	|| gCMUsage.ulUsageState & (1 << DISP_AC_PACKLIFEL))
-            	{
-            		painter.drawPixmap(width() - offsetX, offsetY + 65, scaledToWidth(m_devicesPix[PACK_YELLOW], 28));
-            	}
-				else
-				{
-                	painter.drawPixmap(width() - offsetX, offsetY + 65, scaledToWidth(m_devicesPix[PACK_OFF], 28));
-				}
+                if (gCMUsage.ulUsageState & (1 << DISP_AC_PACKLIFEDAY)
+                    || gCMUsage.ulUsageState & (1 << DISP_AC_PACKLIFEL))
+                {
+                    painter.drawPixmap(width() - offsetX, offsetY + 65, scaledToWidth(m_devicesPix[PACK_YELLOW], 28));
+                }
+                else
+                {
+                    painter.drawPixmap(width() - offsetX, offsetY + 65, scaledToWidth(m_devicesPix[PACK_OFF], 28));
+                }
             }
 
             //P Pack
             offsetX += 40;
-			if (gCMUsage.ulUsageState & (1 << DISP_P_PACKLIFEDAY) 
+            if (gCMUsage.ulUsageState & (1 << DISP_P_PACKLIFEDAY) 
                 || gCMUsage.ulUsageState & (1 << DISP_P_PACKLIFEL))
-			{
-				painter.drawPixmap(width() - offsetX, offsetY + 65, scaledToWidth(m_devicesPix[PACK_YELLOW], 28));
-			}
-			else
-			{
-				painter.drawPixmap(width() - offsetX, offsetY + 65, scaledToWidth(m_devicesPix[PACK_OFF], 28));
-			}
+            {
+                painter.drawPixmap(width() - offsetX, offsetY + 65, scaledToWidth(m_devicesPix[PACK_YELLOW], 28));
+            }
+            else
+            {
+                painter.drawPixmap(width() - offsetX, offsetY + 65, scaledToWidth(m_devicesPix[PACK_OFF], 28));
+            }
 
             //进水电导率电极
             offsetX += 245;
@@ -1064,30 +1064,30 @@ void DFlowChartWidget::paintProduct(QPainter &painter)
     case MACHINE_L_EDI_LOOP:
         setStatePen(painter, !m_deviceState[E3_STATE] && m_deviceState[E1_STATE]);
 
-		//RO产水
-		if(gGlobalParam.iMachineType == MACHINE_L_Genie 
-			&& gAdditionalCfgParam.machineInfo.iMachineFlow == 250)
-		{
-	        points.clear();
-	        points.append(QPointF(width() - 610, offsetY + 274));
-	        points.append(QPointF(width() - 610, offsetY + 140));
-	        points.append(QPointF(width() - 150, offsetY + 140));
-	        points.append(QPointF(width() - 150, offsetY + 170));
-	        painter.drawPolyline(points);
-		}
-		else
-		{
-	        points.clear();
-	        points.append(QPointF(width() - 610, offsetY + 274));
-	        points.append(QPointF(width() - 610, offsetY + 140));
-	        points.append(QPointF(width() - 533, offsetY + 140));
-	        points.append(QPointF(width() - 533, offsetY + 155));
-	        points.append(QPointF(width() - 520, offsetY + 155));
-	        points.append(QPointF(width() - 520, offsetY + 140));
-	        points.append(QPointF(width() - 150, offsetY + 140));
-	        points.append(QPointF(width() - 150, offsetY + 170));
-	        painter.drawPolyline(points);
-		}
+        //RO产水
+        if(gGlobalParam.iMachineType == MACHINE_L_Genie 
+            && gAdditionalCfgParam.machineInfo.iMachineFlow == 250)
+        {
+            points.clear();
+            points.append(QPointF(width() - 610, offsetY + 274));
+            points.append(QPointF(width() - 610, offsetY + 140));
+            points.append(QPointF(width() - 150, offsetY + 140));
+            points.append(QPointF(width() - 150, offsetY + 170));
+            painter.drawPolyline(points);
+        }
+        else
+        {
+            points.clear();
+            points.append(QPointF(width() - 610, offsetY + 274));
+            points.append(QPointF(width() - 610, offsetY + 140));
+            points.append(QPointF(width() - 533, offsetY + 140));
+            points.append(QPointF(width() - 533, offsetY + 155));
+            points.append(QPointF(width() - 520, offsetY + 155));
+            points.append(QPointF(width() - 520, offsetY + 140));
+            points.append(QPointF(width() - 150, offsetY + 140));
+            points.append(QPointF(width() - 150, offsetY + 170));
+            painter.drawPolyline(points);
+        }
         
         //EDI弃水
         points.clear();
@@ -1114,16 +1114,16 @@ void DFlowChartWidget::paintProduct(QPainter &painter)
 
             //AT Pack
             offsetX -= 45;
-			if (gCMUsage.ulUsageState & (1 << DISP_AT_PACKLIFEDAY) 
+            if (gCMUsage.ulUsageState & (1 << DISP_AT_PACKLIFEDAY) 
                 || gCMUsage.ulUsageState & (1 << DISP_AT_PACKLIFEL))
 
-			{
-				painter.drawPixmap(width() - offsetX, offsetY + 150, scaledToWidth(m_devicesPix[PACK_YELLOW], 28));
-			}
-			else
-			{
-				painter.drawPixmap(width() - offsetX, offsetY + 150, scaledToWidth(m_devicesPix[PACK_ON], 28));
-			}
+            {
+                painter.drawPixmap(width() - offsetX, offsetY + 150, scaledToWidth(m_devicesPix[PACK_YELLOW], 28));
+            }
+            else
+            {
+                painter.drawPixmap(width() - offsetX, offsetY + 150, scaledToWidth(m_devicesPix[PACK_ON], 28));
+            }
 
             //EDI
             offsetX -= 50;
@@ -1153,37 +1153,37 @@ void DFlowChartWidget::paintProduct(QPainter &painter)
             painter.drawPixmap(width() - offsetX, offsetY + 135,
                                scaledToWidth(m_devicesPix[FLOWMETER_OFF], 28).transformed(matrix, Qt::SmoothTransformation));
 
-			//AT Pack
-		    offsetX -= 45;
-			if(gGlobalParam.iMachineType == MACHINE_L_Genie)
-			{
-				if(gAdditionalCfgParam.machineInfo.iMachineFlow != 250)
-				{
-					if (gCMUsage.ulUsageState & (1 << DISP_AT_PACKLIFEDAY) 
-		                || gCMUsage.ulUsageState & (1 << DISP_AT_PACKLIFEL))
+            //AT Pack
+            offsetX -= 45;
+            if(gGlobalParam.iMachineType == MACHINE_L_Genie)
+            {
+                if(gAdditionalCfgParam.machineInfo.iMachineFlow != 250)
+                {
+                    if (gCMUsage.ulUsageState & (1 << DISP_AT_PACKLIFEDAY) 
+                        || gCMUsage.ulUsageState & (1 << DISP_AT_PACKLIFEL))
 
-					{
-						painter.drawPixmap(width() - offsetX, offsetY + 150, scaledToWidth(m_devicesPix[PACK_YELLOW], 28));
-					}
-					else
-					{
-						painter.drawPixmap(width() - offsetX, offsetY + 150, scaledToWidth(m_devicesPix[PACK_OFF], 28));
-					}
-				}
-			}
-			else
-			{
-				if (gCMUsage.ulUsageState & (1 << DISP_AT_PACKLIFEDAY) 
-	                || gCMUsage.ulUsageState & (1 << DISP_AT_PACKLIFEL))
+                    {
+                        painter.drawPixmap(width() - offsetX, offsetY + 150, scaledToWidth(m_devicesPix[PACK_YELLOW], 28));
+                    }
+                    else
+                    {
+                        painter.drawPixmap(width() - offsetX, offsetY + 150, scaledToWidth(m_devicesPix[PACK_OFF], 28));
+                    }
+                }
+            }
+            else
+            {
+                if (gCMUsage.ulUsageState & (1 << DISP_AT_PACKLIFEDAY) 
+                    || gCMUsage.ulUsageState & (1 << DISP_AT_PACKLIFEL))
 
-				{
-					painter.drawPixmap(width() - offsetX, offsetY + 150, scaledToWidth(m_devicesPix[PACK_YELLOW], 28));
-				}
-				else
-				{
-					painter.drawPixmap(width() - offsetX, offsetY + 150, scaledToWidth(m_devicesPix[PACK_OFF], 28));
-				}
-			}
+                {
+                    painter.drawPixmap(width() - offsetX, offsetY + 150, scaledToWidth(m_devicesPix[PACK_YELLOW], 28));
+                }
+                else
+                {
+                    painter.drawPixmap(width() - offsetX, offsetY + 150, scaledToWidth(m_devicesPix[PACK_OFF], 28));
+                }
+            }
 
             //EDI
             offsetX -= 50;
@@ -1200,26 +1200,26 @@ void DFlowChartWidget::paintProduct(QPainter &painter)
             painter.drawPixmap(width() - offsetX, offsetY + 126, scaledToWidth(m_devicesPix[I_OFF], 28));
 
         }
-		
-		//纯水紫外灯
+
+        //纯水紫外灯
         offsetX -= 90;
         matrix.rotate(90);
-		if (gCMUsage.ulUsageState & (1 << DISP_N1_UVLIFEDAY) 
-			|| gCMUsage.ulUsageState & (1 << DISP_N1_UVLIFEHOUR))
-		{
-			painter.drawPixmap(width() - offsetX, offsetY + 133, 
-							   scaledToHeight(m_devicesPix[UV_YELLOW], 64).transformed(matrix, Qt::SmoothTransformation));
-		}
-		else if(m_deviceState[N1_STATE])
-		{
-			painter.drawPixmap(width() - offsetX, offsetY + 133,
-                               scaledToHeight(m_devicesPix[UV_ON], 64).transformed(matrix, Qt::SmoothTransformation));
-		}
-		else
-		{
-			painter.drawPixmap(width() - offsetX, offsetY + 133,
-                               scaledToHeight(m_devicesPix[UV_OFF], 64).transformed(matrix, Qt::SmoothTransformation));
-		}
+        if (gCMUsage.ulUsageState & (1 << DISP_N1_UVLIFEDAY) 
+            || gCMUsage.ulUsageState & (1 << DISP_N1_UVLIFEHOUR))
+        {
+            painter.drawPixmap(width() - offsetX, offsetY + 133, 
+                                scaledToHeight(m_devicesPix[UV_YELLOW], 64).transformed(matrix, Qt::SmoothTransformation));
+        }
+        else if(m_deviceState[N1_STATE])
+        {
+            painter.drawPixmap(width() - offsetX, offsetY + 133,
+                                scaledToHeight(m_devicesPix[UV_ON], 64).transformed(matrix, Qt::SmoothTransformation));
+        }
+        else
+        {
+            painter.drawPixmap(width() - offsetX, offsetY + 133,
+                                scaledToHeight(m_devicesPix[UV_OFF], 64).transformed(matrix, Qt::SmoothTransformation));
+        }
         break;
     case MACHINE_L_UP:
     case MACHINE_L_RO_LOOP:
@@ -1260,28 +1260,28 @@ void DFlowChartWidget::paintProduct(QPainter &painter)
                                scaledToWidth(m_devicesPix[FLOWMETER_OFF], 28).transformed(matrix, Qt::SmoothTransformation));
         }
 
-	    //纯水紫外灯
+        //纯水紫外灯
         offsetX -= 245;
         matrix.rotate(90);
-		if (gCMUsage.ulUsageState & (1 << DISP_N1_UVLIFEDAY) 
-			|| gCMUsage.ulUsageState & (1 << DISP_N1_UVLIFEHOUR))
-		{
-			painter.drawPixmap(width() - offsetX, offsetY + 133,
-							   scaledToHeight(m_devicesPix[UV_YELLOW], 64).transformed(matrix, Qt::SmoothTransformation));
+        if (gCMUsage.ulUsageState & (1 << DISP_N1_UVLIFEDAY) 
+            || gCMUsage.ulUsageState & (1 << DISP_N1_UVLIFEHOUR))
+        {
+            painter.drawPixmap(width() - offsetX, offsetY + 133,
+                                scaledToHeight(m_devicesPix[UV_YELLOW], 64).transformed(matrix, Qt::SmoothTransformation));
 
-		}
-		else if(m_deviceState[N1_STATE])
-		{
-			painter.drawPixmap(width() - offsetX, offsetY + 133,
-							   scaledToHeight(m_devicesPix[UV_ON], 64).transformed(matrix, Qt::SmoothTransformation));
+        }
+        else if(m_deviceState[N1_STATE])
+        {
+            painter.drawPixmap(width() - offsetX, offsetY + 133,
+                                scaledToHeight(m_devicesPix[UV_ON], 64).transformed(matrix, Qt::SmoothTransformation));
 
-		}
-		else
-		{
-			painter.drawPixmap(width() - offsetX, offsetY + 133,
-							   scaledToHeight(m_devicesPix[UV_OFF], 64).transformed(matrix, Qt::SmoothTransformation));
+        }
+        else
+        {
+            painter.drawPixmap(width() - offsetX, offsetY + 133,
+                                scaledToHeight(m_devicesPix[UV_OFF], 64).transformed(matrix, Qt::SmoothTransformation));
 
-		}
+        }
         break;
     case MACHINE_Genie:
     case MACHINE_EDI:
@@ -1346,26 +1346,26 @@ void DFlowChartWidget::paintProduct(QPainter &painter)
             offsetX -= 80;
             painter.drawPixmap(width() - offsetX, offsetY + 126, scaledToWidth(m_devicesPix[I_OFF], 28));
         }
-		
-	    //纯水紫外灯
-        offsetX -= 110;		
-		if (gCMUsage.ulUsageState & (1 << DISP_N1_UVLIFEDAY) 
-			|| gCMUsage.ulUsageState & (1 << DISP_N1_UVLIFEHOUR))
-		{
-            painter.drawPixmap(width() - offsetX, offsetY + 133,
-						       scaledToHeight(m_devicesPix[UV_YELLOW], 64).transformed(matrix, Qt::SmoothTransformation));
 
-		}
-		else if(m_deviceState[N1_STATE])
-		{
-			painter.drawPixmap(width() - offsetX, offsetY + 133,
-						   	   scaledToHeight(m_devicesPix[UV_ON], 64).transformed(matrix, Qt::SmoothTransformation));
-		}
-		else
-		{
-			painter.drawPixmap(width() - offsetX, offsetY + 133,
-						   	   scaledToHeight(m_devicesPix[UV_OFF], 64).transformed(matrix, Qt::SmoothTransformation));
-		}
+        //纯水紫外灯
+        offsetX -= 110;		
+        if (gCMUsage.ulUsageState & (1 << DISP_N1_UVLIFEDAY) 
+            || gCMUsage.ulUsageState & (1 << DISP_N1_UVLIFEHOUR))
+        {
+            painter.drawPixmap(width() - offsetX, offsetY + 133,
+                                scaledToHeight(m_devicesPix[UV_YELLOW], 64).transformed(matrix, Qt::SmoothTransformation));
+
+        }
+        else if(m_deviceState[N1_STATE])
+        {
+            painter.drawPixmap(width() - offsetX, offsetY + 133,
+                                scaledToHeight(m_devicesPix[UV_ON], 64).transformed(matrix, Qt::SmoothTransformation));
+        }
+        else
+        {
+            painter.drawPixmap(width() - offsetX, offsetY + 133,
+                                scaledToHeight(m_devicesPix[UV_OFF], 64).transformed(matrix, Qt::SmoothTransformation));
+        }
         break;
     case MACHINE_RO:
     case MACHINE_UP:
@@ -1466,28 +1466,28 @@ void DFlowChartWidget::paintPureTank(QPainter &painter)
             if(m_deviceState[E6_STATE] || (!m_deviceState[E3_STATE] && m_deviceState[E1_STATE]))
             {
                 //T Pack
-            	if (gCMUsage.ulUsageState & (1 << DISP_T_PACKLIFEDAY)
-                	|| gCMUsage.ulUsageState & (1 << DISP_T_PACKLIFEL))
-            	{
-            		painter.drawPixmap(width() - offsetX, offsetY + 179, scaledToWidth(m_devicesPix[PACK_YELLOW], 28));
-            	}
-				else
-				{
-					painter.drawPixmap(width() - offsetX, offsetY + 179, scaledToWidth(m_devicesPix[PACK_ON], 28));
-				}
+                if (gCMUsage.ulUsageState & (1 << DISP_T_PACKLIFEDAY)
+                    || gCMUsage.ulUsageState & (1 << DISP_T_PACKLIFEL))
+                {
+                    painter.drawPixmap(width() - offsetX, offsetY + 179, scaledToWidth(m_devicesPix[PACK_YELLOW], 28));
+                }
+                else
+                {
+                    painter.drawPixmap(width() - offsetX, offsetY + 179, scaledToWidth(m_devicesPix[PACK_ON], 28));
+                }
             }
             else
             {
                 //T Pack
                 if (gCMUsage.ulUsageState & (1 << DISP_T_PACKLIFEDAY)
-                	|| gCMUsage.ulUsageState & (1 << DISP_T_PACKLIFEL))
-            	{
-            		painter.drawPixmap(width() - offsetX, offsetY + 179, scaledToWidth(m_devicesPix[PACK_YELLOW], 28));
-            	}
-				else
-				{
-					painter.drawPixmap(width() - offsetX, offsetY + 179, scaledToWidth(m_devicesPix[PACK_OFF], 28));
-				}
+                    || gCMUsage.ulUsageState & (1 << DISP_T_PACKLIFEL))
+                {
+                    painter.drawPixmap(width() - offsetX, offsetY + 179, scaledToWidth(m_devicesPix[PACK_YELLOW], 28));
+                }
+                else
+                {
+                    painter.drawPixmap(width() - offsetX, offsetY + 179, scaledToWidth(m_devicesPix[PACK_OFF], 28));
+                }
             }
         }
 
@@ -1498,11 +1498,11 @@ void DFlowChartWidget::paintPureTank(QPainter &painter)
 
         //水箱紫外灯
         offsetX -= 11;
-		if (gCMUsage.ulUsageState & (1 << DISP_N3_UVLIFEDAY) 
-        	|| gCMUsage.ulUsageState & (1 << DISP_N3_UVLIFEHOUR))
-		{
-			painter.drawPixmap(width() - offsetX, offsetY + 200, scaledToHeight(m_devicesPix[TANKUV_YELLOW], 48));
-		}
+        if (gCMUsage.ulUsageState & (1 << DISP_N3_UVLIFEDAY) 
+            || gCMUsage.ulUsageState & (1 << DISP_N3_UVLIFEHOUR))
+        {
+            painter.drawPixmap(width() - offsetX, offsetY + 200, scaledToHeight(m_devicesPix[TANKUV_YELLOW], 48));
+        }
         else if(m_deviceState[N3_STATE])
         {
             painter.drawPixmap(width() - offsetX, offsetY + 200, scaledToHeight(m_devicesPix[TANKUV_ON], 48));
@@ -1527,36 +1527,36 @@ void DFlowChartWidget::paintDispense(QPainter &painter)
     QPen pen(Qt::gray, 3);
     painter.setPen(pen);
     QMatrix matrix;
-	
+
     //有终端过滤器到期后，所有手柄均显示为黄色
-	bool bYellow = false;
-	if(gCMUsage.ulUsageState & (1 << DISP_T_A_FILTERLIFE) 
-	   || gCMUsage.ulUsageState & (1 << DISP_T_A_FILTERLIFE)
-	   || gCMUsage.ulUsageState & (1 << DISP_T_B_FILTERLIFE) 
-	   || gCMUsage.ulUsageState & (1 << DISP_T_B_FILTERLIFE))
-	{
-		bYellow = true;
-	}
+    bool bYellow = false;
+    if(gCMUsage.ulUsageState & (1 << DISP_T_A_FILTERLIFE) 
+        || gCMUsage.ulUsageState & (1 << DISP_T_A_FILTERLIFE)
+        || gCMUsage.ulUsageState & (1 << DISP_T_B_FILTERLIFE) 
+        || gCMUsage.ulUsageState & (1 << DISP_T_B_FILTERLIFE))
+    {
+        bYellow = true;
+    }
 
     //UP取水时，设置E7阀工作状态为true
-	if(DispGetUpQtwFlag())
-	{
-		m_deviceState[E7_STATE] = true;
-	}
-	else
-	{
-		m_deviceState[E7_STATE] = false;
-	}
+    if(DispGetUpQtwFlag())
+    {
+        m_deviceState[E7_STATE] = true;
+    }
+    else
+    {
+        m_deviceState[E7_STATE] = false;
+    }
 
     //HP取水时，设置E8阀工作状态为true
-	if(DispGetEdiQtwFlag())
-	{
-		m_deviceState[E8_STATE] = true;
-	}
-	else
-	{
-		m_deviceState[E8_STATE] = false;
-	}
+    if(DispGetEdiQtwFlag())
+    {
+        m_deviceState[E8_STATE] = true;
+    }
+    else
+    {
+        m_deviceState[E8_STATE] = false;
+    }
 
     switch(gGlobalParam.iMachineType)
     {
@@ -1714,14 +1714,14 @@ void DFlowChartWidget::paintDispense(QPainter &painter)
                                scaledToWidth(m_devicesPix[VALVE2_OFF], 28).transformed(matrix, Qt::SmoothTransformation));
         }
 
-		//N2
+        //N2
         offsetX -= 6;
-		if (gCMUsage.ulUsageState & (1 << DISP_N2_UVLIFEDAY) 
-        	|| gCMUsage.ulUsageState & (1 << DISP_N2_UVLIFEHOUR))
-		{
-		    painter.drawPixmap(width() - offsetX, offsetY + 280,
-                               scaledToHeight(m_devicesPix[UV_YELLOW], 64));
-		}
+        if (gCMUsage.ulUsageState & (1 << DISP_N2_UVLIFEDAY) 
+            || gCMUsage.ulUsageState & (1 << DISP_N2_UVLIFEHOUR))
+        {
+            painter.drawPixmap(width() - offsetX, offsetY + 280,
+                                scaledToHeight(m_devicesPix[UV_YELLOW], 64));
+        }
         else if(m_deviceState[N2_STATE])
         {
             painter.drawPixmap(width() - offsetX, offsetY + 280,
@@ -1785,7 +1785,7 @@ void DFlowChartWidget::paintDispense(QPainter &painter)
                                scaledToWidth(m_devicesPix[VALVE_OFF], 28).transformed(matrix, Qt::SmoothTransformation));
         }
 
-		//UP 取水阀
+        //UP 取水阀
         offsetX -= 30;
         if(m_deviceState[E7_STATE])
         {
@@ -1796,13 +1796,13 @@ void DFlowChartWidget::paintDispense(QPainter &painter)
             painter.drawPixmap(width() - offsetX, offsetY + 286, scaledToWidth(m_devicesPix[VALVE_OFF], 28));
         }
 
-		//UP 手柄
+        //UP 手柄
         offsetX -= 50;
-		if (bYellow)
-		{
-			painter.drawPixmap(width() - offsetX, offsetY + 249, scaledToHeight(m_devicesPix[DISPER_YELLOW], 54));
-		}
-		else if(m_deviceState[E7_STATE])
+        if (bYellow)
+        {
+            painter.drawPixmap(width() - offsetX, offsetY + 249, scaledToHeight(m_devicesPix[DISPER_YELLOW], 54));
+        }
+        else if(m_deviceState[E7_STATE])
         {
             painter.drawPixmap(width() - offsetX, offsetY + 249, scaledToHeight(m_devicesPix[DISPER_ON], 54));
         }
@@ -1811,7 +1811,7 @@ void DFlowChartWidget::paintDispense(QPainter &painter)
             painter.drawPixmap(width() - offsetX, offsetY + 249, scaledToHeight(m_devicesPix[DISPER], 54));
         }
 
-		//HP 取水阀
+        //HP 取水阀
         offsetX += 50;
         if(m_deviceState[E8_STATE])
         {
@@ -1822,13 +1822,13 @@ void DFlowChartWidget::paintDispense(QPainter &painter)
             painter.drawPixmap(width() - offsetX, offsetY + 216, scaledToWidth(m_devicesPix[VALVE_OFF], 28));
         }
 
-		//HP 手柄
+        //HP 手柄
         offsetX -= 50;
-		if (bYellow)
-		{
-		    painter.drawPixmap(width() - offsetX, offsetY + 179, scaledToHeight(m_devicesPix[DISPER_YELLOW], 54));
-		}
-		else if(m_deviceState[E8_STATE])
+        if (bYellow)
+        {
+            painter.drawPixmap(width() - offsetX, offsetY + 179, scaledToHeight(m_devicesPix[DISPER_YELLOW], 54));
+        }
+        else if(m_deviceState[E8_STATE])
         {
             painter.drawPixmap(width() - offsetX, offsetY + 179, scaledToHeight(m_devicesPix[DISPER_ON], 54));
         }
@@ -1929,7 +1929,7 @@ void DFlowChartWidget::paintDispense(QPainter &painter)
             }
         }
 
-	    //HP 取水阀
+        //HP 取水阀
         offsetX -= 156;
         if(m_deviceState[E8_STATE])
         {
@@ -1939,14 +1939,14 @@ void DFlowChartWidget::paintDispense(QPainter &painter)
         {
             painter.drawPixmap(width() - offsetX, offsetY + 246, scaledToWidth(m_devicesPix[VALVE_OFF], 28));
         }
-		
-		//HP 手柄
+
+        //HP 手柄
         offsetX -= 50;
-		if (bYellow)
-		{
-			painter.drawPixmap(width() - offsetX, offsetY + 209, scaledToHeight(m_devicesPix[DISPER_YELLOW], 54));
-		}
-		else if(m_deviceState[E8_STATE])
+        if (bYellow)
+        {
+            painter.drawPixmap(width() - offsetX, offsetY + 209, scaledToHeight(m_devicesPix[DISPER_YELLOW], 54));
+        }
+        else if(m_deviceState[E8_STATE])
         {
             painter.drawPixmap(width() - offsetX, offsetY + 209, scaledToHeight(m_devicesPix[DISPER_ON], 54));
         }
@@ -1994,39 +1994,41 @@ void DFlowChartWidget::paintDispense(QPainter &painter)
             points.clear();
             points.append(QPointF(width() - 490, offsetY + 260));
             points.append(QPointF(width() - 467, offsetY + 260));
-            points.append(QPointF(width() - 467, offsetY + 275));
-            points.append(QPointF(width() - 455, offsetY + 275));
-            points.append(QPointF(width() - 455, offsetY + 260));
-            points.append(QPointF(width() - 420, offsetY + 260));
-            points.append(QPointF(width() - 420, offsetY + 280));
+            points.append(QPointF(width() - 467, offsetY + 280));
             painter.drawPolyline(points);
 
             //TOC冲洗阀->TOC测量水路交点
             setStatePen(painter, m_deviceState[E9_STATE]);
   
             points.clear();
-            points.append(QPointF(width() - 420, offsetY + 285));
-            points.append(QPointF(width() - 420, offsetY + 390));
-            points.append(QPointF(width() - 395, offsetY + 390));
+            points.append(QPointF(width() - 467, offsetY + 285));
+            points.append(QPointF(width() - 467, offsetY + 385));
+            points.append(QPointF(width() - 442, offsetY + 385));
             painter.drawPolyline(points);
 
             //TOC冲洗阀->TOC测量水路交点 (旁路)
             setStatePen(painter, !m_deviceState[E9_STATE] && (m_deviceState[E5_STATE] || m_deviceState[E7_STATE]));
 
             points.clear();
-            points.append(QPointF(width() - 410, offsetY + 288));
-            points.append(QPointF(width() - 395, offsetY + 288));
-            points.append(QPointF(width() - 395, offsetY + 390));
+            points.append(QPointF(width() - 457, offsetY + 288));
+            points.append(QPointF(width() - 442, offsetY + 288));
+            points.append(QPointF(width() - 442, offsetY + 385));
             painter.drawPolyline(points);
 
             //TOC测量水路交点 ->UP取水和循环交叉点
             setStatePen(painter, m_deviceState[E5_STATE] || m_deviceState[E7_STATE]);
 
             points.clear();
-            points.append(QPointF(width() - 395, offsetY + 390));
-            points.append(QPointF(width() - 370, offsetY + 390));
-            points.append(QPointF(width() - 370, offsetY + 300));
-            points.append(QPointF(width() - 286, offsetY + 300));
+            points.append(QPointF(width() - 442, offsetY + 385));
+            points.append(QPointF(width() - 417, offsetY + 385));
+            points.append(QPointF(width() - 417, offsetY + 300)); //note
+
+            points.append(QPointF(width() - 332, offsetY + 300));
+            points.append(QPointF(width() - 332, offsetY + 315));
+            points.append(QPointF(width() - 320, offsetY + 315));
+            points.append(QPointF(width() - 320, offsetY + 300));
+            
+            points.append(QPointF(width() - 285, offsetY + 300));
             points.append(QPointF(width() - 285, offsetY + 315));
             points.append(QPointF(width() - 273, offsetY + 315));
             points.append(QPointF(width() - 273, offsetY + 300));
@@ -2039,16 +2041,16 @@ void DFlowChartWidget::paintDispense(QPainter &painter)
             setStatePen(painter, m_deviceState[E5_STATE] || m_deviceState[E7_STATE]);
 
             points.clear();
-            points.append(QPointF(width() - 490, offsetY + 260));
-            points.append(QPointF(width() - 467, offsetY + 260));
-            points.append(QPointF(width() - 467, offsetY + 275));
-            points.append(QPointF(width() - 455, offsetY + 275));
-            points.append(QPointF(width() - 455, offsetY + 260));
-            points.append(QPointF(width() - 420, offsetY + 260));
-            points.append(QPointF(width() - 420, offsetY + 390));
-            points.append(QPointF(width() - 370, offsetY + 390));
-            points.append(QPointF(width() - 370, offsetY + 300));
-            points.append(QPointF(width() - 286, offsetY + 300));
+            points.append(QPointF(width() - 490, offsetY + 385));
+            points.append(QPointF(width() - 455, offsetY + 385));
+            points.append(QPointF(width() - 455, offsetY + 300));
+
+            points.append(QPointF(width() - 332, offsetY + 300));
+            points.append(QPointF(width() - 332, offsetY + 315));
+            points.append(QPointF(width() - 320, offsetY + 315));
+            points.append(QPointF(width() - 320, offsetY + 300));
+            
+            points.append(QPointF(width() - 285, offsetY + 300));
             points.append(QPointF(width() - 285, offsetY + 315));
             points.append(QPointF(width() - 273, offsetY + 315));
             points.append(QPointF(width() - 273, offsetY + 300));
@@ -2130,22 +2132,7 @@ void DFlowChartWidget::paintDispense(QPainter &painter)
             painter.drawPixmap(width() - offsetX, offsetY + 396, scaledToWidth(m_devicesPix[PUMP_OFF], 28));
         }
 
-        //H Pack
         offsetX += 130;
-        if (gCMUsage.ulUsageState & (1 << DISP_H_PACKLIFEDAY) 
-            || gCMUsage.ulUsageState & (1 << DISP_H_PACKLIFEL))
-        {
-            painter.drawPixmap(width() - offsetX, offsetY + 269, scaledToWidth(m_devicesPix[PACK_YELLOW], 28));
-        }
-        else if(m_deviceState[E5_STATE] || m_deviceState[E7_STATE])
-        {
-            painter.drawPixmap(width() - offsetX, offsetY + 269, scaledToWidth(m_devicesPix[PACK_ON], 28));
-        }
-        else
-        {
-            painter.drawPixmap(width() - offsetX, offsetY + 269, scaledToWidth(m_devicesPix[PACK_OFF], 28));
-        }
-
         //NOTE: I3 配置水箱则配置I3电极用于检测水箱循环水质
         if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
         {
@@ -2160,7 +2147,7 @@ void DFlowChartWidget::paintDispense(QPainter &painter)
         }
 
         //TOC清洗阀
-        offsetX -= 40; //94
+        offsetX += 7; //94
         matrix.rotate(-90);
         if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveTOC))
         {
@@ -2179,30 +2166,53 @@ void DFlowChartWidget::paintDispense(QPainter &painter)
                 painter.drawPixmap(width() - offsetX, offsetY + 275,
                                    scaledToWidth(m_devicesPix[VALVE2_OFF], 28).transformed(matrix, Qt::SmoothTransformation));
             }
-
         }
-
+        
         //UV
-        offsetX -= 7;
-		if (gCMUsage.ulUsageState & (1 << DISP_N2_UVLIFEDAY) 
-        	|| gCMUsage.ulUsageState & (1 << DISP_N2_UVLIFEHOUR))
-		{
-		    painter.drawPixmap(width() - offsetX, offsetY + 310,
-                               scaledToHeight(m_devicesPix[UV_YELLOW], 64));
-		}
-        else if(m_deviceState[N2_STATE])
+        if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveTOC))
         {
-            painter.drawPixmap(width() - offsetX, offsetY + 310,
-                               scaledToHeight(m_devicesPix[UV_ON], 64));
+            offsetX -= 7;
+            if (gCMUsage.ulUsageState & (1 << DISP_N2_UVLIFEDAY) 
+                || gCMUsage.ulUsageState & (1 << DISP_N2_UVLIFEHOUR))
+            {
+                painter.drawPixmap(width() - offsetX, offsetY + 310,
+                                scaledToHeight(m_devicesPix[UV_YELLOW], 64));
+            }
+            else if(m_deviceState[N2_STATE])
+            {
+                painter.drawPixmap(width() - offsetX, offsetY + 310,
+                                scaledToHeight(m_devicesPix[UV_ON], 64));
+            }
+            else
+            {
+                painter.drawPixmap(width() - offsetX, offsetY + 310,
+                                scaledToHeight(m_devicesPix[UV_OFF], 64));
+            }
         }
         else
         {
-            painter.drawPixmap(width() - offsetX, offsetY + 310,
-                               scaledToHeight(m_devicesPix[UV_OFF], 64));
+            offsetX -= 19;
+            if (gCMUsage.ulUsageState & (1 << DISP_N2_UVLIFEDAY) 
+                || gCMUsage.ulUsageState & (1 << DISP_N2_UVLIFEHOUR))
+            {
+                painter.drawPixmap(width() - offsetX, offsetY + 310,
+                                scaledToHeight(m_devicesPix[UV_YELLOW], 64));
+            }
+            else if(m_deviceState[N2_STATE])
+            {
+                painter.drawPixmap(width() - offsetX, offsetY + 310,
+                                scaledToHeight(m_devicesPix[UV_ON], 64));
+            }
+            else
+            {
+                painter.drawPixmap(width() - offsetX, offsetY + 310,
+                                scaledToHeight(m_devicesPix[UV_OFF], 64));
+            }
+            offsetX += 12;
         }
 
         //I4
-        offsetX -= 85;
+        offsetX -= 80;
         if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveTOC))
         {
             if(m_deviceState[E5_STATE] || m_deviceState[E7_STATE])
@@ -2215,8 +2225,24 @@ void DFlowChartWidget::paintDispense(QPainter &painter)
             }
         }
 
+        //H Pack
+        offsetX -= (50 + 5);
+        if (gCMUsage.ulUsageState & (1 << DISP_H_PACKLIFEDAY) 
+            || gCMUsage.ulUsageState & (1 << DISP_H_PACKLIFEL))
+        {
+            painter.drawPixmap(width() - offsetX, offsetY + 310, scaledToWidth(m_devicesPix[PACK_YELLOW], 28));
+        }
+        else if(m_deviceState[E5_STATE] || m_deviceState[E7_STATE])
+        {
+            painter.drawPixmap(width() - offsetX, offsetY + 310, scaledToWidth(m_devicesPix[PACK_ON], 28));
+        }
+        else
+        {
+            painter.drawPixmap(width() - offsetX, offsetY + 310, scaledToWidth(m_devicesPix[PACK_OFF], 28));
+        }
+        
         //U Pack
-        offsetX -= 50;
+        offsetX -= 47;
         if (gCMUsage.ulUsageState & (1 << DISP_U_PACKLIFEDAY) 
             || gCMUsage.ulUsageState & (1 << DISP_U_PACKLIFEL))
         {
@@ -2255,7 +2281,7 @@ void DFlowChartWidget::paintDispense(QPainter &painter)
                                scaledToWidth(m_devicesPix[VALVE_OFF], 28).transformed(matrix, Qt::SmoothTransformation));
         }
 
-		//UP 取水阀
+        //UP 取水阀
         offsetX -= 30;
         if(m_deviceState[E7_STATE])
         {
@@ -2266,13 +2292,13 @@ void DFlowChartWidget::paintDispense(QPainter &painter)
             painter.drawPixmap(width() - offsetX, offsetY + 286, scaledToWidth(m_devicesPix[VALVE_OFF], 28));
         }
 
-	    //UP 手柄
+        //UP 手柄
         offsetX -= 50;
-		if (bYellow)
-		{
-			painter.drawPixmap(width() - offsetX, offsetY + 249, scaledToHeight(m_devicesPix[DISPER_YELLOW], 54));
-		}
-		else if(m_deviceState[E7_STATE])
+        if (bYellow)
+        {
+            painter.drawPixmap(width() - offsetX, offsetY + 249, scaledToHeight(m_devicesPix[DISPER_YELLOW], 54));
+        }
+        else if(m_deviceState[E7_STATE])
         {
             painter.drawPixmap(width() - offsetX, offsetY + 249, scaledToHeight(m_devicesPix[DISPER_ON], 54));
         }
@@ -2281,8 +2307,8 @@ void DFlowChartWidget::paintDispense(QPainter &painter)
             painter.drawPixmap(width() - offsetX, offsetY + 249, scaledToHeight(m_devicesPix[DISPER], 54));
         }
 
-		//HP 取水阀
-		offsetX += 114;
+        //HP 取水阀
+        offsetX += 114;
         if(m_deviceState[E8_STATE])
         {
             painter.drawPixmap(width() - offsetX, offsetY + 216, scaledToWidth(m_devicesPix[VALVE_ON], 28));
@@ -2291,14 +2317,14 @@ void DFlowChartWidget::paintDispense(QPainter &painter)
         {
             painter.drawPixmap(width() - offsetX, offsetY + 216, scaledToWidth(m_devicesPix[VALVE_OFF], 28));
         }
-	
+
         //HP 手柄
         offsetX -= 50;
-		if(bYellow)
-		{
-			painter.drawPixmap(width() - offsetX, offsetY + 179, scaledToHeight(m_devicesPix[DISPER_YELLOW], 54));
-		}
-		else if(m_deviceState[E8_STATE])
+        if(bYellow)
+        {
+            painter.drawPixmap(width() - offsetX, offsetY + 179, scaledToHeight(m_devicesPix[DISPER_YELLOW], 54));
+        }
+        else if(m_deviceState[E8_STATE])
         {
             painter.drawPixmap(width() - offsetX, offsetY + 179, scaledToHeight(m_devicesPix[DISPER_ON], 54));
         }
@@ -2442,7 +2468,7 @@ void DFlowChartWidget::paintDispense(QPainter &painter)
             painter.drawPixmap(width() - offsetX, offsetY + 161, scaledToWidth(m_devicesPix[PUMP_OFF], 28));
         }
 
-		//HP 取水阀
+        //HP 取水阀
         offsetX -= 180;
         if(m_deviceState[E8_STATE])
         {
@@ -2453,13 +2479,13 @@ void DFlowChartWidget::paintDispense(QPainter &painter)
             painter.drawPixmap(width() - offsetX, offsetY + 171, scaledToWidth(m_devicesPix[VALVE_OFF], 28));
         }
 
-		//HP 手柄
+        //HP 手柄
         offsetX -= 60;
-		if(bYellow)
-		{
-			painter.drawPixmap(width() - offsetX, offsetY + 134, scaledToHeight(m_devicesPix[DISPER_YELLOW], 54));
-		}
-		else if(m_deviceState[E8_STATE])
+        if(bYellow)
+        {
+            painter.drawPixmap(width() - offsetX, offsetY + 134, scaledToHeight(m_devicesPix[DISPER_YELLOW], 54));
+        }
+        else if(m_deviceState[E8_STATE])
         {
             painter.drawPixmap(width() - offsetX, offsetY + 134, scaledToHeight(m_devicesPix[DISPER_ON], 54));
         }
@@ -2494,12 +2520,12 @@ void DFlowChartWidget::paintDispense(QPainter &painter)
         //N2 UV
         offsetX += 80;
         matrix.rotate(90);
-		if (gCMUsage.ulUsageState & (1 << DISP_N2_UVLIFEDAY) 
-        	|| gCMUsage.ulUsageState & (1 << DISP_N2_UVLIFEHOUR))
-		{
-		    painter.drawPixmap(width() - offsetX, offsetY + 257,
-                               scaledToHeight(m_devicesPix[UV_YELLOW], 64).transformed(matrix, Qt::SmoothTransformation));
-		}
+        if (gCMUsage.ulUsageState & (1 << DISP_N2_UVLIFEDAY) 
+            || gCMUsage.ulUsageState & (1 << DISP_N2_UVLIFEHOUR))
+        {
+            painter.drawPixmap(width() - offsetX, offsetY + 257,
+                                scaledToHeight(m_devicesPix[UV_YELLOW], 64).transformed(matrix, Qt::SmoothTransformation));
+        }
         else if(m_deviceState[N2_STATE])
         {
             painter.drawPixmap(width() - offsetX, offsetY + 257,
@@ -2522,16 +2548,16 @@ void DFlowChartWidget::paintDispense(QPainter &painter)
 
             //U Pack
             offsetX += 50;
-			if (gCMUsage.ulUsageState & (1 << DISP_U_PACKLIFEDAY) 
+            if (gCMUsage.ulUsageState & (1 << DISP_U_PACKLIFEDAY) 
                 || gCMUsage.ulUsageState & (1 << DISP_U_PACKLIFEL))
-			{
-				painter.drawPixmap(width() - offsetX, offsetY + 275, scaledToWidth(m_devicesPix[PACK_YELLOW], 28));
-			}
-			else
-			{
-				painter.drawPixmap(width() - offsetX, offsetY + 275, scaledToWidth(m_devicesPix[PACK_ON], 28));
-			}
-            
+            {
+                painter.drawPixmap(width() - offsetX, offsetY + 275, scaledToWidth(m_devicesPix[PACK_YELLOW], 28));
+            }
+            else
+            {
+                painter.drawPixmap(width() - offsetX, offsetY + 275, scaledToWidth(m_devicesPix[PACK_ON], 28));
+            }
+
             //I5
             offsetX -= 80;
             painter.drawPixmap(width() - offsetX, offsetY + 350, scaledToWidth(m_devicesPix[I_ON], 28));
@@ -2547,22 +2573,22 @@ void DFlowChartWidget::paintDispense(QPainter &painter)
 
             //U Pack
             offsetX += 50;
-			if (gCMUsage.ulUsageState & (1 << DISP_U_PACKLIFEDAY) 
+            if (gCMUsage.ulUsageState & (1 << DISP_U_PACKLIFEDAY) 
                 || gCMUsage.ulUsageState & (1 << DISP_U_PACKLIFEL))
-			{
-				painter.drawPixmap(width() - offsetX, offsetY + 275, scaledToWidth(m_devicesPix[PACK_YELLOW], 28));
-			}
-			else
-			{
-				painter.drawPixmap(width() - offsetX, offsetY + 275, scaledToWidth(m_devicesPix[PACK_OFF], 28));
-			}
+            {
+                painter.drawPixmap(width() - offsetX, offsetY + 275, scaledToWidth(m_devicesPix[PACK_YELLOW], 28));
+            }
+            else
+            {
+                painter.drawPixmap(width() - offsetX, offsetY + 275, scaledToWidth(m_devicesPix[PACK_OFF], 28));
+            }
 
             //I5
             offsetX -= 80;
             painter.drawPixmap(width() - offsetX, offsetY + 350, scaledToWidth(m_devicesPix[I_OFF], 28));
         }
 
-		//UP 取水阀
+        //UP 取水阀
         offsetX -= 190;
         if(m_deviceState[E7_STATE])
         {
@@ -2573,12 +2599,12 @@ void DFlowChartWidget::paintDispense(QPainter &painter)
             painter.drawPixmap(width() - offsetX, offsetY + 352, scaledToWidth(m_devicesPix[VALVE_OFF], 28));
         }
 
-		//UP 手柄
+        //UP 手柄
         offsetX -= 60;
-		if(bYellow)
-		{
-		    painter.drawPixmap(width() - offsetX, offsetY + 315, scaledToHeight(m_devicesPix[DISPER_YELLOW], 54));
-		}
+        if(bYellow)
+        {
+            painter.drawPixmap(width() - offsetX, offsetY + 315, scaledToHeight(m_devicesPix[DISPER_YELLOW], 54));
+        }
         else if(m_deviceState[E7_STATE])
         {
             painter.drawPixmap(width() - offsetX, offsetY + 315, scaledToHeight(m_devicesPix[DISPER_ON], 54));
@@ -2620,36 +2646,39 @@ void DFlowChartWidget::paintDispense(QPainter &painter)
             points.append(QPointF(width() - 360, offsetY + 264));
             points.append(QPointF(width() - 700, offsetY + 264));
             points.append(QPointF(width() - 700, offsetY + 44));
-            points.append(QPointF(width() - 649, offsetY + 44));
-            points.append(QPointF(width() - 649, offsetY + 59));
-            points.append(QPointF(width() - 636, offsetY + 59));
-            points.append(QPointF(width() - 636, offsetY + 44));
-            points.append(QPointF(width() - 575, offsetY + 44));
+
+            points.append(QPointF(width() - 675, offsetY + 44));
             painter.drawPolyline(points);
 
             //TOC冲洗阀->TOC检测交叉点
             setStatePen(painter, m_deviceState[E9_STATE]);
 
             points.clear();
-            points.append(QPointF(width() - 575, offsetY + 44));
-            points.append(QPointF(width() - 425, offsetY + 44));
+            points.append(QPointF(width() - 675, offsetY + 44));
+            points.append(QPointF(width() - 525, offsetY + 44));
             painter.drawPolyline(points);
 
             //TOC冲洗阀->TOC检测交叉点(旁路)
             setStatePen(painter, !m_deviceState[E9_STATE] && m_deviceState[C2_STATE]);
 
             points.clear();
-            points.append(QPointF(width() - 563, offsetY + 57));
-            points.append(QPointF(width() - 563, offsetY + 70));
-            points.append(QPointF(width() - 425, offsetY + 70));
-            points.append(QPointF(width() - 425, offsetY + 44));
+            points.append(QPointF(width() - 663, offsetY + 57));
+            points.append(QPointF(width() - 663, offsetY + 70));
+            points.append(QPointF(width() - 525, offsetY + 70));
+            points.append(QPointF(width() - 525, offsetY + 44));
             painter.drawPolyline(points);
 
             //TOC检测交叉点(旁路)->取水循环交点
             setStatePen(painter, m_deviceState[C2_STATE]);
             
             points.clear();
-            points.append(QPointF(width() - 425, offsetY + 44));
+            points.append(QPointF(width() - 525, offsetY + 44));
+
+            points.append(QPointF(width() - 432, offsetY + 44));
+            points.append(QPointF(width() - 432, offsetY + 59));
+            points.append(QPointF(width() - 419, offsetY + 59));
+            points.append(QPointF(width() - 419, offsetY + 44));
+
             points.append(QPointF(width() - 339, offsetY + 44));
             points.append(QPointF(width() - 339, offsetY + 59));
             points.append(QPointF(width() - 326, offsetY + 59));
@@ -2666,10 +2695,12 @@ void DFlowChartWidget::paintDispense(QPainter &painter)
             points.append(QPointF(width() - 360, offsetY + 264));
             points.append(QPointF(width() - 700, offsetY + 264));
             points.append(QPointF(width() - 700, offsetY + 44));
-            points.append(QPointF(width() - 649, offsetY + 44));
-            points.append(QPointF(width() - 649, offsetY + 59));
-            points.append(QPointF(width() - 636, offsetY + 59));
-            points.append(QPointF(width() - 636, offsetY + 44));
+
+            points.append(QPointF(width() - 432, offsetY + 44));
+            points.append(QPointF(width() - 432, offsetY + 59));
+            points.append(QPointF(width() - 419, offsetY + 59));
+            points.append(QPointF(width() - 419, offsetY + 44));
+
             points.append(QPointF(width() - 339, offsetY + 44));
             points.append(QPointF(width() - 339, offsetY + 59));
             points.append(QPointF(width() - 326, offsetY + 59));
@@ -2718,7 +2749,6 @@ void DFlowChartWidget::paintDispense(QPainter &painter)
             painter.drawPixmap(width() - offsetX, offsetY + 250, scaledToWidth(m_devicesPix[I_OFF], 28));
         }
 
-
         if(m_deviceState[C2_STATE])
         {
             //取水流量计
@@ -2740,24 +2770,8 @@ void DFlowChartWidget::paintDispense(QPainter &painter)
             painter.drawPixmap(width() - offsetX, offsetY + 240, scaledToWidth(m_devicesPix[PUMP_OFF], 28));  
         }
 
-        //H Pack
-        offsetX += 80;
-        if (gCMUsage.ulUsageState & (1 << DISP_H_PACKLIFEDAY) 
-            || gCMUsage.ulUsageState & (1 << DISP_H_PACKLIFEL))
-        {
-            painter.drawPixmap(width() - offsetX, offsetY + 55, scaledToWidth(m_devicesPix[PACK_YELLOW], 28));
-        }
-        else if(m_deviceState[C2_STATE])
-        {
-            painter.drawPixmap(width() - offsetX, offsetY + 55, scaledToWidth(m_devicesPix[PACK_ON], 28));
-        }
-        else
-        {
-            painter.drawPixmap(width() - offsetX, offsetY + 55, scaledToWidth(m_devicesPix[PACK_OFF], 28));
-        }
-
         //TOC清洗阀
-        offsetX -= 80;
+        offsetX += 100;
         if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveTOC))
         {
             if(m_deviceState[E9_STATE])
@@ -2777,12 +2791,12 @@ void DFlowChartWidget::paintDispense(QPainter &painter)
         //N2 UV
         offsetX -= 60;
         matrix.rotate(90);
-		if (gCMUsage.ulUsageState & (1 << DISP_N2_UVLIFEDAY) 
-        	|| gCMUsage.ulUsageState & (1 << DISP_N2_UVLIFEHOUR))
-		{
-		    painter.drawPixmap(width() - offsetX, offsetY + 37,
-                               scaledToHeight(m_devicesPix[UV_YELLOW], 64).transformed(matrix, Qt::SmoothTransformation));
-		}
+        if (gCMUsage.ulUsageState & (1 << DISP_N2_UVLIFEDAY) 
+            || gCMUsage.ulUsageState & (1 << DISP_N2_UVLIFEHOUR))
+        {
+            painter.drawPixmap(width() - offsetX, offsetY + 37,
+                                scaledToHeight(m_devicesPix[UV_YELLOW], 64).transformed(matrix, Qt::SmoothTransformation));
+        }
         else if(m_deviceState[N2_STATE])
         {
             painter.drawPixmap(width() - offsetX, offsetY + 37,
@@ -2806,11 +2820,26 @@ void DFlowChartWidget::paintDispense(QPainter &painter)
             {
                 painter.drawPixmap(width() - offsetX, offsetY + 30, scaledToWidth(m_devicesPix[I_OFF], 28));
             }
+        }
 
+        //H Pack
+        offsetX -= 67;
+        if (gCMUsage.ulUsageState & (1 << DISP_H_PACKLIFEDAY) 
+            || gCMUsage.ulUsageState & (1 << DISP_H_PACKLIFEL))
+        {
+            painter.drawPixmap(width() - offsetX, offsetY + 55, scaledToWidth(m_devicesPix[PACK_YELLOW], 28));
+        }
+        else if(m_deviceState[C2_STATE])
+        {
+            painter.drawPixmap(width() - offsetX, offsetY + 55, scaledToWidth(m_devicesPix[PACK_ON], 28));
+        }
+        else
+        {
+            painter.drawPixmap(width() - offsetX, offsetY + 55, scaledToWidth(m_devicesPix[PACK_OFF], 28));
         }
 
         //U Pack
-        offsetX -= 60;
+        offsetX -= 93;
         if (gCMUsage.ulUsageState & (1 << DISP_U_PACKLIFEDAY) 
             || gCMUsage.ulUsageState & (1 << DISP_U_PACKLIFEL))
         {
@@ -2836,7 +2865,7 @@ void DFlowChartWidget::paintDispense(QPainter &painter)
             painter.drawPixmap(width() - offsetX, offsetY + 30, scaledToWidth(m_devicesPix[I_OFF], 28));
         }
 
-		//UP 取水阀
+        //UP 取水阀
         offsetX -= 100;
         if(m_deviceState[E7_STATE])
         {
@@ -2847,13 +2876,13 @@ void DFlowChartWidget::paintDispense(QPainter &painter)
             painter.drawPixmap(width() - offsetX, offsetY + 30, scaledToWidth(m_devicesPix[VALVE_OFF], 28));
         }
 
-		//UP 手柄
+        //UP 手柄
         offsetX -= 60;
-		if(bYellow)
-		{
-		    painter.drawPixmap(width() - offsetX, offsetY - 7, scaledToHeight(m_devicesPix[DISPER_YELLOW], 54));
-		}
-		else if(m_deviceState[E7_STATE])
+        if(bYellow)
+        {
+            painter.drawPixmap(width() - offsetX, offsetY - 7, scaledToHeight(m_devicesPix[DISPER_YELLOW], 54));
+        }
+        else if(m_deviceState[E7_STATE])
         {
             painter.drawPixmap(width() - offsetX, offsetY - 7, scaledToHeight(m_devicesPix[DISPER_ON], 54));
         }
@@ -2928,9 +2957,9 @@ void DFlowChartWidget::paintPureTankLevel(QPainter &painter)
     painter.setBrush(QBrush(levelColor));
     painter.setRenderHint(QPainter::Antialiasing, true);
 
-    double offset = 52*(1 - iTankLevel*1.0/100);
+    double offset = 58*(1 - iTankLevel*1.0/100);
     QRectF tankLevelRect(QPointF(732, 247 + offset),
-                         QPointF(762, 300)); //Tank Level
+                         QPointF(762, 306)); //Tank Level
     painter.drawRect(tankLevelRect);
 
     painter.setPen(oldPen);
@@ -2957,18 +2986,18 @@ void DFlowChartWidget::paintValue(QPainter &painter)
     case MACHINE_L_UP:
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
-		if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveB3))
-		{
-			//原水箱液位
-	        if(m_iSourceTankLevel >= 10)
-	        {
-	            painter.drawText(488, 65, QString("%1%").arg(m_iSourceTankLevel));
-	        }
-	        else
-	        {
-	            painter.drawText(496, 65, QString("%1%").arg(m_iSourceTankLevel));
-	        }
-		}
+        if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveB3))
+        {
+            //原水箱液位
+            if(m_iSourceTankLevel >= 10)
+            {
+                painter.drawText(488, 65, QString("%1%").arg(m_iSourceTankLevel));
+            }
+            else
+            {
+                painter.drawText(496, 65, QString("%1%").arg(m_iSourceTankLevel));
+            }
+        }
         break;
     default:
         break;
@@ -3108,9 +3137,9 @@ void DFlowChartWidget::paintValue(QPainter &painter)
             //I4
             temp = static_cast<double>(m_waterInfo[I4_VALUE].fQuality);
             iPrecision = temp > 1.0 ? 1: 2;
-            painter.drawText(420, 305,
+            painter.drawText(373, 305,
                              toString(m_waterInfo[I4_VALUE].fQuality, iPrecision) + QString(" ") + m_strUnit[RES_COND_UNIT]);
-            painter.drawText(420, 320,
+            painter.drawText(373, 320,
                              toString(m_waterInfo[I4_VALUE].fTemp,  1)  + QString(" ") + m_strUnit[TEMP_UNIT]);
         }
         //I5
@@ -3191,9 +3220,9 @@ void DFlowChartWidget::paintValue(QPainter &painter)
         {
             temp = static_cast<double>(m_waterInfo[I4_VALUE].fQuality);
             iPrecision = temp > 1.0 ? 1: 2;
-            painter.drawText(355, 130,
+            painter.drawText(255, 130,
                              toString(m_waterInfo[I4_VALUE].fQuality, iPrecision) + QString(" ") + m_strUnit[RES_COND_UNIT]);
-            painter.drawText(355, 145,
+            painter.drawText(255, 145,
                              toString(m_waterInfo[I4_VALUE].fTemp,  1)  + QString(" ") + m_strUnit[TEMP_UNIT]);
         }
 
@@ -3233,24 +3262,24 @@ void DFlowChartWidget::paintValue(QPainter &painter)
                          tr("TANK UV") + QString(":  %1mA").arg(m_detectionPara[N3_DETECTION].iValueI));
         painter.drawText(offsetX, 480,
                          tr("EDI Module") + QString(":  %1mA").arg(m_detectionPara[EDI_DETECTION].iValueI));
-		painter.drawText(offsetX, 495,
+        painter.drawText(offsetX, 495,
                          tr("RO Rejection") + ":  " + toString(m_fResidue, 1) + QString("%"));
 
-		if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveTOC))
+        if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveTOC))
         {
-        	QString strToc;
-        	if(m_fToc >= 200)
-        	{
-        		strToc = ">200" + QString("ppb");
-        	}
-			else if(m_fToc < 10)
-			{
-				strToc = toString(m_fToc, 1) + QString("ppb");
-			}
-			else
-			{
-				strToc = toString(m_fToc) + QString("ppb");
-			}
+            QString strToc;
+            if(m_fToc >= 200)
+            {
+                strToc = ">200" + QString("ppb");
+            }
+            else if(m_fToc < 10)
+            {
+                strToc = toString(m_fToc, 1) + QString("ppb");
+            }
+            else
+            {
+                strToc = toString(m_fToc) + QString("ppb");
+            }
             painter.drawText(170, 495, tr("TOC") + ":  " + strToc);
         }
         break;
@@ -3279,23 +3308,23 @@ void DFlowChartWidget::paintValue(QPainter &painter)
                          tr("185 UV") + QString(":  %1mA").arg(m_detectionPara[N2_DETECTION].iValueI));
         painter.drawText(offsetX, 480,
                          tr("TANK UV") + QString(":  %1mA").arg(m_detectionPara[N3_DETECTION].iValueI));
-		painter.drawText(offsetX, 495,
+        painter.drawText(offsetX, 495,
                          tr("RO Rejection") + ":  " + toString(m_fResidue, 1) + QString("%"));
-		if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveTOC))
+        if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveTOC))
         {
             QString strToc;
-        	if(m_fToc >= 200)
-        	{
-        		strToc = ">200" + QString("ppb");
-        	}
-			else if(m_fToc < 10)
-			{
-				strToc = toString(m_fToc, 1) + QString("ppb");
-			}
-			else
-			{
-				strToc = toString(m_fToc) + QString("ppb");
-			}
+            if(m_fToc >= 200)
+            {
+                strToc = ">200" + QString("ppb");
+            }
+            else if(m_fToc < 10)
+            {
+                strToc = toString(m_fToc, 1) + QString("ppb");
+            }
+            else
+            {
+                strToc = toString(m_fToc) + QString("ppb");
+            }
             painter.drawText(170, 475, tr("TOC") + ":  " + strToc);
         }
         break;
@@ -3308,25 +3337,25 @@ void DFlowChartWidget::paintValue(QPainter &painter)
                          tr("185 UV") + QString(":  %1mA").arg(m_detectionPara[N2_DETECTION].iValueI));
         painter.drawText(offsetX, 480,
                          tr("TANK UV") + QString(":  %1mA").arg(m_detectionPara[N3_DETECTION].iValueI));
-		painter.drawText(offsetX, 495,
-						tr("RO Rejection") + ":  " + toString(m_fResidue, 1) + QString("%"));
+        painter.drawText(offsetX, 495,
+                        tr("RO Rejection") + ":  " + toString(m_fResidue, 1) + QString("%"));
 
-	   	if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveTOC))
-       	{
-       	    QString strToc;
-        	if(m_fToc >= 200)
-        	{
-        		strToc = ">200" + QString("ppb");
-        	}
-			else if(m_fToc < 10)
-			{
-				strToc = toString(m_fToc, 1) + QString("ppb");
-			}
-			else
-			{
-				strToc = toString(m_fToc) + QString("ppb");
-			}
-           	painter.drawText(170, 475, tr("TOC") + ":  " + strToc);
+        if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveTOC))
+        {
+            QString strToc;
+            if(m_fToc >= 200)
+            {
+                strToc = ">200" + QString("ppb");
+            }
+            else if(m_fToc < 10)
+            {
+                strToc = toString(m_fToc, 1) + QString("ppb");
+            }
+            else
+            {
+                strToc = toString(m_fToc) + QString("ppb");
+            }
+            painter.drawText(170, 475, tr("TOC") + ":  " + strToc);
        	}
         break;
     case MACHINE_L_RO_LOOP:
@@ -3354,24 +3383,24 @@ void DFlowChartWidget::paintValue(QPainter &painter)
                          tr("Recir. Pump") + QString(":  %1mA %2V").arg(m_detectionPara[C2_DETECTION].iValueI).arg(m_detectionPara[C2_DETECTION].iValueV/1000));
         painter.drawText(offsetX, 480,
                          tr("185 UV") + QString(":  %1mA").arg(m_detectionPara[N2_DETECTION].iValueI));
-		painter.drawText(offsetX, 495,
+        painter.drawText(offsetX, 495,
                          tr("RO Rejection") + ":  " + toString(m_fResidue, 1) + QString("%"));
-		
-		if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveTOC))
+        
+        if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveTOC))
         {
             QString strToc;
-        	if(m_fToc >= 200)
-        	{
-        		strToc = ">200" + QString("ppb");
-        	}
-			else if(m_fToc < 10)
-			{
-				strToc =toString(m_fToc, 1) + QString("ppb");
-			}
-			else
-			{
-				strToc = toString(m_fToc) + QString("ppb");
-			}
+            if(m_fToc >= 200)
+            {
+                strToc = ">200" + QString("ppb");
+            }
+            else if(m_fToc < 10)
+            {
+                strToc =toString(m_fToc, 1) + QString("ppb");
+            }
+            else
+            {
+                strToc = toString(m_fToc) + QString("ppb");
+            }
             painter.drawText(170, 475, tr("TOC") + ":  " + strToc);
         }
         break;
@@ -3383,18 +3412,18 @@ void DFlowChartWidget::paintValue(QPainter &painter)
         if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveTOC))
         {
             QString strToc;
-        	if(m_fToc >= 200)
-        	{
-        		strToc = ">200" + QString("ppb");
-        	}
-			else if(m_fToc < 10)
-			{
-				strToc = toString(m_fToc, 1) + QString("ppb");
-			}
-			else
-			{
-				strToc = toString(m_fToc) + QString("ppb");
-			}
+            if(m_fToc >= 200)
+            {
+                strToc = ">200" + QString("ppb");
+            }
+            else if(m_fToc < 10)
+            {
+                strToc = toString(m_fToc, 1) + QString("ppb");
+            }
+            else
+            {
+                strToc = toString(m_fToc) + QString("ppb");
+            }
             painter.drawText(170, 490, tr("TOC") + ":  " + strToc);
         }
         break;
@@ -3436,11 +3465,11 @@ void DFlowChartWidget::initUI()
 //初始化参数默认值
 void DFlowChartWidget::initDefaultValue()
 {
-	for(int i = 0; i < I_NUM; i++)
-	{
-		m_waterInfo[i].fQuality = 0.0;
-    	m_waterInfo[i].fTemp = 0.0;
-	}
+    for(int i = 0; i < I_NUM; i++)
+    {
+        m_waterInfo[i].fQuality = 0.0;
+        m_waterInfo[i].fTemp = 0.0;
+    }
 
     m_fResidue = 0.0;
     m_fToc = 0;

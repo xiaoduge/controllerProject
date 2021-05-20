@@ -227,6 +227,17 @@ void SyszuxPinyin::initGb()
         ctl_geo_digi_vector.push_back(pCtrlInfo);
         hoffset += pCtrlInfo->rect.width() + hmargin;
 
+        /* -  dcj add*/
+        id = 10 + 11;
+        pushButton = button_vector.at(id-1);
+        pCtrlInfo = new SyszuxPingyinCtlInfo(); 
+        pCtrlInfo->id = id;
+        pCtrlInfo->rect = pushButton->geometry();
+        pCtrlInfo->rect.moveTo(hoffset,voffset);
+        pCtrlInfo->widget = pushButton;
+        ctl_geo_digi_vector.push_back(pCtrlInfo);
+        hoffset += pCtrlInfo->rect.width() + hmargin;
+
         /* backspace */
         id = 12 + 11;
         pushButton = button_vector.at(id-1);

@@ -3611,11 +3611,7 @@ void MainWindow::initAlarmCfg()
                                                          |(1 << DISP_ALARM_PART1_HIGHER_EDI_PRODUCT_TEMPERATURE)
                                                          |(1 << DISP_ALARM_PART1_LOWER_EDI_PRODUCT_TEMPERATURE)
                                                          |(1 << DISP_ALARM_PART1_HIGHER_TUBE_TEMPERATURE)
-                                                         |(1 << DISP_ALARM_PART1_LOWER_TUBE_TEMPERATURE)
-                                                         |(1 << DISP_ALARM_PART1_HIGHER_TOC_SENSOR_TEMPERATURE)
-                                                         |(1 << DISP_ALARM_PART1_LOWER_TOC_SENSOR_TEMPERATURE)
-                                                         |(1 << DISP_ALARM_PART1_LOWER_TOC_SOURCE_WATER_RESISTENCE)
-                                                         |(1 << DISP_ALARM_PART1_HIGHER_TOC)));
+                                                         |(1 << DISP_ALARM_PART1_LOWER_TUBE_TEMPERATURE)));
             
             m_bC1Regulator = true;
             break;
@@ -3798,20 +3794,20 @@ void MainWindow::initConsumablesCfg()
         //config final filter
         if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_FINALFILTER_B))
         {
-            m_cMas[iLoop].aulMask[0] |= (1 << 1 << DISP_T_B_FILTER);
+            m_cMas[iLoop].aulMask[0] |= (1 << DISP_T_B_FILTER);
         }
         else
         {
-            m_cMas[iLoop].aulMask[0] &= ~(1 << 1 << DISP_T_B_FILTER);
+            m_cMas[iLoop].aulMask[0] &= ~(1 << DISP_T_B_FILTER);
         }
         
         if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_FINALFILTER_A))
         {
-            m_cMas[iLoop].aulMask[0] |= (1 << 1 << DISP_T_A_FILTER);
+            m_cMas[iLoop].aulMask[0] |= (1 << DISP_T_A_FILTER);
         }
         else
         {
-            m_cMas[iLoop].aulMask[0] &= ~(1 << 1 << DISP_T_A_FILTER);
+            m_cMas[iLoop].aulMask[0] &= ~( 1 << DISP_T_A_FILTER);
         }
     }
 }
@@ -8286,10 +8282,18 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                 fToc = -29.14 * log(pItem->fP) + 42;
             }
 
+            double integer;
+            float decimal = modf(fToc, &integer);
+            if(decimal < 0)
+            {
+                decimal *= -1;
+            }
+            
             if(fToc < 2)
             {
-                fToc = 2;
+                fToc = 2 + decimal;
             }
+            
             else if(fToc > 200)
             {
                 fToc = 200;
@@ -9344,6 +9348,11 @@ void MainWindow::buildTranslation()
     m_astrDbName[3] = tr("GetW");
     m_astrDbName[4] = tr("PWater");
     m_astrDbName[5] = tr("Log");
+}
+
+void MainWindow::onScreenPageHide()
+{
+    on_Ex_ScreenPageHide();
 }
 
 void MainWindow::on_Ex_ScreenPageHide()

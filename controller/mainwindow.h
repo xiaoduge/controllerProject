@@ -434,6 +434,7 @@ public:
 
 public slots:
     void retriveLastRunState();
+    void onScreenPageHide();
 
 private slots:
     void on_timerEvent();
