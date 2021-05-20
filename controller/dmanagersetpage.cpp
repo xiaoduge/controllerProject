@@ -1233,6 +1233,11 @@ void DManagerSetPage::initAdditionalSettingsPage()
     m_pAddBtnSave->move(580, 420);
     connect(m_pAddBtnSave, SIGNAL(clicked()), this, SLOT(on_AdditionalBtnSave_clicked()));
 
+    if(gAdditionalCfgParam.machineInfo.iMachineFlow >= 500 || MACHINE_ADAPT == gGlobalParam.iMachineType)
+    {
+        m_pAdditionalWidget[HPCIR_SETTING]->hide();
+    }
+
     QIcon icon1(":/pic/unselected.png");
     m_tabWidget->addTab(m_pageWidget[MANAGER_PAGE_ADDSETTINGS], icon1, tr("Additional Settings"));
 }
