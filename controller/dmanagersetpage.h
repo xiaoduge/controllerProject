@@ -45,7 +45,6 @@ public:
     {
         MANAGER_PAGE_TIME = 0,
         MANAGER_PAGE_CALIBRATION,
-        MANAGER_PAGE_AUDIO,
         MANAGER_PAGE_LCD,
         MANAGER_PAGE_FINALFILTER,
         MANAGER_PAGE_NETWORK,
@@ -88,7 +87,6 @@ protected slots:
 
     //Audio
     void on_checkBox_changeState(int state);
-    void on_audioBtnSavebtn_clicked();
 
     //LCD
     void on_LcdSaveBtn_clicked();
@@ -104,9 +102,7 @@ protected slots:
     void on_NetworkSaveBtn_clicked();
 
     //Additional Settings
-    void on_AdditionalBtnSave_clicked();
     void on_HPCircheckBox_changeState(int state);
-    void on_RephiLinkcheckBox_changeState(int state);
     void on_RephiLinkcheckBox_clicked();
 
 #ifdef STEPPERMOTOR
@@ -116,8 +112,6 @@ protected slots:
 private:
     void initTimePage();
     void initCalibrationPage();
-
-    void initAudioPage();
 
     void initLcdPage();
     void initFinalFilterPage();
@@ -161,15 +155,6 @@ private:
     QLabel    *m_pStepperValueLB;
 #endif
 
-    //Audio
-    QLabel        *m_lblNames[DISPLAY_SOUND_NUM];
-    QCheckBox     *m_chkSwitchs[DISPLAY_SOUND_NUM];
-    QWidget       *m_pAudioBackWidget[DISPLAY_SOUND_NUM];
-    QString       m_strSounds[DISPLAY_SOUND_NUM];
-    QString       m_strQss4Chk;
-    int           m_iSoundMask;
-    QPushButton   *m_pAudioBtnSave;
-
     //LCD
     QLabel        *laName[2]; //2
     QComboBox     *m_comboBox;
@@ -197,10 +182,14 @@ private:
     QPushButton    *m_pNetworkSaveBtn;
     int             m_iNetworkMask;
 
-
     //Additional Settings
+    QLabel        *m_lblNames[DISPLAY_SOUND_NUM]; //Audio
+    QCheckBox     *m_chkSwitchs[DISPLAY_SOUND_NUM];
+    QWidget       *m_pAudioBackWidget[DISPLAY_SOUND_NUM];
+    QString       m_strSounds[DISPLAY_SOUND_NUM];
+    int           m_iSoundMask;
+    
     QWidget       *m_pAdditionalWidget[ADDITIONAL_NUM];
-    QPushButton   *m_pAddBtnSave;
     QLabel        *m_pAdditionalLb[ADDITIONAL_NUM];
     QCheckBox     *m_pAdditionalCheck[ADDITIONAL_NUM];
 };

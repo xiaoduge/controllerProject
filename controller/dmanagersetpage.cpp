@@ -20,6 +20,9 @@
 #include <QIntValidator>
 #include <QDoubleValidator>
 #include <QSpinBox>
+#include <QScrollArea>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
 
 DManagerSetPage::DManagerSetPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : CSubPage(parent,widget,wndMain)
 {
@@ -69,23 +72,22 @@ void DManagerSetPage::buildTitles()
 
 void DManagerSetPage::buildTranslation()
 {
+    //机型流量大于500，没有参数校正和终端过滤器配置
     if(gAdditionalCfgParam.machineInfo.iMachineFlow >= 500)
     {
         m_tabWidget->setTabText(0, tr("Time & Date"));
-        m_tabWidget->setTabText(1, tr("Audio"));
-        m_tabWidget->setTabText(2, tr("LCD"));
-        m_tabWidget->setTabText(3, tr("Network"));
-        m_tabWidget->setTabText(4, tr("Additional Settings"));
+        m_tabWidget->setTabText(1, tr("LCD"));
+        m_tabWidget->setTabText(2, tr("Network"));
+        m_tabWidget->setTabText(3, tr("Additional Settings"));
     }
     else
     {
         m_tabWidget->setTabText(0, tr("Time & Date"));
         m_tabWidget->setTabText(1, tr("Calibration"));
-        m_tabWidget->setTabText(2, tr("Audio"));
-        m_tabWidget->setTabText(3, tr("LCD"));
-        m_tabWidget->setTabText(4, tr("Final Filter"));
-        m_tabWidget->setTabText(5, tr("Network"));
-        m_tabWidget->setTabText(6, tr("Additional Settings"));
+        m_tabWidget->setTabText(2, tr("LCD"));
+        m_tabWidget->setTabText(3, tr("Final Filter"));
+        m_tabWidget->setTabText(4, tr("Network"));
+        m_tabWidget->setTabText(5, tr("Additional Settings"));
     }
 
     //Time
@@ -106,16 +108,6 @@ void DManagerSetPage::buildTranslation()
 #ifdef STEPPERMOTOR
     m_pStepperLabel->setText(tr("Motor Valve"));
 #endif
-
-    //Audio
-    m_strSounds[0] = tr("Touch-tone");
-    m_strSounds[1] = tr("Audio Alarms");
-    for(iLoop = 0 ; iLoop < DISPLAY_SOUND_NUM ; iLoop++)
-    {
-        m_lblNames[iLoop]->setText(m_strSounds[iLoop]);
-    }
-    m_pAudioBtnSave->setText(tr("Save"));
-
     //LCD
     m_DispNames[0] = tr("Brightness");
     m_DispNames[1] = tr("Energy-saving");
@@ -142,9 +134,15 @@ void DManagerSetPage::buildTranslation()
     m_pNetworkSaveBtn->setText(tr("Save"));
 
     //Additional Settings
+    m_strSounds[0] = tr("Touch-tone");
+    m_strSounds[1] = tr("Audio Alarms");
+    for(iLoop = 0 ; iLoop < DISPLAY_SOUND_NUM ; iLoop++)
+    {
+        m_lblNames[iLoop]->setText(m_strSounds[iLoop]);
+    }
+    
     m_pAdditionalLb[REPHILINK_SETTING]->setText(tr("RephiLink"));
     m_pAdditionalLb[HPCIR_SETTING]->setText(tr("HP Recir."));
-    m_pAddBtnSave->setText(tr("Save"));
     m_pNetworkWidget->buildTranslation();
 }
 
@@ -180,7 +178,6 @@ void DManagerSetPage::initUi()
     initTimePage();
     initCalibrationPage();
 
-    initAudioPage();
     initLcdPage();
     initFinalFilterPage();
     initNetworkPage();
@@ -189,7 +186,7 @@ void DManagerSetPage::initUi()
     if(gAdditionalCfgParam.machineInfo.iMachineFlow >= 500)
     {
         m_tabWidget->removeTab(1);
-        m_tabWidget->removeTab(3);
+        m_tabWidget->removeTab(2);
     }
 
     mainLayout->addWidget(m_tabWidget, 0, 0);
@@ -236,20 +233,6 @@ void DManagerSetPage::update()
         }
     }
 #endif
-
-    //Audio
-    for(int iLoop = 0; iLoop < DISPLAY_SOUND_NUM; ++iLoop)
-    {
-        if (m_iSoundMask & (1 << iLoop))
-        {
-            m_chkSwitchs[iLoop]->setChecked(true);
-        }
-        else
-        {
-            m_chkSwitchs[iLoop]->setChecked(false);
-        }
-    }
-
     //LCD
     m_iEnergySave = gGlobalParam.MiscParam.iEnerySave;
     if(m_iEnergySave)
@@ -293,6 +276,18 @@ void DManagerSetPage::update()
     }
 
     //Additional Settings
+    for(int iLoop = 0; iLoop < DISPLAY_SOUND_NUM; ++iLoop)
+    {
+        if (m_iSoundMask & (1 << iLoop))
+        {
+            m_chkSwitchs[iLoop]->setChecked(true);
+        }
+        else
+        {
+            m_chkSwitchs[iLoop]->setChecked(false);
+        }
+    }
+
     if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_REPHILINK))
     {
         m_pAdditionalCheck[REPHILINK_SETTING]->setChecked(true);
@@ -463,6 +458,11 @@ void DManagerSetPage::on_timeCancelBtn_clicked()
     m_wndMain->prepareKeyStroke();
 }
 
+/**
+ * @Author: dcj
+ * @Date: 2021-06-21 13:19:37
+ * @Description: 保存校准数据
+ */
 void DManagerSetPage::on_caliSaveBtn_clicked()
 {
     QMap<int, DISP_PARAM_CALI_ITEM_STRU> cMap;
@@ -491,18 +491,16 @@ void DManagerSetPage::on_caliSaveBtn_clicked()
     DHintDialog::getInstance(tr("Successfully saved"));
 }
 
+/**
+ * @Author: dcj
+ * @Date: 2021-06-21 13:20:05
+ * @Description: 保存声音设置
+ * @param {int} stateL: unused
+ */
 void DManagerSetPage::on_checkBox_changeState(int state)
 {
-    int iLoop;
-
-    QCheckBox *pChkBox = (QCheckBox *)this->sender();
-
-    if (!pChkBox)
-    {
-        return ;
-    }
-
-    for(iLoop = 0 ; iLoop < DISPLAY_SOUND_NUM ; iLoop++)
+    Q_UNUSED(state);
+    for(int iLoop = 0 ; iLoop < DISPLAY_SOUND_NUM ; iLoop++)
     {
        if ((Qt::Checked == m_chkSwitchs[iLoop]->checkState()))
        {
@@ -513,28 +511,23 @@ void DManagerSetPage::on_checkBox_changeState(int state)
            m_iSoundMask &= ~(1 << iLoop);
        }
     }
-}
 
-void DManagerSetPage::on_audioBtnSavebtn_clicked()
-{
     if (m_iSoundMask != gGlobalParam.MiscParam.iSoundMask)
     {
        DISP_MISC_SETTING_STRU  MiscParam = gGlobalParam.MiscParam;
-
        MiscParam.iSoundMask = m_iSoundMask;
-
        MainSaveMiscParam(gGlobalParam.iMachineType,MiscParam);
-
        MainUpdateSpecificParam(NOT_PARAM_MISC_PARAM);
 
        m_wndMain->MainWriteLoginOperationInfo2Db(SETPAGE_SYSTEM_SOUND);
-
     }
-    m_wndMain->prepareKeyStroke();
-
-    DHintDialog::getInstance(tr("Successfully saved"));
 }
 
+/**
+ * @Author: dcj
+ * @Date: 2021-06-21 13:21:38
+ * @Description: 保存显示设置
+ */
 void DManagerSetPage::on_LcdSaveBtn_clicked()
 {
     DISP_MISC_SETTING_STRU  MiscParam = gGlobalParam.MiscParam;
@@ -555,6 +548,12 @@ void DManagerSetPage::on_LcdSaveBtn_clicked()
     DHintDialog::getInstance(tr("Successfully saved"));
 }
 
+/**
+ * @Author: dcj
+ * @Date: 2021-06-21 13:23:11
+ * @Description: 显示节能模式调整（不保存，只当前有效）
+ * @param {int} state
+ */
 void DManagerSetPage::on_CheckEnergySave_stateChanged(int state)
 {
     if(Qt::Checked == state)
@@ -570,6 +569,12 @@ void DManagerSetPage::on_CheckEnergySave_stateChanged(int state)
     m_wndMain->prepareKeyStroke();
 }
 
+/**
+ * @Author: dcj
+ * @Date: 2021-06-21 13:24:14
+ * @Description: 休眠时间调节
+ * @param {int} index
+ */
 void DManagerSetPage::on_comboBox_currentIndexChanged(int index)
 {
     m_iSleepTime = index + 1;
@@ -597,6 +602,11 @@ void DManagerSetPage::setValue(int value)
     Write_sys_int(PWMLCD_FILE,m_iBrightness);
 }
 
+/**
+ * @Author: dcj
+ * @Date: 2021-06-21 13:26:27
+ * @Description: 保存终端过滤器配置
+ */
 void DManagerSetPage::on_FilterSaveBtn_clicked()
 {
     DISP_MISC_SETTING_STRU        miscParam = gGlobalParam.MiscParam;
@@ -641,6 +651,11 @@ void DManagerSetPage::onWifiCheckBoxChangeState(int state)
     emit wifiEnabled(Qt::Checked == m_pWifiCheckBox->checkState());
 }
 
+/**
+ * @Author: dcj
+ * @Date: 2021-06-21 13:28:57
+ * @Description: 保存网络配置
+ */
 void DManagerSetPage::on_NetworkSaveBtn_clicked()
 {
     if (m_iNetworkMask != gGlobalParam.MiscParam.iNetworkMask)
@@ -651,20 +666,19 @@ void DManagerSetPage::on_NetworkSaveBtn_clicked()
         MainUpdateSpecificParam(NOT_PARAM_MISC_PARAM);
     }
     m_wndMain->MainWriteLoginOperationInfo2Db(SETPAGE_SYSTEM_NETWORK);
+    m_wndMain->prepareKeyStroke();
 }
 
-void DManagerSetPage::on_AdditionalBtnSave_clicked()
+/**
+ * @Author: dcj
+ * @Date: 2021-06-21 13:29:22
+ * @Description: 保存HP循环配置
+ * @param {int} state ： unused
+ */
+void DManagerSetPage::on_HPCircheckBox_changeState(int state)
 {
+    Q_UNUSED(state);
     DISP_MISC_SETTING_STRU        miscParam = gGlobalParam.MiscParam;
-
-    if(Qt::Checked == m_pAdditionalCheck[REPHILINK_SETTING]->checkState())
-    {
-        miscParam.ulMisFlags |= 1 << DISP_SM_REPHILINK;
-    }
-    else
-    {
-        miscParam.ulMisFlags &= ~(1 << DISP_SM_REPHILINK);
-    }
 
     if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
     {
@@ -680,32 +694,13 @@ void DManagerSetPage::on_AdditionalBtnSave_clicked()
 
     MainSaveMiscParam(gGlobalParam.iMachineType,miscParam);
     MainUpdateGlobalParam();
-
-    m_wndMain->prepareKeyStroke();
-
-    DHintDialog::getInstance(tr("Successfully saved"));
 }
 
-void DManagerSetPage::on_HPCircheckBox_changeState(int state)
-{
-}
-
-void DManagerSetPage::on_RephiLinkcheckBox_changeState(int state)
-{
-    if(Qt::Checked == state)
-    {
-        DRephiLinkProtocolDlg dlg;
-        if(QDialog::Accepted != dlg.exec())
-        {
-            m_pAdditionalCheck[REPHILINK_SETTING]->setCheckState(Qt::Unchecked);
-        }
-        else
-        {
-            qDebug() << "dcj: Select RephiLink";
-        }
-    }
-}
-
+/**
+ * @Author: dcj
+ * @Date: 2021-06-21 13:30:04
+ * @Description: 保存RephiLink配置
+ */
 void DManagerSetPage::on_RephiLinkcheckBox_clicked()
 {
     if(Qt::Checked == m_pAdditionalCheck[REPHILINK_SETTING]->checkState())
@@ -715,11 +710,20 @@ void DManagerSetPage::on_RephiLinkcheckBox_clicked()
         {
             m_pAdditionalCheck[REPHILINK_SETTING]->setCheckState(Qt::Unchecked);
         }
-        else
-        {
-            qDebug() << "dcj: Select RephiLink";
-        }
     }
+
+    DISP_MISC_SETTING_STRU        miscParam = gGlobalParam.MiscParam;
+    if(Qt::Checked == m_pAdditionalCheck[REPHILINK_SETTING]->checkState())
+    {
+        miscParam.ulMisFlags |= 1 << DISP_SM_REPHILINK;
+    }
+    else
+    {
+        miscParam.ulMisFlags &= ~(1 << DISP_SM_REPHILINK);
+    }
+
+    MainSaveMiscParam(gGlobalParam.iMachineType,miscParam);
+    MainUpdateGlobalParam();
 }
 
 #ifdef STEPPERMOTOR
@@ -935,79 +939,6 @@ void DManagerSetPage::initCalibrationPage()
     m_tabWidget->addTab(m_pageWidget[MANAGER_PAGE_CALIBRATION], icon1, tr("Calibration"));
 }
 
-void DManagerSetPage::initAudioPage()
-{
-    m_iSoundMask = gGlobalParam.MiscParam.iSoundMask;
-    setBackColor();
-    m_pageWidget[MANAGER_PAGE_AUDIO] = new QWidget;
-
-    int iLoop ;
-
-    m_strQss4Chk = m_wndMain->getQss4Chk();
-
-    QPixmap back(":/pic/SubPageBack.png");
-    QSize size(back.width(), back.height());
-    QImage image_bg = QImage(size, QImage::Format_ARGB32);
-    QPainter p(&image_bg);
-
-    p.fillRect(image_bg.rect(), QColor(255, 255, 255));
-
-    for(iLoop = 0 ; iLoop < DISPLAY_SOUND_NUM ; iLoop++)
-    {
-        m_pAudioBackWidget[iLoop] = new QWidget(m_pageWidget[MANAGER_PAGE_AUDIO]);
-
-        QPalette pal(m_pAudioBackWidget[iLoop]->palette());
-
-        pal.setColor(QPalette::Background, Qt::white);
-
-        m_pAudioBackWidget[iLoop]->setAutoFillBackground(true);
-        m_pAudioBackWidget[iLoop]->setPalette(pal);
-
-//        m_pAudioBackWidget[iLoop]->setGeometry(QRect(120 , 100 + 70 * iLoop , 530 ,60));
-        m_pAudioBackWidget[iLoop]->setGeometry(QRect(120 , 120 + 70 * iLoop , 530 ,60));
-
-        m_lblNames[iLoop] = new QLabel(m_pAudioBackWidget[iLoop]);
-        m_lblNames[iLoop]->setPixmap(NULL);
-        m_lblNames[iLoop]->setGeometry(QRect(25, 25 , 140 , 20));
-        m_lblNames[iLoop]->setText("Sound");
-        m_lblNames[iLoop]->setStyleSheet(" font-size:18px;color:#16181e;font-family:Arial;QFont::Bold");
-        m_lblNames[iLoop]->show();
-        m_lblNames[iLoop]->setAlignment(Qt::AlignLeft);
-
-        m_chkSwitchs[iLoop] = new QCheckBox(m_pAudioBackWidget[iLoop]);
-
-        m_chkSwitchs[iLoop]->setGeometry(QRect(480 , 9 ,40,40));
-
-        m_chkSwitchs[iLoop]->setStyleSheet(m_strQss4Chk);
-
-        m_chkSwitchs[iLoop]->show();
-
-        if (m_iSoundMask & (1 << iLoop))
-        {
-            m_chkSwitchs[iLoop]->setChecked(true);
-        }
-        else
-        {
-            m_chkSwitchs[iLoop]->setChecked(false);
-        }
-
-        connect(m_chkSwitchs[iLoop], SIGNAL(stateChanged(int)), this, SLOT(on_checkBox_changeState(int)));
-        //2019.3.14 add
-//        if(iLoop != 0)
-//        {
-//            m_pAudioBackWidget[iLoop]->hide();
-//        }
-    }
-
-    m_pAudioBtnSave = new QPushButton(m_pageWidget[MANAGER_PAGE_AUDIO]);
-    m_pAudioBtnSave->move(580, 420);
-    connect(m_pAudioBtnSave, SIGNAL(clicked()), this, SLOT(on_audioBtnSavebtn_clicked()));
-
-    QIcon icon1(":/pic/unselected.png");
-    m_tabWidget->addTab(m_pageWidget[MANAGER_PAGE_AUDIO], icon1, tr("Audio"));
-
-}
-
 void DManagerSetPage::initLcdPage()
 {
     m_pageWidget[MANAGER_PAGE_LCD] = new QWidget;
@@ -1187,28 +1118,69 @@ void DManagerSetPage::initAdditionalSettingsPage()
 {
     setBackColor();
     m_pageWidget[MANAGER_PAGE_ADDSETTINGS] = new QWidget;
+    m_pageWidget[MANAGER_PAGE_ADDSETTINGS]->setMinimumWidth(740);
+    QScrollArea *scrollWidget = new QScrollArea(m_widget);
 
-    int iLoop ;
+    QVBoxLayout *vLayout = new QVBoxLayout;
+    QMargins vLayoutMargins = vLayout->contentsMargins();
+    vLayoutMargins.setTop(20);   //设置VBoxLayout 上边界为20
+    vLayout->setContentsMargins(vLayoutMargins);
 
     QPixmap back(":/pic/SubPageBack.png");
     QSize size(back.width(), back.height());
     QImage image_bg = QImage(size, QImage::Format_ARGB32);
     QPainter p(&image_bg);
-
     p.fillRect(image_bg.rect(), QColor(255, 255, 255));
+    
+    QString strQss4Chk = m_wndMain->getQss4Chk();
 
-    for(iLoop = 0 ; iLoop < ADDITIONAL_NUM ; iLoop++)
+    //声音设置选项，单独构建
+    m_iSoundMask = gGlobalParam.MiscParam.iSoundMask;
+    for(int iLoop = 0 ; iLoop < DISPLAY_SOUND_NUM ; iLoop++)
     {
-        m_pAdditionalWidget[iLoop] = new QWidget(m_pageWidget[MANAGER_PAGE_ADDSETTINGS]);
+        m_pAudioBackWidget[iLoop] = new QWidget;
+
+        QPalette pal(m_pAudioBackWidget[iLoop]->palette());
+        pal.setColor(QPalette::Background, Qt::white);
+        m_pAudioBackWidget[iLoop]->setAutoFillBackground(true);
+        m_pAudioBackWidget[iLoop]->setPalette(pal);
+
+        m_pAudioBackWidget[iLoop]->setMinimumSize(530, 60);
+
+        m_lblNames[iLoop] = new QLabel(m_pAudioBackWidget[iLoop]);
+        m_lblNames[iLoop]->setPixmap(NULL);
+        m_lblNames[iLoop]->setGeometry(QRect(25, 25 , 140 , 20));
+        m_lblNames[iLoop]->setStyleSheet(" font-size:18px;color:#16181e;font-family:Arial;QFont::Bold");
+        m_lblNames[iLoop]->setAlignment(Qt::AlignLeft);
+
+        m_chkSwitchs[iLoop] = new QCheckBox(m_pAudioBackWidget[iLoop]);
+        m_chkSwitchs[iLoop]->setGeometry(QRect(480 , 9 ,40,40));
+        m_chkSwitchs[iLoop]->setStyleSheet(strQss4Chk);
+
+        if (m_iSoundMask & (1 << iLoop))
+        {
+            m_chkSwitchs[iLoop]->setChecked(true);
+        }
+        else
+        {
+            m_chkSwitchs[iLoop]->setChecked(false);
+        }
+
+        connect(m_chkSwitchs[iLoop], SIGNAL(stateChanged(int)), this, SLOT(on_checkBox_changeState(int)));
+
+        vLayout->addWidget(m_pAudioBackWidget[iLoop]);
+    }
+
+    //其它配置项，若新增配置项，则在此处增加
+    for(int iLoop = 0 ; iLoop < ADDITIONAL_NUM ; iLoop++)
+    {
+        m_pAdditionalWidget[iLoop] = new QWidget;
 
         QPalette pal(m_pAdditionalWidget[iLoop]->palette());
-
         pal.setColor(QPalette::Background, Qt::white);
-
         m_pAdditionalWidget[iLoop]->setAutoFillBackground(true);
         m_pAdditionalWidget[iLoop]->setPalette(pal);
-
-        m_pAdditionalWidget[iLoop]->setGeometry(QRect(120 , 120 + 70 * iLoop , 530 ,60));
+        m_pAdditionalWidget[iLoop]->setMinimumSize(530, 60);
 
         m_pAdditionalLb[iLoop] = new QLabel(m_pAdditionalWidget[iLoop]);
         m_pAdditionalLb[iLoop]->setPixmap(NULL);
@@ -1218,20 +1190,34 @@ void DManagerSetPage::initAdditionalSettingsPage()
         m_pAdditionalLb[iLoop]->setAlignment(Qt::AlignLeft);
 
         m_pAdditionalCheck[iLoop] = new QCheckBox(m_pAdditionalWidget[iLoop]);
-
         m_pAdditionalCheck[iLoop]->setGeometry(QRect(480 , 9 ,40,40));
-
-        QString strQss4Chk = m_wndMain->getQss4Chk();
         m_pAdditionalCheck[iLoop]->setStyleSheet(strQss4Chk);
+
+        vLayout->addWidget(m_pAdditionalWidget[iLoop]);
     }
 
     connect(m_pAdditionalCheck[HPCIR_SETTING], SIGNAL(stateChanged(int)), this, SLOT(on_HPCircheckBox_changeState(int)));
-    // connect(m_pAdditionalCheck[REPHILINK_SETTING], SIGNAL(stateChanged(int)), this, SLOT(on_RephiLinkcheckBox_changeState(int)));
     connect(m_pAdditionalCheck[REPHILINK_SETTING], SIGNAL(clicked()), this, SLOT(on_RephiLinkcheckBox_clicked()));
 
-    m_pAddBtnSave = new QPushButton(m_pageWidget[MANAGER_PAGE_ADDSETTINGS]);
-    m_pAddBtnSave->move(580, 420);
-    connect(m_pAddBtnSave, SIGNAL(clicked()), this, SLOT(on_AdditionalBtnSave_clicked()));
+    QFile qss(":/app/other.qss");
+    qss.open(QFile::ReadOnly);
+    QString strQss = QLatin1String (qss.readAll());
+    qss.close(); 
+
+    QHBoxLayout *hLayout = new QHBoxLayout;
+    hLayout->addStretch(1);
+    hLayout->addLayout(vLayout);
+    hLayout->addStretch(1);
+    m_pageWidget[MANAGER_PAGE_ADDSETTINGS]->setLayout(hLayout);
+    m_pageWidget[MANAGER_PAGE_ADDSETTINGS]->setStyleSheet(strQss);
+    scrollWidget->setWidget(m_pageWidget[MANAGER_PAGE_ADDSETTINGS]);
+    scrollWidget->setGeometry(QRect(5, 60, 780, 490));
+    scrollWidget->setStyleSheet("QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical{background: transparent;}");
+
+    if(0 != gAdditionalCfgParam.productInfo.iCompany)
+    {
+        m_pAdditionalWidget[REPHILINK_SETTING]->hide();
+    }
 
     if(gAdditionalCfgParam.machineInfo.iMachineFlow >= 500 || MACHINE_ADAPT == gGlobalParam.iMachineType)
     {
@@ -1239,7 +1225,7 @@ void DManagerSetPage::initAdditionalSettingsPage()
     }
 
     QIcon icon1(":/pic/unselected.png");
-    m_tabWidget->addTab(m_pageWidget[MANAGER_PAGE_ADDSETTINGS], icon1, tr("Additional Settings"));
+    m_tabWidget->addTab(scrollWidget, icon1, tr("Additional Settings"));
 }
 
 void DManagerSetPage::changeTime()
