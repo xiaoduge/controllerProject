@@ -1760,7 +1760,6 @@ void MainPage::updI3Info(ECO_INFO_STRU *info, bool bVisible, bool bForceUpd)
                         m_pLabels[LABEL_NAVI_UP_WQ_VALUE]->setText(QString::number(fQ,'f',1));
                     }
                     m_pLabels[m_aiLblMap[LABEL_NAVI_UP_TEMP_VALUE]]->setText(QString::number(fT,'f',1));
-                    m_pLabels[LABEL_NAVI_UP_WQ_UNIT]->setText(tr("omg"));
                 }
                 if(!bForceUpd) m_aHistoryEco[iIndex] = *info;
             }

@@ -296,6 +296,8 @@ void UnitPage::save()
        m_wndMain->switchLanguage();
 
        m_wndMain->MainWriteLoginOperationInfo2Db(SETPAGE_SYSTEM_UNIT);
+
+       m_wndMain->emitUnitsChanged();
        
     }
     
