@@ -1035,18 +1035,18 @@ void SystemCfgPage::connectData()
         m_chkPWTankUV->setChecked(false);
     }
 #ifdef STEPPERMOTOR
-	if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_STEPPERMOTOR))
-	{
-		m_chkStepperMotor->setChecked(true);
-	}
-	else
-	{
-		m_chkStepperMotor->setChecked(false);
-	}
+    if(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_STEPPERMOTOR))
+    {
+        m_chkStepperMotor->setChecked(true);
+    }
+    else
+    {
+        m_chkStepperMotor->setChecked(false);
+    }
 #endif
 
 #ifdef CFG_DO_PH
-	if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_DO))
+	if (gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_DO))
     {
         m_chkDO->setChecked(true);
     }
@@ -1055,7 +1055,7 @@ void SystemCfgPage::connectData()
         m_chkDO->setChecked(false);
     }
 
-	if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_PH))
+	if (gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_PH))
     {
         m_chkPH->setChecked(true);
     }
@@ -1341,34 +1341,34 @@ void SystemCfgPage::save()
     }
 
 #ifdef STEPPERMOTOR
-	if(Qt::Checked == m_chkStepperMotor->checkState())
-	{
-		smParam.ulFlags |= 1 << DISP_SM_STEPPERMOTOR;
-	}
-	else
-	{
-		smParam.ulFlags &= ~(1 << DISP_SM_STEPPERMOTOR);
-	}
+    if(Qt::Checked == m_chkStepperMotor->checkState())
+    {
+        smParam.ulAddFlags |= 1 << DISP_SM_STEPPERMOTOR;
+    }
+    else
+    {
+        smParam.ulAddFlags &= ~(1 << DISP_SM_STEPPERMOTOR);
+    }
 #endif
 
 
 #ifdef CFG_DO_PH
     if (Qt::Checked == m_chkDO->checkState())
     {
-        smParam.ulFlags |= 1 << DISP_SM_DO;
+        smParam.ulAddFlags |= 1 << DISP_SM_DO;
     }
     else
     {
-        smParam.ulFlags &= ~(1 << DISP_SM_DO);
+        smParam.ulAddFlags &= ~(1 << DISP_SM_DO);
     }
 
-	if (Qt::Checked == m_chkPH->checkState())
+    if (Qt::Checked == m_chkPH->checkState())
     {
-        smParam.ulFlags |= 1 << DISP_SM_PH;
+        smParam.ulAddFlags |= 1 << DISP_SM_PH;
     }
     else
     {
-        smParam.ulFlags &= ~(1 << DISP_SM_PH);
+        smParam.ulAddFlags &= ~(1 << DISP_SM_PH);
     }
 #endif
 

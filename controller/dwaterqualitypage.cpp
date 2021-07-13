@@ -821,11 +821,11 @@ void DWaterQualityPage::initConfigList()
     }
 
 #ifdef CFG_DO_PH
-	if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_DO))
+	if (gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_DO))
     {
         m_cfglist.append(m_tags[DO_Value]);
     }
-	if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_PH))
+	if (gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_PH))
     {
         m_cfglist.append(m_tags[PH_Value]);
     }

@@ -220,8 +220,12 @@ void DManagerSetPage::update()
         m_pCaliS1LineEdit->setText(QString::number(gCaliParam.pc[m_caliId].fk,'f',3));
     }
 #ifdef STEPPERMOTOR
-    if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_STEPPERMOTOR))
+    if(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_STEPPERMOTOR))
     {
+        if(!m_pStepperWidget->isVisible())
+        {
+            m_pStepperWidget->show();
+        }
         m_pStepperSlider->setValue(gCaliParam.stepperCali.iStart - STEPPER_REFERENCD_POINT);
         m_pStepperValueLB->setText(QString::number(m_pStepperSlider->value()));
     }
@@ -928,7 +932,11 @@ void DManagerSetPage::initCalibrationPage()
     m_pStepperValueLB->setAlignment(Qt::AlignVCenter|Qt::AlignLeft);
 
     connect(m_pStepperSlider, SIGNAL(valueChanged(int)), this, SLOT(onStepperSlider_valueChanged(int)));
-
+    if(!(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_STEPPERMOTOR)))
+    {
+        m_pStepperWidget->hide();
+    }
+    
 #endif
 
     m_pCaliBtn = new QPushButton(m_pageWidget[MANAGER_PAGE_CALIBRATION]);

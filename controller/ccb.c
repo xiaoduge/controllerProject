@@ -75,7 +75,7 @@ unsigned char gaucIapBuffer[1024];
 #define haveHPCir(pCcb)((pCcb)->MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
 #define haveZigbee(pCcb)((pCcb)->MiscParam.iNetworkMask & (1 << DISPLAY_NETWORK_ZIGBEE))
 
-#define haveStepper(pCcb)((pCcb)->SubModSetting.ulFlags & (1 << DISP_SM_STEPPERMOTOR))
+#define haveStepper(pCcb)((pCcb)->SubModSetting.ulAddFlags & (1 << DISP_SM_STEPPERMOTOR))
 
 static const float s_fTankHOffset = 0.08; //水箱高度偏差
 

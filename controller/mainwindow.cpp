@@ -279,6 +279,7 @@ QString gastrTmCfgName[] =
 QString gastrSmCfgName[] = 
 {
     "Flag",
+    "Flag_Add",    
 };
 
 QString gastrAlarmCfgName[] = 
@@ -743,8 +744,11 @@ void MainRetriveSubModuleSetting(int iMachineType,DISP_SUB_MODULE_SETTING_STRU  
         int iValue ;
 
         iValue = config->value(strV,gaMachineType[iMachineType].iDefaultModule).toInt();
-
         Param.ulFlags  = iValue;
+
+        strV = "/SM/" + gastrSmCfgName[1];
+        iValue = config->value(strV, 0).toInt();
+        Param.ulAddFlags  = iValue;
     }
 
     switch(iMachineType)
@@ -1891,6 +1895,17 @@ void MainSaveSubModuleSetting(int iMachineType,DISP_SUB_MODULE_SETTING_STRU  &Pa
         if (Param.ulFlags != tmpParam.ulFlags)
         {
             iValue = Param.ulFlags;
+
+            strTmp = QString::number(iValue);
+            
+            config->setValue(strV,strTmp);
+            
+        }
+
+        strV = "/SM/" + gastrSmCfgName[1];
+        if (Param.ulAddFlags != tmpParam.ulAddFlags)
+        {
+            iValue = Param.ulAddFlags;
 
             strTmp = QString::number(iValue);
             

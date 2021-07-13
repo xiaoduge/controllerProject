@@ -985,7 +985,7 @@ void MainPage::on_btn_clicked(int index)
                 DrawSpeed(0,iValue);
                 /* set speed */
 #ifdef STEPPERMOTOR
-                if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_STEPPERMOTOR))
+                if(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_STEPPERMOTOR))
                 {
                     SpeedRegulation(APP_DEV_HS_SUB_HYPER, iValue);
                 }
@@ -1010,14 +1010,14 @@ void MainPage::on_btn_clicked(int index)
                 
                 DrawSpeed(0,iValue);
 #ifdef STEPPERMOTOR
-				if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_STEPPERMOTOR))
-				{
-					SpeedRegulation(APP_DEV_HS_SUB_HYPER, iValue);
-				}
-				else
-				{
-					SetSpeed(APP_DEV_HS_SUB_HYPER,iValue);
-				}
+                if(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_STEPPERMOTOR))
+                {
+                    SpeedRegulation(APP_DEV_HS_SUB_HYPER, iValue);
+                }
+                else
+                {
+                    SetSpeed(APP_DEV_HS_SUB_HYPER,iValue);
+                }
 #else
                 SetSpeed(APP_DEV_HS_SUB_HYPER,iValue);
 #endif
@@ -1057,14 +1057,14 @@ void MainPage::on_btn_clicked(int index)
 
                 DrawSpeed(1,iValue);
 #ifdef STEPPERMOTOR
-				if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_STEPPERMOTOR))
-				{
-					SpeedRegulation(APP_DEV_HS_SUB_REGULAR, iValue);
-				}
-				else
-				{
-					SetSpeed(APP_DEV_HS_SUB_REGULAR,iValue);
-				}
+                if(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_STEPPERMOTOR))
+                {
+                    SpeedRegulation(APP_DEV_HS_SUB_REGULAR, iValue);
+                }
+                else
+                {
+                    SetSpeed(APP_DEV_HS_SUB_REGULAR,iValue);
+                }
 #else
                 SetSpeed(APP_DEV_HS_SUB_REGULAR,iValue);
 #endif
@@ -1081,14 +1081,14 @@ void MainPage::on_btn_clicked(int index)
                 m_wndMain->changeRPumpValue(1,iValue);
                 DrawSpeed(1,iValue);
 #ifdef STEPPERMOTOR
-				if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_STEPPERMOTOR))
-				{
-					SpeedRegulation(APP_DEV_HS_SUB_REGULAR, iValue);
-				}
-				else
-				{
-					SetSpeed(APP_DEV_HS_SUB_REGULAR,iValue);
-				}
+                if(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_STEPPERMOTOR))
+                {
+                    SpeedRegulation(APP_DEV_HS_SUB_REGULAR, iValue);
+                }
+                else
+                {
+                    SetSpeed(APP_DEV_HS_SUB_REGULAR,iValue);
+                }
 #else
                 SetSpeed(APP_DEV_HS_SUB_REGULAR,iValue);
 #endif
