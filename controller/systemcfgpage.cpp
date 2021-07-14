@@ -3,9 +3,11 @@
 #include "exconfig.h"
 #include "dlineedit.h"
 #include "cbitmapbutton.h"
+#include "drunwarningdialog.h"
 #include <QScrollArea>
 #include <QVBoxLayout>
 #include <QScrollBar>
+#include <QFile>
 
 #define ControlNum 6
 
@@ -223,6 +225,9 @@ void SystemCfgPage::buildTranslation()
 
     m_pPureRangeLab->setText(tr("Pure Tank Level Sensor Range"));
     m_pFeedRangeLab->setText(tr("Feed Tank Level Sensor Range"));
+
+    m_pUpdateLab->setText(tr("Update System Firmware"));
+    m_pUpdateBtn->setText(tr("Update Program"));
 }
 
 void SystemCfgPage::switchLanguage()
@@ -418,7 +423,7 @@ void SystemCfgPage::createControl()
 	/* line 4-2*/
     tmpWidget = new QWidget;
 
-	tmpWidget->setAutoFillBackground(true);
+    tmpWidget->setAutoFillBackground(true);
     tmpWidget->setPalette(pal);
     tmpWidget->setFixedSize(tmpWidgetWidth ,BACKWIDGET_HEIGHT);
 
@@ -436,7 +441,7 @@ void SystemCfgPage::createControl()
     /* line 4-2*/
     tmpWidget = new QWidget;
 
-	tmpWidget->setAutoFillBackground(true);
+    tmpWidget->setAutoFillBackground(true);
     tmpWidget->setPalette(pal);
     tmpWidget->setFixedSize(tmpWidgetWidth ,BACKWIDGET_HEIGHT);
 
@@ -450,7 +455,7 @@ void SystemCfgPage::createControl()
     rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 60);
     m_chkPH = new QCheckBox(tmpWidget);
     m_chkPH->setGeometry(rectTmp);
-	m_chkPH->setStyleSheet(strQss4Chk);
+    m_chkPH->setStyleSheet(strQss4Chk);
 
     mainLayout->addWidget(tmpWidget);
 #endif
@@ -614,15 +619,15 @@ void SystemCfgPage::createControl()
     m_pPureRangeEdit = new DLineEdit(tmpWidget);
     m_pPureRangeEdit->setValidator(new QRegExpValidator(sensorRangerx, this));
     m_pPureRangeEdit->setGeometry(rectTmp);
-	m_pPureRangeEdit->setText(QString("%1").arg(gSensorRange.fPureSRange));
+    m_pPureRangeEdit->setText(QString("%1").arg(gSensorRange.fPureSRange));
     m_pPureRangeEdit->hide();
 
-	rectTmp.setX(rectTmp.x() + rectTmp.width() + 10);
+    rectTmp.setX(rectTmp.x() + rectTmp.width() + 10);
     rectTmp.setWidth(90);
-	m_pPureRangeUnit = new QLabel(tmpWidget);
-	m_pPureRangeUnit->setText(tr("bar"));
-	m_pPureRangeUnit->setGeometry(rectTmp);
-	m_pPureRangeUnit->hide();
+    m_pPureRangeUnit = new QLabel(tmpWidget);
+    m_pPureRangeUnit->setText(tr("bar"));
+    m_pPureRangeUnit->setGeometry(rectTmp);
+    m_pPureRangeUnit->hide();
 
     switch(gGlobalParam.iMachineType)
     {
@@ -632,7 +637,7 @@ void SystemCfgPage::createControl()
     default:
         m_pPureRangeLab->show();
         m_pPureRangeEdit->show();
-		m_pPureRangeUnit->show();
+        m_pPureRangeUnit->show();
         break;
     }
     mainLayout->addWidget(tmpWidget);
@@ -717,13 +722,13 @@ void SystemCfgPage::createControl()
     m_pFeedRangeEdit = new DLineEdit(tmpWidget);
     m_pFeedRangeEdit->setValidator(new QRegExpValidator(sensorRangerx, this));
     m_pFeedRangeEdit->setGeometry(rectTmp);
-	m_pFeedRangeEdit->setText(QString("%1").arg(gSensorRange.fFeedSRange));
+    m_pFeedRangeEdit->setText(QString("%1").arg(gSensorRange.fFeedSRange));
 
-	rectTmp.setX(rectTmp.x() + rectTmp.width() + 10);
+    rectTmp.setX(rectTmp.x() + rectTmp.width() + 10);
     rectTmp.setWidth(90);
-	m_pFeedRangeUnit = new QLabel(tmpWidget);
-	m_pFeedRangeUnit->setText(tr("bar"));
-	m_pFeedRangeUnit->setGeometry(rectTmp);
+    m_pFeedRangeUnit = new QLabel(tmpWidget);
+    m_pFeedRangeUnit->setText(tr("bar"));
+    m_pFeedRangeUnit->setGeometry(rectTmp);
 
     tmpWidget->hide();
     switch(gGlobalParam.iMachineType)
@@ -735,30 +740,40 @@ void SystemCfgPage::createControl()
         tmpWidget->show();
         break;
     }
-
     mainLayout->addWidget(tmpWidget);
-        //
-    mainWidget->setLayout(mainLayout);
+    
+    //line 10
+    tmpWidget = new QWidget;
+    tmpWidget->setAutoFillBackground(true);
+    tmpWidget->setPalette(pal);
+    tmpWidget->setFixedSize(tmpWidgetWidth ,BACKWIDGET_HEIGHT);
 
+    rectTmp = sQrectAry[0];
+    rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 70);
+    m_pUpdateLab = new QLabel(tmpWidget);
+    m_pUpdateLab->setGeometry(rectTmp);
+    
+    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
+    rectTmp.setWidth(X_ITEM_WIDTH + 70);
+    m_pUpdateBtn = new QPushButton(tmpWidget);
+    m_pUpdateBtn->setGeometry(rectTmp);
+    connect(m_pUpdateBtn, SIGNAL(clicked()), this, SLOT(onUpdateBtnClicked()));
+    
+    mainLayout->addWidget(tmpWidget);
+
+    mainWidget->setLayout(mainLayout);
     scrollWidget->setWidget(mainWidget);
     scrollWidget->setGeometry(QRect(5, 60, 780, 490));
 
     scrollWidget->setStyleSheet("QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical{background: transparent;}");
 
     m_pBtnSave = new CBitmapButton(m_widget,BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL,SYSCFGPAGE_BTN_SAVE);
-    
     m_pBtnSave->setButtonPicture(gpGlobalPixmaps[GLOBAL_BMP_PAGE_NAVI_NORMAL]);
-    
     m_pBtnSave->setPressPicture(gpGlobalPixmaps[GLOBAL_BMP_PAGE_NAVI_ACTIVE]);
-    
     m_pBtnSave->setGeometry(700,560,m_pBtnSave->getPicWidth(),m_pBtnSave->getPicHeight());
-    
     m_pBtnSave->setStyleSheet("background-color:transparent");
-    
     connect(m_pBtnSave, SIGNAL(clicked(int)), this, SLOT(on_btn_clicked(int)));
-    
     m_pBtnSave->show();
-
 }
 
 
@@ -1503,6 +1518,47 @@ void SystemCfgPage::on_btn_clicked(int index)
    m_wndMain->prepareKeyStroke();
 }
 
+/**
+ * 手动从USB设备升级系统
+ */
+void SystemCfgPage::onUpdateBtnClicked()
+{
+    // 检查USB设备中是否存在 controller 文件
+    if(QFile::exists("/media/sda1/controller"))
+    {
+        DRunWarningDialog updateDlg(tr("Update System Firmware Now?"));
+        if(QDialog::Accepted == updateDlg.exec())
+        {
+            QMessageBox::warning(NULL, 
+                                tr("Warning"), 
+                                tr("System will restart automatically after the update. DO NOT interrupt!"), 
+                                QMessageBox::Ok);
+            
+            QString bakFile = "controller_" + gApp->applicationVersion();
+            if(QFile::rename("controller", bakFile))  //重命名当前 controller 文件, 备份
+            {
+                if(QFile::copy("/media/sda1/controller", "controller"))  // 将USB设备内的文件拷贝到工作目录
+                {
+                    QFile::remove(bakFile);
+                    m_wndMain->restart();
+                }
+                else
+                {
+                    QFile::rename(bakFile, "controller"); // 拷贝失败，则恢复备份文件
+                    QMessageBox::warning(NULL, tr("Warning"), tr("Update failed : 2"), QMessageBox::Ok);
+                }
+            }
+            else
+            {
+                QMessageBox::warning(NULL, tr("Warning"), tr("Update failed : 1"), QMessageBox::Ok);
+            }
+        }   
+    }
+    else
+    {
+        QMessageBox::warning(NULL, tr("Warning"), tr("Did not find system firmware on the USB card"), QMessageBox::Ok);
+    }
+}
 
 
 

@@ -94,6 +94,9 @@ private:
 
     QCheckBox *m_aChks[32];
 
+    QLabel      *m_pUpdateLab;
+    QPushButton *m_pUpdateBtn;
+
     struct CHK_ITEM_TYPE {
         int iId;
     }aCHKsIds[32];
@@ -104,6 +107,7 @@ public slots:
     void on_btn_clicked(int);
     void on_CmbIndexChange_pw(int index);
     void on_CmbIndexChange_sw(int index);
+    void onUpdateBtnClicked();
 };
 
 #endif // STERILIZEPAGE_H
