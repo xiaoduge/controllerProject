@@ -874,6 +874,10 @@ void SystemMonitorPage::updateWorkState()
        }
        break;
    case DISP_WORK_STATE_RUN:
+        if(MACHINE_ADAPT == gGlobalParam.iMachineType && NOT_RUNING_STATE_FLUSH == DispGetRunningStateFlag())
+        {
+            strInfo2 += tr("Flush");
+        }
         if(NOT_RUNING_STATE_CLEAN == DispGetRunningStateFlag())
         {
             strInfo2 += tr("Rinsing");
@@ -886,10 +890,10 @@ void SystemMonitorPage::updateWorkState()
       
         break;
    case DISP_WORK_STATE_LPP:
-        strInfo3 = tr("LPP");
+        strInfo3 = tr("");
         break;
    case DISP_WORK_STATE_KP:
-        strInfo3 = tr("KP");
+        strInfo3 = tr("");
         break;
    }
    
