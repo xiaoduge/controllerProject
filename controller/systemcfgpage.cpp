@@ -3,9 +3,11 @@
 #include "exconfig.h"
 #include "dlineedit.h"
 #include "cbitmapbutton.h"
+#include "drunwarningdialog.h"
 #include <QScrollArea>
 #include <QVBoxLayout>
 #include <QScrollBar>
+#include <QFile>
 
 #define ControlNum 6
 
@@ -25,26 +27,9 @@ static  QRect   sQrectAry[2] = {
 SystemCfgPage::SystemCfgPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMain) : CSubPage(parent,widget,wndMain)
 {
     int iIdx = 0;
-    
-    // aCHKsIds[iIdx].iId = DISP_SM_HaveSWValve;
-    // iIdx++;
-
-    // aCHKsIds[iIdx].iId = DISP_SM_ElecLeakProtector;
-    // iIdx++;
 
     aCHKsIds[iIdx].iId = DISP_SM_Printer;
     iIdx++;
-
-    // switch(gGlobalParam.iMachineType)
-    // {
-    // case MACHINE_PURIST:
-    // case MACHINE_ADAPT:
-    //     break;
-    // default:
-    //     aCHKsIds[iIdx].iId = DISP_SM_HP_Water_Cir;
-    //     iIdx++;
-    //     break;
-    // }
 
     switch(gGlobalParam.iMachineType)
     {
@@ -70,18 +55,7 @@ SystemCfgPage::SystemCfgPage(QObject *parent,CBaseWidget *widget ,MainWindow *wn
         iIdx++;
         break;
     }
-/*
-    switch(gGlobalParam.iMachineType)
-    {
-    case MACHINE_L_EDI_LOOP:
-    case MACHINE_L_RO_LOOP:
-        aCHKsIds[iIdx].iId = DISP_SM_H_PACK;
-        iIdx++;
-        aCHKsIds[iIdx].iId = DISP_SM_HP_Electrode;
-        iIdx++;
-        break;
-    }
-*/
+
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_L_Genie:
@@ -108,29 +82,22 @@ SystemCfgPage::SystemCfgPage(QObject *parent,CBaseWidget *widget ,MainWindow *wn
     m_iRealChkNum = iIdx;
     
     creatTitle();
-
     initUi();
-
     buildTranslation();
 }
 
 void SystemCfgPage::creatTitle()
 {
     CSubPage::creatTitle();
-
     buildTitles();
-
     selectTitle(0);
 }
 
 void SystemCfgPage::buildTitles()
 {
     QStringList stringList;
-
     stringList << tr("System Config");
-
     setTitles(stringList);
-
 }
 
 void SystemCfgPage::buildTranslation()
@@ -152,7 +119,6 @@ void SystemCfgPage::buildTranslation()
     m_lbSWHUnit->setText(tr("Height(M)"));
     m_lbSWCUnit->setText(tr("Volume(L)"));
 
-    
     for (int iLoop = 0; iLoop < m_iRealChkNum; iLoop++)
     {
         switch (aCHKsIds[iLoop].iId)
@@ -223,12 +189,14 @@ void SystemCfgPage::buildTranslation()
 
     m_pPureRangeLab->setText(tr("Pure Tank Level Sensor Range"));
     m_pFeedRangeLab->setText(tr("Feed Tank Level Sensor Range"));
+
+    m_pUpdateLab->setText(tr("Update System Firmware"));
+    m_pUpdateBtn->setText(tr("Update Program"));
 }
 
 void SystemCfgPage::switchLanguage()
 {
     buildTranslation();
-
     buildTitles();
 
     selectTitle(titleIndex());
@@ -264,7 +232,6 @@ void SystemCfgPage::createControl()
     QRegExp sensorRangerx("([0-9]{1}[\.][0-9]{0,3})");
 
     const int tmpWidgetWidth = 740;
-    int yOffset = BACKWIDGET_START_Y ;
     QWidget *tmpWidget = NULL;
     QRect    rectTmp;
 
@@ -274,16 +241,13 @@ void SystemCfgPage::createControl()
     QVBoxLayout *mainLayout = new QVBoxLayout;
     /* line 1*/
     tmpWidget = new QWidget;
-    
     QPalette pal(tmpWidget->palette());
     pal.setColor(QPalette::Background, QColor(255,255,255));
-    
     tmpWidget->setAutoFillBackground(true);
     tmpWidget->setPalette(pal);
     tmpWidget->setFixedSize(tmpWidgetWidth ,BACKWIDGET_HEIGHT);
 
     rectTmp = sQrectAry[0];
-
     m_lbDeviceTypeName = new QLabel(tmpWidget);
     m_lbDeviceTypeName->setGeometry(rectTmp);
     m_lbDeviceTypeName->show();
@@ -332,7 +296,6 @@ void SystemCfgPage::createControl()
     {
         /* line 2*/
         tmpWidget = new QWidget;
-        
         tmpWidget->setAutoFillBackground(true);
         tmpWidget->setPalette(pal);
         tmpWidget->setFixedSize(tmpWidgetWidth ,BACKWIDGET_HEIGHT);
@@ -355,21 +318,10 @@ void SystemCfgPage::createControl()
         mainLayout->addWidget(tmpWidget);
     }
 
-    /* line 4*/
+    //水箱UV配置
     tmpWidget = new QWidget;
-
-    switch(gGlobalParam.iMachineType)
-    {
-   // case MACHINE_PURIST:
-    case MACHINE_ADAPT:
-        tmpWidget->setAutoFillBackground(false);
-        tmpWidget->setPalette(pal);
-        break;
-    default:
-        tmpWidget->setAutoFillBackground(true);
-        tmpWidget->setPalette(pal);
-        break;
-    }
+    tmpWidget->setAutoFillBackground(true);
+    tmpWidget->setPalette(pal);
     tmpWidget->setFixedSize(tmpWidgetWidth ,BACKWIDGET_HEIGHT);
 
     rectTmp = sQrectAry[0];
@@ -377,48 +329,38 @@ void SystemCfgPage::createControl()
     m_chkPWTankUV = new QCheckBox(tmpWidget);
     m_chkPWTankUV->setGeometry(rectTmp);
     m_chkPWTankUV->setStyleSheet(strQss4Chk);
-    m_chkPWTankUV->hide();
 
     rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
     rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 60);
     m_lbPWTankUVName = new QLabel(tmpWidget);
     m_lbPWTankUVName->setGeometry(rectTmp);
     m_lbPWTankUVName->setAlignment(Qt::AlignCenter);
-    m_lbPWTankUVName->hide();
 
     rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
     rectTmp.setWidth(X_ITEM_WIDTH);
     m_lePWTankUVValue = new DLineEdit(tmpWidget);
     m_lePWTankUVValue->setGeometry(rectTmp);
     m_lePWTankUVValue->setValidator(new QIntValidator(0, 100, this));
-    m_lePWTankUVValue->hide();
 
     rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
     rectTmp.setWidth(X_ITEM_WIDTH+30);
     m_lbPWTankUVUnit = new QLabel(tmpWidget);
     m_lbPWTankUVUnit->setGeometry(rectTmp);
-    m_lbPWTankUVUnit->hide();
 
+    mainLayout->addWidget(tmpWidget);
     switch(gGlobalParam.iMachineType)
     {
-//    case MACHINE_PURIST:
     case MACHINE_ADAPT:
-        yOffset -= BACKWIDGET_START_HIATUS;
+        tmpWidget->hide();
         break;
     default:
-        m_chkPWTankUV->show();
-        m_lbPWTankUVName->show();    
-        m_lePWTankUVValue->show();
-        m_lbPWTankUVUnit->show();
         break;
     }
-    mainLayout->addWidget(tmpWidget);
 
 #ifdef STEPPERMOTOR
-	/* line 4-2*/
+    //步进电磁阀配置
     tmpWidget = new QWidget;
-
-	tmpWidget->setAutoFillBackground(true);
+    tmpWidget->setAutoFillBackground(true);
     tmpWidget->setPalette(pal);
     tmpWidget->setFixedSize(tmpWidgetWidth ,BACKWIDGET_HEIGHT);
 
@@ -431,12 +373,10 @@ void SystemCfgPage::createControl()
     mainLayout->addWidget(tmpWidget);
 #endif
 
-
 #ifdef CFG_DO_PH
-    /* line 4-2*/
+    //pH、DO配置
     tmpWidget = new QWidget;
-
-	tmpWidget->setAutoFillBackground(true);
+    tmpWidget->setAutoFillBackground(true);
     tmpWidget->setPalette(pal);
     tmpWidget->setFixedSize(tmpWidgetWidth ,BACKWIDGET_HEIGHT);
 
@@ -450,14 +390,13 @@ void SystemCfgPage::createControl()
     rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 60);
     m_chkPH = new QCheckBox(tmpWidget);
     m_chkPH->setGeometry(rectTmp);
-	m_chkPH->setStyleSheet(strQss4Chk);
+    m_chkPH->setStyleSheet(strQss4Chk);
 
     mainLayout->addWidget(tmpWidget);
 #endif
 
-    /* line 5*/
+    //登出、冲洗时间
     tmpWidget = new QWidget;
-    
     tmpWidget->setAutoFillBackground(true);
     tmpWidget->setPalette(pal);
     tmpWidget->setFixedSize(tmpWidgetWidth ,BACKWIDGET_HEIGHT);
@@ -508,7 +447,6 @@ void SystemCfgPage::createControl()
     m_lbLoginLingerName = new QLabel(tmpWidget);
     m_lbLoginLingerName->setGeometry(rectTmp);
 
-        
     rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN + 20);
     rectTmp.setWidth(X_ITEM_WIDTH);
     m_leLoginLingerValue = new DLineEdit(tmpWidget);
@@ -520,9 +458,9 @@ void SystemCfgPage::createControl()
     m_lbLoginLingerUnit = new QLabel(tmpWidget);
     m_lbLoginLingerUnit->setGeometry(rectTmp);
     mainLayout->addWidget(tmpWidget);
-    /* line 6*/
+
+    //纯水箱配置
     tmpWidget = new QWidget;
-    
     tmpWidget->setAutoFillBackground(true);
     tmpWidget->setPalette(pal);
     tmpWidget->setFixedSize(tmpWidgetWidth ,BACKWIDGET_HEIGHT);
@@ -531,7 +469,6 @@ void SystemCfgPage::createControl()
     rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 70);
     m_lbPWTankName = new QLabel(tmpWidget);
     m_lbPWTankName->setGeometry(rectTmp);
-    m_lbPWTankName->hide();
     
     rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
     rectTmp.setWidth(X_ITEM_WIDTH + 60);
@@ -547,58 +484,42 @@ void SystemCfgPage::createControl()
 
     if(MACHINE_PURIST== gGlobalParam.iMachineType) m_cmbPWTankVolume->addItem(tr("NO"));
     
-    connect(m_cmbPWTankVolume, SIGNAL(currentIndexChanged(int)),
-     this, SLOT(on_CmbIndexChange_pw(int)));
-
-    m_cmbPWTankVolume->hide();
+    connect(m_cmbPWTankVolume, SIGNAL(currentIndexChanged(int)), this, SLOT(on_CmbIndexChange_pw(int)));
     
     rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN + 20);
     rectTmp.setWidth(X_VALUE_WIDTH);
     m_lePWTankHeight = new DLineEdit(tmpWidget);
     m_lePWTankHeight->setGeometry(rectTmp);
     m_lePWTankHeight->setValidator(new QRegExpValidator(double_rx,this));
-    m_lePWTankHeight->hide();
     
     rectTmp.setX(rectTmp.x() + rectTmp.width() + 10);
     rectTmp.setWidth(90);
     m_lbPWHUnit = new QLabel(tmpWidget);
     m_lbPWHUnit->setGeometry(rectTmp);
-//    m_lbPWHUnit->setText("M");
-    m_lbPWHUnit->hide();
     
     rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN + 20);
     rectTmp.setWidth(X_VALUE_WIDTH);
     m_lePWTankCap = new DLineEdit(tmpWidget);
     m_lePWTankCap->setGeometry(rectTmp);
     m_lePWTankCap->setValidator(new QIntValidator(0, 9999, this));
-    m_lePWTankCap->hide();
     
     rectTmp.setX(rectTmp.x() + rectTmp.width() + 10);
     rectTmp.setWidth(90);
     m_lbPWCUnit = new QLabel(tmpWidget);
     m_lbPWCUnit->setGeometry(rectTmp);
-//    m_lbPWCUnit->setText("L");
-    m_lbPWCUnit->hide();
 
+    mainLayout->addWidget(tmpWidget);
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_ADAPT:  
-        tmpWidget->setAutoFillBackground(false);
+        tmpWidget->hide();
         break;
     default:
-        m_lbPWTankName->show();
-        m_cmbPWTankVolume->show();
-        m_lePWTankHeight->show();
-        m_lbPWHUnit->show();
-        m_lePWTankCap->show();
-        m_lbPWCUnit->show();
         break;
     }
-    mainLayout->addWidget(tmpWidget);
 
-    //line 7
+    //纯水箱传感器量程
     tmpWidget = new QWidget;
-
     tmpWidget->setAutoFillBackground(true);
     tmpWidget->setPalette(pal);
     tmpWidget->setFixedSize(tmpWidgetWidth ,BACKWIDGET_HEIGHT);
@@ -607,39 +528,32 @@ void SystemCfgPage::createControl()
     rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 120);
     m_pPureRangeLab = new QLabel(tmpWidget);
     m_pPureRangeLab->setGeometry(rectTmp);
-    m_pPureRangeLab->hide();
 
     rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
     rectTmp.setWidth(X_ITEM_WIDTH + 60);
     m_pPureRangeEdit = new DLineEdit(tmpWidget);
     m_pPureRangeEdit->setValidator(new QRegExpValidator(sensorRangerx, this));
     m_pPureRangeEdit->setGeometry(rectTmp);
-	m_pPureRangeEdit->setText(QString("%1").arg(gSensorRange.fPureSRange));
-    m_pPureRangeEdit->hide();
+    m_pPureRangeEdit->setText(QString("%1").arg(gSensorRange.fPureSRange));
 
-	rectTmp.setX(rectTmp.x() + rectTmp.width() + 10);
+    rectTmp.setX(rectTmp.x() + rectTmp.width() + 10);
     rectTmp.setWidth(90);
-	m_pPureRangeUnit = new QLabel(tmpWidget);
-	m_pPureRangeUnit->setText(tr("bar"));
-	m_pPureRangeUnit->setGeometry(rectTmp);
-	m_pPureRangeUnit->hide();
+    m_pPureRangeUnit = new QLabel(tmpWidget);
+    m_pPureRangeUnit->setText(tr("bar"));
+    m_pPureRangeUnit->setGeometry(rectTmp);
 
+    mainLayout->addWidget(tmpWidget);
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_ADAPT:
-        tmpWidget->setAutoFillBackground(false);
+        tmpWidget->hide();
         break;
     default:
-        m_pPureRangeLab->show();
-        m_pPureRangeEdit->show();
-		m_pPureRangeUnit->show();
         break;
     }
-    mainLayout->addWidget(tmpWidget);
-    //
-    /* line 8*/
+    
+    //原水箱配置
     tmpWidget = new QWidget;
-
     tmpWidget->setAutoFillBackground(true);
     tmpWidget->setPalette(pal);
     tmpWidget->setFixedSize(tmpWidgetWidth ,BACKWIDGET_HEIGHT);
@@ -674,7 +588,6 @@ void SystemCfgPage::createControl()
     rectTmp.setWidth(90);
     m_lbSWHUnit = new QLabel(tmpWidget);
     m_lbSWHUnit->setGeometry(rectTmp);
-//    m_lbSWHUnit->setText("M");
     
     rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN + 20);
     rectTmp.setWidth(X_VALUE_WIDTH);
@@ -686,23 +599,23 @@ void SystemCfgPage::createControl()
     rectTmp.setWidth(90);
     m_lbSWCUnit = new QLabel(tmpWidget);
     m_lbSWCUnit->setGeometry(rectTmp);
-//    m_lbSWCUnit->setText("L");
 
-    tmpWidget->hide();
+    mainLayout->addWidget(tmpWidget);
     switch(gGlobalParam.iMachineType)
     {
-     case MACHINE_L_Genie:
-     case MACHINE_L_UP:
-     case MACHINE_L_EDI_LOOP:
-     case MACHINE_L_RO_LOOP:
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
         tmpWidget->show();
         break;
+    default:
+        tmpWidget->hide();
+        break;
     }
-    mainLayout->addWidget(tmpWidget);
-
-    //line 9
+    
+    //原水箱传感器量程
     tmpWidget = new QWidget;
-
     tmpWidget->setAutoFillBackground(true);
     tmpWidget->setPalette(pal);
     tmpWidget->setFixedSize(tmpWidgetWidth ,BACKWIDGET_HEIGHT);
@@ -717,56 +630,67 @@ void SystemCfgPage::createControl()
     m_pFeedRangeEdit = new DLineEdit(tmpWidget);
     m_pFeedRangeEdit->setValidator(new QRegExpValidator(sensorRangerx, this));
     m_pFeedRangeEdit->setGeometry(rectTmp);
-	m_pFeedRangeEdit->setText(QString("%1").arg(gSensorRange.fFeedSRange));
+    m_pFeedRangeEdit->setText(QString("%1").arg(gSensorRange.fFeedSRange));
 
-	rectTmp.setX(rectTmp.x() + rectTmp.width() + 10);
+    rectTmp.setX(rectTmp.x() + rectTmp.width() + 10);
     rectTmp.setWidth(90);
-	m_pFeedRangeUnit = new QLabel(tmpWidget);
-	m_pFeedRangeUnit->setText(tr("bar"));
-	m_pFeedRangeUnit->setGeometry(rectTmp);
-
-    tmpWidget->hide();
-    switch(gGlobalParam.iMachineType)
-    {
-     case MACHINE_L_Genie:
-     case MACHINE_L_UP:
-     case MACHINE_L_EDI_LOOP:
-     case MACHINE_L_RO_LOOP:
-        tmpWidget->show();
-        break;
-    }
+    m_pFeedRangeUnit = new QLabel(tmpWidget);
+    m_pFeedRangeUnit->setText(tr("bar"));
+    m_pFeedRangeUnit->setGeometry(rectTmp);
 
     mainLayout->addWidget(tmpWidget);
-        //
-    mainWidget->setLayout(mainLayout);
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+        tmpWidget->show();
+        break;
+    default:
+        tmpWidget->hide();
+        break;
+    }
+    
+    //升级程序
+    tmpWidget = new QWidget;
+    tmpWidget->setAutoFillBackground(true);
+    tmpWidget->setPalette(pal);
+    tmpWidget->setFixedSize(tmpWidgetWidth ,BACKWIDGET_HEIGHT);
 
+    rectTmp = sQrectAry[0];
+    rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 70);
+    m_pUpdateLab = new QLabel(tmpWidget);
+    m_pUpdateLab->setGeometry(rectTmp);
+    
+    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
+    rectTmp.setWidth(X_ITEM_WIDTH + 70);
+    m_pUpdateBtn = new QPushButton(tmpWidget);
+    m_pUpdateBtn->setGeometry(rectTmp);
+    connect(m_pUpdateBtn, SIGNAL(clicked()), this, SLOT(onUpdateBtnClicked()));
+    
+    mainLayout->addWidget(tmpWidget);
+
+    mainWidget->setLayout(mainLayout);
     scrollWidget->setWidget(mainWidget);
     scrollWidget->setGeometry(QRect(5, 60, 780, 490));
 
     scrollWidget->setStyleSheet("QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical{background: transparent;}");
 
     m_pBtnSave = new CBitmapButton(m_widget,BITMAPBUTTON_STYLE_PUSH,BITMAPBUTTON_PIC_STYLE_NORMAL,SYSCFGPAGE_BTN_SAVE);
-    
     m_pBtnSave->setButtonPicture(gpGlobalPixmaps[GLOBAL_BMP_PAGE_NAVI_NORMAL]);
-    
     m_pBtnSave->setPressPicture(gpGlobalPixmaps[GLOBAL_BMP_PAGE_NAVI_ACTIVE]);
-    
     m_pBtnSave->setGeometry(700,560,m_pBtnSave->getPicWidth(),m_pBtnSave->getPicHeight());
-    
     m_pBtnSave->setStyleSheet("background-color:transparent");
-    
     connect(m_pBtnSave, SIGNAL(clicked(int)), this, SLOT(on_btn_clicked(int)));
-    
     m_pBtnSave->show();
-
 }
-
 
 void SystemCfgPage::initUi()
 {
     setBackColor();
     createControl();
-	connectData();
+    connectData();
 }
 
 void SystemCfgPage::update()
@@ -789,7 +713,7 @@ void SystemCfgPage::connectData()
     if (iIdx > DISP_WATER_BARREL_TYPE_NUM )
     {
         iIdx = DISP_WATER_BARREL_TYPE_030L;
-		m_pPureRangeEdit->setEnabled(false);
+        m_pPureRangeEdit->setEnabled(false);
     }
     
     switch(gGlobalParam.iMachineType)
@@ -802,29 +726,28 @@ void SystemCfgPage::connectData()
         {
             if (iIdx <= DISP_WATER_BARREL_TYPE_NO)
             {
-               m_cmbPWTankVolume->setCurrentIndex(iIdx);
+                m_cmbPWTankVolume->setCurrentIndex(iIdx);
             
-               if (DISP_WATER_BARREL_TYPE_UDF != iIdx)
-               {
-                   m_lePWTankHeight->hide();
-                   m_lbPWHUnit->hide();
-                   m_lePWTankCap->hide();
-                   m_lbPWCUnit->hide();
-				   
-				   m_pPureRangeEdit->setEnabled(false);
-               }
-               else
-               {
-                   m_lePWTankHeight->show();
-                   m_lbPWHUnit->show();
-                   m_lePWTankCap->show();
-                   m_lbPWCUnit->show();
-            
-                   m_lePWTankHeight->setText(QString::number(gGlobalParam.PmParam.afDepth[DISP_PM_PM2],'f',2));
-                   m_lePWTankCap->setText(QString::number(gGlobalParam.PmParam.afCap[DISP_PM_PM2]));
-				   
-				   m_pPureRangeEdit->setEnabled(true);
-			   }
+                if (DISP_WATER_BARREL_TYPE_UDF != iIdx)
+                {
+                    m_lePWTankHeight->hide();
+                    m_lbPWHUnit->hide();
+                    m_lePWTankCap->hide();
+                    m_lbPWCUnit->hide();
+                    m_pPureRangeEdit->setEnabled(false);
+                }
+                else
+                {
+                    m_lePWTankHeight->show();
+                    m_lbPWHUnit->show();
+                    m_lePWTankCap->show();
+                    m_lbPWCUnit->show();
+
+                    m_lePWTankHeight->setText(QString::number(gGlobalParam.PmParam.afDepth[DISP_PM_PM2],'f',2));
+                    m_lePWTankCap->setText(QString::number(gGlobalParam.PmParam.afCap[DISP_PM_PM2]));
+                    
+                    m_pPureRangeEdit->setEnabled(true);
+                }
             }
         }
         break;
@@ -836,47 +759,47 @@ void SystemCfgPage::connectData()
     if (iIdx > DISP_WATER_BARREL_TYPE_NUM )
     {
         iIdx = DISP_WATER_BARREL_TYPE_030L;
-		m_pFeedRangeEdit->setEnabled(false);
+        m_pFeedRangeEdit->setEnabled(false);
     }
     
     switch(gGlobalParam.iMachineType)
     {
-     case MACHINE_L_Genie:
-     case MACHINE_L_UP:
-     case MACHINE_L_EDI_LOOP:
-     case MACHINE_L_RO_LOOP: 
-        { 
-            if (m_cmbSWTankVolume->isVisible())
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP: 
+    { 
+        if (m_cmbSWTankVolume->isVisible())
+        {
+            if (iIdx <= DISP_WATER_BARREL_TYPE_NO)
             {
-                if (iIdx <= DISP_WATER_BARREL_TYPE_NO)
+                m_cmbSWTankVolume->setCurrentIndex(iIdx);
+            
+                if (DISP_WATER_BARREL_TYPE_UDF != iIdx)
                 {
-                   m_cmbSWTankVolume->setCurrentIndex(iIdx);
-                
-                   if (DISP_WATER_BARREL_TYPE_UDF != iIdx)
-                   {
-                       m_leSWTankHeight->hide();
-                       m_lbSWHUnit->hide();
-                       m_leSWTankCap->hide();
-                       m_lbSWCUnit->hide();
+                    m_leSWTankHeight->hide();
+                    m_lbSWHUnit->hide();
+                    m_leSWTankCap->hide();
+                    m_lbSWCUnit->hide();
 
-					   m_pFeedRangeEdit->setEnabled(false);
-                   }
-                   else 
-                   {
-                       m_leSWTankHeight->show();
-                       m_lbSWHUnit->show();
-                       m_leSWTankCap->show();
-                       m_lbSWCUnit->show();
-                
-                       m_leSWTankHeight->setText(QString::number(gGlobalParam.PmParam.afDepth[DISP_PM_PM3],'f',2));
-                       m_leSWTankCap->setText(QString::number(gGlobalParam.PmParam.afCap[DISP_PM_PM3]));
-					   m_pFeedRangeEdit->setEnabled(true);
-				   }
+                    m_pFeedRangeEdit->setEnabled(false);
+                }
+                else 
+                {
+                    m_leSWTankHeight->show();
+                    m_lbSWHUnit->show();
+                    m_leSWTankCap->show();
+                    m_lbSWCUnit->show();
+            
+                    m_leSWTankHeight->setText(QString::number(gGlobalParam.PmParam.afDepth[DISP_PM_PM3],'f',2));
+                    m_leSWTankCap->setText(QString::number(gGlobalParam.PmParam.afCap[DISP_PM_PM3]));
+                    m_pFeedRangeEdit->setEnabled(true);
                 }
             }
         }
-        break;
     }
+    break;
+}
     
     for (iLoop = 0; iLoop < m_iRealChkNum; iLoop++)
     {
@@ -1035,18 +958,18 @@ void SystemCfgPage::connectData()
         m_chkPWTankUV->setChecked(false);
     }
 #ifdef STEPPERMOTOR
-	if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_STEPPERMOTOR))
-	{
-		m_chkStepperMotor->setChecked(true);
-	}
-	else
-	{
-		m_chkStepperMotor->setChecked(false);
-	}
+    if(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_STEPPERMOTOR))
+    {
+        m_chkStepperMotor->setChecked(true);
+    }
+    else
+    {
+        m_chkStepperMotor->setChecked(false);
+    }
 #endif
 
 #ifdef CFG_DO_PH
-	if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_DO))
+    if (gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_DO))
     {
         m_chkDO->setChecked(true);
     }
@@ -1055,7 +978,7 @@ void SystemCfgPage::connectData()
         m_chkDO->setChecked(false);
     }
 
-	if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_PH))
+    if (gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_PH))
     {
         m_chkPH->setChecked(true);
     }
@@ -1069,8 +992,8 @@ void SystemCfgPage::connectData()
     m_leLoginLingerValue->setText(QString::number(gGlobalParam.MiscParam.iAutoLogoutTime));
     m_lePOweronFlushValue->setText(QString::number(gGlobalParam.MiscParam.iPowerOnFlushTime));
 
-	m_pPureRangeEdit->setText(QString("%1").arg(gSensorRange.fPureSRange));
-	m_pFeedRangeEdit->setText(QString("%1").arg(gSensorRange.fFeedSRange));
+    m_pPureRangeEdit->setText(QString("%1").arg(gSensorRange.fPureSRange));
+    m_pFeedRangeEdit->setText(QString("%1").arg(gSensorRange.fFeedSRange));
 }
 
 void SystemCfgPage::save()
@@ -1341,34 +1264,34 @@ void SystemCfgPage::save()
     }
 
 #ifdef STEPPERMOTOR
-	if(Qt::Checked == m_chkStepperMotor->checkState())
-	{
-		smParam.ulFlags |= 1 << DISP_SM_STEPPERMOTOR;
-	}
-	else
-	{
-		smParam.ulFlags &= ~(1 << DISP_SM_STEPPERMOTOR);
-	}
+    if(Qt::Checked == m_chkStepperMotor->checkState())
+    {
+        smParam.ulAddFlags |= 1 << DISP_SM_STEPPERMOTOR;
+    }
+    else
+    {
+        smParam.ulAddFlags &= ~(1 << DISP_SM_STEPPERMOTOR);
+    }
 #endif
 
 
 #ifdef CFG_DO_PH
     if (Qt::Checked == m_chkDO->checkState())
     {
-        smParam.ulFlags |= 1 << DISP_SM_DO;
+        smParam.ulAddFlags |= 1 << DISP_SM_DO;
     }
     else
     {
-        smParam.ulFlags &= ~(1 << DISP_SM_DO);
+        smParam.ulAddFlags &= ~(1 << DISP_SM_DO);
     }
 
-	if (Qt::Checked == m_chkPH->checkState())
+    if (Qt::Checked == m_chkPH->checkState())
     {
-        smParam.ulFlags |= 1 << DISP_SM_PH;
+        smParam.ulAddFlags |= 1 << DISP_SM_PH;
     }
     else
     {
-        smParam.ulFlags &= ~(1 << DISP_SM_PH);
+        smParam.ulAddFlags &= ~(1 << DISP_SM_PH);
     }
 #endif
 
@@ -1503,6 +1426,47 @@ void SystemCfgPage::on_btn_clicked(int index)
    m_wndMain->prepareKeyStroke();
 }
 
+/**
+ * 手动从USB设备升级系统
+ */
+void SystemCfgPage::onUpdateBtnClicked()
+{
+    // 检查USB设备中是否存在 controller 文件
+    if(QFile::exists("/media/sda1/controller"))
+    {
+        DRunWarningDialog updateDlg(tr("Update System Firmware Now?"));
+        if(QDialog::Accepted == updateDlg.exec())
+        {
+            QMessageBox::warning(NULL, 
+                                tr("Warning"), 
+                                tr("System will restart automatically after the update. DO NOT interrupt!"), 
+                                QMessageBox::Ok);
+            
+            QString bakFile = "controller_" + gApp->applicationVersion();
+            if(QFile::rename("controller", bakFile))  //重命名当前 controller 文件, 备份
+            {
+                if(QFile::copy("/media/sda1/controller", "controller"))  // 将USB设备内的文件拷贝到工作目录
+                {
+                    QFile::remove(bakFile);
+                    m_wndMain->restart();
+                }
+                else
+                {
+                    QFile::rename(bakFile, "controller"); // 拷贝失败，则恢复备份文件
+                    QMessageBox::warning(NULL, tr("Warning"), tr("Update failed : 2"), QMessageBox::Ok);
+                }
+            }
+            else
+            {
+                QMessageBox::warning(NULL, tr("Warning"), tr("Update failed : 1"), QMessageBox::Ok);
+            }
+        }   
+    }
+    else
+    {
+        QMessageBox::warning(NULL, tr("Warning"), tr("Did not find system firmware on the USB card"), QMessageBox::Ok);
+    }
+}
 
 
 

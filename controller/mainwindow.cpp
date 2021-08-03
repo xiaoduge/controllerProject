@@ -232,7 +232,8 @@ bool gScreenSleeping;
 unsigned int gAutoLogoutTimer;
 
 unsigned int ex_gulSecond = 0;
-unsigned short g_bNewPPack;
+EX_RUNCONDITIONS g_runConditions;
+
 
 //RO 清洗时间定义
 const unsigned int gROWashDuration[ROWashTimeNum] = 
@@ -279,6 +280,7 @@ QString gastrTmCfgName[] =
 QString gastrSmCfgName[] = 
 {
     "Flag",
+    "Flag_Add",    
 };
 
 QString gastrAlarmCfgName[] = 
@@ -743,8 +745,11 @@ void MainRetriveSubModuleSetting(int iMachineType,DISP_SUB_MODULE_SETTING_STRU  
         int iValue ;
 
         iValue = config->value(strV,gaMachineType[iMachineType].iDefaultModule).toInt();
-
         Param.ulFlags  = iValue;
+
+        strV = "/SM/" + gastrSmCfgName[1];
+        iValue = config->value(strV, 0).toInt();
+        Param.ulAddFlags  = iValue;
     }
 
     switch(iMachineType)
@@ -1898,6 +1903,17 @@ void MainSaveSubModuleSetting(int iMachineType,DISP_SUB_MODULE_SETTING_STRU  &Pa
             
         }
 
+        strV = "/SM/" + gastrSmCfgName[1];
+        if (Param.ulAddFlags != tmpParam.ulAddFlags)
+        {
+            iValue = Param.ulAddFlags;
+
+            strTmp = QString::number(iValue);
+            
+            config->setValue(strV,strTmp);
+            
+        }
+
     }    
     if (config)
     {
@@ -3009,7 +3025,7 @@ void MainResetCmInfo(int iSel)
         gCMUsage.ulUsageState &= ~(1 << DISP_P_PACKLIFEL);
         gCMUsage.cmInfo.aulCumulatedData[DISP_P_PACKLIFEDAY] = 0;
         gCMUsage.cmInfo.aulCumulatedData[DISP_P_PACKLIFEL] = 0;
-        g_bNewPPack = 1; //2019.3.4 add
+        g_runConditions.bit1NewPPack = 1;
         break;
     case DISP_U_PACK:
         gCMUsage.info.aulCms[DISP_U_PACKLIFEDAY] = DispGetCurSecond();
@@ -4134,7 +4150,8 @@ MainWindow::MainWindow(QMainWindow *parent) :
     m_bSplash = false;
 
     m_bC1Regulator = false;
-    g_bNewPPack = 0;
+    g_runConditions.bit1NewPPack = 0;
+    g_runConditions.bit1FirstQtw = 1;
     excepCounter = 0;
     //Set the factory default time for RFID tags
     m_consuambleInitDate = QString("2014-05-22");
@@ -9908,7 +9925,7 @@ void MainWindow::updateRunningFlushTime()
 int MainWindow::runningFlushTime()
 {
     int iTimeLeft = gGlobalParam.MiscParam.iPowerOnFlushTime* 60 + 10 - m_runningFlushTime;
-    if(g_bNewPPack)
+    if(g_runConditions.bit1NewPPack)
     {
         iTimeLeft = 20 * 60 + 10 - m_runningFlushTime;
     }

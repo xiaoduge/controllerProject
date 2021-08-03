@@ -2346,7 +2346,7 @@ void DFlowChartWidget::paintDispense(QPainter &painter)
         break;
     case MACHINE_ADAPT:
         /****** 绘制水管 ******/
-        setStatePen(painter, m_deviceState[C2_STATE]);
+        setStatePen(painter, m_deviceState[C2_STATE] || CcbGetTwFlag());
 
         //RO产水->HP/UP分支
         points.clear();

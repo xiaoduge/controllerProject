@@ -357,9 +357,9 @@ void DCheckConsumaleInstall::updateSql()
 
     if(ret)
     {
-        if((DISP_P_PACK == m_iType) && (!g_bNewPPack))
+        if((DISP_P_PACK == m_iType) && (!g_runConditions.bit1NewPPack))
         {
-            g_bNewPPack = 1;
+            g_runConditions.bit1NewPPack = 1;
         }
     }
 
@@ -379,9 +379,9 @@ void DCheckConsumaleInstall::insertSql()
 
     if(ret)
     {
-        if((DISP_P_PACK == m_iType) && (!g_bNewPPack))
+        if((DISP_P_PACK == m_iType) && (!g_runConditions.bit1NewPPack))
         {
-            g_bNewPPack = 1;
+            g_runConditions.bit1NewPPack = 1;
         }
     }
 

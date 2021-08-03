@@ -985,7 +985,7 @@ void MainPage::on_btn_clicked(int index)
                 DrawSpeed(0,iValue);
                 /* set speed */
 #ifdef STEPPERMOTOR
-                if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_STEPPERMOTOR))
+                if(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_STEPPERMOTOR))
                 {
                     SpeedRegulation(APP_DEV_HS_SUB_HYPER, iValue);
                 }
@@ -1010,14 +1010,14 @@ void MainPage::on_btn_clicked(int index)
                 
                 DrawSpeed(0,iValue);
 #ifdef STEPPERMOTOR
-				if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_STEPPERMOTOR))
-				{
-					SpeedRegulation(APP_DEV_HS_SUB_HYPER, iValue);
-				}
-				else
-				{
-					SetSpeed(APP_DEV_HS_SUB_HYPER,iValue);
-				}
+                if(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_STEPPERMOTOR))
+                {
+                    SpeedRegulation(APP_DEV_HS_SUB_HYPER, iValue);
+                }
+                else
+                {
+                    SetSpeed(APP_DEV_HS_SUB_HYPER,iValue);
+                }
 #else
                 SetSpeed(APP_DEV_HS_SUB_HYPER,iValue);
 #endif
@@ -1057,14 +1057,14 @@ void MainPage::on_btn_clicked(int index)
 
                 DrawSpeed(1,iValue);
 #ifdef STEPPERMOTOR
-				if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_STEPPERMOTOR))
-				{
-					SpeedRegulation(APP_DEV_HS_SUB_REGULAR, iValue);
-				}
-				else
-				{
-					SetSpeed(APP_DEV_HS_SUB_REGULAR,iValue);
-				}
+                if(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_STEPPERMOTOR))
+                {
+                    SpeedRegulation(APP_DEV_HS_SUB_REGULAR, iValue);
+                }
+                else
+                {
+                    SetSpeed(APP_DEV_HS_SUB_REGULAR,iValue);
+                }
 #else
                 SetSpeed(APP_DEV_HS_SUB_REGULAR,iValue);
 #endif
@@ -1081,14 +1081,14 @@ void MainPage::on_btn_clicked(int index)
                 m_wndMain->changeRPumpValue(1,iValue);
                 DrawSpeed(1,iValue);
 #ifdef STEPPERMOTOR
-				if(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_STEPPERMOTOR))
-				{
-					SpeedRegulation(APP_DEV_HS_SUB_REGULAR, iValue);
-				}
-				else
-				{
-					SetSpeed(APP_DEV_HS_SUB_REGULAR,iValue);
-				}
+                if(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_STEPPERMOTOR))
+                {
+                    SpeedRegulation(APP_DEV_HS_SUB_REGULAR, iValue);
+                }
+                else
+                {
+                    SetSpeed(APP_DEV_HS_SUB_REGULAR,iValue);
+                }
 #else
                 SetSpeed(APP_DEV_HS_SUB_REGULAR,iValue);
 #endif
@@ -1760,7 +1760,6 @@ void MainPage::updI3Info(ECO_INFO_STRU *info, bool bVisible, bool bForceUpd)
                         m_pLabels[LABEL_NAVI_UP_WQ_VALUE]->setText(QString::number(fQ,'f',1));
                     }
                     m_pLabels[m_aiLblMap[LABEL_NAVI_UP_TEMP_VALUE]]->setText(QString::number(fT,'f',1));
-                    m_pLabels[LABEL_NAVI_UP_WQ_UNIT]->setText(tr("omg"));
                 }
                 if(!bForceUpd) m_aHistoryEco[iIndex] = *info;
             }
@@ -2015,16 +2014,37 @@ void  MainPage::updMainpageState(void)
 
         if (MACHINE_FUNCTION_EDI == (MACHINE_FUNCTION_EDI & gaMachineType[gGlobalParam.iMachineType].iFunctions))
         {
-            if(NOT_RUNING_STATE_CLEAN == DispGetRunningStateFlag())
+            switch(gGlobalParam.iMachineType)
             {
-                m_pLabels[m_aiLblMap[LABEL_NAVI_EDI_STATE]]->setText(tr("Rinsing"));
-            }
-
-            //2019.7.5 add
-            if(NOT_RUNING_STATE_FLUSH == DispGetRunningStateFlag())
-            {
-                QString strFlushTime = QString(" %1s").arg(m_wndMain->runningFlushTime());
-                m_pLabels[m_aiLblMap[LABEL_NAVI_EDI_STATE]]->setText(tr("Flush") + strFlushTime);
+            case MACHINE_ADAPT:
+                if(CcbGetTwFlag() || CcbGetTwPendingFlag())
+                {
+                    if(NOT_RUNING_STATE_CLEAN == DispGetRunningStateFlag())
+                    {
+                        m_pLabels[m_aiLblMap[LABEL_NAVI_EDI_STATE]]->setText(tr("Rinsing"));
+                    }
+                    else if(NOT_RUNING_STATE_FLUSH == DispGetRunningStateFlag())
+                    {
+                        QString strFlushTime = QString(" %1s").arg(m_wndMain->runningFlushTime());
+                        m_pLabels[m_aiLblMap[LABEL_NAVI_EDI_STATE]]->setText(tr("Flush") + strFlushTime);
+                    }
+                }
+                else
+                {
+                    m_pLabels[m_aiLblMap[LABEL_NAVI_EDI_STATE]]->setText(tr("Ready"));
+                }
+                break;
+            default:
+                if(NOT_RUNING_STATE_CLEAN == DispGetRunningStateFlag())
+                {
+                    m_pLabels[m_aiLblMap[LABEL_NAVI_EDI_STATE]]->setText(tr("Rinsing"));
+                }
+                else if(NOT_RUNING_STATE_FLUSH == DispGetRunningStateFlag())
+                {
+                    QString strFlushTime = QString(" %1s").arg(m_wndMain->runningFlushTime());
+                    m_pLabels[m_aiLblMap[LABEL_NAVI_EDI_STATE]]->setText(tr("Flush") + strFlushTime);
+                }
+                break;
             }
         }
          

@@ -159,20 +159,38 @@ void DFlowChartPage::updateWorkState()
         }
         break;
     case DISP_WORK_STATE_RUN:
-         if(NOT_RUNING_STATE_CLEAN == DispGetRunningStateFlag())
-         {
-             strInfo2 += tr("Rinsing");
-         }
-         if (DispGetPwFlag() && (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveB2)))
-         {
-             strInfo3 = tr("Filling");
-         }
-         break;
+        switch(gGlobalParam.iMachineType)
+        {
+        case MACHINE_ADAPT:
+            if(CcbGetTwFlag() || CcbGetTwPendingFlag())
+            {
+                if(NOT_RUNING_STATE_FLUSH == DispGetRunningStateFlag())
+                {
+                    strInfo2 += tr("Flush");
+                }
+                else if(NOT_RUNING_STATE_CLEAN == DispGetRunningStateFlag())
+                {
+                    strInfo2 += tr("Rinsing");
+                }
+            }
+            break;
+        default:
+            if(NOT_RUNING_STATE_CLEAN == DispGetRunningStateFlag())
+            {
+                strInfo2 += tr("Rinsing");
+            }
+            if (DispGetPwFlag() && (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_HaveB2)))
+            {
+                strInfo3 = tr("Filling");
+            }
+            break;
+        }
+        break;
     case DISP_WORK_STATE_LPP:
-         strInfo3 = tr("LPP");
+         strInfo3 = tr("");
          break;
     case DISP_WORK_STATE_KP:
-         strInfo3 = tr("KP");
+         strInfo3 = tr("");
          break;
     }
 

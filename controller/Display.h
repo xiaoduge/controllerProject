@@ -478,6 +478,12 @@ typedef enum
 
     DISP_SM_UP_IN, // PURIST UP IN
 
+    DISP_SM_NUM,
+}DISP_SUB_MODULE_ENUM;   // 已经达到32位int最大的表示量，后期添加配置选项在DISP_SUB_ADD_MODULE_ENUM中添加
+
+
+typedef enum
+{
 #ifdef STEPPERMOTOR
     DISP_SM_STEPPERMOTOR, //Stepper Motor
 #endif
@@ -487,8 +493,9 @@ typedef enum
     DISP_SM_PH,
 #endif
 
-    DISP_SM_NUM,
-}DISP_SUB_MODULE_ENUM;
+    DISP_SM_ADD_NUM,
+}DISP_SUB_ADD_MODULE_ENUM;
+
 
 #define MODULES_ALL ((1 << DISP_SM_NUM) - 1)
 
@@ -519,6 +526,7 @@ typedef enum
 typedef struct
 {
     unsigned int ulFlags;
+    unsigned int ulAddFlags;
 }DISP_SUB_MODULE_SETTING_STRU;
 
 

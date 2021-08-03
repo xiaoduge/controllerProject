@@ -425,6 +425,10 @@ void ConsumableInsPage::initTypeMap()
     m_typeMap.insert(FINALFILTER_B_CATNO, DISP_T_B_FILTER);
     m_typeMap.insert(EDI_CATNO, DISP_MACHINERY_EDI);
     m_typeMap.insert(TANKVENTFILTER_CATNO, DISP_W_FILTER);
+
+    m_typeMap.insert(LOOPFILTER_CATNO, DISP_TUBE_FILTER);
+    m_typeMap.insert(LOOPUV_CATNO, DISP_N4_UV);
+	m_typeMap.insert(LOOPDI_CATNO, DISP_TUBE_DI);
 }
 
 void ConsumableInsPage::initNormalItem()

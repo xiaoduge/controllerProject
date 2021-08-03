@@ -114,6 +114,12 @@ typedef struct
 
 }EX_CCB;
 
+typedef struct
+{
+    unsigned int  bit1NewPPack      : 1;
+    unsigned int  bit1FirstQtw      : 1;
+}EX_RUNCONDITIONS;
+
 extern unsigned int gMachineFlow;
 extern Ex_DISP_PARAM_CALI_STRU gCaliParam;
 extern EX_CCB  ex_gCcb;
@@ -121,7 +127,7 @@ extern EX_CCB  ex_gCcb;
 extern SENSOR_RANGE gSensorRange;
 
 extern unsigned int ex_gulSecond;
-extern unsigned short g_bNewPPack;
+extern EX_RUNCONDITIONS g_runConditions;
 
 int Ex_FactoryTest(int select);
 unsigned int getKeyState(); //2019.9.16 add
