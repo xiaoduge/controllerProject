@@ -428,6 +428,7 @@ void DWaterQualityPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info)
     case APP_EXE_I1_NO: // RO In
     {
         float fT;
+        bool  bUpdateTapCond = false;
 
         if (TEMERATURE_UINT_CELSIUS == gGlobalParam.MiscParam.iUint4Temperature)
         {
@@ -438,8 +439,27 @@ void DWaterQualityPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info)
             fT = toFahrenheit(info->fTemperature);
             strTempUnit = strUnitMsg[UNIT_F];
         }
-
+        //检查是否需要更新自来水电导率
         if (DispGetInitRunFlag())
+        {
+            bUpdateTapCond = true;
+        }
+        switch(gGlobalParam.iMachineType)
+        {
+        case MACHINE_ADAPT:
+            if(CcbGetTwFlag() || CcbGetTwPendingFlag())
+            {
+                if(NOT_RUNING_STATE_FLUSH == DispGetRunningStateFlag())
+                {
+                    bUpdateTapCond = true;
+                }
+            }
+            break;
+        default:
+            break;
+        }
+
+        if (bUpdateTapCond)
         {
             updateValue(m_tags[Tap_Cond],
                         strUnitMsg[UNIT_USCM].arg(info->fQuality, 0, 'f', 1),

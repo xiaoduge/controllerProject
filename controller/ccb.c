@@ -3264,16 +3264,15 @@ void work_start_qtw(void *para)
     case MACHINE_ADAPT:
     {
         int iLoop;
-        int iFlushTime; //冲洗时间，单位second
         CanCcbTransState(DISP_WORK_STATE_RUN,DISP_WORK_SUB_RUN_INIT);
 
         //距离上次取水超过1min
-        if ((gulSecond - pCcb->ulAdapterAgingCount > 60) || g_runConditions.bit1FirstQtw || g_runConditions.bit1NewPPack)
+        if ((gulSecond - pCcb->ulAdapterAgingCount > 60) || g_runConditions.bit1FirstQtw)
         {
             gCcb.aHandler[iIndex].bit1PendingQtw = 1;
 
             //如果是开机后第一次取水，则先进行冲洗过程
-            if(g_runConditions.bit1FirstQtw || g_runConditions.bit1NewPPack)
+            if(g_runConditions.bit1FirstQtw )
             {
                 g_runConditions.bit1FirstQtw = 0;
                 iRet = CcbUpdateIAndBs(pWorkItem->id, 0, pCcb->ulPMMask, pCcb->ulPMMask);    
@@ -3317,15 +3316,7 @@ void work_start_qtw(void *para)
                 pCcb->bit3RuningState = NOT_RUNING_STATE_FLUSH;
                 CcbNotState(NOT_STATE_OTHER);
 
-                if(g_runConditions.bit1NewPPack)
-                {
-                    iFlushTime = 20*60;
-                }
-                else
-                {
-                    iFlushTime = pCcb->MiscParam.iPowerOnFlushTime*60;
-                }
-                for(iLoop = 0; iLoop < iFlushTime; ++iLoop)
+                for(iLoop = 0; iLoop < pCcb->MiscParam.iPowerOnFlushTime*60; ++iLoop)
                 {
                     iRet = CcbWorkDelayEntry(pWorkItem->id, 1000, CcbDelayCallBack);
                     if (iRet )
@@ -3335,7 +3326,6 @@ void work_start_qtw(void *para)
                         return ;
                     } 
                 }
-                g_runConditions.bit1NewPPack = 0;
             }
             
             //第一步：冲洗
@@ -9426,7 +9416,11 @@ int CanCcbAfDataHOQtwReqMsg(MAIN_CANITF_MSG_STRU *pCanItfMsg)
     case APP_PACKET_HO_ACTION_START:
         {
             /* late implement */
-            if (DISP_WORK_STATE_RUN != gCcb.curWorkState.iMainWorkState4Pw)
+            if((MACHINE_ADAPT == gCcb.ulMachineType) && DispGetInitRunFlag() )
+            {
+                ucResult = APP_PACKET_HO_ERROR_CODE_UNREADY; // failed
+            }
+            else if (DISP_WORK_STATE_RUN != gCcb.curWorkState.iMainWorkState4Pw)
             {
                 ucResult = APP_PACKET_HO_ERROR_CODE_UNREADY; // failed
             }
@@ -10083,8 +10077,11 @@ int CanCcbZigbeeHOQtwReqMsg(ZBITF_MAIN_MSG_STRU *pZigbeeItfMsg)
     {
     case APP_PACKET_HO_ACTION_START:
         {
-            /* late implement */
-            if (DISP_WORK_STATE_RUN != gCcb.curWorkState.iMainWorkState4Pw)
+            if((MACHINE_ADAPT == gCcb.ulMachineType) && DispGetInitRunFlag() )
+            {
+                ucResult = APP_PACKET_HO_ERROR_CODE_UNREADY; // failed
+            }
+            else if (DISP_WORK_STATE_RUN != gCcb.curWorkState.iMainWorkState4Pw)
             {
                 ucResult = APP_PACKET_HO_ERROR_CODE_UNREADY; // failed
             }
@@ -13003,92 +13000,63 @@ void work_init_run_wrapper(void *para)
     case MACHINE_PURIST:
         break;
     case MACHINE_ADAPT:
-#if 0
-        iRet = CcbUpdateIAndBs(pWorkItem->id,0,pCcb->ulPMMask,pCcb->ulPMMask);    
-        if (iRet )
-        {
-            VOS_LOG(VOS_LOG_WARNING,"CcbUpdatePmObjState Fail %d",iRet);    
-    
-            /* notify ui (late implemnt) */
-            work_init_run_fail(pWorkItem->id);
-            
-            return ;
-        }
-
-        VOS_LOG(VOS_LOG_WARNING,"Flush for Init Run"); 
-
-        /* wash state for init run */
-        /* E1,E2,E3 ON*/
-        /* set  valves */
-        if(haveB3(&gCcb))
-        {
-            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1 << APP_EXE_E3_NO)|(1<<APP_EXE_C3_NO);
-        }
-        else
-        {
-            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1 << APP_EXE_E3_NO)
-                    |(1 << APP_EXE_E10_NO)|(1 << APP_EXE_C3_NO);
-        }
-        
-        iRet = CcbSetSwitch(pWorkItem->id, 0, iTmp);
-        if (iRet )
-        {
-            VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet); 
-            work_init_run_fail(pWorkItem->id);  
-            /* notify ui (late implemnt) */
-            return ;
-        }
-    
-        /* enable I1 reports */
-        iTmp = 1 << APP_EXE_I1_NO;
-        iRet = CcbUpdateIAndBs(pWorkItem->id,0,iTmp,iTmp);
-        if (iRet )
-        {
-            VOS_LOG(VOS_LOG_WARNING,"CcbSetIAndBs Fail %d",iRet);   
-            work_init_run_fail(pWorkItem->id);  
-            /* notify ui (late implemnt) */
-            return ;
-        }
-
-        VOS_LOG(VOS_LOG_WARNING,"iPowerOnFlushTime %d",pCcb->MiscParam.iPowerOnFlushTime);    
-
-        pCcb->bit3RuningState = NOT_RUNING_STATE_FLUSH;
-
-        CcbNotState(NOT_STATE_OTHER);
-
         if(g_runConditions.bit1NewPPack)
         {
-            g_runConditions.bit1NewPPack = 0;
-            iRet = CcbWorkDelayEntry(pWorkItem->id,
-                                     20*60*1000,
-                                     CcbDelayCallBack);
-        }
-        else
-        {
-            iRet = CcbWorkDelayEntry(pWorkItem->id,pCcb->MiscParam.iPowerOnFlushTime*60*1000,CcbDelayCallBack);
-        }
-        
-        if (iRet )
-        {
-            VOS_LOG(VOS_LOG_WARNING,"CcbWorkDelayEntry Fail %d",iRet);    
-            work_init_run_fail(pWorkItem->id);  
-            /* notify ui (late implemnt) */
-            return ;
-        } 
+            iRet = CcbUpdateIAndBs(pWorkItem->id,0,pCcb->ulPMMask,pCcb->ulPMMask);    
+            if (iRet )
+            {
+                VOS_LOG(VOS_LOG_WARNING,"CcbUpdatePmObjState Fail %d",iRet);    
+                work_init_run_fail(pWorkItem->id);
+                return ;
+            }
 
-        //2019.2.14 add
-        if(!(DispGetUpCirFlag()
-             | DispGetTankCirFlag()
-             | DispGetTocCirFlag()
-             //| DispGetUpQtwFlag()
-             //| DispGetEdiQtwFlag()
-             | CcbGetTwFlag()
-             | CcbGetTwPendingFlag()))
-        {
-            iTmp = 0;
-            iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
+            VOS_LOG(VOS_LOG_WARNING,"Flush for Init Run"); 
+
+            /* wash state for init run */
+            if(haveB3(&gCcb))
+            {
+                iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1 << APP_EXE_E3_NO)|(1<<APP_EXE_C3_NO);
+            }
+            else
+            {
+                iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1 << APP_EXE_E3_NO)
+                        |(1 << APP_EXE_E10_NO)|(1 << APP_EXE_C3_NO);
+            }
+                    iRet = CcbSetSwitch(pWorkItem->id, 0, iTmp);
+            if (iRet )
+            {
+                VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet); 
+                work_init_run_fail(pWorkItem->id);  
+                /* notify ui (late implemnt) */
+                return ;
+            }
+        
+            /* enable I1 reports */
+            iTmp = 1 << APP_EXE_I1_NO;
+            iRet = CcbUpdateIAndBs(pWorkItem->id,0,iTmp,iTmp);
+            if (iRet )
+            {
+                VOS_LOG(VOS_LOG_WARNING,"CcbSetIAndBs Fail %d",iRet);   
+                work_init_run_fail(pWorkItem->id);  
+                /* notify ui (late implemnt) */
+                return ;
+            }
+
+            VOS_LOG(VOS_LOG_WARNING,"iPowerOnFlushTime %d",pCcb->MiscParam.iPowerOnFlushTime);    
+
+            pCcb->bit3RuningState = NOT_RUNING_STATE_FLUSH;
+            CcbNotState(NOT_STATE_OTHER);
+
+            iRet = CcbWorkDelayEntry(pWorkItem->id, 20*60*1000, CcbDelayCallBack);
+            if (iRet )
+            {
+                VOS_LOG(VOS_LOG_WARNING,"CcbWorkDelayEntry Fail %d",iRet);    
+                work_init_run_fail(pWorkItem->id);  
+                return ;
+            } 
+            g_runConditions.bit1NewPPack = 0;
+            g_runConditions.bit1FirstQtw = 0;
         }
-#endif
         break;
     }
     //冲洗完成，进入运行状态
@@ -14648,6 +14616,11 @@ DISPHANDLE DispCmdTw(unsigned char *pucData, int iLength)
 
     VOS_LOG(VOS_LOG_DEBUG,"qtw: %d & %d",gCcb.curWorkState.iMainWorkState4Pw ,gCcb.curWorkState.iSubWorkState4Pw);    
     
+    //Adapt 冲洗的时候不能取水
+    if((MACHINE_ADAPT == gCcb.ulMachineType) && DispGetInitRunFlag() )
+    {
+        return DISP_INVALID_HANDLE;
+    }
 
     if (DISP_WORK_STATE_RUN != gCcb.curWorkState.iMainWorkState4Pw)
     {
