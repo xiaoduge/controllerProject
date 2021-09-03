@@ -878,6 +878,7 @@ typedef struct
 
     int           iTankUvOnTime;
     int           iAutoLogoutTime;
+    int           iMaxDispTime;
     int           iPowerOnFlushTime;
     
 }DISP_MISC_SETTING_STRU;

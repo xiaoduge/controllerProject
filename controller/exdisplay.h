@@ -112,6 +112,8 @@ typedef struct
 
     EX_AUTO_CIR_TICK Ex_Auto_Cir_Tick;
 
+    unsigned int Ex_Disp_Tick;
+
 }EX_CCB;
 
 typedef struct

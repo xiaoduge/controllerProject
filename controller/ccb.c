@@ -2546,12 +2546,12 @@ int SetStepperMotorSpeed(int iSpeed)
 
     if(1 == direction)
     {
-        sStart += 50;
+        sStart += 100;
     }
 
     if(iSpeed < PUMP_SPEED_10)
     {
-        sPosition = sStart + iSpeed * 15;
+        sPosition = sStart + iSpeed * 10;
     }
 
     //QTWSTEPPER,步进电磁阀的CAN通讯地址
@@ -3248,6 +3248,8 @@ void work_start_qtw(void *para)
     pCcb->bit1B2Empty = FALSE;
     pCcb->bit1AlarmUP = FALSE;
 
+    ex_gCcb.Ex_Disp_Tick = 0;
+
     CcbInitHandlerQtwMeas(iIndex);
 
     /* Processing */
@@ -3825,6 +3827,11 @@ void work_stop_qtw(void *para)
 
     pCcb->ulAdapterAgingCount = gulSecond;
     g_ulQtwLastTimeFm = 0;
+
+#ifdef STEPPERMOTOR
+    CcbNotSpeed(pCcb->aHandler[iIndex].iDevType,PUMP_SPEED_10);
+    DispSndHoSpeed(pCcb->aHandler[iIndex].iDevType, PUMP_SPEED_10);
+#endif
 }
 
 DISPHANDLE CcbInnerWorkStopQtw(int iIndex)
@@ -5325,11 +5332,16 @@ void checkB3ToProcessB3NeedFill()
 {
     float fValue = CcbConvert2Pm3SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM3_NO].Value.ulV);
 
-	if((getKeyState() & (1 << APP_EXE_DIN_LEAK_KEY)) ||  getLeakState())
-	{
-		return;
-	}
-	
+    if ( gCcb.ExeBrd.ucLeakState || (DISP_WORK_STATE_KP == gCcb.curWorkState.iMainWorkState))
+    {
+        return;
+    }
+
+    if((getKeyState() & (1 << APP_EXE_DIN_LEAK_KEY)) ||  getLeakState())
+    {
+        return;
+    }
+
     if(fValue < CcbGetSp8())
     {
         gCcb.bit1NeedFillTank = 1;
@@ -7040,6 +7052,11 @@ void work_start_Leak(void *para)
     CcbNotAlarmFire(0XFF, DISP_ALARM_B_LEAK, TRUE);
 
     CanCcbTransState(DISP_WORK_STATE_KP, DISP_WORK_SUB_IDLE);
+
+    if (!SearchWork(work_stop_fill_water))
+    {
+        CcbInnerWorkStopFillWater();
+    }
     work_start_Leak_succ();
 }
 
@@ -7197,30 +7214,37 @@ void work_start_key(void *para)
     {
     case APP_EXE_DIN_RF_KEY:
         {
-            /* E10 ON */
-            if(is_SWPUMP_FRONT(&gCcb))
+            if(!((getKeyState() & (1 << APP_EXE_DIN_LEAK_KEY)) ||  getLeakState()))
             {
-                iTmp = (1 << APP_EXE_E10_NO)|(1 << APP_EXE_C3_NO);
-            }
-            else
-            {
-                iTmp = (1 << APP_EXE_E10_NO);
-            }
+                if(is_SWPUMP_FRONT(&gCcb))
+                {
+                    if(haveB3(pCcb))
+                    {
+                        iTmp = (1 << APP_EXE_C3_NO);
+                    }
+                    else
+                    {
+                        iTmp = (1 << APP_EXE_E10_NO)|(1 << APP_EXE_C3_NO);
+                    }
+                }
+                else
+                {
+                    iTmp = (1 << APP_EXE_E10_NO);
+                }
 
-            iRet = CcbUpdateSwitch(pWorkItem->id,0,iTmp,iTmp);
-            if (iRet )
-            {
-                VOS_LOG(VOS_LOG_WARNING,"CcbUpdateSwitch Fail %d",iRet);
-                work_start_key_fail((int)pWorkItem->extra);
+                iRet = CcbUpdateSwitch(pWorkItem->id,0,iTmp,iTmp);
+                if (iRet )
+                {
+                    VOS_LOG(VOS_LOG_WARNING,"CcbUpdateSwitch Fail %d",iRet);
+                    work_start_key_fail((int)pWorkItem->extra);
 
-                return ;
+                    return ;
+                }
             }
-
-            //CanCcbTransState(DISP_WORK_STATE_KP,DISP_WORK_SUB_IDLE);
         }
         break;
     case APP_EXE_DIN_LEAK_KEY:
-        {
+        { 
             /* stop all */
             iTmp = 0;
             iRet = CcbSetSwitch(pWorkItem->id,0,iTmp); // don care modbus exe result
@@ -7238,6 +7262,11 @@ void work_start_key(void *para)
             CcbNotAlarmFire(0XFF, DISP_ALARM_B_TANKOVERFLOW, TRUE);
 
             CanCcbTransState(DISP_WORK_STATE_KP,DISP_WORK_SUB_IDLE);
+
+            if (!SearchWork(work_stop_fill_water))
+            {
+                CcbInnerWorkStopFillWater();
+            }
         }
         break;
     }
@@ -7271,7 +7300,15 @@ void work_stop_key(void *para)
             /* E10 OFF */
             if(is_SWPUMP_FRONT(&gCcb))
             {
-                iTmp = (1 << APP_EXE_E10_NO)|(1 << APP_EXE_C3_NO);
+                if(haveB3(pCcb))
+                {
+                    iTmp = (1 << APP_EXE_C3_NO);
+                }
+                else
+                {
+                    iTmp = (1 << APP_EXE_E10_NO)|(1 << APP_EXE_C3_NO);
+                }
+                
             }
             else
             {
@@ -16039,7 +16076,6 @@ void MainSecondTask4Pw()
 	checkForTubeCir();
 }
 
-//ex
 void Ex_DispDecPressure()
 {
     if((gCcb.curWorkState.iMainWorkState4Pw == DISP_WORK_STATE_IDLE)
@@ -16052,8 +16088,22 @@ void Ex_DispDecPressure()
         }
     }
 }
-//end
 
+/**
+ * 检查是否超过设定的最大取水时间则自动停止取水
+ */
+void Ex_MaxDispTime()
+{
+    //最大取水时间设置为零，则最大取水时间为无限大
+    if(CcbGetTwFlag() && ( 0 != gCcb.MiscParam.iMaxDispTime))
+    {
+        ex_gCcb.Ex_Disp_Tick++; //每次开始取水前置零
+        if(ex_gCcb.Ex_Disp_Tick > (gCcb.MiscParam.iMaxDispTime * 60))
+        {
+            CcbStopQtw();
+        }
+    }
+}
 
 void MainSecondTask()
 {
@@ -16070,6 +16120,7 @@ void MainSecondTask()
     MainSecondTask4Pw();
 
     Ex_DispDecPressure(); //ex
+    Ex_MaxDispTime();
 
 }
 
@@ -16310,58 +16361,58 @@ void CcbSyncSetMachineParams(DISP_MACHINE_PARAM_STRU *pParam)
 //dcj
 void SetSpeed2ScaleMap()
 {
-	int iLoop;
-	float fv; 
-	for (iLoop = 0; iLoop < PUMP_SPEED_NUM; iLoop++)
-	{
+    int iLoop;
+    float fv; 
+    for (iLoop = 0; iLoop < PUMP_SPEED_NUM; iLoop++)
+    {
 #ifdef STEPPERMOTOR
-		if(haveStepper(&gCcb))
-		{
-			fv = GetSpeedVoltage(iLoop);
-		}
-		else
-		{
-			
-			if(10 <= iLoop)
-			{
-				fv = 24.0;
-			}
-			else if(iLoop == 9)
-			{
-				fv = 18.0;
-			}
-			else if(iLoop == 8)
-			{
-				fv = 15.0;
-			}
-			else
-			{
-				fv = iLoop + 6.0;
-			}
-		}
+        if(haveStepper(&gCcb))
+        {
+            fv = GetSpeedVoltage(iLoop);
+        }
+        else
+        {
+            
+            if(10 <= iLoop)
+            {
+                fv = 24.0;
+            }
+            else if(iLoop == 9)
+            {
+                fv = 18.0;
+            }
+            else if(iLoop == 8)
+            {
+                fv = 15.0;
+            }
+            else
+            {
+                fv = iLoop + 6.0;
+            }
+        }
 #else
-		//2019.1.7
-		if(10 <= iLoop)
-		{
-			fv = 24.0;
-		}
-		else if(iLoop == 9)
-		{
-			fv = 18.0;
-		}
-		else if(iLoop == 8)
-		{
-			fv = 15.0;
-		}
-		else
-		{
-			fv = iLoop + 6.0;
-		}
+        //2019.1.7
+        if(10 <= iLoop)
+        {
+            fv = 24.0;
+        }
+        else if(iLoop == 9)
+        {
+            fv = 18.0;
+        }
+        else if(iLoop == 8)
+        {
+            fv = 15.0;
+        }
+        else
+        {
+            fv = iLoop + 6.0;
+        }
 #endif
-	   gCcb.aiSpeed2ScaleMap[iLoop] = DispConvertVoltage2RPumpSpeed(fv);
-	   //end
-	   //gCcb.aiSpeed2ScaleMap[iLoop] = DispConvertVoltage2RPumpSpeed(((24.0 - 5.0)*iLoop)/PUMP_SPEED_NUM + 5);
-	}
+        gCcb.aiSpeed2ScaleMap[iLoop] = DispConvertVoltage2RPumpSpeed(fv);
+        //end
+        //gCcb.aiSpeed2ScaleMap[iLoop] = DispConvertVoltage2RPumpSpeed(((24.0 - 5.0)*iLoop)/PUMP_SPEED_NUM + 5);
+    }
 
 }
 
@@ -16374,7 +16425,7 @@ void CcbSyncSetModuleParams(DISP_SUB_MODULE_SETTING_STRU *pParam)
         gCcb.bit1NeedFillTank = 0;
         gCcb.bit1FillingTank  = 0;
     }
-	SetSpeed2ScaleMap();
+    SetSpeed2ScaleMap();
 }
 
 void CcbSyncSetAlarmParams(DISP_ALARM_SETTING_STRU *pParam)

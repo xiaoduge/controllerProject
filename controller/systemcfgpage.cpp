@@ -181,6 +181,9 @@ void SystemCfgPage::buildTranslation()
     m_lbLoginLingerName->setText(tr("Auto. Logout"));
     m_lbLoginLingerUnit->setText(tr("min"));
 
+    m_lbMaxDispTime->setText(tr("Max Dispensing Time"));
+    m_lbMaxDispTimeUnit->setText(tr("min"));
+
     m_lbDeviceTypeName->setText(tr("System Type"));
 
     m_chkDeviceTypeTOC->setText(tr("TOC"));
@@ -457,6 +460,29 @@ void SystemCfgPage::createControl()
     rectTmp.setWidth(X_ITEM_WIDTH);
     m_lbLoginLingerUnit = new QLabel(tmpWidget);
     m_lbLoginLingerUnit->setGeometry(rectTmp);
+    mainLayout->addWidget(tmpWidget);
+
+    //最大取水时间
+    tmpWidget = new QWidget;
+    tmpWidget->setAutoFillBackground(true);
+    tmpWidget->setPalette(pal);
+    tmpWidget->setFixedSize(tmpWidgetWidth ,BACKWIDGET_HEIGHT);
+
+    rectTmp = sQrectAry[0];
+    rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 30);
+    m_lbMaxDispTime = new QLabel(tmpWidget);
+    m_lbMaxDispTime->setGeometry(rectTmp);
+
+    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN + 20);
+    rectTmp.setWidth(X_ITEM_WIDTH);
+    m_leMaxDispTime = new DLineEdit(tmpWidget);
+    m_leMaxDispTime->setGeometry(rectTmp);
+    m_leMaxDispTime->setValidator(new QIntValidator(0, 100, this));
+
+    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
+    rectTmp.setWidth(X_ITEM_WIDTH);
+    m_lbMaxDispTimeUnit = new QLabel(tmpWidget);
+    m_lbMaxDispTimeUnit->setGeometry(rectTmp);
     mainLayout->addWidget(tmpWidget);
 
     //纯水箱配置
@@ -990,6 +1016,7 @@ void SystemCfgPage::connectData()
 
     m_lePWTankUVValue->setText(QString::number(gGlobalParam.MiscParam.iTankUvOnTime));
     m_leLoginLingerValue->setText(QString::number(gGlobalParam.MiscParam.iAutoLogoutTime));
+    m_leMaxDispTime->setText(QString::number(gGlobalParam.MiscParam.iMaxDispTime));
     m_lePOweronFlushValue->setText(QString::number(gGlobalParam.MiscParam.iPowerOnFlushTime));
 
     m_pPureRangeEdit->setText(QString("%1").arg(gSensorRange.fPureSRange));
@@ -1297,6 +1324,7 @@ void SystemCfgPage::save()
 
     miscParam.iTankUvOnTime     = m_lePWTankUVValue->text().toInt();
     miscParam.iAutoLogoutTime   = m_leLoginLingerValue->text().toInt();
+    miscParam.iMaxDispTime      = m_leMaxDispTime->text().toInt();
     miscParam.iPowerOnFlushTime = m_lePOweronFlushValue->text().toInt();
 
     if(DISP_WATER_BARREL_TYPE_UDF == pmParam.aiBuckType[DISP_PM_PM2])

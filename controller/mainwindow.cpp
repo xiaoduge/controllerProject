@@ -1246,6 +1246,10 @@ void MainRetriveMiscParam(int iMachineType,DISP_MISC_SETTING_STRU  &Param)
         strV = "/MISC/AUTOLOGOUTTIME";
         iValue = config->value(strV,1).toInt();
         Param.iAutoLogoutTime = iValue;  
+
+        strV = "/MISC/MAXDISPTIME";
+        iValue = config->value(strV, 15).toInt();
+        Param.iMaxDispTime = iValue;
         
         strV = "/MISC/POWERONFLUSHTIME";
         iValue = config->value(strV,5).toInt(); //5
@@ -2213,158 +2217,159 @@ void MainSaveMiscParam(int iMachineType,DISP_MISC_SETTING_STRU  &Param)
     QSettings *config = new QSettings(strCfgName, QSettings::IniFormat);
 
     {
-        QString strV = "/MISC/FLAG";
+        QString strV;
         QString strTmp;
 
         if (Param.ulAllocMask != tmpParam.ulAllocMask)
         {
+            strV = "/MISC/FLAG";
             strTmp = QString::number(Param.ulAllocMask);
             config->setValue(strV,strTmp);
         }
 
-        strV = "/MISC/ICP";
-        
         if (Param.iTubeCirCycle != tmpParam.iTubeCirCycle)
         {
+            strV = "/MISC/ICP";
             strTmp = QString::number(Param.iTubeCirCycle);
             config->setValue(strV,strTmp);
         }
         
-        strV = "/MISC/DT";
-        
         if (Param.iTubeCirDuration != tmpParam.iTubeCirDuration)
         {
+            strV = "/MISC/DT";
             strTmp = QString::number(Param.iTubeCirDuration);
             config->setValue(strV,strTmp);
         }
 
-        strV = "/MISC/ST";
-        
         if (Param.aiTubeCirTimeInfo[0] != tmpParam.aiTubeCirTimeInfo[0])
         {
+            strV = "/MISC/ST";
             strTmp = QString::number(Param.aiTubeCirTimeInfo[0]);
             config->setValue(strV,strTmp);
         }
         
-        strV = "/MISC/ET";
-        
         if (Param.aiTubeCirTimeInfo[1] != tmpParam.aiTubeCirTimeInfo[1])
         {
+            strV = "/MISC/ET";
             strTmp = QString::number(Param.aiTubeCirTimeInfo[1]);
             config->setValue(strV,strTmp);
         }
-    
-        strV = "/MISC/RP0";
         
         if (Param.RPumpSetting[0] != tmpParam.RPumpSetting[0])
         {
+            strV = "/MISC/RP0";
             strTmp = QString::number(Param.RPumpSetting[0]);
             config->setValue(strV,strTmp);
         }
-
-        strV = "/MISC/RP1";
         
         if (Param.RPumpSetting[1] != tmpParam.RPumpSetting[1])
         {
+            strV = "/MISC/RP1";
             strTmp = QString::number(Param.RPumpSetting[1]);
             config->setValue(strV,strTmp);
         }
         
-        strV = "/MISC/LAN";
-        
         if (Param.iLan != tmpParam.iLan)
         {
+            strV = "/MISC/LAN";
             strTmp = QString::number(Param.iLan);
             config->setValue(strV,strTmp);
         }
-
-        strV = "/MISC/BRIGHTNESS";
         
         if (Param.iBrightness != tmpParam.iBrightness)
         {
+            strV = "/MISC/BRIGHTNESS";
             strTmp = QString::number(Param.iBrightness);
             config->setValue(strV,strTmp);
         }
         
-        strV = "/MISC/ENERGYSAVE";
-        
         if (Param.iEnerySave != tmpParam.iEnerySave)
         {
+            strV = "/MISC/ENERGYSAVE";
             strTmp = QString::number(Param.iEnerySave);
             config->setValue(strV,strTmp);
         }
         
-        strV = "/MISC/CONDUCTIVITYUNIT";
         if (Param.iUint4Conductivity != tmpParam.iUint4Conductivity)
         {
+            strV = "/MISC/CONDUCTIVITYUNIT";
             strTmp = QString::number(Param.iUint4Conductivity);
             config->setValue(strV,strTmp);
         }       
-
-        strV = "/MISC/TEMPUNIT";
+        
         if (Param.iUint4Temperature != tmpParam.iUint4Temperature)
         {
+            strV = "/MISC/TEMPUNIT";
             strTmp = QString::number(Param.iUint4Temperature);
             config->setValue(strV,strTmp);
         }       
         
-        strV = "/MISC/PRESSUREUNIT";
         if (Param.iUint4Pressure != tmpParam.iUint4Pressure)
         {
+            strV = "/MISC/PRESSUREUNIT";
             strTmp = QString::number(Param.iUint4Pressure);
             config->setValue(strV,strTmp);
         }       
-
-        strV = "/MISC/LIQUIDUNIT";
+        
         if (Param.iUint4LiquidLevel != tmpParam.iUint4LiquidLevel)
         {
+            strV = "/MISC/LIQUIDUNIT";
             strTmp = QString::number(Param.iUint4LiquidLevel);
             config->setValue(strV,strTmp);
         }       
-
-        strV = "/MISC/FLOWVELOCITYUNIT";
+        
         if (Param.iUint4FlowVelocity != tmpParam.iUint4FlowVelocity)
         {
+            strV = "/MISC/FLOWVELOCITYUNIT";
             strTmp = QString::number(Param.iUint4FlowVelocity);
             config->setValue(strV,strTmp);
         }  
         
-        strV = "/MISC/SOUNDMASK";
         if (Param.iSoundMask != tmpParam.iSoundMask)
         {
+            strV = "/MISC/SOUNDMASK";
             strTmp = QString::number(Param.iSoundMask);
             config->setValue(strV,strTmp);
         }  
-    
-        strV = "/MISC/NETWORKMASK";
+        
         if (Param.iNetworkMask != tmpParam.iNetworkMask)
         {
+            strV = "/MISC/NETWORKMASK";
             strTmp = QString::number(Param.iNetworkMask);
             config->setValue(strV,strTmp);
         }  
-
-        strV = "/MISC/MISCFLAG";
+        
         if (Param.ulMisFlags != tmpParam.ulMisFlags)
         {
+            strV = "/MISC/MISCFLAG";
             strTmp = QString::number(Param.ulMisFlags);
             config->setValue(strV,strTmp);
         }  
         
-        strV = "/MISC/TANKUVONTIME";
         if (Param.iTankUvOnTime != tmpParam.iTankUvOnTime)
         {
+            strV = "/MISC/TANKUVONTIME";
             strTmp = QString::number(Param.iTankUvOnTime);
             config->setValue(strV,strTmp);
         }         
-        strV = "/MISC/AUTOLOGOUTTIME";
+        
         if (Param.iAutoLogoutTime != tmpParam.iAutoLogoutTime)
         {
+            strV = "/MISC/AUTOLOGOUTTIME";
             strTmp = QString::number(Param.iAutoLogoutTime);
             config->setValue(strV,strTmp);
         }         
-        strV = "/MISC/POWERONFLUSHTIME";
+        
+        if (Param.iMaxDispTime != tmpParam.iMaxDispTime)
+        {
+            strV = "/MISC/MAXDISPTIME";
+            strTmp = QString::number(Param.iMaxDispTime);
+            config->setValue(strV, strTmp);
+        }
+        
         if (Param.iPowerOnFlushTime != tmpParam.iPowerOnFlushTime)
         {
+            strV = "/MISC/POWERONFLUSHTIME";
             strTmp = QString::number(Param.iPowerOnFlushTime);
             config->setValue(strV,strTmp);
         }         
@@ -3790,6 +3795,10 @@ void MainWindow::initConsumablesCfg()
         if(!(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_Pre_Filter)))
         {
             m_cMas[iLoop].aulMask[0] &= ~(1 << DISP_PRE_PACK);
+        }
+        if (!(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_TankUV)))
+        {
+            m_cMas[iLoop].aulMask[0] &= ~(1 << DISP_N3_UV);
         }
 
         if (!(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_TubeUV)))
@@ -8165,7 +8174,7 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
         {
             NOT_SPEED_ITEM_STRU *pItem = (NOT_SPEED_ITEM_STRU *)pNotify->aucData;
 
-            if (typeid(*m_pCurPage) == typeid(MainPage))
+            //if (typeid(*m_pCurPage) == typeid(MainPage))
             {
                 pMainPage->updSpeed(pItem->iType,pItem->iSpeed);
             }

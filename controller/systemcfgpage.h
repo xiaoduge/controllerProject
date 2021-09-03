@@ -75,6 +75,10 @@ private:
     DLineEdit *m_leLoginLingerValue;
     QLabel    *m_lbLoginLingerUnit;
 
+    QLabel    *m_lbMaxDispTime;
+    DLineEdit *m_leMaxDispTime;
+    QLabel    *m_lbMaxDispTimeUnit;
+
     QLabel    *m_lbDeviceTypeName;
     QLabel    *m_lbDeviceType;
 
