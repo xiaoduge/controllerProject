@@ -116,14 +116,19 @@ if __name__ == "__main__":
             os.chdir(buildPath)
             print("当前工作目录: %s " % os.getcwd())
 
-            os.system("/opt/qt4.8.5/bin/qmake %s/controller/controller.pro -r -spec qws/linux-arm-g++" % currentPath)
-            os.system("make")
+            ret = os.system("/opt/qt4.8.5/bin/qmake %s/controller/controller.pro -r -spec qws/linux-arm-g++" % currentPath)
+            print("qmake return: %d" % ret)
+            ret = os.system("make")
+            print("make return: %d" % ret)
 
-            print("项目构建完成...")
-            print(" ************************************************************************** ")
-            print("拷贝程序文件...")
-            copyBuildFile()
-            print("拷贝程序文件完成")
+            if 0 == ret:
+                print("项目构建完成...")
+                print(" ************************************************************************** ")
+                print("拷贝程序文件...")
+                copyBuildFile()
+                print("拷贝程序文件完成")
+            else:
+                print("构建失败！")
         else:
             print("项目构建失败...")
 
