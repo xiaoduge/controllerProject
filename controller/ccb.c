@@ -76,6 +76,7 @@ unsigned char gaucIapBuffer[1024];
 #define haveZigbee(pCcb)((pCcb)->MiscParam.iNetworkMask & (1 << DISPLAY_NETWORK_ZIGBEE))
 
 #define haveStepper(pCcb)((pCcb)->SubModSetting.ulAddFlags & (1 << DISP_SM_STEPPERMOTOR))
+#define TempCompensation(pCcb)((pCcb)->SubModSetting.ulAddFlags & (1 << DISP_SM_COMPENSATION))
 
 static const float s_fTankHOffset = 0.08; //水箱高度偏差
 
@@ -7529,9 +7530,6 @@ int CcbC2Regulator(int id,float fv,int on)
     return 0;
 }
 
-#define SMOOTHI2
-
-#ifdef SMOOTHI2
 /**
  * @Author: dcj
  * @Date: 2021-01-14 08:58:17
@@ -7559,7 +7557,100 @@ void smoothI2Data(float newValue)
 
     discard = 0;
 }
-#endif
+
+//根据温度求电阻率温补系数
+void get_Kcoef_Kp(double t, double *Kcoef, double *Kp)
+{
+    if(t<20)
+    {
+        *Kcoef=0.00079*t*t-0.0539*t+1.873;
+        *Kp=0.365e-4*t*t+0.775e-3*t+0.0119;
+    }
+    else if(t<40)
+    {
+        *Kcoef=0.0000125*t*t-0.02705*t+1.602;
+        *Kp=0.59e-4*t*t-0.9e-4*t+0.0202;
+    }
+    else
+    {
+        *Kcoef=-0.000065*t*t-0.00215*t+0.91;
+        *Kp=0.849e-4*t*t-0.205e-2*t+0.057;
+    }
+}
+
+/*
+ *  
+ * @Description: 根据当前电阻率和温度，反推不带温补（25度）的电阻率
+ * @param {double} fG25x： 当前电阻率
+ * @param {int} tx： 当前温度
+ */
+double ResNoTempCompensation(double fG25x, int tx)
+{
+    double Kcoef, Kp, Rx;
+
+    get_Kcoef_Kp((double)tx/10, &Kcoef, &Kp);
+    Rx = (1/(double)fG25x - 0.05482)/Kcoef + Kp;
+
+    get_Kcoef_Kp(250/10, &Kcoef, &Kp);
+    double newValue = 1/(Kcoef*(Rx-Kp) + 0.05482);
+
+    return newValue;
+}
+
+/*
+ *  
+ * @Description: 根据当前电导率和温度，反推不带温补（25度）的电导率
+ * @param {double} fG25x： 当前电导率
+ * @param {int} tx： 当前温度
+ */
+double CondNoTempCompensation(double fG25x, int tx)
+{
+    return fG25x * (1+0.02*(tx-25));
+}
+
+/*
+ *  
+ * @Description: 电阻率/电导率 乘上校准系数
+ * @param {int} iChl： 通道
+ */
+void EnableCalibrate(int iChl)
+{
+    switch(iChl)
+    {
+    case APP_EXE_I1_NO:
+        gCcb.ExeBrd.aEcoObjs[iChl].Value.eV.fWaterQ *= gCaliParam.pc[DISP_PC_COFF_SOURCE_WATER_CONDUCT].fk;
+        gCcb.ExeBrd.aEcoObjs[iChl].Value.eV.usTemp *= gCaliParam.pc[DISP_PC_COFF_SOURCE_WATER_TEMP].fk;
+        break;
+    case APP_EXE_I2_NO:
+        gCcb.ExeBrd.aEcoObjs[iChl].Value.eV.fWaterQ *= gCaliParam.pc[DISP_PC_COFF_RO_WATER_CONDUCT].fk;
+        gCcb.ExeBrd.aEcoObjs[iChl].Value.eV.usTemp *= gCaliParam.pc[DISP_PC_COFF_RO_WATER_TEMP].fk;
+        break;
+    case APP_EXE_I3_NO:
+        gCcb.ExeBrd.aEcoObjs[iChl].Value.eV.fWaterQ *= gCaliParam.pc[DISP_PC_COFF_EDI_WATER_CONDUCT].fk;
+        gCcb.ExeBrd.aEcoObjs[iChl].Value.eV.usTemp *= gCaliParam.pc[DISP_PC_COFF_EDI_WATER_TEMP].fk;
+        if(TempCompensation(&gCcb) && (gCcb.ExeBrd.aEcoObjs[iChl].Value.eV.fWaterQ > 16))
+            gCcb.ExeBrd.aEcoObjs[iChl].Value.eV.fWaterQ = 16;
+        break;
+    case APP_EXE_I4_NO:
+        gCcb.ExeBrd.aEcoObjs[iChl].Value.eV.fWaterQ *= gCaliParam.pc[DISP_PC_COFF_TOC_WATER_CONDUCT].fk;
+        gCcb.ExeBrd.aEcoObjs[iChl].Value.eV.usTemp *= gCaliParam.pc[DISP_PC_COFF_TOC_WATER_TEMP].fk;
+        if(TempCompensation(&gCcb) && (gCcb.ExeBrd.aEcoObjs[iChl].Value.eV.fWaterQ > 18.2))
+            gCcb.ExeBrd.aEcoObjs[iChl].Value.eV.fWaterQ = 18.2;
+        break;
+    case APP_EXE_I5_NO:
+        gCcb.ExeBrd.aEcoObjs[iChl].Value.eV.fWaterQ *= gCaliParam.pc[DISP_PC_COFF_UP_WATER_CONDUCT].fk;
+        gCcb.ExeBrd.aEcoObjs[iChl].Value.eV.usTemp *= gCaliParam.pc[DISP_PC_COFF_UP_WATER_TEMP].fk;
+        if(TempCompensation(&gCcb) && (gCcb.ExeBrd.aEcoObjs[iChl].Value.eV.fWaterQ > 18.2))
+            gCcb.ExeBrd.aEcoObjs[iChl].Value.eV.fWaterQ = 18.2;
+        break;
+    }
+
+    if(gCcb.ExeBrd.aEcoObjs[iChl].Value.eV.fWaterQ < 0)
+        gCcb.ExeBrd.aEcoObjs[iChl].Value.eV.fWaterQ = 0;
+
+    if(gCcb.ExeBrd.aEcoObjs[iChl].Value.eV.usTemp < 0)
+        gCcb.ExeBrd.aEcoObjs[iChl].Value.eV.usTemp = 0;
+}
 
 int CanCcbAfDataClientRpt4ExeBoard(MAIN_CANITF_MSG_STRU *pCanItfMsg)
 {
@@ -7578,7 +7669,24 @@ int CanCcbAfDataClientRpt4ExeBoard(MAIN_CANITF_MSG_STRU *pCanItfMsg)
             {
                 if (pEco->ucId < APP_EXE_ECO_NUM)
                 {
-#ifdef SMOOTHI2
+                    if(!TempCompensation(&gCcb))
+                    {
+                        switch(pEco->ucId)
+                        {
+                        case APP_EXE_I1_NO:
+                        case APP_EXE_I2_NO:
+                            pEco->ev.fWaterQ = CondNoTempCompensation(pEco->ev.fWaterQ, pEco->ev.usTemp);
+                            break;
+                        case APP_EXE_I3_NO:
+                        case APP_EXE_I4_NO:
+                        case APP_EXE_I5_NO:
+                            pEco->ev.fWaterQ = ResNoTempCompensation(pEco->ev.fWaterQ, pEco->ev.usTemp);
+                            break;
+                        default:
+                            break;
+                        }
+                    }
+
                     if(APP_EXE_I2_NO == pEco->ucId && gCcb.bit1ProduceWater)
                     {
                         smoothI2Data(pEco->ev.fWaterQ);
@@ -7590,92 +7698,37 @@ int CanCcbAfDataClientRpt4ExeBoard(MAIN_CANITF_MSG_STRU *pCanItfMsg)
                     gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.usTemp = pEco->ev.usTemp;
                     gCcb.ExeBrd.ulEcoValidFlags |= 1 << pEco->ucId;
 
-#else                    
-                    gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ = pEco->ev.fWaterQ;
-                    gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.usTemp = pEco->ev.usTemp;
-                    gCcb.ExeBrd.ulEcoValidFlags |= 1 << pEco->ucId;
-#endif
-
-                    //ex_dcj
-                    switch(pEco->ucId)
-                    {
-                    case 0:
-                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ *= gCaliParam.pc[DISP_PC_COFF_SOURCE_WATER_CONDUCT].fk;
-                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.usTemp *= gCaliParam.pc[DISP_PC_COFF_SOURCE_WATER_TEMP].fk;
-                        break;
-                    case 1:
-                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ *= gCaliParam.pc[DISP_PC_COFF_RO_WATER_CONDUCT].fk;
-                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.usTemp *= gCaliParam.pc[DISP_PC_COFF_RO_WATER_TEMP].fk;
-                        break;
-                    case 2:
-                    {
-                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ *= gCaliParam.pc[DISP_PC_COFF_EDI_WATER_CONDUCT].fk;
-                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.usTemp *= gCaliParam.pc[DISP_PC_COFF_EDI_WATER_TEMP].fk;
-                        if(gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ > 16)
-                            gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ = 16;
-                        break;
-                    }
-                    case 3:
-                    {
-                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ *= gCaliParam.pc[DISP_PC_COFF_TOC_WATER_CONDUCT].fk;
-                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.usTemp *= gCaliParam.pc[DISP_PC_COFF_TOC_WATER_TEMP].fk;
-                        if(gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ > 18.2)
-                            gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ = 18.2;
-                        break;
-                    }
-                    case 4:
-                    {
-                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ *= gCaliParam.pc[DISP_PC_COFF_UP_WATER_CONDUCT].fk;
-                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.usTemp *= gCaliParam.pc[DISP_PC_COFF_UP_WATER_TEMP].fk;
-                        if(gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ > 18.2)
-                            gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ = 18.2;
-                        break;
-                    }
-                    }
-
-                    if(gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ < 0)
-                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ = 0;
-
-                    if(gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.usTemp < 0)
-                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.usTemp = 0;
-                    //end
+                    EnableCalibrate(pEco->ucId);
+                    
                     CanCcbEcoMeasurePostProcess(pEco->ucId);
 
-                    //2019.3.26 add
                     switch(gCcb.ulMachineType)
                     {
                     case MACHINE_L_Genie:
                     case MACHINE_L_EDI_LOOP:
                     case MACHINE_Genie:
                     case MACHINE_EDI:
-                    {
                         if(!haveHPCir(&gCcb) && (APP_EXE_I3_NO == pEco->ucId))
                         {
                             iEco4ZigbeeMask |= 0x1 << APP_EXE_I4_NO;
                         }
                         break;
-                    }
                     case MACHINE_L_UP:
                     case MACHINE_L_RO_LOOP:
                     case MACHINE_UP:
                     case MACHINE_RO:
-                    {
                         if(!haveHPCir(&gCcb) && (APP_EXE_I2_NO == pEco->ucId))
                         {
                             iEco4ZigbeeMask |= 0x1 << APP_EXE_I4_NO;
                         }
                         break;
-                    }
                     case MACHINE_ADAPT:
-                    {
                         if(APP_EXE_I2_NO == pEco->ucId)
                         {
                             iEco4ZigbeeMask |= 0x1 << APP_EXE_I4_NO;
                         }
                         break;
                     }
-                    }
-                    //end
 
                     if (APP_EXE_I4_NO == pEco->ucId)
                     {
@@ -7821,19 +7874,19 @@ int CanCcbAfDataClientRpt4ExeBoard(MAIN_CANITF_MSG_STRU *pCanItfMsg)
 
 #ifdef CFG_DO_PH
     case APP_PACKET_RPT_DO:
-    	{
-			APP_PH_DO_VALUE_STRU *pDO = (APP_PH_DO_VALUE_STRU *)pmg->aucData;
-			gCcb.ExeBrd.doInfo = *pDO;
-			CcbDONotify();
-    	}
-		break;
+        {
+            APP_PH_DO_VALUE_STRU *pDO = (APP_PH_DO_VALUE_STRU *)pmg->aucData;
+            gCcb.ExeBrd.doInfo = *pDO;
+            CcbDONotify();
+        }
+        break;
     case APP_PACKET_RPT_PH:
-    	{
-			APP_PH_DO_VALUE_STRU *pPH = (APP_PH_DO_VALUE_STRU *)pmg->aucData;
-			gCcb.ExeBrd.doInfo = *pPH;
-			CcbPHNotify();
-    	}
-		break;
+        {
+            APP_PH_DO_VALUE_STRU *pPH = (APP_PH_DO_VALUE_STRU *)pmg->aucData;
+            gCcb.ExeBrd.doInfo = *pPH;
+            CcbPHNotify();
+        }
+        break;
 #endif
     }
     return 0;

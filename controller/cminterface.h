@@ -223,7 +223,7 @@
 #ifdef STEPPERMOTOR
 #define QTWSTEPPER 0    //取水步进电磁阀地址
 #endif
-#define STEPPER_REFERENCD_POINT (280)  //Stepper motor valve Reference point
+#define STEPPER_REFERENCD_POINT (300)  //Stepper motor valve Reference point
 
 typedef enum
 {

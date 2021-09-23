@@ -3010,7 +3010,7 @@
     <message>
         <location filename="dmanagersetpage.cpp" line="78"/>
         <location filename="dmanagersetpage.cpp" line="85"/>
-        <location filename="dmanagersetpage.cpp" line="865"/>
+        <location filename="dmanagersetpage.cpp" line="893"/>
         <source>Time &amp; Date</source>
         <oldsource>Time</oldsource>
         <translation>时间</translation>
@@ -3030,7 +3030,7 @@
     <message>
         <location filename="dmanagersetpage.cpp" line="79"/>
         <location filename="dmanagersetpage.cpp" line="87"/>
-        <location filename="dmanagersetpage.cpp" line="1038"/>
+        <location filename="dmanagersetpage.cpp" line="1066"/>
         <source>LCD</source>
         <translation>显示屏调节</translation>
     </message>
@@ -3049,21 +3049,21 @@
     </message>
     <message>
         <location filename="dmanagersetpage.cpp" line="88"/>
-        <location filename="dmanagersetpage.cpp" line="1074"/>
+        <location filename="dmanagersetpage.cpp" line="1102"/>
         <source>Final Filter</source>
         <translation>终端过滤器</translation>
     </message>
     <message>
         <location filename="dmanagersetpage.cpp" line="81"/>
         <location filename="dmanagersetpage.cpp" line="90"/>
-        <location filename="dmanagersetpage.cpp" line="1236"/>
+        <location filename="dmanagersetpage.cpp" line="1265"/>
         <source>Additional Settings</source>
         <translation>更多设置</translation>
     </message>
     <message>
         <location filename="dmanagersetpage.cpp" line="80"/>
         <location filename="dmanagersetpage.cpp" line="89"/>
-        <location filename="dmanagersetpage.cpp" line="1120"/>
+        <location filename="dmanagersetpage.cpp" line="1148"/>
         <source>Network</source>
         <translation>网络</translation>
     </message>
@@ -3131,7 +3131,7 @@
     </message>
     <message>
         <location filename="dmanagersetpage.cpp" line="86"/>
-        <location filename="dmanagersetpage.cpp" line="947"/>
+        <location filename="dmanagersetpage.cpp" line="975"/>
         <source>Calibration</source>
         <translation>参数校正</translation>
     </message>
@@ -3251,9 +3251,14 @@
         <translation>水箱循环</translation>
     </message>
     <message>
-        <location filename="dmanagersetpage.cpp" line="495"/>
-        <location filename="dmanagersetpage.cpp" line="552"/>
-        <location filename="dmanagersetpage.cpp" line="639"/>
+        <location filename="dmanagersetpage.cpp" line="146"/>
+        <source>Temperature Compensation</source>
+        <translation>温度补偿</translation>
+    </message>
+    <message>
+        <location filename="dmanagersetpage.cpp" line="506"/>
+        <location filename="dmanagersetpage.cpp" line="563"/>
+        <location filename="dmanagersetpage.cpp" line="650"/>
         <source>Successfully saved</source>
         <translation>保存成功</translation>
     </message>

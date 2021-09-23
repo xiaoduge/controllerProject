@@ -56,6 +56,7 @@ public:
     {
         REPHILINK_SETTING,  //Rephilink
         HPCIR_SETTING,
+        COMPENSATION_SETTING, //No compensation
         ADDITIONAL_NUM
     };
 
@@ -104,6 +105,7 @@ protected slots:
     //Additional Settings
     void on_HPCircheckBox_changeState(int state);
     void on_RephiLinkcheckBox_clicked();
+    void on_CompensationcheckBox_changeState(int state);
 
 #ifdef STEPPERMOTOR
     void onStepperSlider_valueChanged(int value);

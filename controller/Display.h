@@ -484,6 +484,7 @@ typedef enum
 
 typedef enum
 {
+    DISP_SM_COMPENSATION,
 #ifdef STEPPERMOTOR
     DISP_SM_STEPPERMOTOR, //Stepper Motor
 #endif
@@ -498,19 +499,7 @@ typedef enum
 
 
 #define MODULES_ALL ((1 << DISP_SM_NUM) - 1)
-
-#if 0
-#define DEFAULT_MODULES_L_Genie      (MODULES_ALL & (~(1 << DISP_SM_AT_PACK)))
-#define DEFAULT_MODULES_L_UP         (MODULES_ALL & (~(1 << DISP_SM_AT_PACK)))
-#define DEFAULT_MODULES_EDI_LOOP     (MODULES_ALL & (~(1 << DISP_SM_AT_PACK)))
-#define DEFAULT_MODULES_RO_LOOP      (MODULES_ALL & (~(1 << DISP_SM_AT_PACK)))
-#define DEFAULT_MODULES_Genie        (MODULES_ALL & (~(1 << DISP_SM_AT_PACK)))
-#define DEFAULT_MODULES_UP           (MODULES_ALL & (~(1 << DISP_SM_AT_PACK)))
-#define DEFAULT_MODULES_EDI          (MODULES_ALL & (~(1 << DISP_SM_AT_PACK)))
-#define DEFAULT_MODULES_RO           (MODULES_ALL & (~(1 << DISP_SM_AT_PACK)))
-#define DEFAULT_MODULES_PURIST       (MODULES_ALL & (~(1 << DISP_SM_AT_PACK)))
-#define DEFAULT_MODULES_ADAPT        (MODULES_ALL & (~(1 << DISP_SM_AT_PACK)))
-#endif
+#define ADD_MODULES_ALL ((1 << DISP_SM_ADD_NUM) - 1)
 
 #define DEFAULT_MODULES_L_Genie      (MODULES_ALL & (~((1 << DISP_SM_AT_PACK) | (1 <<DISP_SM_Pre_Filter))))
 #define DEFAULT_MODULES_L_UP         (MODULES_ALL & (~((1 << DISP_SM_AT_PACK) | (1 <<DISP_SM_Pre_Filter))))
@@ -522,6 +511,17 @@ typedef enum
 #define DEFAULT_MODULES_RO           (MODULES_ALL & (~((1 << DISP_SM_AT_PACK) | (1 <<DISP_SM_Pre_Filter))))
 #define DEFAULT_MODULES_PURIST       (MODULES_ALL & (~((1 << DISP_SM_AT_PACK) | (1 <<DISP_SM_Pre_Filter))))
 #define DEFAULT_MODULES_ADAPT        (MODULES_ALL & (~((1 << DISP_SM_AT_PACK) | (1 <<DISP_SM_Pre_Filter))))
+
+#define DEFAULT_ADD_MODULES_L_Genie      (ADD_MODULES_ALL)
+#define DEFAULT_ADD_MODULES_L_UP         (ADD_MODULES_ALL)
+#define DEFAULT_ADD_MODULES_EDI_LOOP     (ADD_MODULES_ALL)
+#define DEFAULT_ADD_MODULES_RO_LOOP      (ADD_MODULES_ALL)
+#define DEFAULT_ADD_MODULES_Genie        (ADD_MODULES_ALL)
+#define DEFAULT_ADD_MODULES_UP           (ADD_MODULES_ALL)
+#define DEFAULT_ADD_MODULES_EDI          (ADD_MODULES_ALL)
+#define DEFAULT_ADD_MODULES_RO           (ADD_MODULES_ALL)
+#define DEFAULT_ADD_MODULES_PURIST       (ADD_MODULES_ALL)
+#define DEFAULT_ADD_MODULES_ADAPT        (ADD_MODULES_ALL)
 
 typedef struct
 {

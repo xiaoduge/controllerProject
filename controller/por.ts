@@ -2723,13 +2723,13 @@
     <message>
         <location filename="dmanagersetpage.cpp" line="78"/>
         <location filename="dmanagersetpage.cpp" line="85"/>
-        <location filename="dmanagersetpage.cpp" line="865"/>
+        <location filename="dmanagersetpage.cpp" line="893"/>
         <source>Time &amp; Date</source>
         <translation type="unfinished">Data e Horário</translation>
     </message>
     <message>
         <location filename="dmanagersetpage.cpp" line="86"/>
-        <location filename="dmanagersetpage.cpp" line="947"/>
+        <location filename="dmanagersetpage.cpp" line="975"/>
         <source>Calibration</source>
         <translation type="unfinished">Calibração</translation>
     </message>
@@ -2740,27 +2740,27 @@
     <message>
         <location filename="dmanagersetpage.cpp" line="79"/>
         <location filename="dmanagersetpage.cpp" line="87"/>
-        <location filename="dmanagersetpage.cpp" line="1038"/>
+        <location filename="dmanagersetpage.cpp" line="1066"/>
         <source>LCD</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="dmanagersetpage.cpp" line="88"/>
-        <location filename="dmanagersetpage.cpp" line="1074"/>
+        <location filename="dmanagersetpage.cpp" line="1102"/>
         <source>Final Filter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="dmanagersetpage.cpp" line="81"/>
         <location filename="dmanagersetpage.cpp" line="90"/>
-        <location filename="dmanagersetpage.cpp" line="1236"/>
+        <location filename="dmanagersetpage.cpp" line="1265"/>
         <source>Additional Settings</source>
         <translation type="unfinished">Configurações Adicionais</translation>
     </message>
     <message>
         <location filename="dmanagersetpage.cpp" line="80"/>
         <location filename="dmanagersetpage.cpp" line="89"/>
-        <location filename="dmanagersetpage.cpp" line="1120"/>
+        <location filename="dmanagersetpage.cpp" line="1148"/>
         <source>Network</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2863,9 +2863,14 @@
         <translation type="unfinished">Recirculação do Reservatório</translation>
     </message>
     <message>
-        <location filename="dmanagersetpage.cpp" line="495"/>
-        <location filename="dmanagersetpage.cpp" line="552"/>
-        <location filename="dmanagersetpage.cpp" line="639"/>
+        <location filename="dmanagersetpage.cpp" line="146"/>
+        <source>Temperature Compensation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dmanagersetpage.cpp" line="506"/>
+        <location filename="dmanagersetpage.cpp" line="563"/>
+        <location filename="dmanagersetpage.cpp" line="650"/>
         <source>Successfully saved</source>
         <translation type="unfinished"></translation>
     </message>
