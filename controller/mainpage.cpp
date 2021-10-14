@@ -219,8 +219,10 @@ void MainPage::initUi()
     for( index = 0 ; index < TANK_WATER_LEVEL_SCALE_NUM ; index++)
     {
         QString strPath;
-    
-        strPath.sprintf(":/pic/speed_%02d.png",index);
+        if(index == 0)
+            strPath.sprintf(":/pic/speed_%02d.png",index + 1);
+        else
+            strPath.sprintf(":/pic/speed_%02d.png",index);
    
         m_pBmpPumpSpeeds[index] = new QPixmap(strPath);
     }
@@ -1383,7 +1385,10 @@ void  MainPage::updSpeed(int itype,int iLevel)
     DrawSpeed(itype,iLevel);
 
 #ifdef STEPPERMOTOR
-    SetStepperMotorSpeed(iLevel);//调节步进电磁阀
+    if(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_STEPPERMOTOR))
+    {
+        SetStepperMotorSpeed(iLevel);//调节步进电磁阀
+    }
 #endif
 
     m_wndMain->changeRPumpValue(itype,iLevel);

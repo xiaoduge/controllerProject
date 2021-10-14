@@ -4374,6 +4374,13 @@ MainWindow::MainWindow(QMainWindow *parent) :
         setStartCheckConsumable(true);
         Splash();
     }
+    
+#ifdef STEPPERMOTOR
+        if(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_STEPPERMOTOR))
+        {
+            SetStepperMotorPosition(2048); //初始化步进电机位置 
+        }
+#endif
 
     initScreenSleep();
     initMachineFlow();
@@ -8711,10 +8718,6 @@ void MainWindow::run(bool bRun)
     if (bRun)
     {
         bool bError = false;
-        
-#ifdef STEPPERMOTOR
-		SetStepperMotorPosition(2048); //初始化步进电机位置 
-#endif
 
         if (DispGetROWashFlag())
         {
