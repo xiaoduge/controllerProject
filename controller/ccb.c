@@ -80,6 +80,8 @@ unsigned char gaucIapBuffer[1024];
 
 static const float s_fTankHOffset = 0.08; //水箱高度偏差
 
+//#define EDI_Drain_E5   //E5阀做为EDI不合格排放阀
+
 int is_B2_FULL(ulValue)
 {
     if(DISP_WATER_BARREL_TYPE_UDF == gCcb.PMParam.aiBuckType[DISP_PM_PM2])
@@ -247,6 +249,9 @@ int CcbC2Regulator(int id,float fv,int on);
 DISPHANDLE CcbInnerWorkInitRun(void);
 
 void CanCcbSndQtwRspMsg(int iIndex,int iCode);
+
+void work_init_run(void *para);
+
 
 int MakeThdState(int id,int flag)
 {
@@ -5513,6 +5518,32 @@ void CcbNotAlarmFire(int iPart,int iId,int bFired)
 
 }
 
+#ifdef EDI_Drain_E5   //E5阀做为EDI不合格排放阀
+void Jump2Drain()
+{
+    DISPHANDLE hdl ;        
+    hdl = SearchWork(work_init_run);
+
+    if (hdl)
+    {
+        CcbCancelWork(hdl);
+    }
+
+    hdl = SearchWork(work_normal_run);
+
+    if (hdl)
+    {
+        CcbCancelWork(hdl);
+    }                   
+    
+    if (!SearchWork(work_init_run))
+    {
+        CcbInnerWorkInitRun();
+    }                
+
+}
+#endif
+
 //2018.12.21 add
 void Check_RO_EDI_Alarm(int iEcoId)
 {
@@ -5578,6 +5609,10 @@ void Check_RO_EDI_Alarm(int iEcoId)
                         gCcb.ulFiredAlarmFlags |= ALARM_ROPW;
 
                         CcbNotAlarmFire(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGER_RO_PRODUCT_CONDUCTIVITY,TRUE);
+                        
+#ifdef EDI_Drain_E5   
+                        Jump2Drain();
+#endif
                     }
                 }
             }
@@ -5610,6 +5645,10 @@ void Check_RO_EDI_Alarm(int iEcoId)
                     {
                         gCcb.ulFiredAlarmFlags |= ALARM_EDI;
                         CcbNotAlarmFire(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_EDI_PRODUCT_RESISTENCE,TRUE);
+                        
+#ifdef EDI_Drain_E5   
+                        Jump2Drain();
+#endif
                     }
                 }
             }
@@ -11378,7 +11417,6 @@ void work_init_run_succ(int iWorkId)
 
 }
 
-//#define EDI_Drain_E5   //E5阀做为EDI不合格排放阀
 
 //设备运行10s冲洗，10s测压，清洗，制水
 void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem, CCB *pCcb, RUN_COMM_CALL_BACK cbf, RUN_COMM_CALL_BACK cbs)
@@ -11655,7 +11693,11 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem, CCB *pCcb, RUN_COMM_CALL_BACK
                     float fRej ;
                     
                     /* check appromixly 5*60 seconds */
-                    for (iLoop = 0; iLoop < DEFAULT_REG_CHECK_DURATION / DEFAULT_REJ_CHECK_PERIOD; iLoop++)                                   
+#ifndef EDI_Drain_E5   
+                    for (iLoop = 0; iLoop < DEFAULT_REG_CHECK_DURATION / DEFAULT_REJ_CHECK_PERIOD; iLoop++)  
+#else
+                    while(1) 
+#endif                                
                     {
                         iRet = CcbWorkDelayEntry(pWorkItem->id, DEFAULT_REJ_CHECK_PERIOD*1000, CcbDelayCallBack);
                         if (iRet )
