@@ -2534,25 +2534,49 @@ int SetStepperMotorPosition(int iSteps)
 int SetStepperMotorSpeed(int iSpeed)
 {
     static int oldSpeed = PUMP_SPEED_NUM;
-    int direction = 0; // direction : 1 加;  0 减
-
-    if(oldSpeed < iSpeed)
-    {
-        direction = 1;
-    }
-    oldSpeed = iSpeed;
-
     short sPosition = 1800;
     short sStart = gCaliParam.stepperCali.iStart;
 
-    if(1 == direction)
+    if(oldSpeed < iSpeed)
     {
-        sStart += 100;
+        sStart += 100;  //加速
     }
+    oldSpeed = iSpeed;
 
-    if(iSpeed < PUMP_SPEED_10)
+    switch (iSpeed)
     {
-        sPosition = sStart + iSpeed * 10;
+    case PUMP_SPEED_00:
+    case PUMP_SPEED_01:
+        sPosition = sStart;
+        break;
+    case PUMP_SPEED_02:
+        sPosition = sStart + 20;
+        break;
+    case PUMP_SPEED_03:
+        sPosition = sStart + 40;
+        break;
+    case PUMP_SPEED_04:
+        sPosition = sStart + 50;
+        break;
+    case PUMP_SPEED_05:
+        sPosition = sStart + 60;
+        break;
+    case PUMP_SPEED_06:
+        sPosition = sStart + 70;
+        break;
+    case PUMP_SPEED_07:
+        sPosition = sStart + 80;
+        break;
+    case PUMP_SPEED_08:
+        sPosition = sStart + 90;
+        break;
+    case PUMP_SPEED_09:
+        sPosition = sStart + 100;
+        break;
+    case PUMP_SPEED_10:
+        sPosition = 1800;
+        break;
+
     }
 
     //QTWSTEPPER,步进电磁阀的CAN通讯地址
