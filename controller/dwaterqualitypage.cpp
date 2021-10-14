@@ -233,24 +233,26 @@ void DWaterQualityPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info)
             switch(gGlobalParam.iMachineType)
             {
             case MACHINE_L_RO_LOOP:
-			case MACHINE_L_UP:
+            case MACHINE_L_UP:
             case MACHINE_RO:
             case MACHINE_UP:
-			case MACHINE_PURIST:
+            case MACHINE_PURIST:
             case MACHINE_ADAPT:
                 break;
-			case MACHINE_L_EDI_LOOP:
-			case MACHINE_EDI:
-				if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
-				{
-		            updateValue(m_tags[HP_Resis],
-                    			strWaterUnit.arg(toOneDecimal(fQ)),
-                    			strTempUnit.arg(toOneDecimal(fT)));
+            case MACHINE_L_Genie:
+            case MACHINE_Genie:
+            case MACHINE_L_EDI_LOOP:
+            case MACHINE_EDI:
+                if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
+                {
+                    updateValue(m_tags[HP_Resis],
+                                strWaterUnit.arg(toOneDecimal(fQ)),
+                                strTempUnit.arg(toOneDecimal(fT)));
 
-	                m_historyInfo[HP_Resis].value1 = info->fQuality;
-	                m_historyInfo[HP_Resis].value2 = info->fTemperature;
-				}
-				break;
+                    m_historyInfo[HP_Resis].value1 = info->fQuality;
+                    m_historyInfo[HP_Resis].value2 = info->fTemperature;
+                }
+                break;
             default:
             {
                 updateValue(m_tags[HP_Resis],
@@ -327,6 +329,8 @@ void DWaterQualityPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info)
                 }
 			}
 			break;
+        case MACHINE_L_Genie:
+        case MACHINE_Genie:
 		case MACHINE_L_EDI_LOOP:
 		case MACHINE_EDI:
 			if(!(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir)))
