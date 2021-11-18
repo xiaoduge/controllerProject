@@ -3349,13 +3349,13 @@ void MainWindow::initConsumablesInfo()
     m_strConsuamble[UPACK_CATNO] << "RR700Q101" << "RR700Q201" << "RR700Q301"
                                  << "RR700Q501" << "RR700Q601" << "RR700Q701"
                                  << "171-1258" << "171-1260" << "171-1261"
-                                 << "RR504Q101";
+                                 << "RR504Q101" << "RR504Q301";
 
     m_strConsuamble[HPACK_CATNO] << "RR700H101" << "RR504H101" << "171-1257";
 
     m_strConsuamble[ATPACK_CATNO] << "RR504AT01";
 
-    m_strConsuamble[CLEANPACK_CATNO] << "RR700CL01" << "RR504CL0" << "171-1281";
+    m_strConsuamble[CLEANPACK_CATNO] << "RR700CL01" << "RR504CL01" << "RR504CPC1" << "171-1281";
 
     m_strConsuamble[UV254_CATNO] << "RAUV135A7" << "RAUV212A7" << "171-1282" << "RAUV357A8";
 
@@ -4374,13 +4374,6 @@ MainWindow::MainWindow(QMainWindow *parent) :
         setStartCheckConsumable(true);
         Splash();
     }
-    
-#ifdef STEPPERMOTOR
-        if(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_STEPPERMOTOR))
-        {
-            SetStepperMotorPosition(2048); //初始化步进电机位置 
-        }
-#endif
 
     initScreenSleep();
     initMachineFlow();
@@ -9975,6 +9968,13 @@ void MainWindow::retriveLastRunState()
     {
         this->run(true);
     }
+    
+#ifdef STEPPERMOTOR
+    if(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_STEPPERMOTOR))
+    {
+        SetStepperMotorPosition(2048); //初始化步进电机位置 
+    }
+#endif
 }
 
 void MainWindow::updateCMInfoWithRFID(int operate)

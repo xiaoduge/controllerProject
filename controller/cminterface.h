@@ -4,7 +4,7 @@
 #pragma   pack(1)
 
 //开启步进电磁阀
-//#define STEPPERMOTOR
+#define STEPPERMOTOR
 
 #ifdef STEPPERMOTOR
 #pragma message("Turn on stepper motor function")
@@ -223,7 +223,7 @@
 #ifdef STEPPERMOTOR
 #define QTWSTEPPER 0    //取水步进电磁阀地址
 #endif
-#define STEPPER_REFERENCD_POINT (300)  //Stepper motor valve Reference point
+#define STEPPER_REFERENCD_POINT (330)  //Stepper motor valve Reference point
 
 typedef enum
 {

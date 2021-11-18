@@ -1,6 +1,6 @@
 #include "exconfig.h"
 
-#define __DEBUG__  //发布程序时注释掉
+//#define __DEBUG__  //发布程序时注释掉
 
 // 程序版本号
 #ifndef __DEBUG__
