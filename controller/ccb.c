@@ -3636,6 +3636,96 @@ void work_start_qtw(void *para)
         work_qtw_succ(iIndex);
         break;
     }
+    case MACHINE_PURIST:
+        /* check B2 & get B2 reports from exe */
+        if (haveB2(&gCcb))
+        {
+            iRet = CcbGetPmValue(pWorkItem->id,APP_EXE_PM2_NO,1);
+            if (iRet )
+            {
+                VOS_LOG(VOS_LOG_WARNING,"CcbGetPmValue Fail %d",iRet);  
+                work_qtw_fail(pCcb,APP_PACKET_HO_ERROR_CODE_TANK_EMPTY,iIndex,pWorkItem->id);        
+                return ;
+            }
+        
+            if (CcbConvert2Pm2SP(pCcb->ExeBrd.aPMObjs[APP_EXE_PM2_NO].Value.ulV) < CcbGetSp6())
+            {
+                pCcb->bit1B2Empty = TRUE;
+                work_qtw_fail(pCcb,APP_PACKET_HO_ERROR_CODE_TANK_EMPTY,iIndex,pWorkItem->id);        
+                return;
+            }
+        }
+
+#ifdef STEPPERMOTOR
+        if(haveStepper(pCcb))
+        {
+            //先调节步进电机，延时1s再进行下一步
+            SetStepperMotorSpeed(GetSpeedValue(pCcb->aHandler[iIndex].iDevType));
+            CcbWorkDelayEntry(pWorkItem->id, 500, CcbDelayCallBack);
+        }
+#endif
+        if (haveB2(&gCcb))
+        {
+            iTmp = (1<<APP_EXE_E4_NO)|(1<<APP_EXE_E9_NO)|(1<<APP_EXE_C2_NO)|(1<<APP_EXE_N2_NO);
+        }
+        else
+        {
+            iTmp = (1<<APP_EXE_E4_NO)|(1<<APP_EXE_E9_NO)|(1<<APP_EXE_E10_NO)|(1<<APP_EXE_C2_NO)|(1<<APP_EXE_N2_NO);
+        }
+
+        iRet = CcbUpdateSwitch(pWorkItem->id, 0, pCcb->ulHyperTwMask, iTmp);
+        if (iRet )
+        {
+            VOS_LOG(VOS_LOG_WARNING,"CcbUpdateSwitch Fail %d",iRet);    
+            work_qtw_fail(pCcb,APP_PACKET_HO_ERROR_CODE_UNKNOW,iIndex,pWorkItem->id);
+            return ;
+        }
+
+        if ((ulQtwSwMask & (1 << APP_EXE_C2_NO))
+           && pCcb->bit1CirSpeedAdjust)
+        {
+#ifdef STEPPERMOTOR
+            if(haveStepper(pCcb))
+            {
+                //调节泵压和步进电磁阀
+                int iSpeed = GetSpeedValue(pCcb->aHandler[iIndex].iDevType);
+                CcbC2Regulator(pWorkItem->id, GetSpeedVoltage(iSpeed), TRUE);
+                // SetStepperMotorSpeed(iSpeed);
+            }
+            else
+            {
+                CcbC2Regulator(pWorkItem->id,24,TRUE);
+            }
+#else
+            CcbC2Regulator(pWorkItem->id,24,TRUE);
+#endif
+        }
+
+        iTmp = (1 << APP_EXE_I2_NO)|(1 << APP_EXE_I4_NO)|(1 << APP_EXE_I5_NO);
+
+        iRet = CcbUpdateIAndBs(pWorkItem->id,0,iTmp,iTmp);
+        if (iRet )
+        {
+            VOS_LOG(VOS_LOG_WARNING,"CcbUpdateIAndBs Fail %d",iRet);
+            
+            /* notify ui (late implemnt) */
+            work_qtw_fail(pCcb,APP_PACKET_HO_ERROR_CODE_UNKNOW,iIndex,pWorkItem->id);        
+            return ;
+        }
+    
+        iTmp = (1 << APP_FM_FM1_NO); /* start flow report */
+        
+        iRet = CcbUpdateFms(pWorkItem->id,0,iTmp,iTmp);
+        if (iRet )
+        {
+            VOS_LOG(VOS_LOG_WARNING,"CcbUpdateFms Fail %d",iRet);    
+            /* notify ui (late implemnt) */
+            work_qtw_fail(pCcb,APP_PACKET_HO_ERROR_CODE_UNKNOW,iIndex,pWorkItem->id);        
+            return ;
+        }
+        pCcb->iCurTwIdx = iIndex;
+        work_qtw_succ(iIndex);
+        break;
     default:
         /* check B2 & get B2 reports from exe */
         if (haveB2(&gCcb))
@@ -5313,6 +5403,34 @@ void checkB2ToProcessB2Empty()
 }
 
 /**
+ * 检查原水箱是否需要启动补水
+ * @param iPmId [压力传感器id]
+ */
+void checkB2ToProcessB2NeedFill()
+{
+    float fValue = CcbConvert2Pm2SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM2_NO].Value.ulV);
+
+    if ( gCcb.ExeBrd.ucLeakState || (DISP_WORK_STATE_KP == gCcb.curWorkState.iMainWorkState))
+    {
+        return;
+    }
+
+    if((getKeyState() & (1 << APP_EXE_DIN_LEAK_KEY)) ||  getLeakState())
+    {
+        return;
+    }
+
+    if(fValue < CcbGetSp5())
+    {
+        gCcb.bit1NeedFillTank = 1;
+        if (!SearchWork(work_start_fill_water))
+        {
+            CcbInnerWorkStartFillWater();
+        }                
+    } 
+}
+
+/**
  * 检查纯水箱是否已满，满则停止产水
  * @param iPmId [压力传感器id]
  */
@@ -5335,6 +5453,21 @@ void checkB2ToProcessB2Full()
                }
             }
         }
+        if(MACHINE_PURIST == gCcb.ulMachineType)
+        {
+            if (fValue >= B2_FULL)
+            {
+                if (!SearchWork(work_stop_fill_water))
+                {
+                    CcbInnerWorkStopFillWater();
+                }
+            }
+            else
+            {
+                checkB2ToProcessB2NeedFill();
+            }
+        }
+
     } 
 }
 
@@ -15384,7 +15517,7 @@ void CcbInitMachineType(void)
         
         break;
     case MACHINE_PURIST:
-        gCcb.ulHyperTwMask  = (1<<APP_EXE_E4_NO)|(1<<APP_EXE_E5_NO)|(1<<APP_EXE_C2_NO)|(1<<APP_EXE_N2_NO)|(1<<APP_EXE_E9_NO);
+        gCcb.ulHyperTwMask  = (1<<APP_EXE_E4_NO)|(1<<APP_EXE_E5_NO)|(1<<APP_EXE_C2_NO)|(1<<APP_EXE_N2_NO)|(1<<APP_EXE_E9_NO)|(1<<APP_EXE_E10_NO);
         gCcb.ulNormalTwMask = 0;
         gCcb.ulCirMask      = (1<<APP_EXE_E4_NO)|(1<<APP_EXE_E5_NO)|(1<<APP_EXE_C2_NO)|(1<<APP_EXE_N2_NO)|(1<<APP_EXE_E9_NO);
 
