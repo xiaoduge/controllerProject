@@ -112,7 +112,7 @@ int QtwWorkDone()
     float fDeviation = 0;
     float fNextDeviation = 0;
     int offset = 5; //偏差补偿5，10
-    printf("dcj TotalFm:%d; curFm: %d; increment: %d; lastTimeFm: %d\n", gCcb.QtwMeas.ulTotalFm, curFm, increment, g_ulQtwLastTimeFm);
+   // printf("dcj TotalFm:%d; curFm: %d; increment: %d; lastTimeFm: %d\n", gCcb.QtwMeas.ulTotalFm, curFm, increment, g_ulQtwLastTimeFm);
     if(gCcb.QtwMeas.ulTotalFm == INVALID_FM_VALUE) //非定量取水直接返回
     {
         return 0;
@@ -3843,6 +3843,10 @@ void work_start_qtw(void *para)
 
 DISPHANDLE CcbInnerWorkStartQtw(int iIndex)
 {
+    if(!checkCardReader())
+    {
+        return;
+    }
     //2019.10.15 add
     if(!check_Sub_Account())
     {
@@ -16759,6 +16763,12 @@ void DispStopCir()
     }
     CcbRmvWork(work_start_cir);
 }
+
+void DispStopQtw()
+{
+    CcbStopQtw();
+}
+
 
 
 //质量检验主板用

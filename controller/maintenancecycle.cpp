@@ -25,6 +25,17 @@ MaintenanceCyclePage::MaintenanceCyclePage(QObject *parent,CBaseWidget *widget ,
         iIdx++;
     }
 
+    if(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_DEION))
+    {
+        aIds[iIdx].iDspType = 2;
+        aIds[iIdx].iId      = DISP_ICP_PACK;
+        aIds[iIdx].vi.v1Min = 0;
+        aIds[iIdx].vi.v1Max = 99999;
+        aIds[iIdx].vi.v2Min = 0;
+        aIds[iIdx].vi.v2Max = 99999;
+        iIdx++;
+    }
+
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_Genie:
@@ -464,6 +475,11 @@ void MaintenanceCyclePage::buildTranslation()
             pMaintenancelistItem[iIndex]->setP1Name(tr("Day"));
             pMaintenancelistItem[iIndex]->setP2Name(tr("L"));
             break;
+       case DISP_ICP_PACK:
+            pMaintenancelistItem[iIndex]->setName(tr("ICP Pack"));
+            pMaintenancelistItem[iIndex]->setP1Name(tr("Day"));
+            pMaintenancelistItem[iIndex]->setP2Name(tr("L"));
+            break;
         case DISP_AC_PACK:
             /*
             AC PACK  90Day   10000L
@@ -720,6 +736,10 @@ void MaintenanceCyclePage:: update()
             pMaintenancelistItem[iIndex]->setP1(QString::number(gGlobalParam.CMParam.aulCms[DISP_PRE_PACKLIFEDAY]));
             pMaintenancelistItem[iIndex]->setP2(QString::number(gGlobalParam.CMParam.aulCms[DISP_PRE_PACKLIFEL]));
             break;
+       case DISP_ICP_PACK:
+            pMaintenancelistItem[iIndex]->setP1(QString::number(gGlobalParam.CMParam.aulCms[DISP_ICP_PACKLIFEDAY]));
+            pMaintenancelistItem[iIndex]->setP2(QString::number(gGlobalParam.CMParam.aulCms[DISP_ICP_PACKLIFEL]));
+            break;
         case DISP_AC_PACK:
             /*
             AC PACK 90DAY  10000L
@@ -871,6 +891,12 @@ void MaintenanceCyclePage::save()
             CMParam.aulCms[DISP_PRE_PACKLIFEDAY] = iTemp;
             iTemp = pMaintenancelistItem[iIndex]->getP2().toInt();
             CMParam.aulCms[DISP_PRE_PACKLIFEL] = iTemp;
+            break;
+       case DISP_ICP_PACK:
+            iTemp = pMaintenancelistItem[iIndex]->getP1().toInt();
+            CMParam.aulCms[DISP_ICP_PACKLIFEDAY] = iTemp;
+            iTemp = pMaintenancelistItem[iIndex]->getP2().toInt();
+            CMParam.aulCms[DISP_ICP_PACKLIFEL] = iTemp;
             break;
         case DISP_AC_PACK:
             /*

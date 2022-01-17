@@ -67,6 +67,10 @@ void ConsumableInsPage::buildTranslation()
             m_aInsListItem[iMapIdx]->setName(tr("Prefilter"));
             m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
             break;
+       case DISP_ICP_PACK:
+            m_aInsListItem[iMapIdx]->setName(tr("ICP Pack"));
+            m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
+            break;
         case DISP_AC_PACK:
             /*
             AC PACK
@@ -412,6 +416,7 @@ void ConsumableInsPage::initTypeMap()
     m_typeMap.insert(UPACK_CATNO, DISP_U_PACK);
     m_typeMap.insert(HPACK_CATNO, DISP_H_PACK);
     m_typeMap.insert(PREPACK_CATNO, DISP_PRE_PACK);
+    m_typeMap.insert(ICPPACK_CATNO, DISP_ICP_PACK);
     m_typeMap.insert(CLEANPACK_CATNO, DISP_P_PACK | (1 <<16));
     m_typeMap.insert(ATPACK_CATNO, DISP_AT_PACK);
     m_typeMap.insert(TPACK_CATNO, DISP_T_PACK);
@@ -440,6 +445,14 @@ void ConsumableInsPage::initNormalItem()
         aIds[iIdx].iType = 0;
         aIds[iIdx].iId   = DISP_PRE_PACK;
         aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        iIdx++;
+    }
+
+    if(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_DEION))
+    {
+        aIds[iIdx].iType = 0;
+        aIds[iIdx].iId   = DISP_ICP_PACK;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ICPPACK;
         iIdx++;
     }
 
@@ -858,7 +871,7 @@ void ConsumableInsPage::initManualItem()
         aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
         iIdx++;
     }
-
+        
     if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
     {
         aIds[iIdx].iType = 0;

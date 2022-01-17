@@ -138,7 +138,8 @@ SOURCES += main.cpp\
     dnetworkwidget.cpp \
     dnetworkpage.cpp \
     dinitnetworkpage.cpp \
-    dnetworkwifiinfoitem.cpp
+    dnetworkwifiinfoitem.cpp \
+    dcardinfodialog.cpp
 HEADERS  += mainwindow.h \
     ctrlapplication.h \
     log.h \
@@ -246,7 +247,8 @@ HEADERS  += mainwindow.h \
     dnetworkwidget.h \
     dnetworkpage.h \
     dinitnetworkpage.h \
-    dnetworkwifiinfoitem.h
+    dnetworkwifiinfoitem.h \
+    dcardinfodialog.h
 
 FORMS    += mainwindow.ui \
     syszuxpinyin.ui \

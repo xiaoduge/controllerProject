@@ -62,6 +62,12 @@ private:
     QCheckBox *m_chkStepperMotor;
 #endif
 
+    QCheckBox *m_chkDeion;
+
+#ifdef WATERCARDREADER
+    QCheckBox *m_chkWaterCard;
+#endif
+
 #ifdef CFG_DO_PH
     QCheckBox *m_chkDO;
     QCheckBox *m_chkPH;

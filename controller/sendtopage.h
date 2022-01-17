@@ -2,6 +2,8 @@
 #define SENDTOPAGE_H
 
 #include "subpage.h"
+#include "Display.h"
+
 
 class MainWindow;
 class QCheckBox;
@@ -39,6 +41,10 @@ private:
     void copyGetWater();
     void copyProduceWater();
     void copyLog();
+
+#ifdef WATERCARDREADER
+    void copyWaterCardInfo();
+#endif
     void copyHistoryToUsb();
 
 private:

@@ -15,7 +15,7 @@ private:
     DHintDialog& operator =(const DHintDialog &obj);
 
 public:
-    static void getInstance(QString strText);
+    static void getInstance(QString strText, int msec = 1000);
     ~DHintDialog();
 
 protected slots:
@@ -23,7 +23,7 @@ protected slots:
 
 private:
     void setInfo(QString strText);
-    void start();
+    void start(int msec);
 
 private:
     QLabel *m_pLbInfo;

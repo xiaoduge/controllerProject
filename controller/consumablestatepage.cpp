@@ -16,6 +16,13 @@ ConsumableStatePage::ConsumableStatePage(QObject *parent,CBaseWidget *widget ,Ma
         iIdx++;
     }
 
+    if(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_DEION))
+    {
+        aIds[iIdx].iType = 0;
+        aIds[iIdx].iId   = DISP_ICP_PACK;
+        iIdx++;
+    }
+
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_Genie:
@@ -403,6 +410,39 @@ void ConsumableStatePage:: update()
             /*Preporcess column */
             m_pCslistItem[iIdx]->setName(tr("Prefilter"));
             break;
+       case DISP_ICP_PACK:
+            /* for preprocess column */
+            tmp = gCMUsage.info.aulCms[DISP_ICP_PACKLIFEL] ;
+            strTmp = astrNames[0] + "  " + QString::number(tmp) + "L";
+            m_pCslistItem[iIdx]->setValue(strTmp);
+        
+            strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_ICP_PACKLIFEDAY]);
+            m_pCslistItem[iIdx]->setInstDate(strTmp);
+        
+            tmp = gGlobalParam.CMParam.aulCms[DISP_ICP_PACKLIFEDAY] - 
+                (DispGetCurSecond() - gCMUsage.info.aulCms[DISP_ICP_PACKLIFEDAY])/ DISP_DAYININSECOND;
+            strTmp = tr("Replace in ") + decodeDays(tmp) + QString(" ")+ tr("days");
+            m_pCslistItem[iIdx]->setChangeDate(strTmp);
+
+            strTmp = tr("Cat No.:") + gGlobalParam.cmSn.aCn[DISP_ICP_PACK];
+            m_pCslistItem[iIdx]->setCatNo(strTmp);
+
+            strTmp = tr("Lot No.:") + gGlobalParam.cmSn.aLn[DISP_ICP_PACK];
+            m_pCslistItem[iIdx]->setLotNo(strTmp);
+
+            if (gCMUsage.ulUsageState & (1 << DISP_ICP_PACKLIFEDAY) 
+                || gCMUsage.ulUsageState & (1 << DISP_ICP_PACKLIFEL))
+            {
+                m_pCslistItem[iIdx]->updateState(1);
+            }
+            else
+            {
+                m_pCslistItem[iIdx]->updateState(0);
+            } 
+            
+            /*Preporcess column */
+            m_pCslistItem[iIdx]->setName(tr("ICP Pack"));
+            break;
         case DISP_AC_PACK:
             /* for preprocess column */
             tmp = gCMUsage.info.aulCms[DISP_AC_PACKLIFEL] ;
@@ -494,7 +534,6 @@ void ConsumableStatePage:: update()
             m_pCslistItem[iIdx]->setName(tr("P PACK "));
             break; 
         case DISP_U_PACK:
-            /* for DISP_U_PACK column */
             tmp = gCMUsage.info.aulCms[DISP_U_PACKLIFEL] ;
             strTmp = astrNames[0] + "  " + QString::number(tmp) + "L";
             m_pCslistItem[iIdx]->setValue(strTmp);

@@ -143,6 +143,16 @@ QString select_sql_subAccount = "select quantity_UP, quantity_HP from SubAccount
 QString insert_sql_subAccount = "INSERT INTO SubAccount (id, name, quantity_UP, quantity_HP) VALUES (:id, :name, :quantity_UP, :quantity_HP)";
 QString update_sql_subAccount = "update SubAccount set quantity_UP = ?, quantity_HP = ? where name = ?";
 
+QString CREATE_TABLE_WATERCARD = "CREATE TABLE IF NOT EXISTS  WaterCards (id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                                                                          "cardid  VARCHAR(24) NOT NULL,"
+                                                                          "balance double NOT NULL,"
+                                                                          "time VARCHAR(20) NOT NULL)";
+
+QString select_sql_waterCard = "select balance from WaterCards where cardid = ?";
+QString insert_sql_waterCard = "INSERT INTO WaterCards (id, cardid, balance, time) VALUES (:id, :cardid, :balance, :time)";
+QString update_sql_waterCard = "update WaterCards set balance = ?, time = ? where cardid = ?";
+
+
 int help_aton(const char *cp)
 {
     int           val;
@@ -460,7 +470,15 @@ int main(int argc, char *argv[])
         qDebug()<<"create Sub-account table successed";
     else
         qDebug()<<"create Sub-account table failed";
+    
+#ifdef WATERCARDREADER
+    success = query.exec(CREATE_TABLE_WATERCARD);
+    if(success)
+        qDebug()<<"create watercard table successed";
+    else
+        qDebug()<<"create watercard table failed";
 
+#endif
 
     DeleteExpiredData(); //删除两年前的数据
 

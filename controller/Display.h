@@ -370,6 +370,7 @@ typedef enum
     DISP_ALARM_PART0_ATPACK_OOP ,    //AT Pack脱落
     DISP_ALARM_PART0_HPACK_OOP ,     //H Pack脱落
     DISP_ALARM_PART0_UPACK_OOP ,     //U Pack脱落
+    DISP_ALARM_PART0_ICPPACK_OOP ,     //U Pack脱落
     DISP_ALARM_PART0_NUM,
 }DISP_ALARM_PART0_ENUM;
 
@@ -485,8 +486,14 @@ typedef enum
 typedef enum
 {
     DISP_SM_COMPENSATION,
+    DISP_SM_DEION,         //De-ion
+    
 #ifdef STEPPERMOTOR
     DISP_SM_STEPPERMOTOR, //Stepper Motor
+#endif
+
+#ifdef WATERCARDREADER
+    DISP_SM_WATERCARD,
 #endif
 
 #ifdef CFG_DO_PH
@@ -499,7 +506,7 @@ typedef enum
 
 
 #define MODULES_ALL ((1 << DISP_SM_NUM) - 1)
-#define ADD_MODULES_ALL ((1 << DISP_SM_ADD_NUM) - 1)
+#define ADD_MODULES_ALL ((1 << DISP_SM_ADD_NUM) - 1) & (~(1 << DISP_SM_DEION))
 
 #define DEFAULT_MODULES_L_Genie      (MODULES_ALL & (~((1 << DISP_SM_AT_PACK) | (1 <<DISP_SM_Pre_Filter))))
 #define DEFAULT_MODULES_L_UP         (MODULES_ALL & (~((1 << DISP_SM_AT_PACK) | (1 <<DISP_SM_Pre_Filter))))
@@ -651,6 +658,8 @@ typedef enum
 {
     DISP_PRE_PACKLIFEDAY = 0,   //纯化柱:  0~999 DAYS    0~9999L 
     DISP_PRE_PACKLIFEL,     //纯化柱:   0~9999L
+    DISP_ICP_PACKLIFEDAY ,    //纯化柱:  0~999 DAYS    0~9999L 
+    DISP_ICP_PACKLIFEL,       //纯化柱:   0~9999L
     DISP_AC_PACKLIFEDAY,   //AC PACK:  0~999 DAYS    0~9999L 
     DISP_AC_PACKLIFEL,     //AC PACK:   0~9999L
     DISP_T_PACKLIFEDAY,     //T PACK: 2018.10.12 ADD
@@ -685,6 +694,7 @@ typedef enum
 typedef enum
 {
     DISP_PRE_PACK = 0,  
+    DISP_ICP_PACK,
     DISP_AC_PACK,  //2018.10.22 ADD
     DISP_T_PACK,  //2018.10.12 ADD
     DISP_P_PACK ,    
@@ -879,6 +889,8 @@ typedef struct
     int           iTankUvOnTime;
     int           iAutoLogoutTime;
     int           iMaxDispTime;
+    int           iUPUnitPrice;
+    int           iHPUnitPrice;
     int           iPowerOnFlushTime;
     
 }DISP_MISC_SETTING_STRU;
@@ -1120,6 +1132,7 @@ unsigned int CcbConvert2GPumpData(unsigned int ulValue);
 unsigned int CcbGetRPumpVData(int iChl);
 unsigned int CcbConvert2RPumpIData(unsigned int ulValue);
 
+int checkCardReader();
 //for sub-account. 2019.10 15 add
 int check_Sub_Account();
 
@@ -1227,7 +1240,7 @@ int SetStepperMotorPosition(int iSteps);
 #endif
 
 void DispStopCir();
-
+void DispStopQtw();
 
 
 #ifdef __cplusplus

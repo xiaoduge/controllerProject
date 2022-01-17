@@ -48,7 +48,7 @@ void DHintDialog::setInfo(QString strText)
 }
 
 
-void DHintDialog::getInstance(QString strText)
+void DHintDialog::getInstance(QString strText, int msec)
 {
     if (NULL == instance)
     {
@@ -57,15 +57,15 @@ void DHintDialog::getInstance(QString strText)
         {
             DHintDialog *pDlg = new DHintDialog();
             pDlg->setInfo(strText);
-            pDlg->start();
+            pDlg->start(msec);
             instance = pDlg;
         }
     }
 }
 
-void DHintDialog::start()
+void DHintDialog::start(int msec)
 {
-    m_timer->start(1000);
+    m_timer->start(msec);
     show();
 }
 

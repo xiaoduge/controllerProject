@@ -371,6 +371,56 @@ void SendToPage::copyLog()
     QFile::remove("/media/sda1/Data/log.csv");
 }
 
+#ifdef WATERCARDREADER
+void SendToPage::copyWaterCardInfo()
+{
+    QFile file("/media/sda1/Data/watercard.csv");
+    if(!file.open(QFile::WriteOnly | QFile::Truncate))
+    {
+        QMessageBox::warning(NULL, tr("Warning"), tr("Failed to send data:watercard"), QMessageBox::Ok);
+        return;
+    }
+
+    QTextStream out(&file);
+    out << tr("ID") << ","
+        << tr("CardID") << ","
+        << tr("Balance") << ","
+        << tr("Time") << "\n";
+
+    QSqlQuery query;
+    query.exec("select * from WaterCards");
+    while(query.next())
+    {
+        out << query.value(0).toInt() << ","
+            << query.value(1).toString() << ","
+            << query.value(2).toDouble() << ","
+            << query.value(3).toString() << "\n";
+    }
+    file.close();
+
+    //tobase64
+    if(!file.open(QFile::ReadOnly | QFile::Truncate))
+    {
+        QMessageBox::warning(NULL, tr("Warning"), tr("Failed to send data:watercard.dcj"), QMessageBox::Ok);
+        return;
+    }
+    QByteArray content = file.readAll().toBase64();
+    QFile fileBase64("/media/sda1/Data/watercard.dcj");
+    if(!fileBase64.open(QFile::WriteOnly | QFile::Truncate))
+    {
+        QMessageBox::warning(NULL, tr("Warning"), tr("Failed to send data:watercard.dcj"), QMessageBox::Ok);
+        return;
+    }
+    fileBase64.write(content);
+
+    file.close();
+    fileBase64.close();
+
+    QFile::remove("/media/sda1/Data/watercard.csv");
+
+}
+#endif
+
 void SendToPage::copyHistoryToUsb()
 {
     QString pathName = QString("/media/sda1");
@@ -399,6 +449,9 @@ void SendToPage::copyHistoryToUsb()
         copyGetWater();
         copyProduceWater();
         copyLog();
+#ifdef WATERCARDREADER
+        copyWaterCardInfo();
+#endif
         DHintDialog::getInstance(tr("Successfully"));
     }
 }
