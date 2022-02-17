@@ -8482,6 +8482,10 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                     {
                         m_pCardInfoDlg->hide();
                     }
+                    if(DispGetUpQtwFlag() || DispGetEdiQtwFlag())
+                    {
+                        DispStopQtw();
+                    }
                 }
             }
 #endif
