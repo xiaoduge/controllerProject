@@ -132,7 +132,10 @@ void AlarmDisplayPage::buildTranslation()
             m_astrPartAlarm[iIdx] = tr("U Pack Not Detected");
             aAsIndex[DISP_ALARM_PART0][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP)] = iIdx; 
             break;
-
+        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_ICPPACK_OOP): //ICP-Pack脱落
+            m_astrPartAlarm[iIdx] = tr("ICP Pack Not Detected");
+            aAsIndex[DISP_ALARM_PART0][aAsIds[iIdx].iId - MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP)] = iIdx; 
+            break;
         /* Part Two */
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE): //自来水压力低
             m_astrPartAlarm[iIdx] = tr("Lower Tap Pres.");
@@ -443,6 +446,44 @@ void AlarmDisplayPage::csUpdate()
                 iIdx++;
             }
             break;
+        case DISP_ICP_PACK: 
+            if (gCMUsage.ulUsageState & (1 << DISP_ICP_PACKLIFEDAY) 
+                || gCMUsage.ulUsageState & (1 << DISP_ICP_PACKLIFEL))
+            {
+                /* for preprocess column */
+                tmp = gCMUsage.info.aulCms[DISP_ICP_PACKLIFEL] ;
+                if(tmp < 0)
+                {
+                    tmp = 0;
+                }
+                strTmp = astrNames[0] + "  " + QString::number(tmp) + "L";
+                m_pCslistItem[iIdx]->setValue(strTmp);
+            
+                strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_ICP_PACKLIFEDAY]);
+                m_pCslistItem[iIdx]->setInstDate(strTmp);
+
+                tmp = ((DispGetCurSecond() - gCMUsage.info.aulCms[DISP_ICP_PACKLIFEDAY])/DISP_DAYININSECOND) -
+                      gGlobalParam.CMParam.aulCms[DISP_ICP_PACKLIFEDAY];
+
+                if(tmp < 0)
+                {
+                    tmp = 0;
+                }
+                strTmp = tr("It is ") + decodeDays(tmp) + tr(" ") + tr("days overdue. ") + strWarnMsg;
+                m_pCslistItem[iIdx]->setName(tr("ICP Pack"));
+                m_pCslistItem[iIdx]->setChangeDate(strTmp);
+
+                strTmp = tr("Cat No.:") + gGlobalParam.cmSn.aCn[DISP_ICP_PACK];
+                m_pCslistItem[iIdx]->setCatNo(strTmp);
+                
+                strTmp = tr("Lot No.:") + gGlobalParam.cmSn.aLn[DISP_ICP_PACK];
+                m_pCslistItem[iIdx]->setLotNo(strTmp);
+                
+                m_pCslistItem[iIdx]->updateState(1);
+                m_pCslistItem[iIdx]->setId(iIdx);
+                iIdx++;
+            }
+            break;
         case DISP_AC_PACK:
             if (gCMUsage.ulUsageState & (1 << DISP_AC_PACKLIFEDAY)
                 || gCMUsage.ulUsageState & (1 << DISP_AC_PACKLIFEL))
@@ -561,7 +602,6 @@ void AlarmDisplayPage::csUpdate()
             if (gCMUsage.ulUsageState & (1 << DISP_U_PACKLIFEDAY) 
                 || gCMUsage.ulUsageState & (1 << DISP_U_PACKLIFEL))
             {
-                /* for DISP_U_PACK column */
                 tmp = gCMUsage.info.aulCms[DISP_U_PACKLIFEL] ;
                 if(tmp < 0)
                 {
@@ -1072,6 +1112,7 @@ void AlarmDisplayPage::asUpdate()
         case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_ATPACK_OOP):
         case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_HPACK_OOP):
         case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_UPACK_OOP):
+        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_ICPPACK_OOP):
             if (m_wndMain->getAlarmInfo(DISP_ALARM_PART0,aAsIds[iLoop].iId - MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP)))
             {
                 if (0XFF != aAsIndex[DISP_ALARM_PART0][aAsIds[iLoop].iId - MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_254UV_OOP)])

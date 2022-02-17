@@ -67,6 +67,10 @@ void ConsumableInsPage::buildTranslation()
             m_aInsListItem[iMapIdx]->setName(tr("Prefilter"));
             m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
             break;
+       case DISP_ICP_PACK:
+            m_aInsListItem[iMapIdx]->setName(tr("ICP Pack"));
+            m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
+            break;
         case DISP_AC_PACK:
             /*
             AC PACK
@@ -412,6 +416,7 @@ void ConsumableInsPage::initTypeMap()
     m_typeMap.insert(UPACK_CATNO, DISP_U_PACK);
     m_typeMap.insert(HPACK_CATNO, DISP_H_PACK);
     m_typeMap.insert(PREPACK_CATNO, DISP_PRE_PACK);
+    m_typeMap.insert(ICPPACK_CATNO, DISP_ICP_PACK);
     m_typeMap.insert(CLEANPACK_CATNO, DISP_P_PACK | (1 <<16));
     m_typeMap.insert(ATPACK_CATNO, DISP_AT_PACK);
     m_typeMap.insert(TPACK_CATNO, DISP_T_PACK);
@@ -440,6 +445,14 @@ void ConsumableInsPage::initNormalItem()
         aIds[iIdx].iType = 0;
         aIds[iIdx].iId   = DISP_PRE_PACK;
         aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+        iIdx++;
+    }
+
+    if(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_DEION))
+    {
+        aIds[iIdx].iType = 0;
+        aIds[iIdx].iId   = DISP_ICP_PACK;
+        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ICPPACK;
         iIdx++;
     }
 
@@ -500,13 +513,14 @@ void ConsumableInsPage::initNormalItem()
     switch(gGlobalParam.iMachineType)
     {
     case MACHINE_L_Genie:
-		if(gAdditionalCfgParam.machineInfo.iMachineFlow != 250)
-		{
-			aIds[iIdx].iType = 0;
-			aIds[iIdx].iId	 = DISP_AT_PACK;
-			aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_HPACK_ATPACK;
-			iIdx++;
-		}
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow != 250)
+        {
+            aIds[iIdx].iType = 0;
+            aIds[iIdx].iId	 = DISP_AT_PACK;
+            aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_HPACK_ATPACK;
+            iIdx++;
+        }
+        break;
     case MACHINE_L_EDI_LOOP:
         aIds[iIdx].iType = 0;
         aIds[iIdx].iId   = DISP_AT_PACK;
@@ -612,10 +626,13 @@ void ConsumableInsPage::initNormalItem()
     case MACHINE_UP:
     case MACHINE_EDI:
     case MACHINE_RO:
-        aIds[iIdx].iType = 0;
-        aIds[iIdx].iId   = DISP_N3_UV;
-        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
-        iIdx++;
+        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_TankUV))
+        {
+            aIds[iIdx].iType = 0;
+            aIds[iIdx].iId   = DISP_N3_UV;
+            aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+            iIdx++;
+        }
         break;
     }
 
@@ -734,7 +751,7 @@ void ConsumableInsPage::initNormalItem()
             aIds[iIdx].iType = 0;
             aIds[iIdx].iId   = DISP_TUBE_DI;
             aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
-			iIdx++;
+            iIdx++;
         }
         break;
     }
@@ -854,7 +871,7 @@ void ConsumableInsPage::initManualItem()
         aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
         iIdx++;
     }
-
+        
     if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
     {
         aIds[iIdx].iType = 0;
@@ -907,10 +924,13 @@ void ConsumableInsPage::initManualItem()
     case MACHINE_UP:
     case MACHINE_EDI:
     case MACHINE_RO:
-        aIds[iIdx].iType = 0;
-        aIds[iIdx].iId   = DISP_N3_UV;
-        aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
-        iIdx++;
+        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_TankUV))
+        {
+            aIds[iIdx].iType = 0;
+            aIds[iIdx].iId   = DISP_N3_UV;
+            aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
+            iIdx++;
+        }
         break;
     default:
         break;
@@ -1026,7 +1046,7 @@ void ConsumableInsPage::initManualItem()
             aIds[iIdx].iType = 0;
             aIds[iIdx].iId   = DISP_TUBE_DI;
             aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
-			iIdx++;
+            iIdx++;
         }
         break;
     default:
@@ -1057,13 +1077,13 @@ void ConsumableInsPage::initManualItem()
     {
     case MACHINE_L_EDI_LOOP:
     case MACHINE_L_RO_LOOP:
-		if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
-		{
+        if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
+        {
             aIds[iIdx].iType = 1; //0
             aIds[iIdx].iId   = DISP_MACHINERY_CIR_PUMP;
             aIds[iIdx].iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
             iIdx++;
-		}
+        }
         break;
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
@@ -1141,14 +1161,14 @@ void ConsumableInsPage::initManualItem()
 
 void ConsumableInsPage::installFeedback(bool result)
 {
-	if(result)
-	{
-		DHintDialog::getInstance(tr("Consumable installed successfully."));
-	}
-	else
-	{
-		DHintDialog::getInstance(tr("Consumable installation failed."));
-	}
+    if(result)
+    {
+        DHintDialog::getInstance(tr("Consumable installed successfully."));
+    }
+    else
+    {
+        DHintDialog::getInstance(tr("Consumable installation failed."));
+    }
 
 }
 

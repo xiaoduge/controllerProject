@@ -69,6 +69,10 @@ void DHistoryPage::buildTranslation()
     m_QryObjNameCbox->setItemText(1, tr("GetW"));
     m_QryObjNameCbox->setItemText(2, tr("PWater"));
     m_QryObjNameCbox->setItemText(3, tr("Log"));
+    
+#ifdef WATERCARDREADER
+    m_QryObjNameCbox->setItemText(4, tr("WaterCard"));
+#endif
 //    m_QryObjNameCbox->setItemText(4, tr("Water"));
 
     initTabelHeaderData(m_pTableModel, m_QryObjNameCbox->currentIndex() + 1);
@@ -119,7 +123,11 @@ void DHistoryPage::initUi()
 
     m_QryObjNameCbox = new QComboBox(m_pOperatingWidget);
     QStringList cbList;
+#ifdef WATERCARDREADER
+    cbList << tr("Alarm") << tr("GetW") << tr("PWater") << tr("Log") << tr("WaterCard");  // << tr("Water")
+#else
     cbList << tr("Alarm") << tr("GetW") << tr("PWater") << tr("Log");  // << tr("Water")
+#endif
     m_QryObjNameCbox->addItems(cbList);
 
     m_pTableView = new QTableView(m_pOperatingWidget);
@@ -227,9 +235,13 @@ void DHistoryPage::dbQuery()
     case 3:
         dbQueryLog();
         break;
-/*  case 4:
-        dbQueryWater();
-        break;   */
+    
+#ifdef WATERCARDREADER
+    case 4:
+        dbQueryWaterCardInfo();
+        break;
+#endif
+
     default:
         break;
     }
@@ -398,6 +410,26 @@ void DHistoryPage::dbQueryLog()
     m_pTableView->setColumnWidth(4, 180);
 }
 
+#ifdef WATERCARDREADER
+void DHistoryPage::dbQueryWaterCardInfo()
+{
+    m_pTableModel->setTable("WaterCards");
+
+    QString strStartTime = m_phBtns[HISTORYPAGE_BTN_QRY_STIME]->text() + " 00:00:00";
+    QString strEndTime = m_phBtns[HISTORYPAGE_BTN_QRY_ETIME]->text() + " 23:59:59";
+    m_pTableModel->setFilter(QString("time > '%1' and time < '%2'").arg(strStartTime).arg(strEndTime));
+
+    m_pTableModel->select();
+    initTabelHeaderData(m_pTableModel, HISTORYPAGE_DATA_WATERCARD);
+    m_pTableView->setModel(m_pTableModel);
+    m_pTableView->horizontalHeader()->setResizeMode(0, QHeaderView::Fixed);
+    m_pTableView->setColumnWidth(0, 60);
+    m_pTableView->horizontalHeader()->setResizeMode(1, QHeaderView::Stretch);
+    m_pTableView->horizontalHeader()->setResizeMode(2, QHeaderView::Stretch);
+    m_pTableView->horizontalHeader()->setResizeMode(3, QHeaderView::Stretch);
+}
+#endif
+
 void DHistoryPage::initTabelHeaderData(QSqlTableModel *tableModel, int tableID)
 {
     switch(tableID)
@@ -442,6 +474,14 @@ void DHistoryPage::initTabelHeaderData(QSqlTableModel *tableModel, int tableID)
         tableModel->setHeaderData(3, Qt::Horizontal, tr("Info"));  //
         tableModel->setHeaderData(4, Qt::Horizontal, tr("Time"));
         break;
+#ifdef WATERCARDREADER
+    case HISTORYPAGE_DATA_WATERCARD:
+        tableModel->setHeaderData(0, Qt::Horizontal, tr("ID"));
+        tableModel->setHeaderData(1, Qt::Horizontal, tr("CardID"));//用户名
+        tableModel->setHeaderData(2, Qt::Horizontal, tr("Balance"));//
+        tableModel->setHeaderData(3, Qt::Horizontal, tr("Time"));  //
+        break;
+#endif
     default:
         break;
     }

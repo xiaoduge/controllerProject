@@ -24,8 +24,6 @@
 
 //#define TOUCHTEST
 
-//#define SUB_ACCOUNT  //Sub-account
-
 #define PAGEID_MARGIN (4)
 
 #define PAGE_X_DIMENSION (40)
@@ -138,6 +136,7 @@ enum SETPAGE_NAME
 enum CONSUMABLE_CATNO
 {
     PREPACK_CATNO = 0,
+    ICPPACK_CATNO,
     ACPACK_CATNO,
     PPACK_CATNO,
     UPACK_CATNO,
@@ -212,6 +211,7 @@ class DNetworkAccessManager;
 class QSslError;
 class DWifiConfigDialog;
 class QFileSystemWatcher;
+class DCardInfoDialog;
 
 class DispenseDataPrint;
 class ProductDataPrint;
@@ -244,6 +244,17 @@ struct DUserInfo
 {
     QString m_strUserName;
     QString m_strPassword;
+};
+
+struct WaterCardInfo
+{
+    bool         bValid;
+    QByteArray   cardID;
+    QByteArray   type;
+    unsigned int amount;
+
+    unsigned int curVolume;
+    unsigned int oldVolumne;
 };
 
 class MainWindow : public QMainWindow
@@ -365,6 +376,13 @@ public:
     bool getRfidState(int iRfId) {return !!m_aRfidInfo[iRfId].ucValid;}
 
     int  readRfid(int iRfId);
+
+    bool readRfid_Reader(int iRfId);
+
+    void deduction(unsigned int vol);
+    void cardReadyBeep();
+    void recordCardInfo();
+    int checkCardReaderStatus();
 
     void getRfidCatNo(int iRfId,CATNO sn) {m_aRfidInfo[iRfId].getCatNo(sn);}
 
@@ -586,10 +604,14 @@ private:
     int mqttNum;
 
 	int excepCounter; //系统状态异常次数
+
+    unsigned char m_aucContent[256];
+    WaterCardInfo m_WaterCardInfo;
     //
 #endif
 private:
     DWifiConfigDialog *m_pWifiConfigDlg;
+    DCardInfoDialog   *m_pCardInfoDlg;
 
 private:
     QTimer* m_timerBuzzer;
@@ -823,6 +845,10 @@ private:
             else if (m_strConsuamble[UPACK_CATNO].contains(strSn))
             {
                iPackType = DISP_U_PACK;
+            }
+            else if (m_strConsuamble[ICPPACK_CATNO].contains(strSn))
+            {
+               iPackType = DISP_ICP_PACK;
             }
             else if (m_strConsuamble[HPACK_CATNO].contains(strSn))
             {

@@ -62,6 +62,7 @@ typedef struct
     int iType;
     int iFunctions;
     int iDefaultModule;
+    int iDefaultAddModule;
     int iDefaultFmPulse;
     // int aParamId[LESUM];
 }MACHINE_TYPE_STRU;

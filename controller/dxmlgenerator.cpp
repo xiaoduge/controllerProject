@@ -822,8 +822,11 @@ void DXmlGenerator::createLifeTimeList(QList<QStringList> &elementsList)
     case MACHINE_UP:
     case MACHINE_EDI:
     case MACHINE_RO:
-        appendElement(elementsList, "TankUV", toString(gGlobalParam.CMParam.aulCms[DISP_N3_UVLIFEDAY]),
-                                              toString(gGlobalParam.CMParam.aulCms[DISP_N3_UVLIFEHOUR]), "h");
+        if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_TankUV))
+        {
+            appendElement(elementsList, "TankUV", toString(gGlobalParam.CMParam.aulCms[DISP_N3_UVLIFEDAY]),
+                                                  toString(gGlobalParam.CMParam.aulCms[DISP_N3_UVLIFEHOUR]), "h");
+        }
         break;
     default:
         break;

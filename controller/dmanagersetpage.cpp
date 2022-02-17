@@ -143,6 +143,8 @@ void DManagerSetPage::buildTranslation()
     
     m_pAdditionalLb[REPHILINK_SETTING]->setText(tr("RephiLink"));
     m_pAdditionalLb[HPCIR_SETTING]->setText(tr("HP Recir."));
+    m_pAdditionalLb[COMPENSATION_SETTING]->setText(tr("Temperature Compensation"));
+    
     m_pNetworkWidget->buildTranslation();
 }
 
@@ -318,6 +320,15 @@ void DManagerSetPage::update()
         {
             m_pAdditionalWidget[HPCIR_SETTING]->hide();
         }
+    }
+
+    if(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_COMPENSATION))
+    {
+         m_pAdditionalCheck[COMPENSATION_SETTING]->setChecked(true);
+    }
+    else
+    {
+         m_pAdditionalCheck[COMPENSATION_SETTING]->setChecked(false);
     }
 }
 
@@ -727,6 +738,23 @@ void DManagerSetPage::on_RephiLinkcheckBox_clicked()
     }
 
     MainSaveMiscParam(gGlobalParam.iMachineType,miscParam);
+    MainUpdateGlobalParam();
+}
+
+void DManagerSetPage::on_CompensationcheckBox_changeState(int state)
+{
+    Q_UNUSED(state);
+    DISP_SUB_MODULE_SETTING_STRU  smParam = gGlobalParam.SubModSetting;
+    if(Qt::Checked == m_pAdditionalCheck[COMPENSATION_SETTING]->checkState())
+    {
+        smParam.ulAddFlags |= 1 << DISP_SM_COMPENSATION;
+    }
+    else
+    {
+        smParam.ulAddFlags &= ~(1 << DISP_SM_COMPENSATION);
+    }
+    
+    MainSaveSubModuleSetting(gGlobalParam.iMachineType,smParam);
     MainUpdateGlobalParam();
 }
 
@@ -1206,7 +1234,8 @@ void DManagerSetPage::initAdditionalSettingsPage()
 
     connect(m_pAdditionalCheck[HPCIR_SETTING], SIGNAL(stateChanged(int)), this, SLOT(on_HPCircheckBox_changeState(int)));
     connect(m_pAdditionalCheck[REPHILINK_SETTING], SIGNAL(clicked()), this, SLOT(on_RephiLinkcheckBox_clicked()));
-
+    connect(m_pAdditionalCheck[COMPENSATION_SETTING], SIGNAL(stateChanged(int)), this, SLOT(on_CompensationcheckBox_changeState(int)));
+    
     QFile qss(":/app/other.qss");
     qss.open(QFile::ReadOnly);
     QString strQss = QLatin1String (qss.readAll());

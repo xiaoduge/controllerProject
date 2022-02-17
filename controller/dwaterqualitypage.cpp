@@ -233,24 +233,26 @@ void DWaterQualityPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info)
             switch(gGlobalParam.iMachineType)
             {
             case MACHINE_L_RO_LOOP:
-			case MACHINE_L_UP:
+            case MACHINE_L_UP:
             case MACHINE_RO:
             case MACHINE_UP:
-			case MACHINE_PURIST:
+            case MACHINE_PURIST:
             case MACHINE_ADAPT:
                 break;
-			case MACHINE_L_EDI_LOOP:
-			case MACHINE_EDI:
-				if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
-				{
-		            updateValue(m_tags[HP_Resis],
-                    			strWaterUnit.arg(toOneDecimal(fQ)),
-                    			strTempUnit.arg(toOneDecimal(fT)));
+            case MACHINE_L_Genie:
+            case MACHINE_Genie:
+            case MACHINE_L_EDI_LOOP:
+            case MACHINE_EDI:
+                if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir))
+                {
+                    updateValue(m_tags[HP_Resis],
+                                strWaterUnit.arg(toOneDecimal(fQ)),
+                                strTempUnit.arg(toOneDecimal(fT)));
 
-	                m_historyInfo[HP_Resis].value1 = info->fQuality;
-	                m_historyInfo[HP_Resis].value2 = info->fTemperature;
-				}
-				break;
+                    m_historyInfo[HP_Resis].value1 = info->fQuality;
+                    m_historyInfo[HP_Resis].value2 = info->fTemperature;
+                }
+                break;
             default:
             {
                 updateValue(m_tags[HP_Resis],
@@ -327,6 +329,8 @@ void DWaterQualityPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info)
                 }
 			}
 			break;
+        case MACHINE_L_Genie:
+        case MACHINE_Genie:
 		case MACHINE_L_EDI_LOOP:
 		case MACHINE_EDI:
 			if(!(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_HP_Water_Cir)))
@@ -428,6 +432,7 @@ void DWaterQualityPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info)
     case APP_EXE_I1_NO: // RO In
     {
         float fT;
+        bool  bUpdateTapCond = false;
 
         if (TEMERATURE_UINT_CELSIUS == gGlobalParam.MiscParam.iUint4Temperature)
         {
@@ -438,8 +443,27 @@ void DWaterQualityPage::updEcoInfo(int iIndex,ECO_INFO_STRU *info)
             fT = toFahrenheit(info->fTemperature);
             strTempUnit = strUnitMsg[UNIT_F];
         }
-
+        //检查是否需要更新自来水电导率
         if (DispGetInitRunFlag())
+        {
+            bUpdateTapCond = true;
+        }
+        switch(gGlobalParam.iMachineType)
+        {
+        case MACHINE_ADAPT:
+            if(CcbGetTwFlag() || CcbGetTwPendingFlag())
+            {
+                if(NOT_RUNING_STATE_FLUSH == DispGetRunningStateFlag())
+                {
+                    bUpdateTapCond = true;
+                }
+            }
+            break;
+        default:
+            break;
+        }
+
+        if (bUpdateTapCond)
         {
             updateValue(m_tags[Tap_Cond],
                         strUnitMsg[UNIT_USCM].arg(info->fQuality, 0, 'f', 1),

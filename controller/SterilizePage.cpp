@@ -417,6 +417,9 @@ void SterilizePage::on_btn_clicked(int index)
                         case DISP_U_PACK:
                              QMessageBox::about(NULL, tr("About"), tr("No U-PACK detected!"));
                              break;
+                        case DISP_ICP_PACK:
+                             QMessageBox::about(NULL, tr("About"), tr("No ICP-PACK detected!"));
+                             break;
                         case DISP_AT_PACK:
                              QMessageBox::about(NULL, tr("About"), tr("No AT-PACK detected!"));
                              break;

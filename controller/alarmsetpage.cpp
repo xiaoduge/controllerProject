@@ -105,6 +105,9 @@ void AlarmSetPage::buildTranslation()
         case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_UPACK_OOP):
             m_plistItem[iIdx]->setName(tr("U Pack Not Detected"));
             break;
+        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_ICPPACK_OOP):
+            m_plistItem[iIdx]->setName(tr("ICP Pack Not Detected"));
+            break;
             /* Part Two */
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE):
             m_plistItem[iIdx]->setName(tr("Low Tap Pressure"));
@@ -484,6 +487,16 @@ void AlarmSetPage::save()
             else
             {
                 Param.aulFlag[DISP_ALARM_PART0] &= ~(1<<DISP_ALARM_PART0_UPACK_OOP);
+            }
+            break;
+        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_ICPPACK_OOP):
+            if (BITMAPBUTTON_STATE_SEL == m_plistItem[iIdx]->getSwitchState())
+            {
+                Param.aulFlag[DISP_ALARM_PART0] |= (1<<DISP_ALARM_PART0_ICPPACK_OOP);
+            }
+            else
+            {
+                Param.aulFlag[DISP_ALARM_PART0] &= ~(1<<DISP_ALARM_PART0_ICPPACK_OOP);
             }
             break;
             
@@ -936,6 +949,16 @@ void AlarmSetPage::update()
                 m_plistItem[iIdx]->setSwitchState(BITMAPBUTTON_STATE_UNSEL);
             }
             break;
+        case MAKEID(DISP_ALARM_PART0,DISP_ALARM_PART0_ICPPACK_OOP):
+            if (pParam->aulFlag[DISP_ALARM_PART0] & (1<<DISP_ALARM_PART0_ICPPACK_OOP))
+            {
+                m_plistItem[iIdx]->setSwitchState(BITMAPBUTTON_STATE_SEL);
+            }
+            else
+            {
+                m_plistItem[iIdx]->setSwitchState(BITMAPBUTTON_STATE_UNSEL);
+            }
+            break;    
             
             /* Part Two */
         case MAKEID(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_SOURCE_WATER_PRESSURE):

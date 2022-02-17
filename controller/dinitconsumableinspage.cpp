@@ -341,6 +341,26 @@ void DInitConsumableInsPage::initPackConfig()
 
     switch(gGlobalParam.iMachineType)
     {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_PURIST:
+    case MACHINE_ADAPT:
+        if(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_DEION))
+        {
+            install_info.iRfid = APP_RFID_SUB_TYPE_ICPPACK;
+            install_info.strName = tr("ICP Pack");
+            m_map[Type0].insert(DISP_ICP_PACK, install_info);
+            m_list[Type0].append(DISP_ICP_PACK);
+        }
+        break;
+    default:
+        break;
+    }
+
+    switch(gGlobalParam.iMachineType)
+    {
     case MACHINE_L_UP:
         if(gAdditionalCfgParam.machineInfo.iMachineFlow < 300)
         {

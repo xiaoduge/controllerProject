@@ -865,7 +865,11 @@ void SystemMonitorPage::updateWorkState()
         if (DispGetFwFlag())
         {
             strInfo3 = tr("Fill Feed Tank");
-        }         
+        }  
+        else
+        {
+            strInfo3 = " ";
+        }
         break;
    case DISP_WORK_STATE_PREPARE:
        if(NOT_RUNING_STATE_FLUSH == DispGetRunningStateFlag())

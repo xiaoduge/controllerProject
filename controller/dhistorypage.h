@@ -2,6 +2,8 @@
 #define DHISTORYPAGE_H
 
 #include "subpage.h"
+#include "Display.h"
+
 
 class QCalendarWidget;
 class SendToPage;
@@ -43,6 +45,10 @@ public:
         HISTORYPAGE_DATA_GETW,
         HISTORYPAGE_DATA_PWATER,
         HISTORYPAGE_DATA_LOG,
+#ifdef WATERCARDREADER
+        HISTORYPAGE_DATA_WATERCARD,
+#endif
+
         HISTORYPAGE_DATA_TABLE_NUM
     };
 
@@ -85,6 +91,9 @@ private:
     void dbQueryGetWater();
     void dbQueryProduceWater();
     void dbQueryLog();
+#ifdef WATERCARDREADER
+    void dbQueryWaterCardInfo();
+#endif
 
     void initTabelHeaderData(QSqlTableModel* tableModel, int tableID);
     void initTabelHeaderData();

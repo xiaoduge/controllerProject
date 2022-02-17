@@ -76,8 +76,11 @@ unsigned char gaucIapBuffer[1024];
 #define haveZigbee(pCcb)((pCcb)->MiscParam.iNetworkMask & (1 << DISPLAY_NETWORK_ZIGBEE))
 
 #define haveStepper(pCcb)((pCcb)->SubModSetting.ulAddFlags & (1 << DISP_SM_STEPPERMOTOR))
+#define TempCompensation(pCcb)((pCcb)->SubModSetting.ulAddFlags & (1 << DISP_SM_COMPENSATION))
 
 static const float s_fTankHOffset = 0.08; //水箱高度偏差
+
+//#define EDI_Drain_E5   //E5阀做为EDI不合格排放阀
 
 int is_B2_FULL(ulValue)
 {
@@ -109,7 +112,7 @@ int QtwWorkDone()
     float fDeviation = 0;
     float fNextDeviation = 0;
     int offset = 5; //偏差补偿5，10
-    printf("dcj TotalFm:%d; curFm: %d; increment: %d; lastTimeFm: %d\n", gCcb.QtwMeas.ulTotalFm, curFm, increment, g_ulQtwLastTimeFm);
+   // printf("dcj TotalFm:%d; curFm: %d; increment: %d; lastTimeFm: %d\n", gCcb.QtwMeas.ulTotalFm, curFm, increment, g_ulQtwLastTimeFm);
     if(gCcb.QtwMeas.ulTotalFm == INVALID_FM_VALUE) //非定量取水直接返回
     {
         return 0;
@@ -246,6 +249,9 @@ int CcbC2Regulator(int id,float fv,int on);
 DISPHANDLE CcbInnerWorkInitRun(void);
 
 void CanCcbSndQtwRspMsg(int iIndex,int iCode);
+
+void work_init_run(void *para);
+
 
 int MakeThdState(int id,int flag)
 {
@@ -2533,25 +2539,49 @@ int SetStepperMotorPosition(int iSteps)
 int SetStepperMotorSpeed(int iSpeed)
 {
     static int oldSpeed = PUMP_SPEED_NUM;
-    int direction = 0; // direction : 1 加;  0 减
-
-    if(oldSpeed < iSpeed)
-    {
-        direction = 1;
-    }
-    oldSpeed = iSpeed;
-
     short sPosition = 1800;
     short sStart = gCaliParam.stepperCali.iStart;
 
-    if(1 == direction)
+    if(oldSpeed < iSpeed)
     {
-        sStart += 50;
+        sStart += 100;  //加速
     }
+    oldSpeed = iSpeed;
 
-    if(iSpeed < PUMP_SPEED_10)
+    switch (iSpeed)
     {
-        sPosition = sStart + iSpeed * 15;
+    case PUMP_SPEED_00:
+    case PUMP_SPEED_01:
+        sPosition = sStart;
+        break;
+    case PUMP_SPEED_02:
+        sPosition = sStart + 20;
+        break;
+    case PUMP_SPEED_03:
+        sPosition = sStart + 40;
+        break;
+    case PUMP_SPEED_04:
+        sPosition = sStart + 50;
+        break;
+    case PUMP_SPEED_05:
+        sPosition = sStart + 60;
+        break;
+    case PUMP_SPEED_06:
+        sPosition = sStart + 70;
+        break;
+    case PUMP_SPEED_07:
+        sPosition = sStart + 80;
+        break;
+    case PUMP_SPEED_08:
+        sPosition = sStart + 90;
+        break;
+    case PUMP_SPEED_09:
+        sPosition = sStart + 100;
+        break;
+    case PUMP_SPEED_10:
+        sPosition = 1800;
+        break;
+
     }
 
     //QTWSTEPPER,步进电磁阀的CAN通讯地址
@@ -3248,6 +3278,8 @@ void work_start_qtw(void *para)
     pCcb->bit1B2Empty = FALSE;
     pCcb->bit1AlarmUP = FALSE;
 
+    ex_gCcb.Ex_Disp_Tick = 0;
+
     CcbInitHandlerQtwMeas(iIndex);
 
     /* Processing */
@@ -3264,16 +3296,15 @@ void work_start_qtw(void *para)
     case MACHINE_ADAPT:
     {
         int iLoop;
-        int iFlushTime; //冲洗时间，单位second
         CanCcbTransState(DISP_WORK_STATE_RUN,DISP_WORK_SUB_RUN_INIT);
 
         //距离上次取水超过1min
-        if ((gulSecond - pCcb->ulAdapterAgingCount > 60) || g_runConditions.bit1FirstQtw || g_runConditions.bit1NewPPack)
+        if ((gulSecond - pCcb->ulAdapterAgingCount > 60) || g_runConditions.bit1FirstQtw)
         {
             gCcb.aHandler[iIndex].bit1PendingQtw = 1;
 
             //如果是开机后第一次取水，则先进行冲洗过程
-            if(g_runConditions.bit1FirstQtw || g_runConditions.bit1NewPPack)
+            if(g_runConditions.bit1FirstQtw )
             {
                 g_runConditions.bit1FirstQtw = 0;
                 iRet = CcbUpdateIAndBs(pWorkItem->id, 0, pCcb->ulPMMask, pCcb->ulPMMask);    
@@ -3317,15 +3348,7 @@ void work_start_qtw(void *para)
                 pCcb->bit3RuningState = NOT_RUNING_STATE_FLUSH;
                 CcbNotState(NOT_STATE_OTHER);
 
-                if(g_runConditions.bit1NewPPack)
-                {
-                    iFlushTime = 20*60;
-                }
-                else
-                {
-                    iFlushTime = pCcb->MiscParam.iPowerOnFlushTime*60;
-                }
-                for(iLoop = 0; iLoop < iFlushTime; ++iLoop)
+                for(iLoop = 0; iLoop < pCcb->MiscParam.iPowerOnFlushTime*60; ++iLoop)
                 {
                     iRet = CcbWorkDelayEntry(pWorkItem->id, 1000, CcbDelayCallBack);
                     if (iRet )
@@ -3335,7 +3358,6 @@ void work_start_qtw(void *para)
                         return ;
                     } 
                 }
-                g_runConditions.bit1NewPPack = 0;
             }
             
             //第一步：冲洗
@@ -3614,6 +3636,96 @@ void work_start_qtw(void *para)
         work_qtw_succ(iIndex);
         break;
     }
+    case MACHINE_PURIST:
+        /* check B2 & get B2 reports from exe */
+        if (haveB2(&gCcb))
+        {
+            iRet = CcbGetPmValue(pWorkItem->id,APP_EXE_PM2_NO,1);
+            if (iRet )
+            {
+                VOS_LOG(VOS_LOG_WARNING,"CcbGetPmValue Fail %d",iRet);  
+                work_qtw_fail(pCcb,APP_PACKET_HO_ERROR_CODE_TANK_EMPTY,iIndex,pWorkItem->id);        
+                return ;
+            }
+        
+            if (CcbConvert2Pm2SP(pCcb->ExeBrd.aPMObjs[APP_EXE_PM2_NO].Value.ulV) < CcbGetSp6())
+            {
+                pCcb->bit1B2Empty = TRUE;
+                work_qtw_fail(pCcb,APP_PACKET_HO_ERROR_CODE_TANK_EMPTY,iIndex,pWorkItem->id);        
+                return;
+            }
+        }
+
+#ifdef STEPPERMOTOR
+        if(haveStepper(pCcb))
+        {
+            //先调节步进电机，延时1s再进行下一步
+            SetStepperMotorSpeed(GetSpeedValue(pCcb->aHandler[iIndex].iDevType));
+            CcbWorkDelayEntry(pWorkItem->id, 500, CcbDelayCallBack);
+        }
+#endif
+        if (haveB2(&gCcb))
+        {
+            iTmp = (1<<APP_EXE_E4_NO)|(1<<APP_EXE_E9_NO)|(1<<APP_EXE_C2_NO)|(1<<APP_EXE_N2_NO);
+        }
+        else
+        {
+            iTmp = (1<<APP_EXE_E4_NO)|(1<<APP_EXE_E9_NO)|(1<<APP_EXE_E10_NO)|(1<<APP_EXE_C2_NO)|(1<<APP_EXE_N2_NO);
+        }
+
+        iRet = CcbUpdateSwitch(pWorkItem->id, 0, pCcb->ulHyperTwMask, iTmp);
+        if (iRet )
+        {
+            VOS_LOG(VOS_LOG_WARNING,"CcbUpdateSwitch Fail %d",iRet);    
+            work_qtw_fail(pCcb,APP_PACKET_HO_ERROR_CODE_UNKNOW,iIndex,pWorkItem->id);
+            return ;
+        }
+
+        if ((ulQtwSwMask & (1 << APP_EXE_C2_NO))
+           && pCcb->bit1CirSpeedAdjust)
+        {
+#ifdef STEPPERMOTOR
+            if(haveStepper(pCcb))
+            {
+                //调节泵压和步进电磁阀
+                int iSpeed = GetSpeedValue(pCcb->aHandler[iIndex].iDevType);
+                CcbC2Regulator(pWorkItem->id, GetSpeedVoltage(iSpeed), TRUE);
+                // SetStepperMotorSpeed(iSpeed);
+            }
+            else
+            {
+                CcbC2Regulator(pWorkItem->id,24,TRUE);
+            }
+#else
+            CcbC2Regulator(pWorkItem->id,24,TRUE);
+#endif
+        }
+
+        iTmp = (1 << APP_EXE_I2_NO)|(1 << APP_EXE_I4_NO)|(1 << APP_EXE_I5_NO);
+
+        iRet = CcbUpdateIAndBs(pWorkItem->id,0,iTmp,iTmp);
+        if (iRet )
+        {
+            VOS_LOG(VOS_LOG_WARNING,"CcbUpdateIAndBs Fail %d",iRet);
+            
+            /* notify ui (late implemnt) */
+            work_qtw_fail(pCcb,APP_PACKET_HO_ERROR_CODE_UNKNOW,iIndex,pWorkItem->id);        
+            return ;
+        }
+    
+        iTmp = (1 << APP_FM_FM1_NO); /* start flow report */
+        
+        iRet = CcbUpdateFms(pWorkItem->id,0,iTmp,iTmp);
+        if (iRet )
+        {
+            VOS_LOG(VOS_LOG_WARNING,"CcbUpdateFms Fail %d",iRet);    
+            /* notify ui (late implemnt) */
+            work_qtw_fail(pCcb,APP_PACKET_HO_ERROR_CODE_UNKNOW,iIndex,pWorkItem->id);        
+            return ;
+        }
+        pCcb->iCurTwIdx = iIndex;
+        work_qtw_succ(iIndex);
+        break;
     default:
         /* check B2 & get B2 reports from exe */
         if (haveB2(&gCcb))
@@ -3731,6 +3843,10 @@ void work_start_qtw(void *para)
 
 DISPHANDLE CcbInnerWorkStartQtw(int iIndex)
 {
+    if(!checkCardReader())
+    {
+        return;
+    }
     //2019.10.15 add
     if(!check_Sub_Account())
     {
@@ -3835,6 +3951,11 @@ void work_stop_qtw(void *para)
 
     pCcb->ulAdapterAgingCount = gulSecond;
     g_ulQtwLastTimeFm = 0;
+
+#ifdef STEPPERMOTOR
+    CcbNotSpeed(pCcb->aHandler[iIndex].iDevType,PUMP_SPEED_10);
+    DispSndHoSpeed(pCcb->aHandler[iIndex].iDevType, PUMP_SPEED_10);
+#endif
 }
 
 DISPHANDLE CcbInnerWorkStopQtw(int iIndex)
@@ -5286,6 +5407,34 @@ void checkB2ToProcessB2Empty()
 }
 
 /**
+ * 检查原水箱是否需要启动补水
+ * @param iPmId [压力传感器id]
+ */
+void checkB2ToProcessB2NeedFill()
+{
+    float fValue = CcbConvert2Pm2SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM2_NO].Value.ulV);
+
+    if ( gCcb.ExeBrd.ucLeakState || (DISP_WORK_STATE_KP == gCcb.curWorkState.iMainWorkState))
+    {
+        return;
+    }
+
+    if((getKeyState() & (1 << APP_EXE_DIN_LEAK_KEY)) ||  getLeakState())
+    {
+        return;
+    }
+
+    if(fValue < CcbGetSp5())
+    {
+        gCcb.bit1NeedFillTank = 1;
+        if (!SearchWork(work_start_fill_water))
+        {
+            CcbInnerWorkStartFillWater();
+        }                
+    } 
+}
+
+/**
  * 检查纯水箱是否已满，满则停止产水
  * @param iPmId [压力传感器id]
  */
@@ -5308,6 +5457,21 @@ void checkB2ToProcessB2Full()
                }
             }
         }
+        if(MACHINE_PURIST == gCcb.ulMachineType)
+        {
+            if (fValue >= B2_FULL)
+            {
+                if (!SearchWork(work_stop_fill_water))
+                {
+                    CcbInnerWorkStopFillWater();
+                }
+            }
+            else
+            {
+                checkB2ToProcessB2NeedFill();
+            }
+        }
+
     } 
 }
 
@@ -5335,11 +5499,16 @@ void checkB3ToProcessB3NeedFill()
 {
     float fValue = CcbConvert2Pm3SP(gCcb.ExeBrd.aPMObjs[APP_EXE_PM3_NO].Value.ulV);
 
-	if((getKeyState() & (1 << APP_EXE_DIN_LEAK_KEY)) ||  getLeakState())
-	{
-		return;
-	}
-	
+    if ( gCcb.ExeBrd.ucLeakState || (DISP_WORK_STATE_KP == gCcb.curWorkState.iMainWorkState))
+    {
+        return;
+    }
+
+    if((getKeyState() & (1 << APP_EXE_DIN_LEAK_KEY)) ||  getLeakState())
+    {
+        return;
+    }
+
     if(fValue < CcbGetSp8())
     {
         gCcb.bit1NeedFillTank = 1;
@@ -5486,6 +5655,32 @@ void CcbNotAlarmFire(int iPart,int iId,int bFired)
 
 }
 
+#ifdef EDI_Drain_E5   //E5阀做为EDI不合格排放阀
+void Jump2Drain()
+{
+    DISPHANDLE hdl ;        
+    hdl = SearchWork(work_init_run);
+
+    if (hdl)
+    {
+        CcbCancelWork(hdl);
+    }
+
+    hdl = SearchWork(work_normal_run);
+
+    if (hdl)
+    {
+        CcbCancelWork(hdl);
+    }                   
+    
+    if (!SearchWork(work_init_run))
+    {
+        CcbInnerWorkInitRun();
+    }                
+
+}
+#endif
+
 //2018.12.21 add
 void Check_RO_EDI_Alarm(int iEcoId)
 {
@@ -5551,6 +5746,10 @@ void Check_RO_EDI_Alarm(int iEcoId)
                         gCcb.ulFiredAlarmFlags |= ALARM_ROPW;
 
                         CcbNotAlarmFire(DISP_ALARM_PART1,DISP_ALARM_PART1_HIGER_RO_PRODUCT_CONDUCTIVITY,TRUE);
+                        
+#ifdef EDI_Drain_E5   
+                        Jump2Drain();
+#endif
                     }
                 }
             }
@@ -5583,6 +5782,10 @@ void Check_RO_EDI_Alarm(int iEcoId)
                     {
                         gCcb.ulFiredAlarmFlags |= ALARM_EDI;
                         CcbNotAlarmFire(DISP_ALARM_PART1,DISP_ALARM_PART1_LOWER_EDI_PRODUCT_RESISTENCE,TRUE);
+                        
+#ifdef EDI_Drain_E5   
+                        Jump2Drain();
+#endif
                     }
                 }
             }
@@ -7050,6 +7253,11 @@ void work_start_Leak(void *para)
     CcbNotAlarmFire(0XFF, DISP_ALARM_B_LEAK, TRUE);
 
     CanCcbTransState(DISP_WORK_STATE_KP, DISP_WORK_SUB_IDLE);
+
+    if (!SearchWork(work_stop_fill_water))
+    {
+        CcbInnerWorkStopFillWater();
+    }
     work_start_Leak_succ();
 }
 
@@ -7207,30 +7415,37 @@ void work_start_key(void *para)
     {
     case APP_EXE_DIN_RF_KEY:
         {
-            /* E10 ON */
-            if(is_SWPUMP_FRONT(&gCcb))
+            if(!((getKeyState() & (1 << APP_EXE_DIN_LEAK_KEY)) ||  getLeakState()))
             {
-                iTmp = (1 << APP_EXE_E10_NO)|(1 << APP_EXE_C3_NO);
-            }
-            else
-            {
-                iTmp = (1 << APP_EXE_E10_NO);
-            }
+                if(is_SWPUMP_FRONT(&gCcb))
+                {
+                    if(haveB3(pCcb))
+                    {
+                        iTmp = (1 << APP_EXE_C3_NO);
+                    }
+                    else
+                    {
+                        iTmp = (1 << APP_EXE_E10_NO)|(1 << APP_EXE_C3_NO);
+                    }
+                }
+                else
+                {
+                    iTmp = (1 << APP_EXE_E10_NO);
+                }
 
-            iRet = CcbUpdateSwitch(pWorkItem->id,0,iTmp,iTmp);
-            if (iRet )
-            {
-                VOS_LOG(VOS_LOG_WARNING,"CcbUpdateSwitch Fail %d",iRet);
-                work_start_key_fail((int)pWorkItem->extra);
+                iRet = CcbUpdateSwitch(pWorkItem->id,0,iTmp,iTmp);
+                if (iRet )
+                {
+                    VOS_LOG(VOS_LOG_WARNING,"CcbUpdateSwitch Fail %d",iRet);
+                    work_start_key_fail((int)pWorkItem->extra);
 
-                return ;
+                    return ;
+                }
             }
-
-            //CanCcbTransState(DISP_WORK_STATE_KP,DISP_WORK_SUB_IDLE);
         }
         break;
     case APP_EXE_DIN_LEAK_KEY:
-        {
+        { 
             /* stop all */
             iTmp = 0;
             iRet = CcbSetSwitch(pWorkItem->id,0,iTmp); // don care modbus exe result
@@ -7248,6 +7463,11 @@ void work_start_key(void *para)
             CcbNotAlarmFire(0XFF, DISP_ALARM_B_TANKOVERFLOW, TRUE);
 
             CanCcbTransState(DISP_WORK_STATE_KP,DISP_WORK_SUB_IDLE);
+
+            if (!SearchWork(work_stop_fill_water))
+            {
+                CcbInnerWorkStopFillWater();
+            }
         }
         break;
     }
@@ -7281,7 +7501,15 @@ void work_stop_key(void *para)
             /* E10 OFF */
             if(is_SWPUMP_FRONT(&gCcb))
             {
-                iTmp = (1 << APP_EXE_E10_NO)|(1 << APP_EXE_C3_NO);
+                if(haveB3(pCcb))
+                {
+                    iTmp = (1 << APP_EXE_C3_NO);
+                }
+                else
+                {
+                    iTmp = (1 << APP_EXE_E10_NO)|(1 << APP_EXE_C3_NO);
+                }
+                
             }
             else
             {
@@ -7502,9 +7730,6 @@ int CcbC2Regulator(int id,float fv,int on)
     return 0;
 }
 
-#define SMOOTHI2
-
-#ifdef SMOOTHI2
 /**
  * @Author: dcj
  * @Date: 2021-01-14 08:58:17
@@ -7532,7 +7757,100 @@ void smoothI2Data(float newValue)
 
     discard = 0;
 }
-#endif
+
+//根据温度求电阻率温补系数
+void get_Kcoef_Kp(double t, double *Kcoef, double *Kp)
+{
+    if(t<20)
+    {
+        *Kcoef=0.00079*t*t-0.0539*t+1.873;
+        *Kp=0.365e-4*t*t+0.775e-3*t+0.0119;
+    }
+    else if(t<40)
+    {
+        *Kcoef=0.0000125*t*t-0.02705*t+1.602;
+        *Kp=0.59e-4*t*t-0.9e-4*t+0.0202;
+    }
+    else
+    {
+        *Kcoef=-0.000065*t*t-0.00215*t+0.91;
+        *Kp=0.849e-4*t*t-0.205e-2*t+0.057;
+    }
+}
+
+/*
+ *  
+ * @Description: 根据当前电阻率和温度，反推不带温补（25度）的电阻率
+ * @param {double} fG25x： 当前电阻率
+ * @param {int} tx： 当前温度
+ */
+double ResNoTempCompensation(double fG25x, int tx)
+{
+    double Kcoef, Kp, Rx;
+
+    get_Kcoef_Kp((double)tx/10, &Kcoef, &Kp);
+    Rx = (1/(double)fG25x - 0.05482)/Kcoef + Kp;
+
+    get_Kcoef_Kp(250/10, &Kcoef, &Kp);
+    double newValue = 1/(Kcoef*(Rx-Kp) + 0.05482);
+
+    return newValue;
+}
+
+/*
+ *  
+ * @Description: 根据当前电导率和温度，反推不带温补（25度）的电导率
+ * @param {double} fG25x： 当前电导率
+ * @param {int} tx： 当前温度
+ */
+double CondNoTempCompensation(double fG25x, int tx)
+{
+    return fG25x * (1+0.02*(tx-25));
+}
+
+/*
+ *  
+ * @Description: 电阻率/电导率 乘上校准系数
+ * @param {int} iChl： 通道
+ */
+void EnableCalibrate(int iChl)
+{
+    switch(iChl)
+    {
+    case APP_EXE_I1_NO:
+        gCcb.ExeBrd.aEcoObjs[iChl].Value.eV.fWaterQ *= gCaliParam.pc[DISP_PC_COFF_SOURCE_WATER_CONDUCT].fk;
+        gCcb.ExeBrd.aEcoObjs[iChl].Value.eV.usTemp *= gCaliParam.pc[DISP_PC_COFF_SOURCE_WATER_TEMP].fk;
+        break;
+    case APP_EXE_I2_NO:
+        gCcb.ExeBrd.aEcoObjs[iChl].Value.eV.fWaterQ *= gCaliParam.pc[DISP_PC_COFF_RO_WATER_CONDUCT].fk;
+        gCcb.ExeBrd.aEcoObjs[iChl].Value.eV.usTemp *= gCaliParam.pc[DISP_PC_COFF_RO_WATER_TEMP].fk;
+        break;
+    case APP_EXE_I3_NO:
+        gCcb.ExeBrd.aEcoObjs[iChl].Value.eV.fWaterQ *= gCaliParam.pc[DISP_PC_COFF_EDI_WATER_CONDUCT].fk;
+        gCcb.ExeBrd.aEcoObjs[iChl].Value.eV.usTemp *= gCaliParam.pc[DISP_PC_COFF_EDI_WATER_TEMP].fk;
+        if(TempCompensation(&gCcb) && (gCcb.ExeBrd.aEcoObjs[iChl].Value.eV.fWaterQ > 16))
+            gCcb.ExeBrd.aEcoObjs[iChl].Value.eV.fWaterQ = 16;
+        break;
+    case APP_EXE_I4_NO:
+        gCcb.ExeBrd.aEcoObjs[iChl].Value.eV.fWaterQ *= gCaliParam.pc[DISP_PC_COFF_TOC_WATER_CONDUCT].fk;
+        gCcb.ExeBrd.aEcoObjs[iChl].Value.eV.usTemp *= gCaliParam.pc[DISP_PC_COFF_TOC_WATER_TEMP].fk;
+        if(TempCompensation(&gCcb) && (gCcb.ExeBrd.aEcoObjs[iChl].Value.eV.fWaterQ > 18.2))
+            gCcb.ExeBrd.aEcoObjs[iChl].Value.eV.fWaterQ = 18.2;
+        break;
+    case APP_EXE_I5_NO:
+        gCcb.ExeBrd.aEcoObjs[iChl].Value.eV.fWaterQ *= gCaliParam.pc[DISP_PC_COFF_UP_WATER_CONDUCT].fk;
+        gCcb.ExeBrd.aEcoObjs[iChl].Value.eV.usTemp *= gCaliParam.pc[DISP_PC_COFF_UP_WATER_TEMP].fk;
+        if(TempCompensation(&gCcb) && (gCcb.ExeBrd.aEcoObjs[iChl].Value.eV.fWaterQ > 18.2))
+            gCcb.ExeBrd.aEcoObjs[iChl].Value.eV.fWaterQ = 18.2;
+        break;
+    }
+
+    if(gCcb.ExeBrd.aEcoObjs[iChl].Value.eV.fWaterQ < 0)
+        gCcb.ExeBrd.aEcoObjs[iChl].Value.eV.fWaterQ = 0;
+
+    if(gCcb.ExeBrd.aEcoObjs[iChl].Value.eV.usTemp < 0)
+        gCcb.ExeBrd.aEcoObjs[iChl].Value.eV.usTemp = 0;
+}
 
 int CanCcbAfDataClientRpt4ExeBoard(MAIN_CANITF_MSG_STRU *pCanItfMsg)
 {
@@ -7551,7 +7869,24 @@ int CanCcbAfDataClientRpt4ExeBoard(MAIN_CANITF_MSG_STRU *pCanItfMsg)
             {
                 if (pEco->ucId < APP_EXE_ECO_NUM)
                 {
-#ifdef SMOOTHI2
+                    if(!TempCompensation(&gCcb))
+                    {
+                        switch(pEco->ucId)
+                        {
+                        case APP_EXE_I1_NO:
+                        case APP_EXE_I2_NO:
+                            pEco->ev.fWaterQ = CondNoTempCompensation(pEco->ev.fWaterQ, pEco->ev.usTemp);
+                            break;
+                        case APP_EXE_I3_NO:
+                        case APP_EXE_I4_NO:
+                        case APP_EXE_I5_NO:
+                            pEco->ev.fWaterQ = ResNoTempCompensation(pEco->ev.fWaterQ, pEco->ev.usTemp);
+                            break;
+                        default:
+                            break;
+                        }
+                    }
+
                     if(APP_EXE_I2_NO == pEco->ucId && gCcb.bit1ProduceWater)
                     {
                         smoothI2Data(pEco->ev.fWaterQ);
@@ -7563,92 +7898,37 @@ int CanCcbAfDataClientRpt4ExeBoard(MAIN_CANITF_MSG_STRU *pCanItfMsg)
                     gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.usTemp = pEco->ev.usTemp;
                     gCcb.ExeBrd.ulEcoValidFlags |= 1 << pEco->ucId;
 
-#else                    
-                    gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ = pEco->ev.fWaterQ;
-                    gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.usTemp = pEco->ev.usTemp;
-                    gCcb.ExeBrd.ulEcoValidFlags |= 1 << pEco->ucId;
-#endif
-
-                    //ex_dcj
-                    switch(pEco->ucId)
-                    {
-                    case 0:
-                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ *= gCaliParam.pc[DISP_PC_COFF_SOURCE_WATER_CONDUCT].fk;
-                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.usTemp *= gCaliParam.pc[DISP_PC_COFF_SOURCE_WATER_TEMP].fk;
-                        break;
-                    case 1:
-                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ *= gCaliParam.pc[DISP_PC_COFF_RO_WATER_CONDUCT].fk;
-                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.usTemp *= gCaliParam.pc[DISP_PC_COFF_RO_WATER_TEMP].fk;
-                        break;
-                    case 2:
-                    {
-                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ *= gCaliParam.pc[DISP_PC_COFF_EDI_WATER_CONDUCT].fk;
-                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.usTemp *= gCaliParam.pc[DISP_PC_COFF_EDI_WATER_TEMP].fk;
-                        if(gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ > 16)
-                            gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ = 16;
-                        break;
-                    }
-                    case 3:
-                    {
-                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ *= gCaliParam.pc[DISP_PC_COFF_TOC_WATER_CONDUCT].fk;
-                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.usTemp *= gCaliParam.pc[DISP_PC_COFF_TOC_WATER_TEMP].fk;
-                        if(gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ > 18.2)
-                            gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ = 18.2;
-                        break;
-                    }
-                    case 4:
-                    {
-                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ *= gCaliParam.pc[DISP_PC_COFF_UP_WATER_CONDUCT].fk;
-                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.usTemp *= gCaliParam.pc[DISP_PC_COFF_UP_WATER_TEMP].fk;
-                        if(gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ > 18.2)
-                            gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ = 18.2;
-                        break;
-                    }
-                    }
-
-                    if(gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ < 0)
-                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.fWaterQ = 0;
-
-                    if(gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.usTemp < 0)
-                        gCcb.ExeBrd.aEcoObjs[pEco->ucId].Value.eV.usTemp = 0;
-                    //end
+                    EnableCalibrate(pEco->ucId);
+                    
                     CanCcbEcoMeasurePostProcess(pEco->ucId);
 
-                    //2019.3.26 add
                     switch(gCcb.ulMachineType)
                     {
                     case MACHINE_L_Genie:
                     case MACHINE_L_EDI_LOOP:
                     case MACHINE_Genie:
                     case MACHINE_EDI:
-                    {
                         if(!haveHPCir(&gCcb) && (APP_EXE_I3_NO == pEco->ucId))
                         {
                             iEco4ZigbeeMask |= 0x1 << APP_EXE_I4_NO;
                         }
                         break;
-                    }
                     case MACHINE_L_UP:
                     case MACHINE_L_RO_LOOP:
                     case MACHINE_UP:
                     case MACHINE_RO:
-                    {
                         if(!haveHPCir(&gCcb) && (APP_EXE_I2_NO == pEco->ucId))
                         {
                             iEco4ZigbeeMask |= 0x1 << APP_EXE_I4_NO;
                         }
                         break;
-                    }
                     case MACHINE_ADAPT:
-                    {
                         if(APP_EXE_I2_NO == pEco->ucId)
                         {
                             iEco4ZigbeeMask |= 0x1 << APP_EXE_I4_NO;
                         }
                         break;
                     }
-                    }
-                    //end
 
                     if (APP_EXE_I4_NO == pEco->ucId)
                     {
@@ -7794,19 +8074,19 @@ int CanCcbAfDataClientRpt4ExeBoard(MAIN_CANITF_MSG_STRU *pCanItfMsg)
 
 #ifdef CFG_DO_PH
     case APP_PACKET_RPT_DO:
-    	{
-			APP_PH_DO_VALUE_STRU *pDO = (APP_PH_DO_VALUE_STRU *)pmg->aucData;
-			gCcb.ExeBrd.doInfo = *pDO;
-			CcbDONotify();
-    	}
-		break;
+        {
+            APP_PH_DO_VALUE_STRU *pDO = (APP_PH_DO_VALUE_STRU *)pmg->aucData;
+            gCcb.ExeBrd.doInfo = *pDO;
+            CcbDONotify();
+        }
+        break;
     case APP_PACKET_RPT_PH:
-    	{
-			APP_PH_DO_VALUE_STRU *pPH = (APP_PH_DO_VALUE_STRU *)pmg->aucData;
-			gCcb.ExeBrd.doInfo = *pPH;
-			CcbPHNotify();
-    	}
-		break;
+        {
+            APP_PH_DO_VALUE_STRU *pPH = (APP_PH_DO_VALUE_STRU *)pmg->aucData;
+            gCcb.ExeBrd.doInfo = *pPH;
+            CcbPHNotify();
+        }
+        break;
 #endif
     }
     return 0;
@@ -9426,7 +9706,11 @@ int CanCcbAfDataHOQtwReqMsg(MAIN_CANITF_MSG_STRU *pCanItfMsg)
     case APP_PACKET_HO_ACTION_START:
         {
             /* late implement */
-            if (DISP_WORK_STATE_RUN != gCcb.curWorkState.iMainWorkState4Pw)
+            if((MACHINE_ADAPT == gCcb.ulMachineType) && DispGetInitRunFlag() )
+            {
+                ucResult = APP_PACKET_HO_ERROR_CODE_UNREADY; // failed
+            }
+            else if (DISP_WORK_STATE_RUN != gCcb.curWorkState.iMainWorkState4Pw)
             {
                 ucResult = APP_PACKET_HO_ERROR_CODE_UNREADY; // failed
             }
@@ -10083,8 +10367,11 @@ int CanCcbZigbeeHOQtwReqMsg(ZBITF_MAIN_MSG_STRU *pZigbeeItfMsg)
     {
     case APP_PACKET_HO_ACTION_START:
         {
-            /* late implement */
-            if (DISP_WORK_STATE_RUN != gCcb.curWorkState.iMainWorkState4Pw)
+            if((MACHINE_ADAPT == gCcb.ulMachineType) && DispGetInitRunFlag() )
+            {
+                ucResult = APP_PACKET_HO_ERROR_CODE_UNREADY; // failed
+            }
+            else if (DISP_WORK_STATE_RUN != gCcb.curWorkState.iMainWorkState4Pw)
             {
                 ucResult = APP_PACKET_HO_ERROR_CODE_UNREADY; // failed
             }
@@ -11267,7 +11554,6 @@ void work_init_run_succ(int iWorkId)
 
 }
 
-//#define EDI_Drain_E5   //E5阀做为EDI不合格排放阀
 
 //设备运行10s冲洗，10s测压，清洗，制水
 void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem, CCB *pCcb, RUN_COMM_CALL_BACK cbf, RUN_COMM_CALL_BACK cbs)
@@ -11544,7 +11830,11 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem, CCB *pCcb, RUN_COMM_CALL_BACK
                     float fRej ;
                     
                     /* check appromixly 5*60 seconds */
-                    for (iLoop = 0; iLoop < DEFAULT_REG_CHECK_DURATION / DEFAULT_REJ_CHECK_PERIOD; iLoop++)                                   
+#ifndef EDI_Drain_E5   
+                    for (iLoop = 0; iLoop < DEFAULT_REG_CHECK_DURATION / DEFAULT_REJ_CHECK_PERIOD; iLoop++)  
+#else
+                    while(1) 
+#endif                                
                     {
                         iRet = CcbWorkDelayEntry(pWorkItem->id, DEFAULT_REJ_CHECK_PERIOD*1000, CcbDelayCallBack);
                         if (iRet )
@@ -13003,92 +13293,63 @@ void work_init_run_wrapper(void *para)
     case MACHINE_PURIST:
         break;
     case MACHINE_ADAPT:
-#if 0
-        iRet = CcbUpdateIAndBs(pWorkItem->id,0,pCcb->ulPMMask,pCcb->ulPMMask);    
-        if (iRet )
-        {
-            VOS_LOG(VOS_LOG_WARNING,"CcbUpdatePmObjState Fail %d",iRet);    
-    
-            /* notify ui (late implemnt) */
-            work_init_run_fail(pWorkItem->id);
-            
-            return ;
-        }
-
-        VOS_LOG(VOS_LOG_WARNING,"Flush for Init Run"); 
-
-        /* wash state for init run */
-        /* E1,E2,E3 ON*/
-        /* set  valves */
-        if(haveB3(&gCcb))
-        {
-            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1 << APP_EXE_E3_NO)|(1<<APP_EXE_C3_NO);
-        }
-        else
-        {
-            iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1 << APP_EXE_E3_NO)
-                    |(1 << APP_EXE_E10_NO)|(1 << APP_EXE_C3_NO);
-        }
-        
-        iRet = CcbSetSwitch(pWorkItem->id, 0, iTmp);
-        if (iRet )
-        {
-            VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet); 
-            work_init_run_fail(pWorkItem->id);  
-            /* notify ui (late implemnt) */
-            return ;
-        }
-    
-        /* enable I1 reports */
-        iTmp = 1 << APP_EXE_I1_NO;
-        iRet = CcbUpdateIAndBs(pWorkItem->id,0,iTmp,iTmp);
-        if (iRet )
-        {
-            VOS_LOG(VOS_LOG_WARNING,"CcbSetIAndBs Fail %d",iRet);   
-            work_init_run_fail(pWorkItem->id);  
-            /* notify ui (late implemnt) */
-            return ;
-        }
-
-        VOS_LOG(VOS_LOG_WARNING,"iPowerOnFlushTime %d",pCcb->MiscParam.iPowerOnFlushTime);    
-
-        pCcb->bit3RuningState = NOT_RUNING_STATE_FLUSH;
-
-        CcbNotState(NOT_STATE_OTHER);
-
         if(g_runConditions.bit1NewPPack)
         {
-            g_runConditions.bit1NewPPack = 0;
-            iRet = CcbWorkDelayEntry(pWorkItem->id,
-                                     20*60*1000,
-                                     CcbDelayCallBack);
-        }
-        else
-        {
-            iRet = CcbWorkDelayEntry(pWorkItem->id,pCcb->MiscParam.iPowerOnFlushTime*60*1000,CcbDelayCallBack);
-        }
-        
-        if (iRet )
-        {
-            VOS_LOG(VOS_LOG_WARNING,"CcbWorkDelayEntry Fail %d",iRet);    
-            work_init_run_fail(pWorkItem->id);  
-            /* notify ui (late implemnt) */
-            return ;
-        } 
+            iRet = CcbUpdateIAndBs(pWorkItem->id,0,pCcb->ulPMMask,pCcb->ulPMMask);    
+            if (iRet )
+            {
+                VOS_LOG(VOS_LOG_WARNING,"CcbUpdatePmObjState Fail %d",iRet);    
+                work_init_run_fail(pWorkItem->id);
+                return ;
+            }
 
-        //2019.2.14 add
-        if(!(DispGetUpCirFlag()
-             | DispGetTankCirFlag()
-             | DispGetTocCirFlag()
-             //| DispGetUpQtwFlag()
-             //| DispGetEdiQtwFlag()
-             | CcbGetTwFlag()
-             | CcbGetTwPendingFlag()))
-        {
-            iTmp = 0;
-            iRet = CcbUpdateSwitch(pWorkItem->id,0,pCcb->ulRunMask,iTmp);
+            VOS_LOG(VOS_LOG_WARNING,"Flush for Init Run"); 
+
+            /* wash state for init run */
+            if(haveB3(&gCcb))
+            {
+                iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1 << APP_EXE_E3_NO)|(1<<APP_EXE_C3_NO);
+            }
+            else
+            {
+                iTmp = (1 << APP_EXE_E1_NO)|(1<<APP_EXE_E2_NO)|(1 << APP_EXE_E3_NO)
+                        |(1 << APP_EXE_E10_NO)|(1 << APP_EXE_C3_NO);
+            }
+                    iRet = CcbSetSwitch(pWorkItem->id, 0, iTmp);
+            if (iRet )
+            {
+                VOS_LOG(VOS_LOG_WARNING,"CcbSetSwitch Fail %d",iRet); 
+                work_init_run_fail(pWorkItem->id);  
+                /* notify ui (late implemnt) */
+                return ;
+            }
+        
+            /* enable I1 reports */
+            iTmp = 1 << APP_EXE_I1_NO;
+            iRet = CcbUpdateIAndBs(pWorkItem->id,0,iTmp,iTmp);
+            if (iRet )
+            {
+                VOS_LOG(VOS_LOG_WARNING,"CcbSetIAndBs Fail %d",iRet);   
+                work_init_run_fail(pWorkItem->id);  
+                /* notify ui (late implemnt) */
+                return ;
+            }
+
+            VOS_LOG(VOS_LOG_WARNING,"iPowerOnFlushTime %d",pCcb->MiscParam.iPowerOnFlushTime);    
+
+            pCcb->bit3RuningState = NOT_RUNING_STATE_FLUSH;
+            CcbNotState(NOT_STATE_OTHER);
+
+            iRet = CcbWorkDelayEntry(pWorkItem->id, 20*60*1000, CcbDelayCallBack);
+            if (iRet )
+            {
+                VOS_LOG(VOS_LOG_WARNING,"CcbWorkDelayEntry Fail %d",iRet);    
+                work_init_run_fail(pWorkItem->id);  
+                return ;
+            } 
+            g_runConditions.bit1NewPPack = 0;
+            g_runConditions.bit1FirstQtw = 0;
         }
-#endif
         break;
     }
     //冲洗完成，进入运行状态
@@ -14648,6 +14909,11 @@ DISPHANDLE DispCmdTw(unsigned char *pucData, int iLength)
 
     VOS_LOG(VOS_LOG_DEBUG,"qtw: %d & %d",gCcb.curWorkState.iMainWorkState4Pw ,gCcb.curWorkState.iSubWorkState4Pw);    
     
+    //Adapt 冲洗的时候不能取水
+    if((MACHINE_ADAPT == gCcb.ulMachineType) && DispGetInitRunFlag() )
+    {
+        return DISP_INVALID_HANDLE;
+    }
 
     if (DISP_WORK_STATE_RUN != gCcb.curWorkState.iMainWorkState4Pw)
     {
@@ -15255,7 +15521,7 @@ void CcbInitMachineType(void)
         
         break;
     case MACHINE_PURIST:
-        gCcb.ulHyperTwMask  = (1<<APP_EXE_E4_NO)|(1<<APP_EXE_E5_NO)|(1<<APP_EXE_C2_NO)|(1<<APP_EXE_N2_NO)|(1<<APP_EXE_E9_NO);
+        gCcb.ulHyperTwMask  = (1<<APP_EXE_E4_NO)|(1<<APP_EXE_E5_NO)|(1<<APP_EXE_C2_NO)|(1<<APP_EXE_N2_NO)|(1<<APP_EXE_E9_NO)|(1<<APP_EXE_E10_NO);
         gCcb.ulNormalTwMask = 0;
         gCcb.ulCirMask      = (1<<APP_EXE_E4_NO)|(1<<APP_EXE_E5_NO)|(1<<APP_EXE_C2_NO)|(1<<APP_EXE_N2_NO)|(1<<APP_EXE_E9_NO);
 
@@ -16066,7 +16332,6 @@ void MainSecondTask4Pw()
 	checkForTubeCir();
 }
 
-//ex
 void Ex_DispDecPressure()
 {
     if((gCcb.curWorkState.iMainWorkState4Pw == DISP_WORK_STATE_IDLE)
@@ -16079,8 +16344,22 @@ void Ex_DispDecPressure()
         }
     }
 }
-//end
 
+/**
+ * 检查是否超过设定的最大取水时间则自动停止取水
+ */
+void Ex_MaxDispTime()
+{
+    //最大取水时间设置为零，则最大取水时间为无限大
+    if(CcbGetTwFlag() && ( 0 != gCcb.MiscParam.iMaxDispTime))
+    {
+        ex_gCcb.Ex_Disp_Tick++; //每次开始取水前置零
+        if(ex_gCcb.Ex_Disp_Tick > (gCcb.MiscParam.iMaxDispTime * 60))
+        {
+            CcbStopQtw();
+        }
+    }
+}
 
 void MainSecondTask()
 {
@@ -16097,6 +16376,7 @@ void MainSecondTask()
     MainSecondTask4Pw();
 
     Ex_DispDecPressure(); //ex
+    Ex_MaxDispTime();
 
 }
 
@@ -16337,58 +16617,58 @@ void CcbSyncSetMachineParams(DISP_MACHINE_PARAM_STRU *pParam)
 //dcj
 void SetSpeed2ScaleMap()
 {
-	int iLoop;
-	float fv; 
-	for (iLoop = 0; iLoop < PUMP_SPEED_NUM; iLoop++)
-	{
+    int iLoop;
+    float fv; 
+    for (iLoop = 0; iLoop < PUMP_SPEED_NUM; iLoop++)
+    {
 #ifdef STEPPERMOTOR
-		if(haveStepper(&gCcb))
-		{
-			fv = GetSpeedVoltage(iLoop);
-		}
-		else
-		{
-			
-			if(10 <= iLoop)
-			{
-				fv = 24.0;
-			}
-			else if(iLoop == 9)
-			{
-				fv = 18.0;
-			}
-			else if(iLoop == 8)
-			{
-				fv = 15.0;
-			}
-			else
-			{
-				fv = iLoop + 6.0;
-			}
-		}
+        if(haveStepper(&gCcb))
+        {
+            fv = GetSpeedVoltage(iLoop);
+        }
+        else
+        {
+            
+            if(10 <= iLoop)
+            {
+                fv = 24.0;
+            }
+            else if(iLoop == 9)
+            {
+                fv = 18.0;
+            }
+            else if(iLoop == 8)
+            {
+                fv = 15.0;
+            }
+            else
+            {
+                fv = iLoop + 6.0;
+            }
+        }
 #else
-		//2019.1.7
-		if(10 <= iLoop)
-		{
-			fv = 24.0;
-		}
-		else if(iLoop == 9)
-		{
-			fv = 18.0;
-		}
-		else if(iLoop == 8)
-		{
-			fv = 15.0;
-		}
-		else
-		{
-			fv = iLoop + 6.0;
-		}
+        //2019.1.7
+        if(10 <= iLoop)
+        {
+            fv = 24.0;
+        }
+        else if(iLoop == 9)
+        {
+            fv = 18.0;
+        }
+        else if(iLoop == 8)
+        {
+            fv = 15.0;
+        }
+        else
+        {
+            fv = iLoop + 6.0;
+        }
 #endif
-	   gCcb.aiSpeed2ScaleMap[iLoop] = DispConvertVoltage2RPumpSpeed(fv);
-	   //end
-	   //gCcb.aiSpeed2ScaleMap[iLoop] = DispConvertVoltage2RPumpSpeed(((24.0 - 5.0)*iLoop)/PUMP_SPEED_NUM + 5);
-	}
+        gCcb.aiSpeed2ScaleMap[iLoop] = DispConvertVoltage2RPumpSpeed(fv);
+        //end
+        //gCcb.aiSpeed2ScaleMap[iLoop] = DispConvertVoltage2RPumpSpeed(((24.0 - 5.0)*iLoop)/PUMP_SPEED_NUM + 5);
+    }
 
 }
 
@@ -16401,7 +16681,7 @@ void CcbSyncSetModuleParams(DISP_SUB_MODULE_SETTING_STRU *pParam)
         gCcb.bit1NeedFillTank = 0;
         gCcb.bit1FillingTank  = 0;
     }
-	SetSpeed2ScaleMap();
+    SetSpeed2ScaleMap();
 }
 
 void CcbSyncSetAlarmParams(DISP_ALARM_SETTING_STRU *pParam)
@@ -16483,6 +16763,12 @@ void DispStopCir()
     }
     CcbRmvWork(work_start_cir);
 }
+
+void DispStopQtw()
+{
+    CcbStopQtw();
+}
+
 
 
 //质量检验主板用

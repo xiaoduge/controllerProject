@@ -169,6 +169,11 @@ void SystemCfgPage::buildTranslation()
 #ifdef STEPPERMOTOR
 	m_chkStepperMotor->setText(tr("Motor Valve"));
 #endif
+    m_chkDeion->setText(tr("De-ion"));
+
+#ifdef WATERCARDREADER
+    m_chkWaterCard->setText(tr("Water Card"));
+#endif
 
 #ifdef CFG_DO_PH
     m_chkDO->setText(tr("DO"));
@@ -180,6 +185,9 @@ void SystemCfgPage::buildTranslation()
 
     m_lbLoginLingerName->setText(tr("Auto. Logout"));
     m_lbLoginLingerUnit->setText(tr("min"));
+
+    m_lbMaxDispTime->setText(tr("Max Dispensing Time"));
+    m_lbMaxDispTimeUnit->setText(tr("min"));
 
     m_lbDeviceTypeName->setText(tr("System Type"));
 
@@ -357,6 +365,25 @@ void SystemCfgPage::createControl()
         break;
     }
 
+    tmpWidget = new QWidget;
+    tmpWidget->setAutoFillBackground(true);
+    tmpWidget->setPalette(pal);
+    tmpWidget->setFixedSize(tmpWidgetWidth ,BACKWIDGET_HEIGHT);
+
+    rectTmp = sQrectAry[0];
+    rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 60);
+    m_chkDeion = new QCheckBox(tmpWidget);
+    m_chkDeion->setGeometry(rectTmp);
+    m_chkDeion->setStyleSheet(strQss4Chk);
+#ifdef WATERCARDREADER
+    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
+    rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 60);
+    m_chkWaterCard = new QCheckBox(tmpWidget);
+    m_chkWaterCard->setGeometry(rectTmp);
+    m_chkWaterCard->setStyleSheet(strQss4Chk);
+#endif
+    mainLayout->addWidget(tmpWidget);
+    
 #ifdef STEPPERMOTOR
     //步进电磁阀配置
     tmpWidget = new QWidget;
@@ -371,7 +398,7 @@ void SystemCfgPage::createControl()
     m_chkStepperMotor->setStyleSheet(strQss4Chk);
 
     mainLayout->addWidget(tmpWidget);
-#endif
+#endif   
 
 #ifdef CFG_DO_PH
     //pH、DO配置
@@ -457,6 +484,29 @@ void SystemCfgPage::createControl()
     rectTmp.setWidth(X_ITEM_WIDTH);
     m_lbLoginLingerUnit = new QLabel(tmpWidget);
     m_lbLoginLingerUnit->setGeometry(rectTmp);
+    mainLayout->addWidget(tmpWidget);
+
+    //最大取水时间
+    tmpWidget = new QWidget;
+    tmpWidget->setAutoFillBackground(true);
+    tmpWidget->setPalette(pal);
+    tmpWidget->setFixedSize(tmpWidgetWidth ,BACKWIDGET_HEIGHT);
+
+    rectTmp = sQrectAry[0];
+    rectTmp.setWidth(BACKWIDGET_ITEM_LENGTH + 30);
+    m_lbMaxDispTime = new QLabel(tmpWidget);
+    m_lbMaxDispTime->setGeometry(rectTmp);
+
+    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN + 20);
+    rectTmp.setWidth(X_ITEM_WIDTH);
+    m_leMaxDispTime = new DLineEdit(tmpWidget);
+    m_leMaxDispTime->setGeometry(rectTmp);
+    m_leMaxDispTime->setValidator(new QIntValidator(0, 100, this));
+
+    rectTmp.setX(rectTmp.x() + rectTmp.width() + X_MARGIN);
+    rectTmp.setWidth(X_ITEM_WIDTH);
+    m_lbMaxDispTimeUnit = new QLabel(tmpWidget);
+    m_lbMaxDispTimeUnit->setGeometry(rectTmp);
     mainLayout->addWidget(tmpWidget);
 
     //纯水箱配置
@@ -957,6 +1007,26 @@ void SystemCfgPage::connectData()
     {
         m_chkPWTankUV->setChecked(false);
     }
+
+    if(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_DEION))
+    {
+        m_chkDeion->setChecked(true);
+    }
+    else
+    {
+        m_chkDeion->setChecked(false);
+    }
+#ifdef WATERCARDREADER
+    if(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_WATERCARD))
+    {
+        m_chkWaterCard->setChecked(true);
+    }
+    else
+    {
+        m_chkWaterCard->setChecked(false);
+    }
+#endif
+
 #ifdef STEPPERMOTOR
     if(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_STEPPERMOTOR))
     {
@@ -990,6 +1060,7 @@ void SystemCfgPage::connectData()
 
     m_lePWTankUVValue->setText(QString::number(gGlobalParam.MiscParam.iTankUvOnTime));
     m_leLoginLingerValue->setText(QString::number(gGlobalParam.MiscParam.iAutoLogoutTime));
+    m_leMaxDispTime->setText(QString::number(gGlobalParam.MiscParam.iMaxDispTime));
     m_lePOweronFlushValue->setText(QString::number(gGlobalParam.MiscParam.iPowerOnFlushTime));
 
     m_pPureRangeEdit->setText(QString("%1").arg(gSensorRange.fPureSRange));
@@ -1263,6 +1334,26 @@ void SystemCfgPage::save()
         }
     }
 
+    if(Qt::Checked == m_chkDeion->checkState())
+    {
+        smParam.ulAddFlags |= 1 << DISP_SM_DEION;
+    }
+    else
+    {
+        smParam.ulAddFlags &= ~(1 << DISP_SM_DEION);
+    }
+    
+#ifdef WATERCARDREADER
+    if(Qt::Checked == m_chkWaterCard->checkState())
+    {
+        smParam.ulAddFlags |= 1 << DISP_SM_WATERCARD;
+    }
+    else
+    {
+        smParam.ulAddFlags &= ~(1 << DISP_SM_WATERCARD);
+    }
+#endif
+
 #ifdef STEPPERMOTOR
     if(Qt::Checked == m_chkStepperMotor->checkState())
     {
@@ -1297,6 +1388,7 @@ void SystemCfgPage::save()
 
     miscParam.iTankUvOnTime     = m_lePWTankUVValue->text().toInt();
     miscParam.iAutoLogoutTime   = m_leLoginLingerValue->text().toInt();
+    miscParam.iMaxDispTime      = m_leMaxDispTime->text().toInt();
     miscParam.iPowerOnFlushTime = m_lePOweronFlushValue->text().toInt();
 
     if(DISP_WATER_BARREL_TYPE_UDF == pmParam.aiBuckType[DISP_PM_PM2])

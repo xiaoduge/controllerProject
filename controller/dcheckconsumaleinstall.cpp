@@ -68,6 +68,7 @@ void DCheckConsumaleInstall::initRfid()
     }
 
     m_iRfid[UPACK_CATNO] = APP_RFID_SUB_TYPE_UPACK_HPACK;
+    m_iRfid[ICPPACK_CATNO] = APP_RFID_SUB_TYPE_ICPPACK;
     m_iRfid[UV254_CATNO] =  APP_RFID_SUB_TYPE_ROPACK_OTHERS;
     m_iRfid[UV185_CATNO] = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
     m_iRfid[UVTANK_CATNO] = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
@@ -178,6 +179,7 @@ void DCheckConsumaleInstall::initTypeMap()
     m_typeMap.insert(UPACK_CATNO, DISP_U_PACK);
     m_typeMap.insert(HPACK_CATNO, DISP_H_PACK);
     m_typeMap.insert(PREPACK_CATNO, DISP_PRE_PACK);
+    m_typeMap.insert(ICPPACK_CATNO, DISP_ICP_PACK);
     m_typeMap.insert(CLEANPACK_CATNO, DISP_P_PACK | (1 <<16));
     m_typeMap.insert(ATPACK_CATNO, DISP_AT_PACK);
     m_typeMap.insert(TPACK_CATNO, DISP_T_PACK);
@@ -202,6 +204,7 @@ void DCheckConsumaleInstall::initCategoryMap()
     m_categoryMap.insert(PPACK_CATNO, 0);
     m_categoryMap.insert(ACPACK_CATNO, 0);
     m_categoryMap.insert(UPACK_CATNO, 0);
+    m_categoryMap.insert(ICPPACK_CATNO, 0);
     m_categoryMap.insert(HPACK_CATNO, 0);
     m_categoryMap.insert(PREPACK_CATNO, 0);
     m_categoryMap.insert(CLEANPACK_CATNO, 0);
@@ -261,6 +264,10 @@ void DCheckConsumaleInstall::retriveCMInfoWithRFID(int type)
     case DISP_PRE_PACK:
         gCMUsage.info.aulCms[DISP_PRE_PACKLIFEDAY] = installTime.toTime_t();
         gCMUsage.info.aulCms[DISP_PRE_PACKLIFEL]   = m_volUsed;
+        break;
+    case DISP_ICP_PACK:
+        gCMUsage.info.aulCms[DISP_ICP_PACKLIFEDAY] = installTime.toTime_t();
+        gCMUsage.info.aulCms[DISP_ICP_PACKLIFEL]   = m_volUsed;
         break;
     case DISP_AC_PACK:
         gCMUsage.info.aulCms[DISP_AC_PACKLIFEDAY] = installTime.toTime_t();

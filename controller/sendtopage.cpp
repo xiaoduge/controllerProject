@@ -165,7 +165,7 @@ void SendToPage::initUi()
 
 void SendToPage::copyAlarmFile()
 {
-    QFile file("/media/sda1/GenieData/alarm_history.csv");
+    QFile file("/media/sda1/Data/alarm_history.csv");
     if(!file.open(QFile::WriteOnly | QFile::Truncate))
     {
         QMessageBox::warning(NULL, tr("Warning"), tr("Failed to send data:alarm_history"), QMessageBox::Ok);
@@ -196,7 +196,7 @@ void SendToPage::copyAlarmFile()
         return;
     }
     QByteArray content = file.readAll().toBase64();
-    QFile fileBase64("/media/sda1/GenieData/alarm_history.dcj");
+    QFile fileBase64("/media/sda1/Data/alarm_history.dcj");
     if(!fileBase64.open(QFile::WriteOnly | QFile::Truncate))
     {
         QMessageBox::warning(NULL, tr("Warning"), tr("Failed to send data:alarm_history.dcj"), QMessageBox::Ok);
@@ -207,12 +207,12 @@ void SendToPage::copyAlarmFile()
     file.close();
     fileBase64.close();
 
-    QFile::remove("/media/sda1/GenieData/alarm_history.csv");
+    QFile::remove("/media/sda1/Data/alarm_history.csv");
 }
 
 void SendToPage::copyGetWater()
 {
-    QFile file("/media/sda1/GenieData/dispense_history.csv");
+    QFile file("/media/sda1/Data/dispense_history.csv");
     if(!file.open(QFile::WriteOnly | QFile::Truncate))
     {
         QMessageBox::warning(NULL, tr("Warning"), tr("Failed to send data:dispense_history"), QMessageBox::Ok);
@@ -249,7 +249,7 @@ void SendToPage::copyGetWater()
         return;
     }
     QByteArray content = file.readAll().toBase64();
-    QFile fileBase64("/media/sda1/GenieData/dispense_history.dcj");
+    QFile fileBase64("/media/sda1/Data/dispense_history.dcj");
     if(!fileBase64.open(QFile::WriteOnly | QFile::Truncate))
     {
         QMessageBox::warning(NULL, tr("Warning"), tr("Failed to send data:dispense_history.dcj"), QMessageBox::Ok);
@@ -260,12 +260,12 @@ void SendToPage::copyGetWater()
     file.close();
     fileBase64.close();
 
-    QFile::remove("/media/sda1/GenieData/dispense_history.csv");
+    QFile::remove("/media/sda1/Data/dispense_history.csv");
 }
 
 void SendToPage::copyProduceWater()
 {
-    QFile file("/media/sda1/GenieData/product_history.csv");
+    QFile file("/media/sda1/Data/product_history.csv");
     if(!file.open(QFile::WriteOnly | QFile::Truncate))
     {
         QMessageBox::warning(NULL, tr("Warning"), tr("Failed to send data:product_history"), QMessageBox::Ok);
@@ -308,7 +308,7 @@ void SendToPage::copyProduceWater()
         return;
     }
     QByteArray content = file.readAll().toBase64();
-    QFile fileBase64("/media/sda1/GenieData/product_history.dcj");
+    QFile fileBase64("/media/sda1/Data/product_history.dcj");
     if(!fileBase64.open(QFile::WriteOnly | QFile::Truncate))
     {
         QMessageBox::warning(NULL, tr("Warning"), tr("Failed to send data:product_history.dcj"), QMessageBox::Ok);
@@ -319,12 +319,12 @@ void SendToPage::copyProduceWater()
     file.close();
     fileBase64.close();
 
-    QFile::remove("/media/sda1/GenieData/product_history.csv");
+    QFile::remove("/media/sda1/Data/product_history.csv");
 }
 
 void SendToPage::copyLog()
 {
-    QFile file("/media/sda1/GenieData/log.csv");
+    QFile file("/media/sda1/Data/log.csv");
     if(!file.open(QFile::WriteOnly | QFile::Truncate))
     {
         QMessageBox::warning(NULL, tr("Warning"), tr("Failed to send data:log"), QMessageBox::Ok);
@@ -357,7 +357,7 @@ void SendToPage::copyLog()
         return;
     }
     QByteArray content = file.readAll().toBase64();
-    QFile fileBase64("/media/sda1/GenieData/log.dcj");
+    QFile fileBase64("/media/sda1/Data/log.dcj");
     if(!fileBase64.open(QFile::WriteOnly | QFile::Truncate))
     {
         QMessageBox::warning(NULL, tr("Warning"), tr("Failed to send data:log.dcj"), QMessageBox::Ok);
@@ -368,8 +368,58 @@ void SendToPage::copyLog()
     file.close();
     fileBase64.close();
 
-    QFile::remove("/media/sda1/GenieData/log.csv");
+    QFile::remove("/media/sda1/Data/log.csv");
 }
+
+#ifdef WATERCARDREADER
+void SendToPage::copyWaterCardInfo()
+{
+    QFile file("/media/sda1/Data/watercard.csv");
+    if(!file.open(QFile::WriteOnly | QFile::Truncate))
+    {
+        QMessageBox::warning(NULL, tr("Warning"), tr("Failed to send data:watercard"), QMessageBox::Ok);
+        return;
+    }
+
+    QTextStream out(&file);
+    out << tr("ID") << ","
+        << tr("CardID") << ","
+        << tr("Balance") << ","
+        << tr("Time") << "\n";
+
+    QSqlQuery query;
+    query.exec("select * from WaterCards");
+    while(query.next())
+    {
+        out << query.value(0).toInt() << ","
+            << query.value(1).toString() << ","
+            << query.value(2).toDouble() << ","
+            << query.value(3).toString() << "\n";
+    }
+    file.close();
+
+    //tobase64
+    if(!file.open(QFile::ReadOnly | QFile::Truncate))
+    {
+        QMessageBox::warning(NULL, tr("Warning"), tr("Failed to send data:watercard.dcj"), QMessageBox::Ok);
+        return;
+    }
+    QByteArray content = file.readAll().toBase64();
+    QFile fileBase64("/media/sda1/Data/watercard.dcj");
+    if(!fileBase64.open(QFile::WriteOnly | QFile::Truncate))
+    {
+        QMessageBox::warning(NULL, tr("Warning"), tr("Failed to send data:watercard.dcj"), QMessageBox::Ok);
+        return;
+    }
+    fileBase64.write(content);
+
+    file.close();
+    fileBase64.close();
+
+    QFile::remove("/media/sda1/Data/watercard.csv");
+
+}
+#endif
 
 void SendToPage::copyHistoryToUsb()
 {
@@ -381,7 +431,7 @@ void SendToPage::copyHistoryToUsb()
         return;
     }
 
-    pathName = QString("/media/sda1/GenieData");
+    pathName = QString("/media/sda1/Data");
     dir.setPath(pathName);
     if(!dir.exists())
     {
@@ -399,6 +449,9 @@ void SendToPage::copyHistoryToUsb()
         copyGetWater();
         copyProduceWater();
         copyLog();
+#ifdef WATERCARDREADER
+        copyWaterCardInfo();
+#endif
         DHintDialog::getInstance(tr("Successfully"));
     }
 }

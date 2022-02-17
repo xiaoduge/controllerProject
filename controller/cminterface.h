@@ -4,11 +4,23 @@
 #pragma   pack(1)
 
 //开启步进电磁阀
-//#define STEPPERMOTOR
-
+#define STEPPERMOTOR
 #ifdef STEPPERMOTOR
 #pragma message("Turn on stepper motor function")
 #endif
+
+//开启刷卡取水
+//#define WATERCARDREADER
+#ifdef WATERCARDREADER
+#pragma message("Turn on water card function")
+#endif
+
+//#define SUB_ACCOUNT  //Sub-account
+#ifdef SUB_ACCOUNT
+#pragma message("Turn on Sub-account function")
+#endif
+
+
 
 #define APP_PROTOL_CANID_RSVD           (0x0)
 #define APP_PROTOL_CANID_ALLOC_BEGIN    (0X1)
@@ -223,7 +235,7 @@
 #ifdef STEPPERMOTOR
 #define QTWSTEPPER 0    //取水步进电磁阀地址
 #endif
-#define STEPPER_REFERENCD_POINT (220)  //Stepper motor valve Reference point
+#define STEPPER_REFERENCD_POINT (330)  //Stepper motor valve Reference point
 
 typedef enum
 {
@@ -339,8 +351,24 @@ typedef enum
     APP_RFID_SUB_TYPE_UPACK_HPACK , 
     APP_RFID_SUB_TYPE_PREPACK,
     APP_RFID_SUB_TYPE_ROPACK_OTHERS,
+    APP_RFID_SUB_TYPE_ICPPACK,
     APP_RFID_SUB_TYPE_NUM,
 }APP_RFID_SUB_TYPE_ENUM;
+
+#define APP_RF_QTW_READER (APP_RF_READER_MAX_NUMBER - 1) //27
+#define ID_LENGTH            14
+#define ID_OFFSET            0
+
+#define TYPE_LENGTH          1
+#define TYPE_OFFSET          (ID_OFFSET + ID_LENGTH)
+
+#define AMOUNT_LENGTH        4
+#define AMOUNT_OFFSET        (TYPE_OFFSET + TYPE_LENGTH)
+
+#define NEW_USER_LENGTH      (AMOUNT_OFFSET + AMOUNT_LENGTH)
+
+#define RATECARDID           "000000000000A1"
+
 
 typedef enum
 {

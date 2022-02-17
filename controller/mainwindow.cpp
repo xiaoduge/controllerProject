@@ -67,6 +67,7 @@
 #include "dleakalarmdlg.h" 
 #include "dwarningdlg.h"
 #include "dsettimedialog.h"
+#include "dcardinfodialog.h"
 
 //#include "dscreensleepthread.h"
 //
@@ -256,17 +257,17 @@ DISP_CM_USAGE_STRU     gCMUsage ;
 
 MACHINE_TYPE_STRU gaMachineType[MACHINE_NUM] =
 {
-    {MACH_NAME_LGenie,   MACHINE_MODEL_MID ,MACHINE_FUNCTION_ALL,DEFAULT_MODULES_L_Genie ,450},
-    {MACH_NAME_LUP,      MACHINE_MODEL_MID ,MACHINE_FUNCTION_ALL,DEFAULT_MODULES_L_UP    ,450},
-    {MACH_NAME_LEDI_LOOP,MACHINE_MODEL_MID ,MACHINE_FUNCTION_EDI,DEFAULT_MODULES_EDI_LOOP,450},
-    {MACH_NAME_LRO_LOOP, MACHINE_MODEL_MID ,MACHINE_FUNCTION_EDI,DEFAULT_MODULES_RO_LOOP ,450},
-    {MACH_NAME_Genie,    MACHINE_MODEL_DESK,MACHINE_FUNCTION_ALL,DEFAULT_MODULES_Genie   ,7055},
-    {MACH_NAME_UP,       MACHINE_MODEL_DESK,MACHINE_FUNCTION_ALL,DEFAULT_MODULES_UP      ,7055},
-    {MACH_NAME_EDI,      MACHINE_MODEL_DESK,MACHINE_FUNCTION_EDI,DEFAULT_MODULES_EDI     ,7055},
-    {MACH_NAME_RO,       MACHINE_MODEL_DESK,MACHINE_FUNCTION_EDI,DEFAULT_MODULES_RO      ,7055},
-    {MACH_NAME_PURIST,   MACHINE_MODEL_DESK,MACHINE_FUNCTION_UP ,DEFAULT_MODULES_PURIST  ,7055},
-    {MACH_NAME_Adapt,    MACHINE_MODEL_DESK,MACHINE_FUNCTION_ALL,DEFAULT_MODULES_ADAPT   ,7055}
-};
+    {MACH_NAME_LGenie,   MACHINE_MODEL_MID , MACHINE_FUNCTION_ALL, DEFAULT_MODULES_L_Genie , DEFAULT_ADD_MODULES_L_Genie , 450},
+    {MACH_NAME_LUP,      MACHINE_MODEL_MID , MACHINE_FUNCTION_ALL, DEFAULT_MODULES_L_UP    , DEFAULT_ADD_MODULES_L_UP    , 450},
+    {MACH_NAME_LEDI_LOOP,MACHINE_MODEL_MID , MACHINE_FUNCTION_EDI, DEFAULT_MODULES_EDI_LOOP, DEFAULT_ADD_MODULES_EDI_LOOP, 450},
+    {MACH_NAME_LRO_LOOP, MACHINE_MODEL_MID , MACHINE_FUNCTION_EDI, DEFAULT_MODULES_RO_LOOP , DEFAULT_ADD_MODULES_RO_LOOP , 450},
+    {MACH_NAME_Genie,    MACHINE_MODEL_DESK, MACHINE_FUNCTION_ALL, DEFAULT_MODULES_Genie   , DEFAULT_ADD_MODULES_Genie   , 7055},
+    {MACH_NAME_UP,       MACHINE_MODEL_DESK, MACHINE_FUNCTION_ALL, DEFAULT_MODULES_UP      , DEFAULT_ADD_MODULES_UP      , 7055},
+    {MACH_NAME_EDI,      MACHINE_MODEL_DESK, MACHINE_FUNCTION_EDI, DEFAULT_MODULES_EDI     , DEFAULT_ADD_MODULES_EDI     , 7055},
+    {MACH_NAME_RO,       MACHINE_MODEL_DESK, MACHINE_FUNCTION_EDI, DEFAULT_MODULES_RO      , DEFAULT_ADD_MODULES_RO      , 7055},
+    {MACH_NAME_PURIST,   MACHINE_MODEL_DESK, MACHINE_FUNCTION_UP , DEFAULT_MODULES_PURIST  , DEFAULT_ADD_MODULES_PURIST  , 7055},
+    {MACH_NAME_Adapt,    MACHINE_MODEL_DESK, MACHINE_FUNCTION_ALL, DEFAULT_MODULES_ADAPT   , DEFAULT_ADD_MODULES_ADAPT   , 7055}
+}; 
 
 QString gastrTmCfgName[] = 
 {   
@@ -380,6 +381,11 @@ extern QString update_sql_Consumable;
 extern QString select_sql_subAccount;
 extern QString insert_sql_subAccount;
 extern QString update_sql_subAccount;
+
+extern QString select_sql_waterCard;
+extern QString insert_sql_waterCard;
+extern QString update_sql_waterCard;
+
 
 const char *State_info[] =
 {
@@ -748,7 +754,7 @@ void MainRetriveSubModuleSetting(int iMachineType,DISP_SUB_MODULE_SETTING_STRU  
         Param.ulFlags  = iValue;
 
         strV = "/SM/" + gastrSmCfgName[1];
-        iValue = config->value(strV, 0).toInt();
+        iValue = config->value(strV, gaMachineType[iMachineType].iDefaultAddModule).toInt();
         Param.ulAddFlags  = iValue;
     }
 
@@ -860,6 +866,29 @@ void MainRetriveCMParam(int iMachineType,DISP_CONSUME_MATERIAL_STRU  &Param)
             break;
         default:
             Param.aulCms[DISP_U_PACKLIFEL] = 3000; 
+            break;
+        }
+    }
+
+    if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_ICP_PACKLIFEDAY])
+    {
+        Param.aulCms[DISP_ICP_PACKLIFEDAY] = 360; 
+    }
+    if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_ICP_PACKLIFEL])
+    {
+        switch(iMachineType)
+        {
+        case MACHINE_L_Genie:
+        case MACHINE_L_EDI_LOOP:
+        case MACHINE_L_RO_LOOP:
+        case MACHINE_L_UP:
+            Param.aulCms[DISP_ICP_PACKLIFEL] = 6000; 
+            break;
+        case MACHINE_ADAPT:
+            Param.aulCms[DISP_ICP_PACKLIFEL] = 1500; 
+            break;
+        default:
+            Param.aulCms[DISP_ICP_PACKLIFEL] = 3000; 
             break;
         }
     }
@@ -1246,10 +1275,22 @@ void MainRetriveMiscParam(int iMachineType,DISP_MISC_SETTING_STRU  &Param)
         strV = "/MISC/AUTOLOGOUTTIME";
         iValue = config->value(strV,1).toInt();
         Param.iAutoLogoutTime = iValue;  
+
+        strV = "/MISC/MAXDISPTIME";
+        iValue = config->value(strV, 15).toInt();
+        Param.iMaxDispTime = iValue;
         
         strV = "/MISC/POWERONFLUSHTIME";
         iValue = config->value(strV,5).toInt(); //5
         Param.iPowerOnFlushTime = iValue;  
+
+        strV = "/MISC/UPUNITPRICE";
+        iValue = config->value(strV, 20).toInt();
+        Param.iUPUnitPrice = iValue;
+
+        strV = "/MISC/HPUNITPRICE";
+        iValue = config->value(strV, 10).toInt();
+        Param.iHPUnitPrice = iValue;
 
     }    
     
@@ -2213,161 +2254,176 @@ void MainSaveMiscParam(int iMachineType,DISP_MISC_SETTING_STRU  &Param)
     QSettings *config = new QSettings(strCfgName, QSettings::IniFormat);
 
     {
-        QString strV = "/MISC/FLAG";
+        QString strV;
         QString strTmp;
 
         if (Param.ulAllocMask != tmpParam.ulAllocMask)
         {
+            strV = "/MISC/FLAG";
             strTmp = QString::number(Param.ulAllocMask);
             config->setValue(strV,strTmp);
         }
 
-        strV = "/MISC/ICP";
-        
         if (Param.iTubeCirCycle != tmpParam.iTubeCirCycle)
         {
+            strV = "/MISC/ICP";
             strTmp = QString::number(Param.iTubeCirCycle);
             config->setValue(strV,strTmp);
         }
         
-        strV = "/MISC/DT";
-        
         if (Param.iTubeCirDuration != tmpParam.iTubeCirDuration)
         {
+            strV = "/MISC/DT";
             strTmp = QString::number(Param.iTubeCirDuration);
             config->setValue(strV,strTmp);
         }
 
-        strV = "/MISC/ST";
-        
         if (Param.aiTubeCirTimeInfo[0] != tmpParam.aiTubeCirTimeInfo[0])
         {
+            strV = "/MISC/ST";
             strTmp = QString::number(Param.aiTubeCirTimeInfo[0]);
             config->setValue(strV,strTmp);
         }
         
-        strV = "/MISC/ET";
-        
         if (Param.aiTubeCirTimeInfo[1] != tmpParam.aiTubeCirTimeInfo[1])
         {
+            strV = "/MISC/ET";
             strTmp = QString::number(Param.aiTubeCirTimeInfo[1]);
             config->setValue(strV,strTmp);
         }
-    
-        strV = "/MISC/RP0";
         
         if (Param.RPumpSetting[0] != tmpParam.RPumpSetting[0])
         {
+            strV = "/MISC/RP0";
             strTmp = QString::number(Param.RPumpSetting[0]);
             config->setValue(strV,strTmp);
         }
-
-        strV = "/MISC/RP1";
         
         if (Param.RPumpSetting[1] != tmpParam.RPumpSetting[1])
         {
+            strV = "/MISC/RP1";
             strTmp = QString::number(Param.RPumpSetting[1]);
             config->setValue(strV,strTmp);
         }
         
-        strV = "/MISC/LAN";
-        
         if (Param.iLan != tmpParam.iLan)
         {
+            strV = "/MISC/LAN";
             strTmp = QString::number(Param.iLan);
             config->setValue(strV,strTmp);
         }
-
-        strV = "/MISC/BRIGHTNESS";
         
         if (Param.iBrightness != tmpParam.iBrightness)
         {
+            strV = "/MISC/BRIGHTNESS";
             strTmp = QString::number(Param.iBrightness);
             config->setValue(strV,strTmp);
         }
         
-        strV = "/MISC/ENERGYSAVE";
-        
         if (Param.iEnerySave != tmpParam.iEnerySave)
         {
+            strV = "/MISC/ENERGYSAVE";
             strTmp = QString::number(Param.iEnerySave);
             config->setValue(strV,strTmp);
         }
         
-        strV = "/MISC/CONDUCTIVITYUNIT";
         if (Param.iUint4Conductivity != tmpParam.iUint4Conductivity)
         {
+            strV = "/MISC/CONDUCTIVITYUNIT";
             strTmp = QString::number(Param.iUint4Conductivity);
             config->setValue(strV,strTmp);
         }       
-
-        strV = "/MISC/TEMPUNIT";
+        
         if (Param.iUint4Temperature != tmpParam.iUint4Temperature)
         {
+            strV = "/MISC/TEMPUNIT";
             strTmp = QString::number(Param.iUint4Temperature);
             config->setValue(strV,strTmp);
         }       
         
-        strV = "/MISC/PRESSUREUNIT";
         if (Param.iUint4Pressure != tmpParam.iUint4Pressure)
         {
+            strV = "/MISC/PRESSUREUNIT";
             strTmp = QString::number(Param.iUint4Pressure);
             config->setValue(strV,strTmp);
         }       
-
-        strV = "/MISC/LIQUIDUNIT";
+        
         if (Param.iUint4LiquidLevel != tmpParam.iUint4LiquidLevel)
         {
+            strV = "/MISC/LIQUIDUNIT";
             strTmp = QString::number(Param.iUint4LiquidLevel);
             config->setValue(strV,strTmp);
         }       
-
-        strV = "/MISC/FLOWVELOCITYUNIT";
+        
         if (Param.iUint4FlowVelocity != tmpParam.iUint4FlowVelocity)
         {
+            strV = "/MISC/FLOWVELOCITYUNIT";
             strTmp = QString::number(Param.iUint4FlowVelocity);
             config->setValue(strV,strTmp);
         }  
         
-        strV = "/MISC/SOUNDMASK";
         if (Param.iSoundMask != tmpParam.iSoundMask)
         {
+            strV = "/MISC/SOUNDMASK";
             strTmp = QString::number(Param.iSoundMask);
             config->setValue(strV,strTmp);
         }  
-    
-        strV = "/MISC/NETWORKMASK";
+        
         if (Param.iNetworkMask != tmpParam.iNetworkMask)
         {
+            strV = "/MISC/NETWORKMASK";
             strTmp = QString::number(Param.iNetworkMask);
             config->setValue(strV,strTmp);
         }  
-
-        strV = "/MISC/MISCFLAG";
+        
         if (Param.ulMisFlags != tmpParam.ulMisFlags)
         {
+            strV = "/MISC/MISCFLAG";
             strTmp = QString::number(Param.ulMisFlags);
             config->setValue(strV,strTmp);
         }  
         
-        strV = "/MISC/TANKUVONTIME";
         if (Param.iTankUvOnTime != tmpParam.iTankUvOnTime)
         {
+            strV = "/MISC/TANKUVONTIME";
             strTmp = QString::number(Param.iTankUvOnTime);
             config->setValue(strV,strTmp);
         }         
-        strV = "/MISC/AUTOLOGOUTTIME";
+        
         if (Param.iAutoLogoutTime != tmpParam.iAutoLogoutTime)
         {
+            strV = "/MISC/AUTOLOGOUTTIME";
             strTmp = QString::number(Param.iAutoLogoutTime);
             config->setValue(strV,strTmp);
         }         
-        strV = "/MISC/POWERONFLUSHTIME";
+        
+        if (Param.iMaxDispTime != tmpParam.iMaxDispTime)
+        {
+            strV = "/MISC/MAXDISPTIME";
+            strTmp = QString::number(Param.iMaxDispTime);
+            config->setValue(strV, strTmp);
+        }
+        
         if (Param.iPowerOnFlushTime != tmpParam.iPowerOnFlushTime)
         {
+            strV = "/MISC/POWERONFLUSHTIME";
             strTmp = QString::number(Param.iPowerOnFlushTime);
             config->setValue(strV,strTmp);
-        }         
+        }       
+
+        if(Param.iUPUnitPrice != tmpParam.iUPUnitPrice)
+        {
+            strV = "/MISC/UPUNITPRICE";
+            strTmp = QString::number(Param.iUPUnitPrice);
+            config->setValue(strV, strTmp);
+        }
+
+        if(Param.iHPUnitPrice != tmpParam.iHPUnitPrice)
+        {
+            strV = "/MISC/HPUNITPRICE";
+            strTmp = QString::number(Param.iHPUnitPrice);
+            config->setValue(strV, strTmp);
+        }
 
     }    
     if (config)
@@ -2729,7 +2785,25 @@ void CheckConsumptiveMaterialState(void)
             gCMUsage.ulUsageState |= (1 << DISP_PRE_PACKLIFEL);
         }
 
-    }    
+    }  
+            
+    if ((ulCurTime > gCMUsage.info.aulCms[DISP_ICP_PACKLIFEDAY])
+            && (iMask & (1 << DISP_ICP_PACK)))
+    {
+        ulTemp = (ulCurTime - gCMUsage.info.aulCms[DISP_ICP_PACKLIFEDAY])/DISP_DAYININSECOND;
+
+
+        if (ulTemp >= gGlobalParam.CMParam.aulCms[DISP_ICP_PACKLIFEDAY])
+        {
+            gCMUsage.ulUsageState |= (1 << DISP_ICP_PACKLIFEDAY);
+        }
+        
+        if (gCMUsage.info.aulCms[DISP_ICP_PACKLIFEL] >= gGlobalParam.CMParam.aulCms[DISP_ICP_PACKLIFEL])
+        {
+            gCMUsage.ulUsageState |= (1 << DISP_ICP_PACKLIFEL);
+        }
+
+    }  
     //2018.10.22 AC PACK
     if ((ulCurTime > gCMUsage.info.aulCms[DISP_AC_PACKLIFEDAY])
             && (iMask & (1 << DISP_AC_PACK)))
@@ -2997,6 +3071,14 @@ void MainResetCmInfo(int iSel)
         gCMUsage.ulUsageState &= ~(1 << DISP_PRE_PACKLIFEL);
         gCMUsage.cmInfo.aulCumulatedData[DISP_PRE_PACKLIFEDAY] = 0;
         gCMUsage.cmInfo.aulCumulatedData[DISP_PRE_PACKLIFEL] = 0;
+        break;
+    case DISP_ICP_PACK:
+        gCMUsage.info.aulCms[DISP_ICP_PACKLIFEDAY] = DispGetCurSecond();
+        gCMUsage.info.aulCms[DISP_ICP_PACKLIFEL]   = 0;
+        gCMUsage.ulUsageState &= ~(1 << DISP_ICP_PACKLIFEDAY);
+        gCMUsage.ulUsageState &= ~(1 << DISP_ICP_PACKLIFEL);
+        gCMUsage.cmInfo.aulCumulatedData[DISP_ICP_PACKLIFEDAY] = 0;
+        gCMUsage.cmInfo.aulCumulatedData[DISP_ICP_PACKLIFEL] = 0;
         break;
     case DISP_AC_PACK:
         gCMUsage.info.aulCms[DISP_AC_PACKLIFEDAY] = DispGetCurSecond();
@@ -3344,13 +3426,15 @@ void MainWindow::initConsumablesInfo()
     m_strConsuamble[UPACK_CATNO] << "RR700Q101" << "RR700Q201" << "RR700Q301"
                                  << "RR700Q501" << "RR700Q601" << "RR700Q701"
                                  << "171-1258" << "171-1260" << "171-1261"
-                                 << "RR504Q101";
+                                 << "RR504Q101" << "RR504Q301";
+
+    m_strConsuamble[ICPPACK_CATNO] << "RR700QICP";
 
     m_strConsuamble[HPACK_CATNO] << "RR700H101" << "RR504H101" << "171-1257";
 
     m_strConsuamble[ATPACK_CATNO] << "RR504AT01";
 
-    m_strConsuamble[CLEANPACK_CATNO] << "RR700CL01" << "RR504CL0" << "171-1281";
+    m_strConsuamble[CLEANPACK_CATNO] << "RR700CL01" << "RR504CL01" << "RR504CPC1" << "171-1281";
 
     m_strConsuamble[UV254_CATNO] << "RAUV135A7" << "RAUV212A7" << "171-1282" << "RAUV357A8";
 
@@ -3634,6 +3718,29 @@ void MainWindow::initAlarmCfg()
         } 
         m_aMas[iLoop].aulMask[DISP_ALARM_PART0] &= ~(1 << DISP_ALARM_PART0_PREPACK_OOP);
         m_aMas[iLoop].aulMask[DISP_ALARM_PART0] &= ~(1 << DISP_ALARM_PART0_TUBEUV_OOP);
+
+        switch(iLoop)
+        {
+        case MACHINE_L_Genie:
+        case MACHINE_L_UP:
+        case MACHINE_Genie:
+        case MACHINE_UP:
+        case MACHINE_PURIST:
+        case MACHINE_ADAPT:
+            if(!(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_DEION)))
+            {
+                 m_aMas[iLoop].aulMask[DISP_ALARM_PART0] &= ~(1 << DISP_ALARM_PART0_ICPPACK_OOP);
+            }
+            break;
+        case MACHINE_L_EDI_LOOP:
+        case MACHINE_L_RO_LOOP:
+        case MACHINE_EDI:
+        case MACHINE_RO:
+            m_aMas[iLoop].aulMask[DISP_ALARM_PART0] &= ~(1 << DISP_ALARM_PART0_ICPPACK_OOP);
+            break;
+        default:
+            break;
+        }
     }
 
 }
@@ -3791,6 +3898,10 @@ void MainWindow::initConsumablesCfg()
         {
             m_cMas[iLoop].aulMask[0] &= ~(1 << DISP_PRE_PACK);
         }
+        if (!(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_TankUV)))
+        {
+            m_cMas[iLoop].aulMask[0] &= ~(1 << DISP_N3_UV);
+        }
 
         if (!(gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_TubeUV)))
         {
@@ -3825,6 +3936,26 @@ void MainWindow::initConsumablesCfg()
         {
             m_cMas[iLoop].aulMask[0] &= ~( 1 << DISP_T_A_FILTER);
         }
+        switch(iLoop)
+        {
+        case MACHINE_L_Genie:
+        case MACHINE_L_UP:
+        case MACHINE_Genie:
+        case MACHINE_UP:
+        case MACHINE_PURIST:
+        case MACHINE_ADAPT:
+            if(!(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_DEION)))
+            {
+                 m_cMas[iLoop].aulMask[0] &= ~(1 << DISP_ICP_PACK);
+            }
+            break;
+        case MACHINE_L_EDI_LOOP:
+        case MACHINE_L_RO_LOOP:
+        case MACHINE_EDI:
+        case MACHINE_RO:
+            m_cMas[iLoop].aulMask[0] &= ~(1 << DISP_ICP_PACK);
+            break;
+        }
     }
 }
 
@@ -3849,6 +3980,12 @@ void MainWindow::initRFIDCfg()
             MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_HPACK_ATPACK] = DISP_AT_PACK;
         }
 
+        if(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_DEION))
+        {
+            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ICPPACK);
+            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ICPPACK] = DISP_ICP_PACK;
+        }
+
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_UPACK_HPACK);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_UPACK_HPACK] = DISP_U_PACK;
 
@@ -3860,6 +3997,12 @@ void MainWindow::initRFIDCfg()
         {
             MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_HPACK_ATPACK);
             MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_HPACK_ATPACK] = DISP_AT_PACK;
+        }
+
+        if(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_DEION))
+        {
+            MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_ICPPACK);
+            MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_ICPPACK] = DISP_ICP_PACK;
         }
 
         MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_UPACK_HPACK);
@@ -3877,6 +4020,12 @@ void MainWindow::initRFIDCfg()
             MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_HPACK_ATPACK] = DISP_H_PACK;
         }
 
+        if(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_DEION))
+        {
+            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ICPPACK);
+            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ICPPACK] = DISP_ICP_PACK;
+        }
+
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_UPACK_HPACK);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_UPACK_HPACK] = DISP_U_PACK;
 
@@ -3888,6 +4037,12 @@ void MainWindow::initRFIDCfg()
         {
             MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_HPACK_ATPACK);
             MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_HPACK_ATPACK] = DISP_H_PACK;
+        }
+
+        if(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_DEION))
+        {
+            MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_ICPPACK);
+            MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_ICPPACK] = DISP_ICP_PACK;
         }
 
         MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_UPACK_HPACK);
@@ -3928,6 +4083,12 @@ void MainWindow::initRFIDCfg()
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_UPACK_HPACK);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_UPACK_HPACK] = DISP_U_PACK;
 
+        if(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_DEION))
+        {
+            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ICPPACK);
+            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ICPPACK] = DISP_ICP_PACK;
+        }
+
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ROPACK_OTHERS);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ROPACK_OTHERS] = DISP_AC_PACK;
 
@@ -3937,6 +4098,12 @@ void MainWindow::initRFIDCfg()
 
         MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_UPACK_HPACK);
         MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_UPACK_HPACK] = DISP_U_PACK;
+
+        if(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_DEION))
+        {
+            MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_ICPPACK);
+            MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_ICPPACK] = DISP_ICP_PACK;
+        }
         
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ROPACK_OTHERS);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ROPACK_OTHERS] = DISP_AC_PACK;
@@ -3950,6 +4117,12 @@ void MainWindow::initRFIDCfg()
 
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_UPACK_HPACK);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_UPACK_HPACK] = DISP_U_PACK;
+
+        if(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_DEION))
+        {
+            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ICPPACK);
+            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ICPPACK] = DISP_ICP_PACK;
+        }
         
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ROPACK_OTHERS);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ROPACK_OTHERS] = DISP_AC_PACK;
@@ -3963,6 +4136,12 @@ void MainWindow::initRFIDCfg()
 
         MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_UPACK_HPACK);
         MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_UPACK_HPACK] = DISP_U_PACK;
+
+        if(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_DEION))
+        {
+            MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_ICPPACK);
+            MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_ICPPACK] = DISP_ICP_PACK;
+        }
         
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ROPACK_OTHERS);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ROPACK_OTHERS] = DISP_AC_PACK;
@@ -4002,6 +4181,12 @@ void MainWindow::initRFIDCfg()
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_HPACK_ATPACK);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_HPACK_ATPACK] = DISP_H_PACK;
 
+        if(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_DEION))
+        {
+            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ICPPACK);
+            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ICPPACK] = DISP_ICP_PACK;
+        }
+
         /*rfid for cleaning stage */
         MacRfidMap.ulMask4Cleaning = 0;
         break;
@@ -4011,6 +4196,12 @@ void MainWindow::initRFIDCfg()
 
         MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_UPACK_HPACK);
         MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_UPACK_HPACK] = DISP_U_PACK;
+
+        if(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_DEION))
+        {
+            MacRfidMap.ulMask4Normlwork |= (1 << APP_RFID_SUB_TYPE_ICPPACK);
+            MacRfidMap.aiDeviceType4Normal[APP_RFID_SUB_TYPE_ICPPACK] = DISP_ICP_PACK;
+        }
         
         /* rfid for cleaning stage */
         MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_PPACK_CLEANPACK);
@@ -4018,6 +4209,12 @@ void MainWindow::initRFIDCfg()
         
         MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_UPACK_HPACK);
         MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_UPACK_HPACK] = DISP_U_PACK;
+
+        if(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_DEION))
+        {
+            MacRfidMap.ulMask4Cleaning |= (1 << APP_RFID_SUB_TYPE_ICPPACK);
+            MacRfidMap.aiDeviceType4Cleaning[APP_RFID_SUB_TYPE_ICPPACK] = DISP_ICP_PACK;
+        }
         break;
     default:
         break;
@@ -4381,6 +4578,13 @@ MainWindow::MainWindow(QMainWindow *parent) :
     m_pWifiConfigDlg = new DWifiConfigDialog(this);
     m_pWifiConfigDlg->hide();
     m_pWifiConfigDlg->move(250, 210);
+
+
+    m_pCardInfoDlg = new DCardInfoDialog(this);
+    m_pCardInfoDlg->hide();
+    m_pCardInfoDlg->move(250, 210);
+
+    m_WaterCardInfo.bValid = false;
 }
 
 void MainWindow::on_timerBuzzerEvent()
@@ -5412,6 +5616,9 @@ void MainWindow::on_timerSecondEvent()
                         case DISP_U_PACK:
                             alarmCommProc(true,DISP_ALARM_PART0,DISP_ALARM_PART0_UPACK_OOP);
                             break;
+                        case DISP_ICP_PACK:
+                            alarmCommProc(true,DISP_ALARM_PART0,DISP_ALARM_PART0_ICPPACK_OOP);
+                            break;
                         case DISP_AT_PACK:
                             alarmCommProc(true,DISP_ALARM_PART0,DISP_ALARM_PART0_ATPACK_OOP);
                             break;
@@ -5821,6 +6028,16 @@ bool alarmHaveAssociatedModule(int iAlarmPart,int iAlarmId)
                 bDevice = false ;
             }
             break;
+        case DISP_ALARM_PART0_ICPPACK_OOP:
+            if (!(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_DEION))) 
+            {
+                bDevice = false ;
+            }
+            if (gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_RFID_Authorization))
+            {
+                bDevice = false ;
+            }
+            break;
         default:
              break;
         }  
@@ -6053,6 +6270,137 @@ int  MainWindow::readRfid(int iRfId)
 
     return iRet;
 }
+
+bool MainWindow::readRfid_Reader(int iRfId)
+{
+    int iRet = -1;
+
+    iRet =  CcbReadRfid(iRfId, 8000, 0, NEW_USER_LENGTH);
+    if (0 == iRet)
+    {
+        iRet = CcbGetRfidCont(iRfId, 0,  NEW_USER_LENGTH, m_aucContent);
+        if (0 == iRet)
+        {
+           return false;
+        }
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+int MainWindow::checkCardReaderStatus()
+{
+    if(m_WaterCardInfo.bValid)
+    {
+        if(m_WaterCardInfo.amount > 0)
+        {
+            return 1;
+        }
+        else
+        {
+            DHintDialog::getInstance(tr("Insufficient balance"), 2000);
+        }
+    }
+    return 0;
+}
+
+void MainWindow::deduction(unsigned int vol)
+{
+    bool bDeduction = false;
+
+    m_WaterCardInfo.curVolume += (vol - m_WaterCardInfo.oldVolumne);
+    m_WaterCardInfo.oldVolumne = vol;
+    unsigned int cost = m_WaterCardInfo.curVolume / 100; //计算每100ml的费用
+
+    if(cost > 0)
+    {
+        if (DispGetUpQtwFlag())
+        {
+            cost *= gGlobalParam.MiscParam.iUPUnitPrice;
+            bDeduction = true;
+        }
+
+        if (DispGetEdiQtwFlag())
+        {
+            cost *= gGlobalParam.MiscParam.iHPUnitPrice;
+            bDeduction = true;
+        }
+
+        if(bDeduction)
+        {
+            m_WaterCardInfo.curVolume %= 100;
+            m_WaterCardInfo.amount -= cost;
+            m_pCardInfoDlg->setValue(m_WaterCardInfo.amount);
+
+            unsigned char pData[4];
+
+            pData[0] = (m_WaterCardInfo.amount >> 24) & 0xFF;
+            pData[1] = (m_WaterCardInfo.amount >> 16) & 0xFF;
+            pData[2] = (m_WaterCardInfo.amount >> 8) & 0xFF;
+            pData[3] = (m_WaterCardInfo.amount >> 0) & 0xFF;
+
+            int iRet = CcbWriteRfid(APP_RF_QTW_READER, 2000, AMOUNT_OFFSET, AMOUNT_LENGTH, pData);
+            if(iRet != 0)
+            {
+                DHintDialog::getInstance(tr("Credit card machine failure"), 2000);
+                DispStopQtw();
+                return;
+            }
+
+            if(m_WaterCardInfo.amount <= 0)
+            {
+                DHintDialog::getInstance(tr("Insufficient balance"), 2000);
+                m_WaterCardInfo.amount = 0;
+                DispStopQtw();
+            }
+            recordCardInfo();
+        }
+    }
+}
+
+void MainWindow::cardReadyBeep()
+{
+    Alarm.m_iAlarmPeriod = 100; // ms
+    Alarm.m_iAlarmDuty   = 50; // ms
+    Alarm.m_iAlarmNum    = 1; // ms
+    startBuzzer();
+}
+
+void MainWindow::recordCardInfo()
+{
+    QSqlQuery query;
+    bool ret;
+
+    query.prepare(select_sql_waterCard);
+    query.addBindValue(m_WaterCardInfo.cardID);
+    ret = query.exec();
+
+    QString curTime = QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
+    double amount = m_WaterCardInfo.amount * 1.0  / 100;
+    
+    if(query.next())
+    {
+        QSqlQuery updateSqlQuery;
+        updateSqlQuery.prepare(update_sql_waterCard);
+        updateSqlQuery.addBindValue(amount);
+        updateSqlQuery.addBindValue(curTime);
+        updateSqlQuery.addBindValue(m_WaterCardInfo.cardID);
+        updateSqlQuery.exec();
+    }
+    else
+    {
+        QSqlQuery insertSqlQuery;
+        insertSqlQuery.prepare(insert_sql_waterCard);
+        insertSqlQuery.bindValue(":cardid", m_WaterCardInfo.cardID);
+        insertSqlQuery.bindValue(":balance", amount);
+        insertSqlQuery.bindValue(":time", curTime);
+        insertSqlQuery.exec();
+    }
+}
+
 
 int MainWindow::writeRfid(int iRfId, int dataLayout, QString strData)
 {
@@ -7960,6 +8308,8 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                 }
                 break;
             case NOT_STATE_QTW:
+                m_WaterCardInfo.curVolume = 0;
+                m_WaterCardInfo.oldVolumne = 0;
                 qDebug("on_dispIndication:DISP_NOT_STATE NOT_STATE_QTW \n");
                 break;
             case NOT_STATE_CIR:
@@ -8083,7 +8433,62 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                     m_aRfidInfo[pItem->ucId].ucValid = 0;
                 }
             }
+#ifdef WATERCARDREADER
+            if(APP_RF_QTW_READER == pItem->ucId)
+            {
+                if (pItem->ucState)
+                {
+                    if(readRfid_Reader(APP_RF_QTW_READER))
+                    {
+                        m_WaterCardInfo.cardID = QByteArray((char*)&m_aucContent[ID_OFFSET], ID_LENGTH);
+                        m_WaterCardInfo.type = QByteArray((char*)&m_aucContent[TYPE_OFFSET], TYPE_LENGTH);
+    
+                        m_WaterCardInfo.amount = (m_aucContent[AMOUNT_OFFSET] << 24) + 
+                                                 (m_aucContent[AMOUNT_OFFSET + 1] << 16) +
+                                                 (m_aucContent[AMOUNT_OFFSET + 2] << 8) +
+                                                 (m_aucContent[AMOUNT_OFFSET + 3]); 
+                        m_pCardInfoDlg->setCardID(m_WaterCardInfo.cardID);
 
+                        if(QByteArray(RATECARDID) == m_WaterCardInfo.cardID)
+                        {
+                            DISP_MISC_SETTING_STRU  MiscParam = gGlobalParam.MiscParam;  
+                            switch (m_WaterCardInfo.type.toInt())
+                            {
+                            case 8:
+                                MiscParam.iUPUnitPrice = m_WaterCardInfo.amount;
+                                break;
+                           case 9:
+                                MiscParam.iHPUnitPrice = m_WaterCardInfo.amount;
+                                break;
+                            }
+                            
+                            MainSaveMiscParam(gGlobalParam.iMachineType, MiscParam);
+                            MainUpdateSpecificParam(NOT_PARAM_MISC_PARAM);
+                            qDebug() << "dcj: rate card: ";
+                        }
+                        else
+                        {
+                            m_WaterCardInfo.bValid = true;
+                            qDebug() << "dcj: water card: "<< m_WaterCardInfo.amount;
+                        }
+                        cardReadyBeep();
+                    }
+                    
+                }
+                else
+                {
+                    m_WaterCardInfo.bValid = false;
+                    if(m_pCardInfoDlg->isVisible())
+                    {
+                        m_pCardInfoDlg->hide();
+                    }
+                    if(DispGetUpQtwFlag() || DispGetEdiQtwFlag())
+                    {
+                        DispStopQtw();
+                    }
+                }
+            }
+#endif
             switch(m_eWorkMode)
             {
             case APP_WORK_MODE_NORMAL:
@@ -8165,7 +8570,7 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
         {
             NOT_SPEED_ITEM_STRU *pItem = (NOT_SPEED_ITEM_STRU *)pNotify->aucData;
 
-            if (typeid(*m_pCurPage) == typeid(MainPage))
+            //if (typeid(*m_pCurPage) == typeid(MainPage))
             {
                 pMainPage->updSpeed(pItem->iType,pItem->iSpeed);
             }
@@ -8429,7 +8834,22 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
             NOT_REALTIME_QTW_VOLUME_ITEM_STRU *pItem = (NOT_REALTIME_QTW_VOLUME_ITEM_STRU *)pNotify->aucData;
 
             unsigned int volume = pItem->ulValue;
+#ifdef WATERCARDREADER
+            if(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_WATERCARD))
+            {
+                if(m_WaterCardInfo.bValid)
+                {
+                    this->deduction(volume);
+                
+                    if(!m_pCardInfoDlg->isVisible())
+                    {
+                        m_pCardInfoDlg->setValue(m_WaterCardInfo.amount);
+                        m_pCardInfoDlg->show();
+                    }
+                }
 
+            }
+#endif     
             if (typeid(*m_pCurPage) == typeid(MainPage))
             {
                 pMainPage->updRealTimeQtwVolume(volume);
@@ -8478,6 +8898,12 @@ void MainWindow :: rmvRfidFromDelayList(int iRfId)
             if (m_iAlarmRcdMask[0][DISP_ALARM_PART0] & DISP_MAKE_ALARM(DISP_ALARM_PART0_UPACK_OOP))
             {
                 alarmCommProc(false,DISP_ALARM_PART0,DISP_ALARM_PART0_UPACK_OOP);
+            }
+            break;
+        case DISP_ICP_PACK:
+            if (m_iAlarmRcdMask[0][DISP_ALARM_PART0] & DISP_MAKE_ALARM(DISP_ALARM_PART0_ICPPACK_OOP))
+            {
+                alarmCommProc(false,DISP_ALARM_PART0,DISP_ALARM_PART0_ICPPACK_OOP);
             }
             break;
         case DISP_AT_PACK:
@@ -8559,6 +8985,20 @@ void DispIndicationEntry(unsigned char *pucData,int iLength)
         if (gpMainWnd) gpMainWnd->emitDispIndication(pdi,iLength);
     }
 }
+
+int checkCardReader()
+{
+#ifdef WATERCARDREADER
+    if(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_WATERCARD))
+    {
+        return gpMainWnd->checkCardReaderStatus();
+    }
+    return 1;
+#else
+    return 1;
+#endif
+}
+
 
 int check_Sub_Account()
 {
@@ -8702,10 +9142,6 @@ void MainWindow::run(bool bRun)
     if (bRun)
     {
         bool bError = false;
-        
-#ifdef STEPPERMOTOR
-		SetStepperMotorPosition(2048); //初始化步进电机位置 
-#endif
 
         if (DispGetROWashFlag())
         {
@@ -8790,6 +9226,9 @@ void MainWindow::run(bool bRun)
                 case DISP_U_PACK:
                     ToastDlg::makeToast(tr("U Pack Not Detected"));
                     return;
+                case DISP_ICP_PACK:
+                    ToastDlg::makeToast(tr("ICP Pack Not Detected"));
+                    return;
                 case DISP_AT_PACK:
                     ToastDlg::makeToast(tr("AT Pack Not Detected"));
                     return;
@@ -8825,6 +9264,10 @@ void MainWindow::run(bool bRun)
                     break;
                 case (DISP_U_PACK | 0xFF00):
                     warningMsg = tr("U Pack Error! Do you want to continue?");
+                    bError = true;
+                    break;
+                case (DISP_ICP_PACK | 0xFF00):
+                    warningMsg = tr("ICP Pack Error! Do you want to continue?");
                     bError = true;
                     break;
                 case (DISP_AT_PACK | 0xFF00):
@@ -9504,6 +9947,12 @@ void MainWindow::checkCMParam()
     {
         m_cMas[gGlobalParam.iMachineType].aulMask[0] &= ~(1 <<  DISP_U_PACK);
     }
+        
+    if ((0 == gGlobalParam.CMParam.aulCms[DISP_ICP_PACKLIFEDAY])
+        ||(0 == gGlobalParam.CMParam.aulCms[DISP_ICP_PACKLIFEL]))
+    {
+        m_cMas[gGlobalParam.iMachineType].aulMask[0] &= ~(1 <<  DISP_ICP_PACK);
+    }
 
     if ((0 == gGlobalParam.CMParam.aulCms[DISP_AT_PACKLIFEDAY])
         ||(0 == gGlobalParam.CMParam.aulCms[DISP_AT_PACKLIFEL]))
@@ -9963,6 +10412,13 @@ void MainWindow::retriveLastRunState()
     {
         this->run(true);
     }
+    
+#ifdef STEPPERMOTOR
+    if(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_STEPPERMOTOR))
+    {
+        SetStepperMotorPosition(2048); //初始化步进电机位置 
+    }
+#endif
 }
 
 void MainWindow::updateCMInfoWithRFID(int operate)
@@ -10097,7 +10553,6 @@ void MainWindow::updateCMInfoWithRFID(int operate)
     case MACHINE_UP:
     case MACHINE_PURIST:
     case MACHINE_ADAPT:
-    {
         packType = DISP_H_PACK;
         iRfId = APP_RFID_SUB_TYPE_HPACK_ATPACK;
         if(0 == operate)
@@ -10109,10 +10564,9 @@ void MainWindow::updateCMInfoWithRFID(int operate)
             writeCMInfoToRFID(iRfId, packType);
         }
         break;
-    }
     default:
         break;
-     }
+    }
 
      switch(gGlobalParam.iMachineType)
      {
@@ -10122,7 +10576,6 @@ void MainWindow::updateCMInfoWithRFID(int operate)
      case MACHINE_UP:
      case MACHINE_PURIST:
      case MACHINE_ADAPT:
-     {
          packType = DISP_U_PACK;
          iRfId = APP_RFID_SUB_TYPE_UPACK_HPACK;
          if(0 == operate)
@@ -10134,7 +10587,32 @@ void MainWindow::updateCMInfoWithRFID(int operate)
              writeCMInfoToRFID(iRfId, packType);
          }
          break;
-     }
+     default:
+        break;
+    }
+
+     switch(gGlobalParam.iMachineType)
+     {
+     case MACHINE_L_Genie:
+     case MACHINE_L_UP:
+     case MACHINE_Genie:
+     case MACHINE_UP:
+     case MACHINE_PURIST:
+     case MACHINE_ADAPT:
+        if(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_DEION))
+        {
+            packType = DISP_ICP_PACK;
+            iRfId = APP_RFID_SUB_TYPE_ICPPACK;
+            if(0 == operate)
+            {
+                readCMInfoFromRFID(iRfId, packType);
+            }
+            else
+            {
+                writeCMInfoToRFID(iRfId, packType);
+            }
+        }
+        break;
      default:
         break;
      }
@@ -10193,6 +10671,10 @@ void MainWindow::readCMInfoFromRFID(int iRfId, int type)
         gCMUsage.info.aulCms[DISP_U_PACKLIFEDAY] = installTime.toTime_t();
         gCMUsage.info.aulCms[DISP_U_PACKLIFEL]   = volUsed;
         break;
+    case DISP_ICP_PACK:
+        gCMUsage.info.aulCms[DISP_ICP_PACKLIFEDAY] = installTime.toTime_t();
+        gCMUsage.info.aulCms[DISP_ICP_PACKLIFEL]   = volUsed;
+        break;
     case DISP_AT_PACK:
         gCMUsage.info.aulCms[DISP_AT_PACKLIFEDAY] = installTime.toTime_t();
         gCMUsage.info.aulCms[DISP_AT_PACKLIFEL]   = volUsed;
@@ -10221,6 +10703,9 @@ void MainWindow::writeCMInfoToRFID(int iRfId, int type)
         break;
     case DISP_U_PACK:
         volData = QString("%1").arg(gCMUsage.info.aulCms[DISP_U_PACKLIFEL]);
+        break;
+    case DISP_ICP_PACK:
+        volData = QString("%1").arg(gCMUsage.info.aulCms[DISP_ICP_PACKLIFEL]);
         break;
     case DISP_AT_PACK:
         volData = QString("%1").arg(gCMUsage.info.aulCms[DISP_AT_PACKLIFEL]);
@@ -10301,6 +10786,7 @@ const QDate MainWindow::resetExConsumableMsg(QDate &date, int iRfid, int iType, 
     {
     case DISP_AC_PACK:
     case DISP_U_PACK:
+    case DISP_ICP_PACK:
     case DISP_P_PACK:
     case DISP_H_PACK:
     {

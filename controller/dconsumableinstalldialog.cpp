@@ -220,6 +220,9 @@ void DConsumableInstallDialog::setConsumableName(int iType, const QString &catNo
     case DISP_PRE_PACK:
         m_pcomboBox->addItem(tr("Prefilter"));
         break;
+    case DISP_ICP_PACK:
+        m_pcomboBox->addItem(tr("ICP Pack"));
+        break;
     case DISP_P_PACK | (1 << 16):
         m_pcomboBox->addItem(tr("Clean Pack"));
         break;

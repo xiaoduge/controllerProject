@@ -62,6 +62,12 @@ private:
     QCheckBox *m_chkStepperMotor;
 #endif
 
+    QCheckBox *m_chkDeion;
+
+#ifdef WATERCARDREADER
+    QCheckBox *m_chkWaterCard;
+#endif
+
 #ifdef CFG_DO_PH
     QCheckBox *m_chkDO;
     QCheckBox *m_chkPH;
@@ -74,6 +80,10 @@ private:
     QLabel    *m_lbLoginLingerName;
     DLineEdit *m_leLoginLingerValue;
     QLabel    *m_lbLoginLingerUnit;
+
+    QLabel    *m_lbMaxDispTime;
+    DLineEdit *m_leMaxDispTime;
+    QLabel    *m_lbMaxDispTimeUnit;
 
     QLabel    *m_lbDeviceTypeName;
     QLabel    *m_lbDeviceType;
