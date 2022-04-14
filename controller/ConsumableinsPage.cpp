@@ -141,6 +141,7 @@ void ConsumableInsPage::buildTranslation()
             m_aInsListItem[iMapIdx]->setName(tr("TUBE UV"));
             m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
             break;
+#if 0
         case DISP_N5_UV:
             /*
             TOC UV       
@@ -148,6 +149,7 @@ void ConsumableInsPage::buildTranslation()
             m_aInsListItem[iMapIdx]->setName(tr("TOC UV"));
             m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
             break;
+#endif
         case DISP_W_FILTER:
             /*
                    

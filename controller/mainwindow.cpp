@@ -957,15 +957,18 @@ void MainRetriveCMParam(int iMachineType,DISP_CONSUME_MATERIAL_STRU  &Param)
     {
         Param.aulCms[DISP_N4_UVLIFEHOUR] = 8000; // 
     }
-
+#if 0
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_N5_UVLIFEDAY])
     {
         Param.aulCms[DISP_N5_UVLIFEDAY] = 720; // 
     }
+
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_N5_UVLIFEHOUR])
     {
         Param.aulCms[DISP_N5_UVLIFEHOUR] = 8000; // 
     }
+#endif
+
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_W_FILTERLIFE])
     {
         if(iMachineType == MACHINE_PURIST)
@@ -1363,6 +1366,16 @@ void MainRetriveCMInfo(int iMachineType,DISP_CONSUME_MATERIAL_STRU  &Param)
         Param.aulCms[DISP_P_PACKLIFEL] = 0; // NEW pack
     }
 
+    if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_ICP_PACKLIFEDAY])
+    {
+        Param.aulCms[DISP_ICP_PACKLIFEDAY] = DispGetCurSecond(); // NEW pack
+    }
+
+    if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_ICP_PACKLIFEL])
+    {
+        Param.aulCms[DISP_ICP_PACKLIFEL] = 0; // NEW pack
+    }
+    
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_U_PACKLIFEDAY])
     {
         Param.aulCms[DISP_U_PACKLIFEDAY] = DispGetCurSecond(); // NEW pack
@@ -1432,7 +1445,7 @@ void MainRetriveCMInfo(int iMachineType,DISP_CONSUME_MATERIAL_STRU  &Param)
     {
         Param.aulCms[DISP_N4_UVLIFEHOUR] = 0; // NEW uv
     }    
-    
+#if 0
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_N5_UVLIFEDAY])
     {
         Param.aulCms[DISP_N5_UVLIFEDAY] = DispGetCurSecond(); // NEW uv
@@ -1442,6 +1455,7 @@ void MainRetriveCMInfo(int iMachineType,DISP_CONSUME_MATERIAL_STRU  &Param)
     {
         Param.aulCms[DISP_N5_UVLIFEHOUR] = 0; // NEW uv
     }    
+#endif
 
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_T_B_FILTERLIFE])
     {
@@ -2961,7 +2975,7 @@ void CheckConsumptiveMaterialState(void)
             gCMUsage.ulUsageState |= (1 << DISP_N4_UVLIFEHOUR);
         }
     }
-    
+#if 0
     if ((ulCurTime > gCMUsage.info.aulCms[DISP_N5_UVLIFEDAY])
             && (iMask & (1 << DISP_N5_UV)))
     {
@@ -2978,7 +2992,7 @@ void CheckConsumptiveMaterialState(void)
         }
 
     }        
-
+#endif
     if ((ulCurTime > gCMUsage.info.aulCms[DISP_W_FILTERLIFE])
             && (iMask & (1 << DISP_W_FILTER)))
     {
@@ -3072,14 +3086,6 @@ void MainResetCmInfo(int iSel)
         gCMUsage.cmInfo.aulCumulatedData[DISP_PRE_PACKLIFEDAY] = 0;
         gCMUsage.cmInfo.aulCumulatedData[DISP_PRE_PACKLIFEL] = 0;
         break;
-    case DISP_ICP_PACK:
-        gCMUsage.info.aulCms[DISP_ICP_PACKLIFEDAY] = DispGetCurSecond();
-        gCMUsage.info.aulCms[DISP_ICP_PACKLIFEL]   = 0;
-        gCMUsage.ulUsageState &= ~(1 << DISP_ICP_PACKLIFEDAY);
-        gCMUsage.ulUsageState &= ~(1 << DISP_ICP_PACKLIFEL);
-        gCMUsage.cmInfo.aulCumulatedData[DISP_ICP_PACKLIFEDAY] = 0;
-        gCMUsage.cmInfo.aulCumulatedData[DISP_ICP_PACKLIFEL] = 0;
-        break;
     case DISP_AC_PACK:
         gCMUsage.info.aulCms[DISP_AC_PACKLIFEDAY] = DispGetCurSecond();
 
@@ -3108,6 +3114,14 @@ void MainResetCmInfo(int iSel)
         gCMUsage.cmInfo.aulCumulatedData[DISP_P_PACKLIFEDAY] = 0;
         gCMUsage.cmInfo.aulCumulatedData[DISP_P_PACKLIFEL] = 0;
         g_runConditions.bit1NewPPack = 1;
+        break;
+    case DISP_ICP_PACK:
+        gCMUsage.info.aulCms[DISP_ICP_PACKLIFEDAY] = DispGetCurSecond();
+        //gCMUsage.info.aulCms[DISP_ICP_PACKLIFEL]   = 0;
+        gCMUsage.ulUsageState &= ~(1 << DISP_ICP_PACKLIFEDAY);
+        gCMUsage.ulUsageState &= ~(1 << DISP_ICP_PACKLIFEL);
+        gCMUsage.cmInfo.aulCumulatedData[DISP_ICP_PACKLIFEDAY] = 0;
+        gCMUsage.cmInfo.aulCumulatedData[DISP_ICP_PACKLIFEL] = 0;
         break;
     case DISP_U_PACK:
         gCMUsage.info.aulCms[DISP_U_PACKLIFEDAY] = DispGetCurSecond();
@@ -3171,6 +3185,7 @@ void MainResetCmInfo(int iSel)
         gCMUsage.cmInfo.aulCumulatedData[DISP_N4_UVLIFEDAY] = 0;
         gCMUsage.cmInfo.aulCumulatedData[DISP_N4_UVLIFEHOUR] = 0;
         break;
+#if 0
     case DISP_N5_UV:
         gCMUsage.info.aulCms[DISP_N5_UVLIFEDAY] = DispGetCurSecond();
         gCMUsage.info.aulCms[DISP_N5_UVLIFEHOUR]= 0;
@@ -3179,6 +3194,7 @@ void MainResetCmInfo(int iSel)
         gCMUsage.cmInfo.aulCumulatedData[DISP_N5_UVLIFEDAY] = 0;
         gCMUsage.cmInfo.aulCumulatedData[DISP_N5_UVLIFEHOUR] = 0;
         break;
+#endif
     case DISP_W_FILTER:
         gCMUsage.info.aulCms[DISP_W_FILTERLIFE] = DispGetCurSecond();
         gCMUsage.ulUsageState &= ~(1 << DISP_W_FILTERLIFE);
@@ -3260,8 +3276,9 @@ void SaveConsumptiveMaterialInfo(void)
 
     int iLoop;
 
-    int aPackArray[] = {DISP_PRE_PACKLIFEL,DISP_AC_PACKLIFEL,DISP_T_PACKLIFEL,DISP_P_PACKLIFEL,DISP_H_PACKLIFEL,DISP_U_PACKLIFEL,DISP_AT_PACKLIFEL};
-    int aNArray[]    = {DISP_N1_UVLIFEHOUR,DISP_N2_UVLIFEHOUR,DISP_N3_UVLIFEHOUR,DISP_N4_UVLIFEHOUR,DISP_N5_UVLIFEHOUR};
+    int aPackArray[] = {DISP_PRE_PACKLIFEL,DISP_ICP_PACKLIFEL,DISP_AC_PACKLIFEL,DISP_T_PACKLIFEL,DISP_P_PACKLIFEL,DISP_H_PACKLIFEL,DISP_U_PACKLIFEL,DISP_AT_PACKLIFEL};
+   // int aNArray[]    = {DISP_N1_UVLIFEHOUR,DISP_N2_UVLIFEHOUR,DISP_N3_UVLIFEHOUR,DISP_N4_UVLIFEHOUR,DISP_N5_UVLIFEHOUR};
+   int aNArray[]    = {DISP_N1_UVLIFEHOUR,DISP_N2_UVLIFEHOUR,DISP_N3_UVLIFEHOUR,DISP_N4_UVLIFEHOUR};
 
     for (iLoop = 0; iLoop < DISP_CM_NUM; iLoop++)
     {
@@ -3812,7 +3829,7 @@ void MainWindow::initConsumablesCfg()
             m_cMas[iLoop].aulMask[0] &= (~((1 << DISP_AT_PACK)
                                          |(1 << DISP_H_PACK)
                                          |(1 << DISP_N4_UV)
-                                         |(1 << DISP_N5_UV)
+                                         //|(1 << DISP_N5_UV)
                                          |(1 << DISP_TUBE_FILTER)
                                          |(1 << DISP_TUBE_DI)));
             break;
@@ -3822,7 +3839,7 @@ void MainWindow::initConsumablesCfg()
             m_cMas[iLoop].aulMask[0] &= (~((1 << DISP_AT_PACK)
                                          |(1 << DISP_N1_UV)
                                          |(1 << DISP_N4_UV)
-                                         |(1 << DISP_N5_UV)
+                                         //|(1 << DISP_N5_UV)
                                          |(1 << DISP_TUBE_FILTER)
                                          |(1 << DISP_TUBE_DI)));
             break;
@@ -3834,7 +3851,7 @@ void MainWindow::initConsumablesCfg()
                                          |(1 << DISP_H_PACK)
                                          |(1 << DISP_N2_UV)
                                          |(1 << DISP_N4_UV)
-                                         |(1 << DISP_N5_UV)
+                                         //|(1 << DISP_N5_UV)
                                          |(1 << DISP_T_B_FILTER) //2018.11.19
                                          |(1 << DISP_TUBE_FILTER)
                                          |(1 << DISP_TUBE_DI)));
@@ -3847,7 +3864,7 @@ void MainWindow::initConsumablesCfg()
                                          |(1 << DISP_N1_UV)
                                          |(1 << DISP_N2_UV)
                                          |(1 << DISP_N4_UV)
-                                         |(1 << DISP_N5_UV)
+                                         //|(1 << DISP_N5_UV)
                                          |(1 << DISP_T_B_FILTER) //2018.11.12
                                          |(1 << DISP_TUBE_FILTER)
                                          |(1 << DISP_TUBE_DI)));
@@ -3864,7 +3881,7 @@ void MainWindow::initConsumablesCfg()
                                          |(1 << DISP_N1_UV)
                                          |(1 << DISP_N3_UV)
                                          |(1 << DISP_N4_UV)
-                                         |(1 << DISP_N5_UV)
+                                         //|(1 << DISP_N5_UV)
                                          |(1 << DISP_W_FILTER)
                                          |(1 << DISP_TUBE_FILTER)
                                          |(1 << DISP_TUBE_DI)));
@@ -3880,7 +3897,7 @@ void MainWindow::initConsumablesCfg()
                                            |(1 << DISP_N1_UV)
                                            |(1 << DISP_N3_UV)
                                            |(1 << DISP_N4_UV)
-                                           |(1 << DISP_N5_UV)
+                                           //|(1 << DISP_N5_UV)
                                            |(1 << DISP_TUBE_FILTER)
                                            |(1 << DISP_W_FILTER)
                                            |(1 << DISP_TUBE_DI)));
@@ -4686,6 +4703,7 @@ void MainWindow::initAlarmName()
                 << "AT-Pack Not Detected"
                 << "H-Pack Not Detected"
                 << "U-Pack Not Detected"
+                << "ICP-Pack Not Detected"
                 << "Low Feed Water Pressure"
                 << "Feed Water Conductivity>SP"
                 << "RO Product Conductivity>SP"
@@ -5364,7 +5382,8 @@ void MainWindow::Splash()
 {
     m_pLabelGif = new QLabel(mainWidget);
     m_pLabelGif->setGeometry(QRect(0, 0, 800, 600));
-
+    
+#ifndef SALUS
     switch(gAdditionalCfgParam.productInfo.iCompany)
     {
     case 1:
@@ -5374,6 +5393,9 @@ void MainWindow::Splash()
         m_pMovieGif = new QMovie(":/pic/LOGO.gif");
         break;
     }
+#else
+     m_pMovieGif = new QMovie(":/pic/salus.gif");
+#endif
 
     m_pLabelGif->setMovie(m_pMovieGif);
     
@@ -6576,7 +6598,11 @@ void MainWindow::initMachineNameRephile()
         m_strMachineName = QString("Genie R") + tr(" %1").arg(iMachineFlow);
         break;
     case MACHINE_PURIST:
+#ifndef SALUS
         m_strMachineName = QString("Genie PURIST");
+#else
+        m_strMachineName = QString("Salus P");
+#endif
         break;
     case MACHINE_ADAPT:
         m_strMachineName = QString("Genie A") + tr(" %1").arg(iMachineFlow);
@@ -6863,7 +6889,7 @@ void MainWindow::checkConsumableAlarm()
             m_conAlarmMark[DISP_N4_NOTIFY] = false;
         }
     }
-
+#if 0
     if (gCMUsage.ulUsageState & (1 << DISP_N5_UVLIFEDAY)
         || gCMUsage.ulUsageState & (1 << DISP_N5_UVLIFEHOUR))
     {
@@ -6883,7 +6909,7 @@ void MainWindow::checkConsumableAlarm()
             m_conAlarmMark[DISP_N5_NOTIFY] = false;
         }
     }
-
+#endif
 
     if ((gCMUsage.ulUsageState & (1 << DISP_W_FILTERLIFE)
         || gCMUsage.ulUsageState & (1 << DISP_W_FILTERLIFE))
@@ -8114,6 +8140,7 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                         float tmpI5 = (m_EcowCurr[APP_EXE_I5_NO].iTemp*1.0)/10;
                         gCMUsage.cmInfo.aulCumulatedData[DISP_U_PACKLIFEL] += ulQuantity;
                         gCMUsage.cmInfo.aulCumulatedData[DISP_H_PACKLIFEL] += ulQuantity;
+                        gCMUsage.cmInfo.aulCumulatedData[DISP_ICP_PACKLIFEL] += ulQuantity;
                         query.prepare(INSERT_sql_GetW);
                         query.bindValue(":name", "UP");
                         query.bindValue(":quantity", fQuantity);
@@ -9989,13 +10016,13 @@ void MainWindow::checkCMParam()
     {
         m_cMas[gGlobalParam.iMachineType].aulMask[0] &= ~(1 <<  DISP_N4_UV);
     }
-
+#if 0
     if ((0 == gGlobalParam.CMParam.aulCms[DISP_N5_UVLIFEDAY])
         ||(0 == gGlobalParam.CMParam.aulCms[DISP_N5_UVLIFEHOUR]))
     {
         m_cMas[gGlobalParam.iMachineType].aulMask[0] &= ~(1 <<  DISP_N5_UV);
     }
-
+#endif
     if (0 == gGlobalParam.CMParam.aulCms[DISP_W_FILTERLIFE])
     {
         m_cMas[gGlobalParam.iMachineType].aulMask[0] &= ~(1 <<  DISP_W_FILTER);

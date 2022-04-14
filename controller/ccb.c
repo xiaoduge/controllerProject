@@ -15970,8 +15970,13 @@ void MainSecondTask4MainState()
         if (gCcb.bit1B1Check4RuningState 
             && gCcb.bit1B1UnderPressureDetected)
         {
-            //if (gulSecond - gCcb.ulB1UnderPressureTick >= 60)
-            if (gulSecond - gCcb.ulB1UnderPressureTick >= DEFAULT_LPP_CHECK_NUMBER)
+            int lpCheckDuration = DEFAULT_LPP_CHECK_NUMBER;
+            if(MACHINE_ADAPT == gCcb.ulMachineType)
+            {
+                lpCheckDuration = 60;
+            }
+
+            if (gulSecond - gCcb.ulB1UnderPressureTick >= lpCheckDuration)
             {
                 //2019.11.08 add for adpet, 
                 if(MACHINE_ADAPT == gCcb.ulMachineType)

@@ -749,6 +749,7 @@ void ConsumableStatePage:: update()
             }
             m_pCslistItem[iIdx]->setName(tr("TUBE UV"));
             break;  
+ #if 0
         case DISP_N5_UV:
             /* for DISP_N5_UV column */
             tmp = gCMUsage.info.aulCms[DISP_N5_UVLIFEHOUR] ;
@@ -779,7 +780,8 @@ void ConsumableStatePage:: update()
                 m_pCslistItem[iIdx]->updateState(0);
             }
             m_pCslistItem[iIdx]->setName(tr("TOC UV"));
-            break;              
+            break;  
+#endif
         case DISP_W_FILTER:
             /* for DISP_W_FILTER column */
             strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_W_FILTERLIFE]);

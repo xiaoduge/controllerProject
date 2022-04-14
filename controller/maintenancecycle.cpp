@@ -560,6 +560,7 @@ void MaintenanceCyclePage::buildTranslation()
             pMaintenancelistItem[iIndex]->setP1Name(tr("Day"));
             pMaintenancelistItem[iIndex]->setP2Name(tr("hr"));
             break;
+#if 0
         case DISP_N5_UV:
             /* 
             TOC UV    720     8000Сʱ 
@@ -568,6 +569,7 @@ void MaintenanceCyclePage::buildTranslation()
             pMaintenancelistItem[iIndex]->setP1Name(tr("Day"));
             pMaintenancelistItem[iIndex]->setP2Name(tr("hr"));
             break;
+#endif
         case DISP_W_FILTER:
             /* 
             ˮ   360     
@@ -813,6 +815,7 @@ void MaintenanceCyclePage:: update()
             pMaintenancelistItem[iIndex]->setP2(QString::number(gGlobalParam.CMParam.aulCms[DISP_N4_UVLIFEHOUR]));
 
             break;
+#if 0
         case DISP_N5_UV:
             /* 
             TOC UV    720     8000Сʱ 
@@ -821,6 +824,7 @@ void MaintenanceCyclePage:: update()
             pMaintenancelistItem[iIndex]->setP2(QString::number(gGlobalParam.CMParam.aulCms[DISP_N5_UVLIFEHOUR]));
 
             break;
+#endif
         case DISP_W_FILTER:
             /* 
             ˮ   360     
@@ -988,6 +992,7 @@ void MaintenanceCyclePage::save()
             iTemp = pMaintenancelistItem[iIndex]->getP2().toInt();
             CMParam.aulCms[DISP_N4_UVLIFEHOUR] = iTemp;
             break;
+#if 0
         case DISP_N5_UV:
             /* 
             TOC UV    720     8000Сʱ 
@@ -997,6 +1002,7 @@ void MaintenanceCyclePage::save()
             iTemp = pMaintenancelistItem[iIndex]->getP2().toInt();
             CMParam.aulCms[DISP_N5_UVLIFEHOUR] = iTemp;
             break;
+ #endif
         case DISP_W_FILTER:
             /* 
             ˮ   360     

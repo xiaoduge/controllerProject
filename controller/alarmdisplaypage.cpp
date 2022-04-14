@@ -858,10 +858,11 @@ void AlarmDisplayPage::csUpdate()
                 m_pCslistItem[iIdx]->setName(tr("TUBE UV"));
                 iIdx++;
             }
-            break;  
+            break; 
+#if 0
         case DISP_N5_UV:
 /*2018/05/21 TOC UV*/
-#if 0
+
             if (gCMUsage.ulUsageState & (1 << DISP_N5_UVLIFEDAY) 
                 || gCMUsage.ulUsageState & (1 << DISP_N5_UVLIFEHOUR))
             {

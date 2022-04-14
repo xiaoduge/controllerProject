@@ -20,6 +20,10 @@
 #pragma message("Turn on Sub-account function")
 #endif
 
+//#define SALUS
+#ifdef SALUS
+#pragma message("Turn on Salus")
+#endif
 
 
 #define APP_PROTOL_CANID_RSVD           (0x0)
