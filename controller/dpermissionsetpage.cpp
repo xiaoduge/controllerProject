@@ -35,8 +35,12 @@ void DPermissionSetPage::buildTitles()
 
 void DPermissionSetPage::buildTranslation()
 {
+    m_tabWidget->setTabText(0, tr("Verification"));
+
+#if 0
     m_tabWidget->setTabText(0, tr("RFID Config"));
     m_tabWidget->setTabText(1, tr("Verification"));
+#endif
 
 #ifdef SUB_ACCOUNT
     m_tabWidget->setTabText(2, tr("Sub-Account"));
@@ -48,9 +52,11 @@ void DPermissionSetPage::buildTranslation()
     m_pDeleteAllBtn->setText(tr("Reset All"));
 #endif
 
+#if 0
     m_pRfidTitle->setText(tr("RFID Config"));
     m_chRfid->setText(tr("Disable RFID"));
     m_saveRfidBtn->setText(tr("Save"));
+#endif
 
     m_pPermissionTitle->setText(tr("Verification"));
     m_chPermission->setText(tr("Users is free of verification."));
@@ -88,7 +94,9 @@ void DPermissionSetPage::initUi()
     m_tabWidget = new QTabWidget;
 
     //add page
+#if 0
     initRFIDConfigPage();
+#endif
     initInstallPermissionPage();
 
 #ifdef SUB_ACCOUNT
@@ -111,6 +119,7 @@ void DPermissionSetPage::initUi()
 
 void DPermissionSetPage::update()
 {
+#if 0
     //RFID
     if (gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_RFID_Authorization))
     {
@@ -120,6 +129,7 @@ void DPermissionSetPage::update()
     {
         m_chRfid->setChecked(false);
     }
+#endif
     //Consumable install Permission
     if (gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_User_Authorization))
     {

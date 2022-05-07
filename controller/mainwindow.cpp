@@ -5606,7 +5606,8 @@ void MainWindow::on_timerSecondEvent()
     updatePackFlow(); //
     checkUserLoginStatus(); //User login status check;
     updateRunningFlushTime(); //Running Flush countdown
-
+    
+#if 0
     if (m_iRfidDelayedMask)
     {
         int iLoop;
@@ -5654,7 +5655,7 @@ void MainWindow::on_timerSecondEvent()
             }
         }
     }
-    
+#endif
     /* faked flow report */
     if (!m_bSplash)
     {
@@ -6035,38 +6036,40 @@ bool alarmHaveAssociatedModule(int iAlarmPart,int iAlarmId)
             {
                 bDevice = false ;
             }
+#if 0
             if (gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_RFID_Authorization))
             {
                 bDevice = false ;
             }
+#endif
             break;
         case DISP_ALARM_PART0_ACPACK_OOP:
         case DISP_ALARM_PART0_PPACK_OOP:
         case DISP_ALARM_PART0_ATPACK_OOP:
         case DISP_ALARM_PART0_HPACK_OOP:
         case DISP_ALARM_PART0_UPACK_OOP:  
+#if 0
             if (gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_RFID_Authorization))
             {
                 bDevice = false ;
             }
+#endif
             break;
         case DISP_ALARM_PART0_ICPPACK_OOP:
             if (!(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_DEION))) 
             {
                 bDevice = false ;
             }
+#if 0
             if (gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_RFID_Authorization))
             {
                 bDevice = false ;
             }
+#endif
             break;
         default:
              break;
         }  
-//        if (gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_RFID_Authorization))
-//        {
-//            bDevice = false ;
-//        }
         break;
     }
     case DISP_ALARM_PART1:
@@ -9213,7 +9216,7 @@ void MainWindow::run(bool bRun)
             }
             return;
         }
-
+#if 0
         if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_RFID_Authorization))
         {
             if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
@@ -9327,7 +9330,146 @@ void MainWindow::run(bool bRun)
                }
             }
         }
-        
+#endif
+
+        {
+            iRet = getActiveRfidBrds();
+
+            if (iRet <= 0)
+            {
+                QString warningMsg;
+                switch(-iRet)
+                {
+                //脱落
+                case DISP_PRE_PACK:
+                    warningMsg = tr("PRE Pack Not Detected! Do you want to continue?");
+                    bError = true;
+                    break;
+                case DISP_AC_PACK:
+                    warningMsg = tr("AC Pack Not Detected! Do you want to continue?");
+                    bError = true;
+                    break;
+                case DISP_P_PACK:
+                    warningMsg = tr("P Pack Not Detected! Do you want to continue?");
+                    bError = true;
+                    break;
+                case DISP_U_PACK:
+                    warningMsg = tr("U Pack Not Detected! Do you want to continue?");
+                    bError = true;
+                    break;
+                case DISP_ICP_PACK:
+                    warningMsg = tr("ICP Pack Not Detected! Do you want to continue?");
+                    return;
+                case DISP_AT_PACK:
+                    warningMsg = tr("AT Pack Not Detected! Do you want to continue?");
+                    bError = true;
+                    break;
+                case DISP_H_PACK:
+                    warningMsg = tr("H Pack Not Detected! Do you want to continue?");
+                    bError = true;
+                    break;
+                //错误
+                case (DISP_PRE_PACK | 0xFF00):
+                    warningMsg = tr("Pre Pack Error! Do you want to continue?");
+                    bError = true;
+                    break;
+                case (DISP_AC_PACK | 0xFF00):
+                    warningMsg = tr("AC Pack Error! Do you want to continue?");
+                    bError = true;
+                    break;
+                case (DISP_P_PACK | 0xFF00):
+                    warningMsg = tr("P Pack Error! Do you want to continue?");
+                    bError = true;
+                    break;
+                case (DISP_U_PACK | 0xFF00):
+                    warningMsg = tr("U Pack Error! Do you want to continue?");
+                    bError = true;
+                    break;
+                case (DISP_ICP_PACK | 0xFF00):
+                    warningMsg = tr("ICP Pack Error! Do you want to continue?");
+                    bError = true;
+                    break;
+                case (DISP_AT_PACK | 0xFF00):
+                    warningMsg = tr("AT Pack Error! Do you want to continue?");
+                    bError = true;
+                    break;
+                case (DISP_H_PACK | 0xFF00):
+                    warningMsg = tr("H Pack Error! Do you want to continue?");
+                    bError = true;
+                    break;
+                default:
+                    break;
+               }
+
+                if(bError)
+                {
+                    DRunWarningDialog runDlg(warningMsg);
+                    runDlg.setButtonText(0, tr("Continue"));
+                    if(QDialog::Accepted != runDlg.exec())
+                    {
+                        gAdditionalCfgParam.lastRunState = 0;
+                        MainSaveLastRunState(gGlobalParam.iMachineType);
+
+                        if (NULL != m_pSubPages[PAGE_MAIN])
+                        {
+                            MainPage *page = (MainPage *)m_pSubPages[PAGE_MAIN];
+                            page->updateRunInfo(false);
+                        }
+
+                        if (m_iRfidDelayedMask)
+                        {
+                            int iLoop;
+                            for (iLoop = 0; iLoop < APP_RF_READER_MAX_NUMBER; iLoop++)
+                            {
+                                if (m_iRfidDelayedMask & (1 << iLoop))
+                                {
+                                    m_aiRfidDelayedCnt[iLoop]--;
+
+                                    if (0 == m_aiRfidDelayedCnt[iLoop])
+                                    {
+                                        m_iRfidBufferActiveMask &= ~(1 << iLoop);
+                                        m_iRfidDelayedMask      &= ~(1 << iLoop);
+
+                                        if (APP_WORK_MODE_NORMAL == m_eWorkMode)
+                                        {
+                                            /*raise alarm */
+                                            switch(MacRfidMap.aiDeviceType4Normal[iLoop])
+                                            {
+                                            case DISP_P_PACK:
+                                                alarmCommProc(true,DISP_ALARM_PART0,DISP_ALARM_PART0_PPACK_OOP);
+                                                break;
+                                            case DISP_PRE_PACK:
+                                                alarmCommProc(true,DISP_ALARM_PART0,DISP_ALARM_PART0_PREPACK_OOP);
+                                                break;
+                                            case DISP_AC_PACK:
+                                                alarmCommProc(true,DISP_ALARM_PART0,DISP_ALARM_PART0_ACPACK_OOP);
+                                                break;
+                                            case DISP_U_PACK:
+                                                alarmCommProc(true,DISP_ALARM_PART0,DISP_ALARM_PART0_UPACK_OOP);
+                                                break;
+                                            case DISP_ICP_PACK:
+                                                alarmCommProc(true,DISP_ALARM_PART0,DISP_ALARM_PART0_ICPPACK_OOP);
+                                                break;
+                                            case DISP_AT_PACK:
+                                                alarmCommProc(true,DISP_ALARM_PART0,DISP_ALARM_PART0_ATPACK_OOP);
+                                                break;
+                                            case DISP_H_PACK:
+                                                alarmCommProc(true,DISP_ALARM_PART0,DISP_ALARM_PART0_HPACK_OOP);
+                                                break;
+                                                
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                        return;
+                    }
+               }
+            }
+        }
+
         if (DISP_WORK_STATE_IDLE == DispGetWorkState())
         {
             DispCmdEntry(DISP_CMD_RUN, NULL, 0);
