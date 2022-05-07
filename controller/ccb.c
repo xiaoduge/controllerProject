@@ -15973,10 +15973,11 @@ void MainSecondTask4MainState()
             int lpCheckDuration = DEFAULT_LPP_CHECK_NUMBER;
             if(MACHINE_ADAPT == gCcb.ulMachineType)
             {
-                lpCheckDuration = 60;
+                lpCheckDuration = 50;
             }
 
             if (gulSecond - gCcb.ulB1UnderPressureTick >= lpCheckDuration)
+            //if (gulSecond - gCcb.ulB1UnderPressureTick >= DEFAULT_LPP_CHECK_NUMBER)
             {
                 //2019.11.08 add for adpet, 
                 if(MACHINE_ADAPT == gCcb.ulMachineType)
