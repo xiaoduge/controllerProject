@@ -172,6 +172,7 @@ ParameterCalibrationPage::ParameterCalibrationPage(QObject *parent,CBaseWidget *
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
     case MACHINE_Genie:
+    case MACHINE_EDI:
     case MACHINE_UP:
     case MACHINE_PURIST:
     case MACHINE_ADAPT:
@@ -186,6 +187,7 @@ ParameterCalibrationPage::ParameterCalibrationPage(QObject *parent,CBaseWidget *
     case MACHINE_L_Genie:
     case MACHINE_L_UP:
     case MACHINE_Genie:
+    case MACHINE_EDI:
     case MACHINE_UP:
     case MACHINE_PURIST:
     case MACHINE_ADAPT:
@@ -463,6 +465,9 @@ void ParameterCalibrationPage::buildTranslation()
             case MACHINE_UP:
                 m_aParameterlistItem[iLoop]->setName(tr("UP TOC Conduct"));
                 break;
+            case MACHINE_EDI:
+                m_aParameterlistItem[iLoop]->setName(tr("HP Conduct"));
+                break;
             default:
                 m_aParameterlistItem[iLoop]->setName(tr("TOC Conduct"));
                 break;
@@ -480,6 +485,9 @@ void ParameterCalibrationPage::buildTranslation()
             {
             case MACHINE_UP:
                 m_aParameterlistItem[iLoop]->setName(tr("UP TOC Temp"));
+                break;
+            case MACHINE_EDI:
+                m_aParameterlistItem[iLoop]->setName(tr("HP Temp"));
                 break;
             default:
                 m_aParameterlistItem[iLoop]->setName(tr("TOC Temp"));
