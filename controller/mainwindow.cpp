@@ -3447,7 +3447,7 @@ void MainWindow::initConsumablesInfo()
 
     m_strConsuamble[ICPPACK_CATNO] << "RR700QICP";
 
-    m_strConsuamble[HPACK_CATNO] << "RR700H101" << "RR504H101" << "171-1257";
+    m_strConsuamble[HPACK_CATNO] << "RR700H101" << "RR700H201" << "RR504H101" << "171-1257";
 
     m_strConsuamble[ATPACK_CATNO] << "RR504AT01";
 
