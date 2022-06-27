@@ -11141,7 +11141,7 @@ void MainWindow::printWorker(const ProductDataPrint &data)
     pCont += iRet;
     iIdx  += iRet;
 
-    iRet = sprintf(pCont,"\"%13s %-4.1f %-6s\" LF\n", "ROFeedCond. :", data.fFeedTemp, "\x75\x73\x2F\x63\x6D");
+    iRet = sprintf(pCont,"\"%13s %-4.1f %-6s\" LF\n", "ROFeedCond. :", data.fFeedCond, "\x75\x73\x2F\x63\x6D");
     pCont += iRet;
     iIdx  += iRet;
 
@@ -11157,7 +11157,7 @@ void MainWindow::printWorker(const ProductDataPrint &data)
     pCont += iRet;
     iIdx  += iRet;
 
-    iRet = sprintf(pCont,"\"%13s %-4.1f %-2s\" LF\n", "RORej.      :", data.fRej, "%");
+    iRet = sprintf(pCont,"\"%13s %-4.1f %-2s\" LF\n", "RORej.      :", data.fRej * 100, "%");
     pCont += iRet;
     iIdx  += iRet;
 
