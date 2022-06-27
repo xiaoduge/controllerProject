@@ -217,6 +217,7 @@ void DFactoryTestPage::initRFIDTestPage()
     m_pIndexCombo->addItem(tr("22"));
     m_pIndexCombo->addItem(tr("23"));
     m_pIndexCombo->addItem(tr("24"));
+    m_pIndexCombo->addItem(tr("25"));
     m_pIndexCombo->setMinimumWidth(100);
     fLayout->addRow(m_pIndexLabel, m_pIndexCombo);
 
