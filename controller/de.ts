@@ -1575,7 +1575,7 @@
     </message>
     <message>
         <location filename="dfactorytestpage.cpp" line="64"/>
-        <location filename="dfactorytestpage.cpp" line="302"/>
+        <location filename="dfactorytestpage.cpp" line="303"/>
         <source>Maintenance</source>
         <translation type="unfinished">Wartung</translation>
     </message>
@@ -1673,7 +1673,12 @@
         <translation type="unfinished">Füllstand Speisewassertank</translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="615"/>
+        <location filename="dfactorytestpage.cpp" line="220"/>
+        <source>25</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="dfactorytestpage.cpp" line="616"/>
         <source>FAIL</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1685,13 +1690,13 @@
     </message>
     <message>
         <location filename="dfactorytestpage.cpp" line="65"/>
-        <location filename="dfactorytestpage.cpp" line="330"/>
+        <location filename="dfactorytestpage.cpp" line="331"/>
         <source>Tools</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="dfactorytestpage.cpp" line="104"/>
-        <location filename="dfactorytestpage.cpp" line="296"/>
+        <location filename="dfactorytestpage.cpp" line="297"/>
         <source>Zigbee Upd</source>
         <translation type="unfinished">Aktualisierung Zigbee</translation>
     </message>
@@ -1726,71 +1731,71 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="255"/>
+        <location filename="dfactorytestpage.cpp" line="256"/>
         <source>RFID TEST</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="278"/>
+        <location filename="dfactorytestpage.cpp" line="279"/>
         <source>Update Wifi</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="347"/>
+        <location filename="dfactorytestpage.cpp" line="348"/>
         <source>Fail: Flow</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="347"/>
-        <location filename="dfactorytestpage.cpp" line="364"/>
+        <location filename="dfactorytestpage.cpp" line="348"/>
+        <location filename="dfactorytestpage.cpp" line="365"/>
         <source>Can not enter test Mode</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="364"/>
+        <location filename="dfactorytestpage.cpp" line="365"/>
         <source>Fail: Pressure</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="386"/>
-        <location filename="dfactorytestpage.cpp" line="391"/>
-        <location filename="dfactorytestpage.cpp" line="397"/>
-        <location filename="dfactorytestpage.cpp" line="402"/>
+        <location filename="dfactorytestpage.cpp" line="387"/>
+        <location filename="dfactorytestpage.cpp" line="392"/>
+        <location filename="dfactorytestpage.cpp" line="398"/>
+        <location filename="dfactorytestpage.cpp" line="403"/>
         <source>Warning</source>
         <translation type="unfinished">Warnung</translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="386"/>
+        <location filename="dfactorytestpage.cpp" line="387"/>
         <source>write cat error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="391"/>
+        <location filename="dfactorytestpage.cpp" line="392"/>
         <source>write lot error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="397"/>
+        <location filename="dfactorytestpage.cpp" line="398"/>
         <source>write install date error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="402"/>
+        <location filename="dfactorytestpage.cpp" line="403"/>
         <source>write vol data error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="405"/>
+        <location filename="dfactorytestpage.cpp" line="406"/>
         <source>Write finished</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="461"/>
+        <location filename="dfactorytestpage.cpp" line="462"/>
         <source>Notice</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="dfactorytestpage.cpp" line="461"/>
+        <location filename="dfactorytestpage.cpp" line="462"/>
         <source>Please Stop System First!</source>
         <translation type="unfinished"></translation>
     </message>
