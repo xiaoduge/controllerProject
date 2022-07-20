@@ -625,6 +625,7 @@ void ConsumableInsPage::initNormalItem()
     case MACHINE_UP:
     case MACHINE_EDI:
     case MACHINE_RO:
+    case MACHINE_PURIST:
         if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_TankUV))
         {
             aIds[iIdx].iType = 0;
@@ -923,6 +924,7 @@ void ConsumableInsPage::initManualItem()
     case MACHINE_UP:
     case MACHINE_EDI:
     case MACHINE_RO:
+    case MACHINE_PURIST:
         if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_TankUV))
         {
             aIds[iIdx].iType = 0;
