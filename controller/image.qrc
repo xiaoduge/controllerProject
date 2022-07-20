@@ -120,6 +120,7 @@
         <file alias="settime.png">pics/image/settime.png</file>
         <file alias="timelogo.png">pics/image/timelogo.png</file>
         <file alias="LOGO_VWR.gif">pics/image/LOGO_VWR.gif</file>
+        <file alias="salus.gif">pics/image/salus.gif</file>
     </qresource>
     <qresource prefix="/userManual">
         <file alias="G_E_1.png">pics/Manual/Genie_G_EN/G_E_1.png</file>

@@ -957,15 +957,18 @@ void MainRetriveCMParam(int iMachineType,DISP_CONSUME_MATERIAL_STRU  &Param)
     {
         Param.aulCms[DISP_N4_UVLIFEHOUR] = 8000; // 
     }
-
+#if 0
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_N5_UVLIFEDAY])
     {
         Param.aulCms[DISP_N5_UVLIFEDAY] = 720; // 
     }
+
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_N5_UVLIFEHOUR])
     {
         Param.aulCms[DISP_N5_UVLIFEHOUR] = 8000; // 
     }
+#endif
+
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_W_FILTERLIFE])
     {
         if(iMachineType == MACHINE_PURIST)
@@ -1363,6 +1366,16 @@ void MainRetriveCMInfo(int iMachineType,DISP_CONSUME_MATERIAL_STRU  &Param)
         Param.aulCms[DISP_P_PACKLIFEL] = 0; // NEW pack
     }
 
+    if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_ICP_PACKLIFEDAY])
+    {
+        Param.aulCms[DISP_ICP_PACKLIFEDAY] = DispGetCurSecond(); // NEW pack
+    }
+
+    if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_ICP_PACKLIFEL])
+    {
+        Param.aulCms[DISP_ICP_PACKLIFEL] = 0; // NEW pack
+    }
+    
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_U_PACKLIFEDAY])
     {
         Param.aulCms[DISP_U_PACKLIFEDAY] = DispGetCurSecond(); // NEW pack
@@ -1432,7 +1445,7 @@ void MainRetriveCMInfo(int iMachineType,DISP_CONSUME_MATERIAL_STRU  &Param)
     {
         Param.aulCms[DISP_N4_UVLIFEHOUR] = 0; // NEW uv
     }    
-    
+#if 0
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_N5_UVLIFEDAY])
     {
         Param.aulCms[DISP_N5_UVLIFEDAY] = DispGetCurSecond(); // NEW uv
@@ -1442,6 +1455,7 @@ void MainRetriveCMInfo(int iMachineType,DISP_CONSUME_MATERIAL_STRU  &Param)
     {
         Param.aulCms[DISP_N5_UVLIFEHOUR] = 0; // NEW uv
     }    
+#endif
 
     if (INVALID_CONFIG_VALUE == Param.aulCms[DISP_T_B_FILTERLIFE])
     {
@@ -2961,7 +2975,7 @@ void CheckConsumptiveMaterialState(void)
             gCMUsage.ulUsageState |= (1 << DISP_N4_UVLIFEHOUR);
         }
     }
-    
+#if 0
     if ((ulCurTime > gCMUsage.info.aulCms[DISP_N5_UVLIFEDAY])
             && (iMask & (1 << DISP_N5_UV)))
     {
@@ -2978,7 +2992,7 @@ void CheckConsumptiveMaterialState(void)
         }
 
     }        
-
+#endif
     if ((ulCurTime > gCMUsage.info.aulCms[DISP_W_FILTERLIFE])
             && (iMask & (1 << DISP_W_FILTER)))
     {
@@ -3072,14 +3086,6 @@ void MainResetCmInfo(int iSel)
         gCMUsage.cmInfo.aulCumulatedData[DISP_PRE_PACKLIFEDAY] = 0;
         gCMUsage.cmInfo.aulCumulatedData[DISP_PRE_PACKLIFEL] = 0;
         break;
-    case DISP_ICP_PACK:
-        gCMUsage.info.aulCms[DISP_ICP_PACKLIFEDAY] = DispGetCurSecond();
-        gCMUsage.info.aulCms[DISP_ICP_PACKLIFEL]   = 0;
-        gCMUsage.ulUsageState &= ~(1 << DISP_ICP_PACKLIFEDAY);
-        gCMUsage.ulUsageState &= ~(1 << DISP_ICP_PACKLIFEL);
-        gCMUsage.cmInfo.aulCumulatedData[DISP_ICP_PACKLIFEDAY] = 0;
-        gCMUsage.cmInfo.aulCumulatedData[DISP_ICP_PACKLIFEL] = 0;
-        break;
     case DISP_AC_PACK:
         gCMUsage.info.aulCms[DISP_AC_PACKLIFEDAY] = DispGetCurSecond();
 
@@ -3108,6 +3114,14 @@ void MainResetCmInfo(int iSel)
         gCMUsage.cmInfo.aulCumulatedData[DISP_P_PACKLIFEDAY] = 0;
         gCMUsage.cmInfo.aulCumulatedData[DISP_P_PACKLIFEL] = 0;
         g_runConditions.bit1NewPPack = 1;
+        break;
+    case DISP_ICP_PACK:
+        gCMUsage.info.aulCms[DISP_ICP_PACKLIFEDAY] = DispGetCurSecond();
+        //gCMUsage.info.aulCms[DISP_ICP_PACKLIFEL]   = 0;
+        gCMUsage.ulUsageState &= ~(1 << DISP_ICP_PACKLIFEDAY);
+        gCMUsage.ulUsageState &= ~(1 << DISP_ICP_PACKLIFEL);
+        gCMUsage.cmInfo.aulCumulatedData[DISP_ICP_PACKLIFEDAY] = 0;
+        gCMUsage.cmInfo.aulCumulatedData[DISP_ICP_PACKLIFEL] = 0;
         break;
     case DISP_U_PACK:
         gCMUsage.info.aulCms[DISP_U_PACKLIFEDAY] = DispGetCurSecond();
@@ -3171,6 +3185,7 @@ void MainResetCmInfo(int iSel)
         gCMUsage.cmInfo.aulCumulatedData[DISP_N4_UVLIFEDAY] = 0;
         gCMUsage.cmInfo.aulCumulatedData[DISP_N4_UVLIFEHOUR] = 0;
         break;
+#if 0
     case DISP_N5_UV:
         gCMUsage.info.aulCms[DISP_N5_UVLIFEDAY] = DispGetCurSecond();
         gCMUsage.info.aulCms[DISP_N5_UVLIFEHOUR]= 0;
@@ -3179,6 +3194,7 @@ void MainResetCmInfo(int iSel)
         gCMUsage.cmInfo.aulCumulatedData[DISP_N5_UVLIFEDAY] = 0;
         gCMUsage.cmInfo.aulCumulatedData[DISP_N5_UVLIFEHOUR] = 0;
         break;
+#endif
     case DISP_W_FILTER:
         gCMUsage.info.aulCms[DISP_W_FILTERLIFE] = DispGetCurSecond();
         gCMUsage.ulUsageState &= ~(1 << DISP_W_FILTERLIFE);
@@ -3260,8 +3276,9 @@ void SaveConsumptiveMaterialInfo(void)
 
     int iLoop;
 
-    int aPackArray[] = {DISP_PRE_PACKLIFEL,DISP_AC_PACKLIFEL,DISP_T_PACKLIFEL,DISP_P_PACKLIFEL,DISP_H_PACKLIFEL,DISP_U_PACKLIFEL,DISP_AT_PACKLIFEL};
-    int aNArray[]    = {DISP_N1_UVLIFEHOUR,DISP_N2_UVLIFEHOUR,DISP_N3_UVLIFEHOUR,DISP_N4_UVLIFEHOUR,DISP_N5_UVLIFEHOUR};
+    int aPackArray[] = {DISP_PRE_PACKLIFEL,DISP_ICP_PACKLIFEL,DISP_AC_PACKLIFEL,DISP_T_PACKLIFEL,DISP_P_PACKLIFEL,DISP_H_PACKLIFEL,DISP_U_PACKLIFEL,DISP_AT_PACKLIFEL};
+   // int aNArray[]    = {DISP_N1_UVLIFEHOUR,DISP_N2_UVLIFEHOUR,DISP_N3_UVLIFEHOUR,DISP_N4_UVLIFEHOUR,DISP_N5_UVLIFEHOUR};
+   int aNArray[]    = {DISP_N1_UVLIFEHOUR,DISP_N2_UVLIFEHOUR,DISP_N3_UVLIFEHOUR,DISP_N4_UVLIFEHOUR};
 
     for (iLoop = 0; iLoop < DISP_CM_NUM; iLoop++)
     {
@@ -3430,7 +3447,7 @@ void MainWindow::initConsumablesInfo()
 
     m_strConsuamble[ICPPACK_CATNO] << "RR700QICP";
 
-    m_strConsuamble[HPACK_CATNO] << "RR700H101" << "RR504H101" << "171-1257";
+    m_strConsuamble[HPACK_CATNO] << "RR700H101" << "RR700H201" << "RR504H101" << "171-1257";
 
     m_strConsuamble[ATPACK_CATNO] << "RR504AT01";
 
@@ -3812,7 +3829,7 @@ void MainWindow::initConsumablesCfg()
             m_cMas[iLoop].aulMask[0] &= (~((1 << DISP_AT_PACK)
                                          |(1 << DISP_H_PACK)
                                          |(1 << DISP_N4_UV)
-                                         |(1 << DISP_N5_UV)
+                                         //|(1 << DISP_N5_UV)
                                          |(1 << DISP_TUBE_FILTER)
                                          |(1 << DISP_TUBE_DI)));
             break;
@@ -3822,7 +3839,7 @@ void MainWindow::initConsumablesCfg()
             m_cMas[iLoop].aulMask[0] &= (~((1 << DISP_AT_PACK)
                                          |(1 << DISP_N1_UV)
                                          |(1 << DISP_N4_UV)
-                                         |(1 << DISP_N5_UV)
+                                         //|(1 << DISP_N5_UV)
                                          |(1 << DISP_TUBE_FILTER)
                                          |(1 << DISP_TUBE_DI)));
             break;
@@ -3834,7 +3851,7 @@ void MainWindow::initConsumablesCfg()
                                          |(1 << DISP_H_PACK)
                                          |(1 << DISP_N2_UV)
                                          |(1 << DISP_N4_UV)
-                                         |(1 << DISP_N5_UV)
+                                         //|(1 << DISP_N5_UV)
                                          |(1 << DISP_T_B_FILTER) //2018.11.19
                                          |(1 << DISP_TUBE_FILTER)
                                          |(1 << DISP_TUBE_DI)));
@@ -3847,7 +3864,7 @@ void MainWindow::initConsumablesCfg()
                                          |(1 << DISP_N1_UV)
                                          |(1 << DISP_N2_UV)
                                          |(1 << DISP_N4_UV)
-                                         |(1 << DISP_N5_UV)
+                                         //|(1 << DISP_N5_UV)
                                          |(1 << DISP_T_B_FILTER) //2018.11.12
                                          |(1 << DISP_TUBE_FILTER)
                                          |(1 << DISP_TUBE_DI)));
@@ -3864,7 +3881,7 @@ void MainWindow::initConsumablesCfg()
                                          |(1 << DISP_N1_UV)
                                          |(1 << DISP_N3_UV)
                                          |(1 << DISP_N4_UV)
-                                         |(1 << DISP_N5_UV)
+                                         //|(1 << DISP_N5_UV)
                                          |(1 << DISP_W_FILTER)
                                          |(1 << DISP_TUBE_FILTER)
                                          |(1 << DISP_TUBE_DI)));
@@ -3880,7 +3897,7 @@ void MainWindow::initConsumablesCfg()
                                            |(1 << DISP_N1_UV)
                                            |(1 << DISP_N3_UV)
                                            |(1 << DISP_N4_UV)
-                                           |(1 << DISP_N5_UV)
+                                           //|(1 << DISP_N5_UV)
                                            |(1 << DISP_TUBE_FILTER)
                                            |(1 << DISP_W_FILTER)
                                            |(1 << DISP_TUBE_DI)));
@@ -4686,6 +4703,7 @@ void MainWindow::initAlarmName()
                 << "AT-Pack Not Detected"
                 << "H-Pack Not Detected"
                 << "U-Pack Not Detected"
+                << "ICP-Pack Not Detected"
                 << "Low Feed Water Pressure"
                 << "Feed Water Conductivity>SP"
                 << "RO Product Conductivity>SP"
@@ -5364,7 +5382,8 @@ void MainWindow::Splash()
 {
     m_pLabelGif = new QLabel(mainWidget);
     m_pLabelGif->setGeometry(QRect(0, 0, 800, 600));
-
+    
+#ifndef SALUS
     switch(gAdditionalCfgParam.productInfo.iCompany)
     {
     case 1:
@@ -5374,6 +5393,9 @@ void MainWindow::Splash()
         m_pMovieGif = new QMovie(":/pic/LOGO.gif");
         break;
     }
+#else
+     m_pMovieGif = new QMovie(":/pic/salus.gif");
+#endif
 
     m_pLabelGif->setMovie(m_pMovieGif);
     
@@ -5584,7 +5606,8 @@ void MainWindow::on_timerSecondEvent()
     updatePackFlow(); //
     checkUserLoginStatus(); //User login status check;
     updateRunningFlushTime(); //Running Flush countdown
-
+    
+#if 0
     if (m_iRfidDelayedMask)
     {
         int iLoop;
@@ -5632,7 +5655,7 @@ void MainWindow::on_timerSecondEvent()
             }
         }
     }
-    
+#endif
     /* faked flow report */
     if (!m_bSplash)
     {
@@ -6013,38 +6036,40 @@ bool alarmHaveAssociatedModule(int iAlarmPart,int iAlarmId)
             {
                 bDevice = false ;
             }
+#if 0
             if (gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_RFID_Authorization))
             {
                 bDevice = false ;
             }
+#endif
             break;
         case DISP_ALARM_PART0_ACPACK_OOP:
         case DISP_ALARM_PART0_PPACK_OOP:
         case DISP_ALARM_PART0_ATPACK_OOP:
         case DISP_ALARM_PART0_HPACK_OOP:
         case DISP_ALARM_PART0_UPACK_OOP:  
+#if 0
             if (gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_RFID_Authorization))
             {
                 bDevice = false ;
             }
+#endif
             break;
         case DISP_ALARM_PART0_ICPPACK_OOP:
             if (!(gGlobalParam.SubModSetting.ulAddFlags & (1 << DISP_SM_DEION))) 
             {
                 bDevice = false ;
             }
+#if 0
             if (gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_RFID_Authorization))
             {
                 bDevice = false ;
             }
+#endif
             break;
         default:
              break;
         }  
-//        if (gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_RFID_Authorization))
-//        {
-//            bDevice = false ;
-//        }
         break;
     }
     case DISP_ALARM_PART1:
@@ -6576,7 +6601,11 @@ void MainWindow::initMachineNameRephile()
         m_strMachineName = QString("Genie R") + tr(" %1").arg(iMachineFlow);
         break;
     case MACHINE_PURIST:
+#ifndef SALUS
         m_strMachineName = QString("Genie PURIST");
+#else
+        m_strMachineName = QString("Salus P");
+#endif
         break;
     case MACHINE_ADAPT:
         m_strMachineName = QString("Genie A") + tr(" %1").arg(iMachineFlow);
@@ -6863,7 +6892,7 @@ void MainWindow::checkConsumableAlarm()
             m_conAlarmMark[DISP_N4_NOTIFY] = false;
         }
     }
-
+#if 0
     if (gCMUsage.ulUsageState & (1 << DISP_N5_UVLIFEDAY)
         || gCMUsage.ulUsageState & (1 << DISP_N5_UVLIFEHOUR))
     {
@@ -6883,7 +6912,7 @@ void MainWindow::checkConsumableAlarm()
             m_conAlarmMark[DISP_N5_NOTIFY] = false;
         }
     }
-
+#endif
 
     if ((gCMUsage.ulUsageState & (1 << DISP_W_FILTERLIFE)
         || gCMUsage.ulUsageState & (1 << DISP_W_FILTERLIFE))
@@ -8114,6 +8143,7 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                         float tmpI5 = (m_EcowCurr[APP_EXE_I5_NO].iTemp*1.0)/10;
                         gCMUsage.cmInfo.aulCumulatedData[DISP_U_PACKLIFEL] += ulQuantity;
                         gCMUsage.cmInfo.aulCumulatedData[DISP_H_PACKLIFEL] += ulQuantity;
+                        gCMUsage.cmInfo.aulCumulatedData[DISP_ICP_PACKLIFEL] += ulQuantity;
                         query.prepare(INSERT_sql_GetW);
                         query.bindValue(":name", "UP");
                         query.bindValue(":quantity", fQuantity);
@@ -9186,7 +9216,7 @@ void MainWindow::run(bool bRun)
             }
             return;
         }
-
+#if 0
         if(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_RFID_Authorization))
         {
             if(gAdditionalCfgParam.machineInfo.iMachineFlow < 500)
@@ -9300,7 +9330,146 @@ void MainWindow::run(bool bRun)
                }
             }
         }
-        
+#endif
+
+        {
+            iRet = getActiveRfidBrds();
+
+            if (iRet <= 0)
+            {
+                QString warningMsg;
+                switch(-iRet)
+                {
+                //脱落
+                case DISP_PRE_PACK:
+                    warningMsg = tr("PRE Pack Not Detected! Do you want to continue?");
+                    bError = true;
+                    break;
+                case DISP_AC_PACK:
+                    warningMsg = tr("AC Pack Not Detected! Do you want to continue?");
+                    bError = true;
+                    break;
+                case DISP_P_PACK:
+                    warningMsg = tr("P Pack Not Detected! Do you want to continue?");
+                    bError = true;
+                    break;
+                case DISP_U_PACK:
+                    warningMsg = tr("U Pack Not Detected! Do you want to continue?");
+                    bError = true;
+                    break;
+                case DISP_ICP_PACK:
+                    warningMsg = tr("ICP Pack Not Detected! Do you want to continue?");
+                    return;
+                case DISP_AT_PACK:
+                    warningMsg = tr("AT Pack Not Detected! Do you want to continue?");
+                    bError = true;
+                    break;
+                case DISP_H_PACK:
+                    warningMsg = tr("H Pack Not Detected! Do you want to continue?");
+                    bError = true;
+                    break;
+                //错误
+                case (DISP_PRE_PACK | 0xFF00):
+                    warningMsg = tr("Pre Pack Error! Do you want to continue?");
+                    bError = true;
+                    break;
+                case (DISP_AC_PACK | 0xFF00):
+                    warningMsg = tr("AC Pack Error! Do you want to continue?");
+                    bError = true;
+                    break;
+                case (DISP_P_PACK | 0xFF00):
+                    warningMsg = tr("P Pack Error! Do you want to continue?");
+                    bError = true;
+                    break;
+                case (DISP_U_PACK | 0xFF00):
+                    warningMsg = tr("U Pack Error! Do you want to continue?");
+                    bError = true;
+                    break;
+                case (DISP_ICP_PACK | 0xFF00):
+                    warningMsg = tr("ICP Pack Error! Do you want to continue?");
+                    bError = true;
+                    break;
+                case (DISP_AT_PACK | 0xFF00):
+                    warningMsg = tr("AT Pack Error! Do you want to continue?");
+                    bError = true;
+                    break;
+                case (DISP_H_PACK | 0xFF00):
+                    warningMsg = tr("H Pack Error! Do you want to continue?");
+                    bError = true;
+                    break;
+                default:
+                    break;
+               }
+
+                if(bError)
+                {
+                    DRunWarningDialog runDlg(warningMsg);
+                    runDlg.setButtonText(0, tr("Continue"));
+                    if(QDialog::Accepted != runDlg.exec())
+                    {
+                        gAdditionalCfgParam.lastRunState = 0;
+                        MainSaveLastRunState(gGlobalParam.iMachineType);
+
+                        if (NULL != m_pSubPages[PAGE_MAIN])
+                        {
+                            MainPage *page = (MainPage *)m_pSubPages[PAGE_MAIN];
+                            page->updateRunInfo(false);
+                        }
+
+                        if (m_iRfidDelayedMask)
+                        {
+                            int iLoop;
+                            for (iLoop = 0; iLoop < APP_RF_READER_MAX_NUMBER; iLoop++)
+                            {
+                                if (m_iRfidDelayedMask & (1 << iLoop))
+                                {
+                                    m_aiRfidDelayedCnt[iLoop]--;
+
+                                    if (0 == m_aiRfidDelayedCnt[iLoop])
+                                    {
+                                        m_iRfidBufferActiveMask &= ~(1 << iLoop);
+                                        m_iRfidDelayedMask      &= ~(1 << iLoop);
+
+                                        if (APP_WORK_MODE_NORMAL == m_eWorkMode)
+                                        {
+                                            /*raise alarm */
+                                            switch(MacRfidMap.aiDeviceType4Normal[iLoop])
+                                            {
+                                            case DISP_P_PACK:
+                                                alarmCommProc(true,DISP_ALARM_PART0,DISP_ALARM_PART0_PPACK_OOP);
+                                                break;
+                                            case DISP_PRE_PACK:
+                                                alarmCommProc(true,DISP_ALARM_PART0,DISP_ALARM_PART0_PREPACK_OOP);
+                                                break;
+                                            case DISP_AC_PACK:
+                                                alarmCommProc(true,DISP_ALARM_PART0,DISP_ALARM_PART0_ACPACK_OOP);
+                                                break;
+                                            case DISP_U_PACK:
+                                                alarmCommProc(true,DISP_ALARM_PART0,DISP_ALARM_PART0_UPACK_OOP);
+                                                break;
+                                            case DISP_ICP_PACK:
+                                                alarmCommProc(true,DISP_ALARM_PART0,DISP_ALARM_PART0_ICPPACK_OOP);
+                                                break;
+                                            case DISP_AT_PACK:
+                                                alarmCommProc(true,DISP_ALARM_PART0,DISP_ALARM_PART0_ATPACK_OOP);
+                                                break;
+                                            case DISP_H_PACK:
+                                                alarmCommProc(true,DISP_ALARM_PART0,DISP_ALARM_PART0_HPACK_OOP);
+                                                break;
+                                                
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                        return;
+                    }
+               }
+            }
+        }
+
         if (DISP_WORK_STATE_IDLE == DispGetWorkState())
         {
             DispCmdEntry(DISP_CMD_RUN, NULL, 0);
@@ -9989,13 +10158,13 @@ void MainWindow::checkCMParam()
     {
         m_cMas[gGlobalParam.iMachineType].aulMask[0] &= ~(1 <<  DISP_N4_UV);
     }
-
+#if 0
     if ((0 == gGlobalParam.CMParam.aulCms[DISP_N5_UVLIFEDAY])
         ||(0 == gGlobalParam.CMParam.aulCms[DISP_N5_UVLIFEHOUR]))
     {
         m_cMas[gGlobalParam.iMachineType].aulMask[0] &= ~(1 <<  DISP_N5_UV);
     }
-
+#endif
     if (0 == gGlobalParam.CMParam.aulCms[DISP_W_FILTERLIFE])
     {
         m_cMas[gGlobalParam.iMachineType].aulMask[0] &= ~(1 <<  DISP_W_FILTER);
@@ -10972,7 +11141,7 @@ void MainWindow::printWorker(const ProductDataPrint &data)
     pCont += iRet;
     iIdx  += iRet;
 
-    iRet = sprintf(pCont,"\"%13s %-4.1f %-6s\" LF\n", "ROFeedCond. :", data.fFeedTemp, "\x75\x73\x2F\x63\x6D");
+    iRet = sprintf(pCont,"\"%13s %-4.1f %-6s\" LF\n", "ROFeedCond. :", data.fFeedCond, "\x75\x73\x2F\x63\x6D");
     pCont += iRet;
     iIdx  += iRet;
 
@@ -10988,7 +11157,7 @@ void MainWindow::printWorker(const ProductDataPrint &data)
     pCont += iRet;
     iIdx  += iRet;
 
-    iRet = sprintf(pCont,"\"%13s %-4.1f %-2s\" LF\n", "RORej.      :", data.fRej, "%");
+    iRet = sprintf(pCont,"\"%13s %-4.1f %-2s\" LF\n", "RORej.      :", data.fRej * 100, "%");
     pCont += iRet;
     iIdx  += iRet;
 

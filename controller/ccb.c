@@ -4401,6 +4401,8 @@ void work_stop_cir(void *para)
     }     
 
     work_stop_cir_succ();
+    
+    gCcb.ulHPMinCirTimes = 0;
 }
 
 
@@ -5927,8 +5929,17 @@ void CanCcbEcoMeasurePostProcess(int iEcoId)
                                     float fValue = gCcb.ExeBrd.aEcoObjs[APP_EXE_I3_NO].Value.eV.fWaterQ;
                                     if (fValue >= CcbGetSp11())
                                     {
-                                        /* Stop Circulation */
-                                        CcbInnerWorkStopCir();
+                                        gCcb.ulHPMinCirTimes++;
+
+                                        if(gCcb.ulHPMinCirTimes > 60)
+                                        {
+                                            /* Stop Circulation */
+                                            CcbInnerWorkStopCir();
+                                        }
+                                    }
+                                    else
+                                    {
+                                        gCcb.ulHPMinCirTimes = 0;
                                     }
                                 }
                                 break;
@@ -5940,8 +5951,17 @@ void CanCcbEcoMeasurePostProcess(int iEcoId)
                                     float fValue = gCcb.ExeBrd.aEcoObjs[APP_EXE_I4_NO].Value.eV.fWaterQ;
                                     if (fValue >= CcbGetSp11())
                                     {
-                                        /* Stop Circulation */
-                                        CcbInnerWorkStopCir();
+                                        gCcb.ulHPMinCirTimes++;
+
+                                        if(gCcb.ulHPMinCirTimes > 60)
+                                        {
+                                            /* Stop Circulation */
+                                            CcbInnerWorkStopCir();
+                                        }
+                                    }
+                                    else
+                                    {
+                                        gCcb.ulHPMinCirTimes = 0;
                                     }
                                 }
                                 break;
@@ -15970,8 +15990,14 @@ void MainSecondTask4MainState()
         if (gCcb.bit1B1Check4RuningState 
             && gCcb.bit1B1UnderPressureDetected)
         {
-            //if (gulSecond - gCcb.ulB1UnderPressureTick >= 60)
-            if (gulSecond - gCcb.ulB1UnderPressureTick >= DEFAULT_LPP_CHECK_NUMBER)
+            int lpCheckDuration = DEFAULT_LPP_CHECK_NUMBER;
+            if(MACHINE_ADAPT == gCcb.ulMachineType)
+            {
+                lpCheckDuration = 50;
+            }
+
+            if (gulSecond - gCcb.ulB1UnderPressureTick >= lpCheckDuration)
+            //if (gulSecond - gCcb.ulB1UnderPressureTick >= DEFAULT_LPP_CHECK_NUMBER)
             {
                 //2019.11.08 add for adpet, 
                 if(MACHINE_ADAPT == gCcb.ulMachineType)

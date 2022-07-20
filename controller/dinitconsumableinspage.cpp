@@ -602,6 +602,7 @@ void DInitConsumableInsPage::initOtherConfig()
     case MACHINE_UP:
     case MACHINE_EDI:
     case MACHINE_RO:
+    case MACHINE_PURIST:
         install_info.iRfid = APP_RFID_SUB_TYPE_ROPACK_OTHERS;
         install_info.strName = tr("Tank UV Lamp");
         m_map[Type1].insert(DISP_N3_UV, install_info);

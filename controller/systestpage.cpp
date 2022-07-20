@@ -274,6 +274,7 @@ SysTestPage::SysTestPage(QObject *parent,CBaseWidget *widget ,MainWindow *wndMai
     case MACHINE_UP:
     case MACHINE_EDI:
     case MACHINE_RO:
+    case MACHINE_PURIST:
         aSwitchs[iIdx].type = SYSTEM_TEST_ITEM_TYPE_SWITCH_AND_VALUE;
         aSwitchs[iIdx].id   = APP_EXE_N3_NO;            
         if (-1 == m_aiIndex[DISP_NOT_RECT])

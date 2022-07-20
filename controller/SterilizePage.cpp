@@ -395,7 +395,7 @@ void SterilizePage::on_btn_clicked(int index)
                     }
                     break;
                 }
-    
+#if 0
                 /* check clean package */
                 if (!(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_RFID_Authorization)))
                 {
@@ -432,7 +432,59 @@ void SterilizePage::on_btn_clicked(int index)
                         return; 
                     }
                 }
+#endif
+                /* check clean package */
+                {
+                    int iRet = m_wndMain->getActiveRfidBrds4Cleaning();
+                    QString warningMsg;
+                    bool bError = false;
+
+                    if (iRet <= 0)
+                    {
+                        bError = true;
+                        switch(-iRet)
+                        {
+                        case DISP_PRE_PACK:
+                             warningMsg = tr("No Pre-PACK detected!");
+                             break;
+                        case DISP_AC_PACK:
+                             warningMsg = tr("No AC-PACK detected!");
+                             break;
+                        case (DISP_P_PACK | (1 << 16)):
+                             warningMsg = tr("No Clean-PACK detected!");
+                             break;
+                        case DISP_U_PACK:
+                             warningMsg = tr("No U-PACK detected!");
+                             break;
+                        case DISP_ICP_PACK:
+                             warningMsg = tr("No ICP-PACK detected!");
+                             break;
+                        case DISP_AT_PACK:
+                             warningMsg = tr("No AT-PACK detected!");
+                             break;
+                        case DISP_H_PACK:
+                             warningMsg = tr("No H-PACK detected!");
+                             break;
+                        default:
+                            bError = false;
+                            break;
+                        }
+                        if(bError)
+                        {
+                            DRunWarningDialog runDlg(warningMsg);
+                            runDlg.setButtonText(0, tr("Continue"));
+                            if(QDialog::Accepted != runDlg.exec())
+                            {
+                                m_aSterilize[index].btnClean->setState(BITMAPBUTTON_STATE_UNSEL);
+                                return;
+                            }
+                        }
+                        
+                    }
+                }
+
             }
+
             if(state == BITMAPBUTTON_STATE_SEL)
             {
                 hdl = m_wndMain->startClean(index, true);

@@ -505,8 +505,8 @@ typedef enum
 }DISP_SUB_ADD_MODULE_ENUM;
 
 
-#define MODULES_ALL ((1 << DISP_SM_NUM) - 1)
-#define ADD_MODULES_ALL ((1 << DISP_SM_ADD_NUM) - 1) & (~(1 << DISP_SM_DEION))
+#define MODULES_ALL     ((1 << DISP_SM_NUM) - 1)
+#define ADD_MODULES_ALL ((1 << DISP_SM_ADD_NUM) - 1)
 
 #define DEFAULT_MODULES_L_Genie      (MODULES_ALL & (~((1 << DISP_SM_AT_PACK) | (1 <<DISP_SM_Pre_Filter))))
 #define DEFAULT_MODULES_L_UP         (MODULES_ALL & (~((1 << DISP_SM_AT_PACK) | (1 <<DISP_SM_Pre_Filter))))
@@ -519,16 +519,16 @@ typedef enum
 #define DEFAULT_MODULES_PURIST       (MODULES_ALL & (~((1 << DISP_SM_AT_PACK) | (1 <<DISP_SM_Pre_Filter))))
 #define DEFAULT_MODULES_ADAPT        (MODULES_ALL & (~((1 << DISP_SM_AT_PACK) | (1 <<DISP_SM_Pre_Filter))))
 
-#define DEFAULT_ADD_MODULES_L_Genie      (ADD_MODULES_ALL)
-#define DEFAULT_ADD_MODULES_L_UP         (ADD_MODULES_ALL)
-#define DEFAULT_ADD_MODULES_EDI_LOOP     (ADD_MODULES_ALL)
-#define DEFAULT_ADD_MODULES_RO_LOOP      (ADD_MODULES_ALL)
-#define DEFAULT_ADD_MODULES_Genie        (ADD_MODULES_ALL)
-#define DEFAULT_ADD_MODULES_UP           (ADD_MODULES_ALL)
-#define DEFAULT_ADD_MODULES_EDI          (ADD_MODULES_ALL)
-#define DEFAULT_ADD_MODULES_RO           (ADD_MODULES_ALL)
-#define DEFAULT_ADD_MODULES_PURIST       (ADD_MODULES_ALL)
-#define DEFAULT_ADD_MODULES_ADAPT        (ADD_MODULES_ALL)
+#define DEFAULT_ADD_MODULES_L_Genie      (ADD_MODULES_ALL & (~((1 << DISP_SM_DEION) | (1 << DISP_SM_STEPPERMOTOR))))
+#define DEFAULT_ADD_MODULES_L_UP         (ADD_MODULES_ALL & (~((1 << DISP_SM_DEION) | (1 << DISP_SM_STEPPERMOTOR))))
+#define DEFAULT_ADD_MODULES_EDI_LOOP     (ADD_MODULES_ALL & (~((1 << DISP_SM_DEION) | (1 << DISP_SM_STEPPERMOTOR))))
+#define DEFAULT_ADD_MODULES_RO_LOOP      (ADD_MODULES_ALL & (~((1 << DISP_SM_DEION) | (1 << DISP_SM_STEPPERMOTOR))))
+#define DEFAULT_ADD_MODULES_Genie        (ADD_MODULES_ALL & (~((1 << DISP_SM_DEION) | (1 << DISP_SM_STEPPERMOTOR))))
+#define DEFAULT_ADD_MODULES_UP           (ADD_MODULES_ALL & (~((1 << DISP_SM_DEION) | (1 << DISP_SM_STEPPERMOTOR))))
+#define DEFAULT_ADD_MODULES_EDI          (ADD_MODULES_ALL & (~((1 << DISP_SM_DEION) | (1 << DISP_SM_STEPPERMOTOR))))
+#define DEFAULT_ADD_MODULES_RO           (ADD_MODULES_ALL & (~((1 << DISP_SM_DEION) | (1 << DISP_SM_STEPPERMOTOR))))
+#define DEFAULT_ADD_MODULES_PURIST       (ADD_MODULES_ALL & (~((1 << DISP_SM_DEION) | (1 << DISP_SM_STEPPERMOTOR))))
+#define DEFAULT_ADD_MODULES_ADAPT        (ADD_MODULES_ALL & (~((1 << DISP_SM_DEION) | (1 << DISP_SM_STEPPERMOTOR))))
 
 typedef struct
 {
@@ -680,8 +680,8 @@ typedef enum
     DISP_N3_UVLIFEHOUR,     // 
     DISP_N4_UVLIFEDAY,      //  管路UV    720天     8000小时 
     DISP_N4_UVLIFEHOUR,     // 
-    DISP_N5_UVLIFEDAY,      //  TOC UV    720天     8000小时 
-    DISP_N5_UVLIFEHOUR,     // 
+  //  DISP_N5_UVLIFEDAY,      //  TOC UV    720天     8000小时 
+  //  DISP_N5_UVLIFEHOUR,     // 
     DISP_W_FILTERLIFE,      //水箱空气过滤器寿命 :0~999DAYS
     DISP_T_B_FILTERLIFE,    //终端过滤器寿命 :0~999DAYS
     DISP_T_A_FILTERLIFE,    //终端过滤器寿命 :0~999DAYS
@@ -705,7 +705,7 @@ typedef enum
     DISP_N2_UV, /*185*/
     DISP_N3_UV, /*tank*/
     DISP_N4_UV, /* tube UV */
-    DISP_N5_UV, /* TOC UV */
+   // DISP_N5_UV, /* TOC UV */
     DISP_W_FILTER,
     DISP_T_B_FILTER,
     DISP_T_A_FILTER,

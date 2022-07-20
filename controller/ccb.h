@@ -425,6 +425,8 @@ typedef struct
 
     /* 2018/02/22 add for zigbee */
     int              aulActMask4Trx[APP_TRX_NUM];
+
+    unsigned int     ulHPMinCirTimes;
    
 }CCB;
 

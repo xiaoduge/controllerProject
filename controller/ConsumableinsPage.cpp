@@ -141,6 +141,7 @@ void ConsumableInsPage::buildTranslation()
             m_aInsListItem[iMapIdx]->setName(tr("TUBE UV"));
             m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
             break;
+#if 0
         case DISP_N5_UV:
             /*
             TOC UV       
@@ -148,6 +149,7 @@ void ConsumableInsPage::buildTranslation()
             m_aInsListItem[iMapIdx]->setName(tr("TOC UV"));
             m_aInsListItem[iMapIdx]->setP2Name(tr("Install"));
             break;
+#endif
         case DISP_W_FILTER:
             /*
                    
@@ -377,16 +379,13 @@ void ConsumableInsPage::updateRfidInfo(int iRfId)
         }
         else
         {
-         // if (!(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_RFID_Authorization)))
+            iRet = m_wndMain->readRfid(iRfId);
+      
+            if (iRet)
             {
-                iRet = m_wndMain->readRfid(iRfId);
-          
-                if (iRet)
-                {
-                    return;
-                }
+                return;
             }
-          
+      
             m_wndMain->getRfidCatNo(iRfId,cn);
             m_wndMain->getRfidLotNo(iRfId,ln);
         }
@@ -626,6 +625,7 @@ void ConsumableInsPage::initNormalItem()
     case MACHINE_UP:
     case MACHINE_EDI:
     case MACHINE_RO:
+    case MACHINE_PURIST:
         if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_TankUV))
         {
             aIds[iIdx].iType = 0;
@@ -924,6 +924,7 @@ void ConsumableInsPage::initManualItem()
     case MACHINE_UP:
     case MACHINE_EDI:
     case MACHINE_RO:
+    case MACHINE_PURIST:
         if (gGlobalParam.SubModSetting.ulFlags & (1 << DISP_SM_TankUV))
         {
             aIds[iIdx].iType = 0;
@@ -1209,16 +1210,12 @@ void ConsumableInsPage::on_btn_clicked(int index)
                 }
                 else
                 {
-              
-                 // if (!(gGlobalParam.MiscParam.ulMisFlags & (1 << DISP_SM_RFID_Authorization)))
+                    iRet = m_wndMain->readRfid(aIds[iMapIdx].iRfid);
+
+                    if (iRet)
                     {
-                        iRet = m_wndMain->readRfid(aIds[iMapIdx].iRfid);
-    
-                        if (iRet)
-                        {
-                            QMessageBox::about(NULL, tr("Alarm"), "<font color='red'>"+tr("Failed to read RFID,please make sure the part is installed correctly.")+"</font>");
-                            return;
-                        }
+                        QMessageBox::about(NULL, tr("Alarm"), "<font color='red'>"+tr("Failed to read RFID,please make sure the part is installed correctly.")+"</font>");
+                        return;
                     }
                     
                     m_wndMain->getRfidCatNo(aIds[iMapIdx].iRfid,cn);
