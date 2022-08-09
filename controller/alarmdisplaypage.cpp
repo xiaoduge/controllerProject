@@ -527,6 +527,7 @@ void AlarmDisplayPage::csUpdate()
                 || gCMUsage.ulUsageState & (1 << DISP_T_PACKLIFEL))
             {
                 /* for preprocess column */
+#if 0
                 tmp = gCMUsage.info.aulCms[DISP_T_PACKLIFEL] ;
                 if(tmp < 0)
                 {
@@ -534,7 +535,7 @@ void AlarmDisplayPage::csUpdate()
                 }
                 strTmp = astrNames[0] + "  " + QString::number(tmp) + "L";
                 m_pCslistItem[iIdx]->setValue(strTmp);
-
+#endif
                 strTmp = tr("Installation Date ") + decodeTime(gCMUsage.info.aulCms[DISP_T_PACKLIFEDAY]);
                 m_pCslistItem[iIdx]->setInstDate(strTmp);
 
