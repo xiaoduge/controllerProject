@@ -17,7 +17,6 @@ DCheckConsumaleInstall::DCheckConsumaleInstall(int id, QObject *parent) :
     initSqlDatabase();
 
     initRfid();
-    initTypeMap();
     initCategoryMap();
     m_isRfidType = false;
     m_isBusy = false;
@@ -124,7 +123,7 @@ void DCheckConsumaleInstall::parseType()
     {
         if (MainWindow::consumableCatNo(static_cast<CONSUMABLE_CATNO>(i)).contains(m_catNo))
         {
-            m_iType = m_typeMap.value(i);
+            m_iType = MainWindow::consumableTypeMapValue(i);
             m_category = m_categoryMap.value(i);
             if(m_iRfid[i] == m_curRfId)
             {
@@ -170,33 +169,6 @@ bool DCheckConsumaleInstall::clearVolofUse()
         return false;
     }
     return true;
-}
-
-void DCheckConsumaleInstall::initTypeMap()
-{
-    m_typeMap.insert(PPACK_CATNO, DISP_P_PACK);
-    m_typeMap.insert(ACPACK_CATNO, DISP_AC_PACK);
-    m_typeMap.insert(UPACK_CATNO, DISP_U_PACK);
-    m_typeMap.insert(HPACK_CATNO, DISP_H_PACK);
-    m_typeMap.insert(PREPACK_CATNO, DISP_PRE_PACK);
-    m_typeMap.insert(ICPPACK_CATNO, DISP_ICP_PACK);
-    m_typeMap.insert(CLEANPACK_CATNO, DISP_P_PACK | (1 <<16));
-    m_typeMap.insert(ATPACK_CATNO, DISP_AT_PACK);
-    m_typeMap.insert(TPACK_CATNO, DISP_T_PACK);
-    m_typeMap.insert(ROPACK_CATNO, DISP_MACHINERY_RO_MEMBRANE);
-    m_typeMap.insert(UV185_CATNO, DISP_N2_UV);
-    m_typeMap.insert(UV254_CATNO, DISP_N1_UV);
-    m_typeMap.insert(UVTANK_CATNO, DISP_N3_UV);
-    m_typeMap.insert(ROPUMP_CATNO, DISP_MACHINERY_RO_BOOSTER_PUMP);
-    m_typeMap.insert(UPPUMP_CATNO, DISP_MACHINERY_CIR_PUMP);
-    m_typeMap.insert(FINALFILTER_A_CATNO, DISP_T_A_FILTER);
-    m_typeMap.insert(FINALFILTER_B_CATNO, DISP_T_B_FILTER);
-    m_typeMap.insert(EDI_CATNO, DISP_MACHINERY_EDI);
-    m_typeMap.insert(TANKVENTFILTER_CATNO, DISP_W_FILTER);
-
-    m_typeMap.insert(LOOPFILTER_CATNO, DISP_TUBE_FILTER);
-    m_typeMap.insert(LOOPUV_CATNO, DISP_N4_UV);
-	m_typeMap.insert(LOOPDI_CATNO, DISP_TUBE_DI);
 }
 
 void DCheckConsumaleInstall::initCategoryMap()

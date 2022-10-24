@@ -25,6 +25,16 @@
 #pragma message("Turn on Salus")
 #endif
 
+//#define UV_PROTECT
+#ifdef UV_PROTECT
+#pragma message("Turn on UV Protect")
+#endif
+
+//#define UPLOADFROMRS485
+#ifdef UPLOADFROMRS485
+#pragma message("Turn on Upload from RS485")
+#endif
+
 
 #define APP_PROTOL_CANID_RSVD           (0x0)
 #define APP_PROTOL_CANID_ALLOC_BEGIN    (0X1)

@@ -1,8 +1,9 @@
 #include "dhintdialog.h"
 #include <QLabel>
 #include <QVBoxLayout>
-#include <QTimer>
+#include <QTimerEvent>
 #include <QMutexLocker>
+#include <QTimer>
 #include <QDebug>
 
 DHintDialog *DHintDialog::instance = NULL;
@@ -33,8 +34,6 @@ DHintDialog::DHintDialog(QWidget *parent) :
 
     setLayout(m_pBottomLayout);
 
-    m_timer = new QTimer(this);
-    connect(m_timer, SIGNAL(timeout()), this, SLOT(on_timer_event()));
 }
 
 DHintDialog::~DHintDialog()
@@ -65,16 +64,32 @@ void DHintDialog::getInstance(QString strText, int msec)
 
 void DHintDialog::start(int msec)
 {
-    m_timer->start(msec);
+//    m_timerID = startTimer(msec);
+    QTimer::singleShot(msec, this, SLOT(killSelf()));
+
     show();
 }
 
-void DHintDialog::on_timer_event()
+void DHintDialog::timerEvent(QTimerEvent *event)
+{
+    if(event->timerId() == m_timerID)
+    {
+        if(instance != NULL)
+        {
+            killTimer(m_timerID);
+            delete this;
+            instance = NULL;
+        }
+    }
+}
+
+void DHintDialog::killSelf()
 {
     if(instance != NULL)
     {
-        m_timer->stop();
         delete this;
         instance = NULL;
     }
 }
+
+

@@ -42,8 +42,6 @@ private:
 
     void toCurrentItem(int index);
 
-    void initTypeMap();
-
     //initNormalItem和initScanItem 只能单独调用一个
     void initNormalItem();
     void initManualItem();
@@ -69,8 +67,6 @@ private:
        int iId;
        int iRfid; /*0xff for items not using rfid or having no corresponding RFID reader */
     }aIds[MAX_ConsumableNum];
-
-    QMap<short int, short int> m_typeMap;
 
 	bool m_bRfidWork;
 

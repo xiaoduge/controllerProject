@@ -121,7 +121,6 @@ void MainRetriveCleanParam(int iMachineType,DISP_CLEAN_SETTING_STRU  &Param);
 void MainSaveMacSnItem(int iMachineType,CATNO cn,LOTNO ln,int iIndex);
 void MainSaveCMSnItem(int iMachineType,CATNO cn,LOTNO ln,int iIndex);
 void MainSaveMacSnParam(int iMachineType,DISP_MACHINERY_SN_STRU  &Param);
-void MainSaveCMSnParam(int iMachineType,DISP_CONSUME_MATERIAL_SN_STRU  &Param);
 void MainSavePMParam(int iMachineType,DISP_PM_SETTING_STRU  &Param);
 void MainRetrivePmParam(int iMachineType,DISP_PM_SETTING_STRU  &Param);
 void MainRetriveCalParam(int iMachineType,DISP_CAL_SETTING_STRU  &Param);

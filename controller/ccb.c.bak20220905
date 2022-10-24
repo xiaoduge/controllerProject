@@ -4369,9 +4369,9 @@ DISPHANDLE CcbInnerWorkStartCir(int iType)
     return (DISPHANDLE)pWorkItem;
 }
 
-void work_stop_cir_succ(int iQtwFlag)
+void work_stop_cir_succ(void)
 {
-    int aiCont[2] = {0,iQtwFlag};
+    int aiCont[1] = {0};
     
     MainSndWorkMsg(WORK_MSG_TYPE_ECIR,(unsigned char *)aiCont,sizeof(aiCont));
 
@@ -4382,7 +4382,6 @@ void work_stop_cir(void *para)
     WORK_ITEM_STRU *pWorkItem = (WORK_ITEM_STRU *)para;
 
     CCB *pCcb = (CCB *)pWorkItem->para;
-    int iQtwFlag = (int)pWorkItem->extra;
 
     int iTmp;
     int iRet;
@@ -4434,14 +4433,13 @@ void work_stop_cir(void *para)
         /* notify ui (late implemnt) */
     }     
 
-    work_stop_cir_succ(iQtwFlag);
+    work_stop_cir_succ();
     
     gCcb.ulHPMinCirTimes = 0;
 }
 
 
-
-DISPHANDLE CcbInnerWorkStopCir_ext(int iQtwFlag)
+DISPHANDLE CcbInnerWorkStopCir(void)
 {
     WORK_ITEM_STRU *pWorkItem = CcbAllocWorkItem();
 
@@ -4454,16 +4452,10 @@ DISPHANDLE CcbInnerWorkStopCir_ext(int iQtwFlag)
 
     pWorkItem->proc = work_stop_cir;
     pWorkItem->para = &gCcb;
-    pWorkItem->extra = (void *)iQtwFlag;
 
     CcbAddWork(WORK_LIST_HP,pWorkItem);
 
     return (DISPHANDLE)pWorkItem;
-}
-
-DISPHANDLE CcbInnerWorkStopCir(void)
-{
-    return CcbInnerWorkStopCir_ext(0);
 }
 
 void work_speed_regulation_end(int iIndex,int iResult)
@@ -5022,7 +5014,7 @@ int CanCcbAfDataOnLineNotiIndMsg(MAIN_CANITF_MSG_STRU *pCanItfMsg)
             APP_PACKET_ONLINE_NOTI_CONF_HANDLER_STRU *pInfo = (APP_PACKET_ONLINE_NOTI_CONF_HANDLER_STRU *)pNotiCnf->aucInfo;
             
             pInfo->usHeartBeatPeriod = HEART_BEAT_PERIOD*1000;
-            pInfo->ucLan             = gCcb.MiscParam.iLan;            
+            pInfo->ucLan             = gCcb.MiscParam.iLan;
             pInfo->ucMode            = gCcb.aHandler[iHandlerIdx].iDevType;
             pInfo->ucState           = CanCcbGetHoState();
             pInfo->ucAlarmState      = getAlarmState();
@@ -10039,7 +10031,7 @@ int CanCcbAfDataHOQtwReqMsg(MAIN_CANITF_MSG_STRU *pCanItfMsg)
                     {
                         if (!SearchWork(work_stop_cir))
                         {
-                        	CcbInnerWorkStopCir_ext(1);
+                        	CcbInnerWorkStopCir();
                         } 
                     }
                     CcbRmvWork(work_start_cir);
@@ -11276,7 +11268,7 @@ void CcbWorMsgProc(SAT_MSG_HEAD *pucMsg)
         break;
     case WORK_MSG_TYPE_ECIR:
         {
-            int aResult[2];
+            int aResult[1];
     
             memcpy(aResult,pWorkMsg->aucData,sizeof(aResult));
     
@@ -11309,16 +11301,9 @@ void CcbWorMsgProc(SAT_MSG_HEAD *pucMsg)
             }
 
             VOS_LOG(VOS_LOG_WARNING,"CanCcbTransState4Pw");    
+            
+            CanCcbTransState4Pw(DISP_WORK_STATE_RUN,DISP_WORK_SUB_IDLE);
 
-            if (!aResult[1])
-            {
-                CanCcbTransState4Pw(DISP_WORK_STATE_RUN,DISP_WORK_SUB_IDLE);
-            }
-            else
-            {
-                gCcb.curWorkState.iMainWorkState4Pw = DISP_WORK_STATE_RUN;
-                gCcb.curWorkState.iSubWorkState4Pw  = DISP_WORK_SUB_IDLE;
-            }
         }        
         break;
     case WORK_MSG_TYPE_ESR:
@@ -15927,17 +15912,7 @@ void MainInitMsg(void)
     /* for other init */
     MainInitInnerIpc();
 
-    //CcbGetParamNotify(NOT_PARAM_ALL_PARAM); /* GET ALL */
-    CcbSyncSetMachineType(gGlobalParam.iMachineType);
-    CcbSyncSetMachineParams(&gGlobalParam.MMParam);
-    CcbSyncSetModuleParams(&gGlobalParam.SubModSetting);
-    CcbSyncSetAlarmParams(&gGlobalParam.AlarmSettting);
-    CcbSyncSetTimeParams(&gGlobalParam.TMParam);
-    CcbSyncSetConsumeMaterialParams(&gGlobalParam.CMParam);
-    CcbSyncSetFmParams(&gGlobalParam.FmParam);
-    CcbSyncSetPmParams(&gGlobalParam.PmParam);
-    CcbSyncSetMiscParams(&gGlobalParam.MiscParam);
-    CcbInitMachineType();
+    CcbGetParamNotify(NOT_PARAM_ALL_PARAM); /* GET ALL */
 
     for (iLoop = 0; iLoop < WORK_LIST_NUM + 1; iLoop++)
     {

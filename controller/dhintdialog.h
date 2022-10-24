@@ -18,8 +18,12 @@ public:
     static void getInstance(QString strText, int msec = 1000);
     ~DHintDialog();
 
+protected:
+    void timerEvent(QTimerEvent *event);
+
 protected slots:
-    void on_timer_event();
+    void killSelf();
+
 
 private:
     void setInfo(QString strText);
@@ -28,7 +32,7 @@ private:
 private:
     QLabel *m_pLbInfo;
     QVBoxLayout *m_pBottomLayout;
-    QTimer* m_timer;
+    int m_timerID;
 
     static DHintDialog *instance;
     

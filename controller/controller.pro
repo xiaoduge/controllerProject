@@ -139,7 +139,8 @@ SOURCES += main.cpp\
     dnetworkpage.cpp \
     dinitnetworkpage.cpp \
     dnetworkwifiinfoitem.cpp \
-    dcardinfodialog.cpp
+    dcardinfodialog.cpp \
+    serialport.c
 HEADERS  += mainwindow.h \
     ctrlapplication.h \
     log.h \
@@ -248,7 +249,8 @@ HEADERS  += mainwindow.h \
     dnetworkpage.h \
     dinitnetworkpage.h \
     dnetworkwifiinfoitem.h \
-    dcardinfodialog.h
+    dcardinfodialog.h \
+    serialport.h
 
 FORMS    += mainwindow.ui \
     syszuxpinyin.ui \

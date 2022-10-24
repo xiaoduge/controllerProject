@@ -69,6 +69,8 @@
 #include "dsettimedialog.h"
 #include "dcardinfodialog.h"
 
+#include "serialport.h"
+
 //#include "dscreensleepthread.h"
 //
 /***********************************************
@@ -443,6 +445,37 @@ QString gastrAlarmName[] =
 };
 #endif
 
+bool clearDir(const QString &strDir)
+{
+    QDir dir(strDir);
+
+    if(!dir.exists())
+    {
+        qDebug() << "directory does not exist";
+        return true;
+    }
+
+    QFileInfoList list = dir.entryInfoList(QDir::NoDotAndDotDot | QDir::Files | QDir::Dirs);
+
+    foreach(QFileInfo info, list)
+    {
+        if(info.isDir())
+        {
+            QString tmpDir = strDir + "/" + info.fileName();
+            if(!clearDir(tmpDir)) return false;
+        }
+        else
+        {
+            QString tmpFile = strDir + "/" + info.fileName();
+            if(!QFile::remove(tmpFile)) return false;
+            qDebug() << "Delete File: " << tmpFile;
+        }
+    }
+
+    qDebug() << "Delete Dir: " << strDir;
+    return dir.rmdir(strDir);
+}
+
 void MainRetriveLastRunState(int iMachineType)
 {
     QString strCfgName = gaMachineType[iMachineType].strName;
@@ -594,6 +627,32 @@ void MainRetriveExConsumableMsg(int iMachineType, DISP_CONSUME_MATERIAL_SN_STRU 
     query.exec("select * from Consumable");
     while(query.next())
     {
+        int iType = DISP_CM_NAME_NUM;
+        for(int i = 0; i < CAT_NUM; i++)
+        {
+            if (MainWindow::consumableCatNo(static_cast<CONSUMABLE_CATNO>(i)).contains(query.value(2).toString()))
+            {
+                iType = MainWindow::consumableTypeMapValue(i);
+
+                if(query.value(4).toInt() == 0)
+                {
+                    memset(cParam.aCn[iType], 0, sizeof(CATNO));
+                    strncpy(cParam.aCn[iType], query.value(2).toString().toAscii(), APP_CAT_LENGTH);
+                    memset(cParam.aLn[iType], 0, sizeof(LOTNO));
+                    strncpy(cParam.aLn[iType], query.value(3).toString().toAscii(), APP_LOT_LENGTH);
+                }
+                else
+                {
+                    memset(mParam.aCn[iType - DISP_MACHINERY_SOURCE_BOOSTER_PUMP], 0, sizeof(CATNO));
+                    strncpy(mParam.aCn[iType - DISP_MACHINERY_SOURCE_BOOSTER_PUMP], query.value(2).toString().toAscii(), APP_CAT_LENGTH);
+                    memset(mParam.aLn[iType - DISP_MACHINERY_SOURCE_BOOSTER_PUMP], 0, sizeof(LOTNO));
+                    strncpy(mParam.aLn[iType - DISP_MACHINERY_SOURCE_BOOSTER_PUMP], query.value(3).toString().toAscii(), APP_LOT_LENGTH);
+                }
+
+                break;
+            }
+        }
+#if 0
         if(query.value(4).toInt() == 0)
         {
             memset(cParam.aCn[query.value(1).toInt()], 0, sizeof(CATNO));
@@ -603,11 +662,12 @@ void MainRetriveExConsumableMsg(int iMachineType, DISP_CONSUME_MATERIAL_SN_STRU 
         }
         else
         {
-            memset(mParam.aCn[query.value(1).toInt()], 0, sizeof(CATNO));
-            strncpy(mParam.aCn[query.value(1).toInt()], query.value(2).toString().toAscii(), APP_CAT_LENGTH);
-            memset(mParam.aLn[query.value(1).toInt()], 0, sizeof(LOTNO));
-            strncpy(mParam.aLn[query.value(1).toInt()], query.value(3).toString().toAscii(), APP_LOT_LENGTH);
+            memset(mParam.aCn[query.value(1).toInt() - DISP_MACHINERY_SOURCE_BOOSTER_PUMP], 0, sizeof(CATNO));
+            strncpy(mParam.aCn[query.value(1).toInt() - DISP_MACHINERY_SOURCE_BOOSTER_PUMP], query.value(2).toString().toAscii(), APP_CAT_LENGTH);
+            memset(mParam.aLn[query.value(1).toInt() - DISP_MACHINERY_SOURCE_BOOSTER_PUMP], 0, sizeof(LOTNO));
+            strncpy(mParam.aLn[query.value(1).toInt() - DISP_MACHINERY_SOURCE_BOOSTER_PUMP], query.value(3).toString().toAscii(), APP_LOT_LENGTH);
         }
+#endif
     }
 }
 
@@ -1294,7 +1354,6 @@ void MainRetriveMiscParam(int iMachineType,DISP_MISC_SETTING_STRU  &Param)
         strV = "/MISC/HPUNITPRICE";
         iValue = config->value(strV, 10).toInt();
         Param.iHPUnitPrice = iValue;
-
     }    
     
     if (config)
@@ -1533,73 +1592,6 @@ void MainRetriveCleanParam(int iMachineType,DISP_CLEAN_SETTING_STRU  &Param)
         config = NULL;
     }
     sync();
-}
-
-void MainRetriveCMSn(int iMachineType,DISP_CONSUME_MATERIAL_SN_STRU  &Param)
-{
-    /* retrive parameter from configuration */
-    int iLoop;
-
-    QString strCfgName = gaMachineType[iMachineType].strName;
-
-    strCfgName += ".ini";
-
-    QSettings *config = new QSettings(strCfgName, QSettings::IniFormat);
-
-    for (iLoop = 0; iLoop < DISP_CM_NAME_NUM; iLoop++)
-    {
-        QString strValue;
-        QString strV = "/CMSN/";
-        strV += QString::number(iLoop);
-
-        strValue = config->value(strV + "/CAT","unknow").toString();
-        memset(Param.aCn[iLoop],0,sizeof(CATNO));
-        strncpy(Param.aCn[iLoop],strValue.toAscii(),APP_CAT_LENGTH);
-
-        strValue = config->value(strV + "/LOT","unknow").toString();
-        memset(Param.aLn[iLoop],0,sizeof(LOTNO));
-        strncpy(Param.aLn[iLoop],strValue.toAscii(),APP_LOT_LENGTH);
-    }    
-    
-    if (config)
-    {
-        delete config;
-        config = NULL;
-    }
-}
-
-void MainRetriveMacSn(int iMachineType,DISP_MACHINERY_SN_STRU  &Param)
-{
-    /* retrive parameter from configuration */
-    int iLoop;
-
-    QString strCfgName = gaMachineType[iMachineType].strName;
-
-    strCfgName += ".ini";
-
-    QSettings *config = new QSettings(strCfgName, QSettings::IniFormat);
-
-    for (iLoop = 0; iLoop < DISP_MACHINERY_NAME_NUM; iLoop++)
-    {
-        QString strValue;
-        QString strV = "/MACSN/";
-        strV += QString::number(iLoop);
-
-        strValue = config->value(strV + "/CAT","unknow").toString();
-        memset(Param.aCn[iLoop],0,sizeof(CATNO));
-        strncpy(Param.aCn[iLoop],strValue.toAscii(),APP_CAT_LENGTH);
-
-        strValue = config->value(strV + "/LOT","unknow").toString();
-        memset(Param.aLn[iLoop],0,sizeof(LOTNO));
-        strncpy(Param.aLn[iLoop],strValue.toAscii(),APP_LOT_LENGTH);
-
-    }    
-    
-    if (config)
-    {
-        delete config;
-        config = NULL;
-    }
 }
 
 void MainSaveSensorRange(int iMachineType)
@@ -2438,7 +2430,6 @@ void MainSaveMiscParam(int iMachineType,DISP_MISC_SETTING_STRU  &Param)
             strTmp = QString::number(Param.iHPUnitPrice);
             config->setValue(strV, strTmp);
         }
-
     }    
     if (config)
     {
@@ -2487,88 +2478,6 @@ void MainSaveCleanParam(int iMachineType,DISP_CLEAN_SETTING_STRU  &Param)
            config->setValue(strV + "/PERIOD",strTmp);
         }
 
-    }    
-    
-    if (config)
-    {
-        delete config;
-        config = NULL;
-    }
-    
-    sync();
-}
-
-void MainSaveCMSnParam(int iMachineType,DISP_CONSUME_MATERIAL_SN_STRU  &Param)
-{
-    /* retrive parameter from configuration */
-    int iLoop;
-
-    DISP_CONSUME_MATERIAL_SN_STRU  tmpParam;
-
-    QString strCfgName = gaMachineType[iMachineType].strName;
-
-    strCfgName += ".ini";
-
-    MainRetriveCMSn(iMachineType,tmpParam);    
-
-    QSettings *config = new QSettings(strCfgName, QSettings::IniFormat);
-
-    for (iLoop = 0; iLoop < DISP_CM_NAME_NUM; iLoop++)
-    {
-        QString strV = "/CMSN/";
-        QString strTmp;
-        
-        strV += QString::number(iLoop);
-
-        if (strncmp(Param.aCn[iLoop],tmpParam.aCn[iLoop],APP_CAT_LENGTH))
-        {
-           config->setValue(strV + "/CAT",Param.aCn[iLoop]);
-        }
-        if (strncmp(Param.aLn[iLoop],tmpParam.aLn[iLoop],APP_LOT_LENGTH))
-        {
-           config->setValue(strV + "/LOT",Param.aLn[iLoop]);
-        }
-    }    
-    
-    if (config)
-    {
-        delete config;
-        config = NULL;
-    }
-    
-    sync();
-}
-
-void MainSaveMacSnParam(int iMachineType,DISP_MACHINERY_SN_STRU  &Param)
-{
-    /* retrive parameter from configuration */
-    int iLoop;
-
-    DISP_MACHINERY_SN_STRU  tmpParam;
-
-    QString strCfgName = gaMachineType[iMachineType].strName;
-
-    strCfgName += ".ini";
-
-    MainRetriveMacSn(iMachineType,tmpParam);    
-
-    QSettings *config = new QSettings(strCfgName, QSettings::IniFormat);
-
-    for (iLoop = 0; iLoop < DISP_MACHINERY_NAME_NUM; iLoop++)
-    {
-        QString strV = "/MACSN/";
-        QString strTmp;
-        
-        strV += QString::number(iLoop);
-
-        if (strncmp(Param.aCn[iLoop],tmpParam.aCn[iLoop],APP_CAT_LENGTH))
-        {
-           config->setValue(strV + "/CAT",Param.aCn[iLoop]);
-        }
-        if (strncmp(Param.aLn[iLoop],tmpParam.aLn[iLoop],APP_CAT_LENGTH))
-        {
-           config->setValue(strV + "/LOT",Param.aLn[iLoop]);
-        }
     }    
     
     if (config)
@@ -2688,8 +2597,6 @@ void MainRetriveGlobalParam(void)
     MainRetrivePmParam(gGlobalParam.iMachineType,gGlobalParam.PmParam);
     MainRetriveMiscParam(gGlobalParam.iMachineType,gGlobalParam.MiscParam);
     MainRetriveCleanParam(gGlobalParam.iMachineType,gGlobalParam.CleanParam);
-//    MainRetriveCMSn(gGlobalParam.iMachineType,gGlobalParam.cmSn);
-//    MainRetriveMacSn(gGlobalParam.iMachineType,gGlobalParam.macSn);
     MainRetriveCalibrateParam(gGlobalParam.iMachineType); 
     MainRetriveStepperCaliParam(gGlobalParam.iMachineType);
 
@@ -3343,6 +3250,7 @@ void SaveConsumptiveMaterialInfo(void)
 }
 
 QStringList MainWindow::m_strConsuamble[CAT_NUM];
+QMap<short int, short int> MainWindow::m_ConsuambleTypeMap;
 
 QPixmap * MainWindow::getBitmap(int id)
 {
@@ -3424,6 +3332,35 @@ void MainWindow::initGlobalStyleSheet()
     }
 }
 
+void MainWindow::initConsumablesTypeMap()
+{
+    m_ConsuambleTypeMap.insert(PPACK_CATNO, DISP_P_PACK);
+    m_ConsuambleTypeMap.insert(ACPACK_CATNO, DISP_AC_PACK);
+    m_ConsuambleTypeMap.insert(UPACK_CATNO, DISP_U_PACK);
+    m_ConsuambleTypeMap.insert(HPACK_CATNO, DISP_H_PACK);
+    m_ConsuambleTypeMap.insert(PREPACK_CATNO, DISP_PRE_PACK);
+    m_ConsuambleTypeMap.insert(ICPPACK_CATNO, DISP_ICP_PACK);
+    m_ConsuambleTypeMap.insert(CLEANPACK_CATNO, DISP_P_PACK | (1 <<16));
+    m_ConsuambleTypeMap.insert(ATPACK_CATNO, DISP_AT_PACK);
+    m_ConsuambleTypeMap.insert(TPACK_CATNO, DISP_T_PACK);
+    m_ConsuambleTypeMap.insert(ROPACK_CATNO, DISP_MACHINERY_RO_MEMBRANE);
+    m_ConsuambleTypeMap.insert(UV185_CATNO, DISP_N2_UV);
+    m_ConsuambleTypeMap.insert(UV254_CATNO, DISP_N1_UV);
+    m_ConsuambleTypeMap.insert(UVTANK_CATNO, DISP_N3_UV);
+    m_ConsuambleTypeMap.insert(ROPUMP_CATNO, DISP_MACHINERY_RO_BOOSTER_PUMP);
+    m_ConsuambleTypeMap.insert(UPPUMP_CATNO, DISP_MACHINERY_CIR_PUMP);
+    m_ConsuambleTypeMap.insert(FINALFILTER_A_CATNO, DISP_T_A_FILTER);
+    m_ConsuambleTypeMap.insert(FINALFILTER_B_CATNO, DISP_T_B_FILTER);
+    m_ConsuambleTypeMap.insert(EDI_CATNO, DISP_MACHINERY_EDI);
+    m_ConsuambleTypeMap.insert(TANKVENTFILTER_CATNO, DISP_W_FILTER);
+    
+    m_ConsuambleTypeMap.insert(LOOPFILTER_CATNO, DISP_TUBE_FILTER);
+    m_ConsuambleTypeMap.insert(LOOPUV_CATNO, DISP_N4_UV);
+    m_ConsuambleTypeMap.insert(LOOPDI_CATNO, DISP_TUBE_DI);
+
+}
+
+
 /**
  * 配置相关耗材的序列号
  */
@@ -3485,7 +3422,7 @@ void MainWindow::initConsumablesInfo()
                                << "W3T17331" << "W3T17333"
                                << "171-1288" << "171-1289" << "171-1290";
 
-    m_strConsuamble[LOOPFILTER_CATNO] << "RAFF12201" << "RAFF22201";
+    m_strConsuamble[LOOPFILTER_CATNO] << "RAFF12201" << "RAFF22201"<< "RAFF12203";
     m_strConsuamble[LOOPUV_CATNO] << "RAUV620A1" << "RAUV843A1";
     m_strConsuamble[LOOPDI_CATNO] << "LAB1000IE" << "LAB0200IE" << "LAB0500IE" 
                                   << "LAB1500IE";
@@ -4248,6 +4185,76 @@ void MainWindow::initRFIDCfg()
     }
 }
 
+
+#ifdef UV_PROTECT
+/*
+ * Rectifer Estimate
+ * history : 2022/06/09 created for initialize uv current threshhold
+ */
+void MainWindow::initUvCurrentThreshhold()
+{
+    int iUvIdx;
+
+    int *pMinCfgs = gGlobalParam.MiscParam.aiCurrentMin;
+    int *pMaxCfgs = gGlobalParam.MiscParam.aiCurrentMax;
+
+    switch(gGlobalParam.iMachineType)
+    {
+    case MACHINE_L_Genie:
+    case MACHINE_L_UP:
+    case MACHINE_L_EDI_LOOP:
+    case MACHINE_L_RO_LOOP:
+        for(iUvIdx = 0; iUvIdx < APP_EXE_RECT_NUM; iUvIdx++)
+        {
+            switch(iUvIdx)
+            {
+            case 0:
+                pMinCfgs[iUvIdx] = 400;
+                pMaxCfgs[iUvIdx] = 1000;
+                break;
+            case 1:
+                pMinCfgs[iUvIdx] = 800;
+                pMaxCfgs[iUvIdx] = 2000;
+                break;
+            case 2:
+                pMinCfgs[iUvIdx] = 800;
+                pMaxCfgs[iUvIdx] = 2000;
+                break;
+            }
+        }
+        break;
+    case MACHINE_Genie:
+    case MACHINE_UP:
+    case MACHINE_EDI:
+    case MACHINE_RO:
+    case MACHINE_PURIST:
+    case MACHINE_ADAPT:
+        for(iUvIdx = 0; iUvIdx < APP_EXE_RECT_NUM; iUvIdx++)
+        {
+            switch(iUvIdx)
+            {
+            case 0:
+                pMinCfgs[iUvIdx] = 250;
+                pMaxCfgs[iUvIdx] = 450;
+                break;
+            case 1:
+                pMinCfgs[iUvIdx] = 800;
+                pMaxCfgs[iUvIdx] = 1500;
+                break;
+            case 2:
+                pMinCfgs[iUvIdx] = 800;
+                pMaxCfgs[iUvIdx] = 1500;
+                break;
+            }
+        }
+        break;
+    default:        
+        break;
+    } 
+
+}
+#endif
+
 void MainWindow::checkDateTime()
 {
     QDate date = QDate::currentDate();
@@ -4356,11 +4363,28 @@ void MainWindow::initUI()
     m_curPageIdx = PAGE_MAIN;
 }
 
+void MainWindow::POST()
+{
+    QStringList pathNames;
+    pathNames << QString("/media/sda1") << QString("/media/sdb1") << QString("/media/sdc1");
+    foreach(QString pathName, pathNames)
+    {
+        QDir dir(pathName);
+        if(dir.exists())
+        {
+            clearDir(pathName);
+        }
+    }
+
+}
+
 MainWindow::MainWindow(QMainWindow *parent) :
     QMainWindow(parent)/*, ui(new Ui::MainWindow)*/
 {
     int iLoop;
 
+    POST();
+    
     m_bSplash = false;
 
     m_bC1Regulator = false;
@@ -4371,6 +4395,9 @@ MainWindow::MainWindow(QMainWindow *parent) :
     m_consuambleInitDate = QString("2014-05-22");
     initMachineName();
     saveLoginfo("unknow");
+
+    initConsumablesInfo();
+    initConsumablesTypeMap();
 
     MainRetriveExConsumableMsg(gGlobalParam.iMachineType,gGlobalParam.cmSn,gGlobalParam.macSn);
 
@@ -4388,8 +4415,6 @@ MainWindow::MainWindow(QMainWindow *parent) :
     m_iRfidBufferActiveMask = 0;
     m_pCurPage              = NULL;
     m_curExInitPage         = NULL;
-
-    initConsumablesInfo();
 
     gCMUsage.ulUsageState = 0;
 
@@ -4519,6 +4544,10 @@ MainWindow::MainWindow(QMainWindow *parent) :
     {
         qDebug() << " open " << BUZZER_FILE << "failed" << endl;
     }
+    
+#ifdef UPLOADFROMRS485
+    initRS485();
+#endif
 
     CheckConsumptiveMaterialState();
 
@@ -4565,7 +4594,10 @@ MainWindow::MainWindow(QMainWindow *parent) :
     ex_gCcb.Ex_Alarm_Bit.bit1AlarmDelayN3 = 0;
 
     ex_gCcb.EX_Check_State.bit1CheckDecPressure = 0;
-    //end
+
+#ifdef UV_PROTECT
+    initUvCurrentThreshhold(); // 2020/06/09 : set default uv current threshhold
+#endif
 
     CcbInit();
 
@@ -4733,7 +4765,7 @@ void MainWindow::initAlarmName()
                 << "TOC Feed Water Resistivity<SP"
                 << "Leakage or Tank Overflow"
                 << "High Work Pressure"
-                << "Low Work Pressure"
+                << "Low Working Pressure"
                 << "TOC > SP";
     if (MACHINE_PURIST == gGlobalParam.iMachineType)
     {
@@ -6231,6 +6263,10 @@ void MainWindow::alarmCommProc(bool bAlarm,int iAlarmPart,int iAlarmId)
             DispSndHoAlarm(APP_PROTOL_CANID_BROADCAST,iType);
         }
     }
+    
+#ifdef UPLOADFROMRS485
+    uploadFromRS485(bAlarm, iAlarmPart, iAlarmId);
+#endif
 }
 
 int  MainWindow::readRfid(int iRfId)
@@ -6326,7 +6362,8 @@ int MainWindow::checkCardReaderStatus()
         }
         else
         {
-            DHintDialog::getInstance(tr("Insufficient balance"), 2000);
+//            m_WaterCardInfo.bValid = false;
+//            DHintDialog::getInstance(tr("Insufficient balance"), 2000);
         }
     }
     return 0;
@@ -6377,7 +6414,7 @@ void MainWindow::deduction(unsigned int vol)
 
             if(m_WaterCardInfo.amount <= 0)
             {
-                DHintDialog::getInstance(tr("Insufficient balance"), 2000);
+//                DHintDialog::getInstance(tr("Insufficient balance"), 2000);
                 m_WaterCardInfo.amount = 0;
                 DispStopQtw();
             }
@@ -8234,6 +8271,10 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                     proPrintData.fEdiTemp = (m_EcowCurr[APP_EXE_I3_NO].iTemp*1.0)/10;
                     proPrintData.duration = ulDelSec/60;
                     printWorker(proPrintData);
+                    
+#ifdef UPLOADFROMRS485
+                    uploadFromRS485(proPrintData);
+#endif
                 }
                 pItem++;
             }
@@ -8385,7 +8426,7 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
             case DISP_ALARM_PART0:
                 if (pInfo->ucId < DISP_ALARM_PART0_NUM)
                 {
-//                    alarmCommProc(!!pInfo->ucFlag,pInfo->ucPart,pInfo->ucId);
+                    alarmCommProc(!!pInfo->ucFlag,pInfo->ucPart,pInfo->ucId);
                 }
                 break;
             case DISP_ALARM_PART1:
@@ -8487,7 +8528,7 @@ void MainWindow::on_dispIndication(unsigned char *pucData,int iLength)
                             case 8:
                                 MiscParam.iUPUnitPrice = m_WaterCardInfo.amount;
                                 break;
-                           case 9:
+                            case 9:
                                 MiscParam.iHPUnitPrice = m_WaterCardInfo.amount;
                                 break;
                             }
@@ -10550,10 +10591,26 @@ int MainWindow::runningFlushTime()
     return iTimeLeft > 0 ? iTimeLeft : 0;
 }
 
-QStringList MainWindow::consumableCatNo(CONSUMABLE_CATNO iType)
+QStringList& MainWindow::consumableCatNo(CONSUMABLE_CATNO iType)
 {
     return m_strConsuamble[iType];
 }
+
+QMap<short int, short int>&  MainWindow::consumableTypeMap()
+{
+    return m_ConsuambleTypeMap;
+}
+
+int MainWindow::consumableTypeMapKey(int value)
+{
+    return m_ConsuambleTypeMap.key(value);
+}
+
+int MainWindow::consumableTypeMapValue(int key)
+{
+    return m_ConsuambleTypeMap.value(key);
+}
+
 
 void MainWindow::emitUnitsChanged()
 {
@@ -11351,3 +11408,106 @@ void MainWindow::printWorker(const ServiceLogPrint & data)
 
     qDebug() << buffer << endl;
 }
+
+#ifdef UPLOADFROMRS485
+void MainWindow::initRS485()
+{
+    m_fdRS485 = rs485SerialInit();
+}
+
+void MainWindow::resetRS485()
+{
+    m_fdRS485 = reset485Serial(m_fdRS485);
+
+}
+
+void MainWindow::uploadFromRS485(const ProductDataPrint &data)
+{
+    if(m_fdRS485 < 0)
+    {
+        qDebug() << "Error writing data to RS485：m_fdRS485 < 0";
+        return;
+    }
+
+    int feedCond = data.fFeedCond * 10;
+    int feedTemp = data.fFeedTemp * 10;
+    int rej      = data.fRej      * 10;
+    int roCond   = data.fRoCond   * 10;
+    int roTemp   = data.fRoTemp   * 10;
+    int ediRes   = data.fEdiRes   * 10;
+    int ediTemp  = data.fEdiTemp  * 10;
+
+    quint8 ucIdx = 0;
+    m_toRS485Buff[ucIdx++] = 0x00;
+    m_toRS485Buff[ucIdx++] = 0x01;
+    m_toRS485Buff[ucIdx++] = 0x10;
+
+    m_toRS485Buff[ucIdx++] = (data.duration >> 8) & 0xff; //产水时间
+    m_toRS485Buff[ucIdx++] = (data.duration >> 0) & 0xff;
+
+    m_toRS485Buff[ucIdx++] = (feedCond >> 8) & 0xff; //进水电导率
+    m_toRS485Buff[ucIdx++] = (feedCond >> 0) & 0xff; 
+
+    m_toRS485Buff[ucIdx++] = (feedTemp >> 8) & 0xff; //进水温度
+    m_toRS485Buff[ucIdx++] = (feedTemp >> 0) & 0xff; 
+
+    m_toRS485Buff[ucIdx++] = (rej >> 8) & 0xff; //截留率
+    m_toRS485Buff[ucIdx++] = (rej >> 0) & 0xff; 
+
+    m_toRS485Buff[ucIdx++] = (roCond >> 8) & 0xff; //RO电导率
+    m_toRS485Buff[ucIdx++] = (roCond >> 0) & 0xff;
+
+    m_toRS485Buff[ucIdx++] = (roTemp >> 8) & 0xff; //RO温度
+    m_toRS485Buff[ucIdx++] = (roTemp >> 0) & 0xff; 
+
+    m_toRS485Buff[ucIdx++] = (ediRes  >> 8) & 0xff; //EDI电阻率
+    m_toRS485Buff[ucIdx++] = (ediRes  >> 0) & 0xff; 
+
+    m_toRS485Buff[ucIdx++] = (ediTemp >> 8) & 0xff; //EDI温度
+    m_toRS485Buff[ucIdx++] = (ediTemp >> 0) & 0xff; 
+    
+    Modbus_MakeMessage(m_toRS485Buff, ucIdx);
+    ucIdx += 2;
+
+    int ret = write(m_fdRS485, m_toRS485Buff, ucIdx);
+    if(ret < 0)
+    {
+        qDebug() << "Write to RS485 error";
+        //如果发送命令失败，则清空终端未完成的输入/输出请求及数据，然后重新发送命令
+        tcflush(m_fdRS485, TCIOFLUSH);
+        return;
+    }
+}
+
+void MainWindow::uploadFromRS485(bool bAlarm,int iAlarmPart,int iAlarmId)
+{
+    if(m_fdRS485 < 0)
+    {
+        qDebug() << "Error writing data to RS485：m_fdRS485 < 0";
+        return;
+    }
+
+    quint8 ucIdx = 0;
+    m_toRS485Buff[ucIdx++] = 0x00;
+    m_toRS485Buff[ucIdx++] = 0x02;
+    m_toRS485Buff[ucIdx++] = 0x03;
+
+    m_toRS485Buff[ucIdx++] = iAlarmPart; 
+    m_toRS485Buff[ucIdx++] = iAlarmId;
+    m_toRS485Buff[ucIdx++] = bAlarm ? 1 : 0; 
+
+    Modbus_MakeMessage(m_toRS485Buff, ucIdx);
+    ucIdx += 2;
+
+    int ret = write(m_fdRS485, m_toRS485Buff, ucIdx);
+    if(ret < 0)
+    {
+        qDebug() << "Write to RS485 error";
+        //如果发送命令失败，则清空终端未完成的输入/输出请求及数据，然后重新发送命令
+        tcflush(m_fdRS485, TCIOFLUSH);
+        return;
+    }
+}
+
+#endif
+

@@ -257,6 +257,9 @@ struct WaterCardInfo
     unsigned int oldVolumne;
 };
 
+
+bool clearDir(const QString &strDir);
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -264,6 +267,8 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QMainWindow *parent = 0);
     ~MainWindow();
+
+    void POST(); 
     void clearIdleSecond();
     
 #ifdef STEPPERMOTOR
@@ -436,7 +441,10 @@ public:
     float        m_fSourceWaterConductivity;
 
     //Static Public Members
-    static QStringList consumableCatNo(CONSUMABLE_CATNO iType);
+    static QStringList& consumableCatNo(CONSUMABLE_CATNO iType);
+    static QMap<short int, short int>& consumableTypeMap();
+    static int consumableTypeMapKey(int value);
+    static int consumableTypeMapValue(int key);
 
     void emitUnitsChanged();
 
@@ -511,13 +519,24 @@ private:
 
 	void printSystemInfo();
 	void initGlobalStyleSheet();
+    void initConsumablesTypeMap();
 	void initConsumablesInfo();
 	void initAlarmCfg();
 	void initConsumablesCfg();
 	void initRFIDCfg();
     void checkDateTime();
     void initUI();
+    
+#ifdef UV_PROTECT   //protect
+    void initUvCurrentThreshhold();
+#endif
 
+#ifdef UPLOADFROMRS485
+    void initRS485();
+    void resetRS485();
+    void uploadFromRS485(const ProductDataPrint &data);
+    void uploadFromRS485(bool bAlarm,int iAlarmPart,int iAlarmId);
+#endif
     
     void Splash();
     
@@ -740,6 +759,7 @@ private:
     DUserInfo  m_userInfo;
 
     static QStringList m_strConsuamble[CAT_NUM];
+    static QMap<short int, short int> m_ConsuambleTypeMap;
 
     QString m_consuambleInitDate; //Used to determine if it is a new consumable
 
@@ -748,6 +768,11 @@ private:
     QStringList m_AlarmName;
     int m_alarmNameLen;
 
+#ifdef UPLOADFROMRS485
+    int m_fdRS485;
+    quint8 m_toRS485Buff[32];
+
+#endif
     class RFIDPackInfo
     {
     public:

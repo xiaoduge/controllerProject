@@ -59,7 +59,6 @@ private:
     bool newPack();
     bool writeInstallDate();
     bool clearVolofUse();
-    void initTypeMap();
     void initCategoryMap();
 
     bool checkDatabaseConnect();
@@ -81,7 +80,6 @@ private:
     bool m_isRfidType;
     InstallAction m_operateID;
     bool m_isBusy;
-    QMap<short int, short int> m_typeMap;
     QMap<short int, short int> m_categoryMap;
 
     QSqlDatabase m_db;

@@ -185,6 +185,15 @@ typedef union
    APP_ECO_VALUE_STRU eV;
 }DISP_OBJ_VALUE;
 
+typedef enum {
+   DISP_OBJ_WORKING_STAGE_INIT = 0,
+   DISP_OBJ_WORKING_STAGE_STARTING,
+   DISP_OBJ_WORKING_STAGE_NORMAL,
+   DISP_OBJ_WORKING_STAGE_NUM,
+}DISP_OBJ_WORKING_STAGE_ENUM;
+
+#define DISP_OBJ_HIST_MAX_NUM (5)
+
 typedef struct
 {
     int emDispObjType; /* refer APP_OBJ_TYPE_ENUM */
@@ -195,6 +204,14 @@ typedef struct
     unsigned int ulDurSec;
     int iVChoice;
     DISP_OBJ_VALUE Value;
+
+#ifdef UV_PROTECT
+    unsigned int ulLstRptTick;
+    int iStage ;      /* refer DISP_OBJ_WORKING_STAGE_ENUM */
+    DISP_OBJ_VALUE Hist[DISP_OBJ_HIST_MAX_NUM];
+    int iHistNum;
+    int iCurHist;
+#endif
 }DISP_OBJ_STRU;
 
 /* default setting for MM parameters */
@@ -893,6 +910,10 @@ typedef struct
     int           iHPUnitPrice;
     int           iPowerOnFlushTime;
     
+#ifdef UV_PROTECT
+    int           aiCurrentMin[APP_EXE_RECT_NUM];
+    int           aiCurrentMax[APP_EXE_RECT_NUM];
+#endif
 }DISP_MISC_SETTING_STRU;
 
 typedef enum
