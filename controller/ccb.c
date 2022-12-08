@@ -12282,6 +12282,20 @@ void work_run_comm_proc(WORK_ITEM_STRU *pWorkItem, CCB *pCcb, RUN_COMM_CALL_BACK
                         return ;
                     }  
                 }
+
+                //EDI合格以后，再排放5分钟
+                for(iLoop = 0; iLoop < 60 * 5; iLoop++)
+                {
+                    iRet = CcbWorkDelayEntry(pWorkItem->id,1000,CcbDelayCallBack); 
+                    if (iRet )
+                    {
+                        VOS_LOG(VOS_LOG_WARNING,"CcbModbusWorkEntry Fail %d",iRet);  
+                        /* notify ui (late implemnt) */
+                        cbf(pWorkItem->id);   
+                    
+                        return ;
+                    }  
+                }
                 
                 if(haveB3(&gCcb))
                 {
