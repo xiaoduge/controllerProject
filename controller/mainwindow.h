@@ -517,6 +517,7 @@ private:
         bool m_bActive;
     }Alarm;
 
+    void versionConfig();
 	void printSystemInfo();
 	void initGlobalStyleSheet();
     void initConsumablesTypeMap();

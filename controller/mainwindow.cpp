@@ -30,6 +30,7 @@
 #include <QFileSystemWatcher>
 #include <QDir>
 #include <QMessageBox>
+#include <QScopedPointer>
 
 #include "setdevicepage.h"
 #include "systestpage.h"
@@ -3294,6 +3295,30 @@ void MainWindow::saveAlarmSP()
     }   
 }
 
+//检查版本号，根据版本号确定是否需要修正配置文件
+void MainWindow::versionConfig()
+{
+    QString strCfgName = gaMachineType[gGlobalParam.iMachineType].strName;
+    strCfgName += "_pre.ini";
+
+    QScopedPointer<QSettings> config(new QSettings(strCfgName, QSettings::IniFormat));
+    config->beginGroup("global");
+
+    const QString versionKey = "version";
+    QString curVersion = config->value(versionKey, "unknow").toString();
+
+    if(0 != curVersion.compare(gApp->applicationVersion()))
+    {
+        //do something
+
+        config->setValue(versionKey, gApp->applicationVersion());
+    }
+    
+    config->endGroup();
+    
+}
+
+
 /**
  * 打印产品信息
  */
@@ -4365,6 +4390,8 @@ void MainWindow::initUI()
 
 void MainWindow::POST()
 {
+    versionConfig();
+
     QStringList pathNames;
     pathNames << QString("/media/sda1") << QString("/media/sdb1") << QString("/media/sdc1");
     foreach(QString pathName, pathNames)
@@ -4381,8 +4408,6 @@ void MainWindow::POST()
 MainWindow::MainWindow(QMainWindow *parent) :
     QMainWindow(parent)/*, ui(new Ui::MainWindow)*/
 {
-    int iLoop;
-
     POST();
     
     m_bSplash = false;
@@ -4433,6 +4458,7 @@ MainWindow::MainWindow(QMainWindow *parent) :
     m_iFmActiveMask  = 0;
     m_eWorkMode      = APP_WORK_MODE_NORMAL; /* refer APP_WORK_MODE_NUM */
 
+    int iLoop;
     for(iLoop = 0; iLoop < APP_EXE_ECO_NUM; iLoop++)
     {
         switch(iLoop)
